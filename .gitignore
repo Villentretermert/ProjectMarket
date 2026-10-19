@@ -1,0 +1,22 @@
+# Credentials and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.keystore
+*.jks
+secrets/
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+# Build and local tooling
+node_modules/
+build/
+dist/
+.local/
+*.log
+.DS_Store

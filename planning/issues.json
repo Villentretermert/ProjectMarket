@@ -1,0 +1,531 @@
+{
+  "version": 1,
+  "repository": "Villentretermert/ProjectMarket",
+  "product": "MarkeTOB",
+  "issues": [
+    {
+      "id": "PM-001",
+      "title": "[PM-001][P0] Границы пилота, сценарии и измеримые критерии",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 1,
+      "status": "ready",
+      "path": "docs/tasks/PM-001.md",
+      "depends_on": []
+    },
+    {
+      "id": "PM-002",
+      "title": "[PM-002][P0] Проверка клиентского стека и архитектурные решения",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 1,
+      "status": "planned",
+      "path": "docs/tasks/PM-002.md",
+      "depends_on": [
+        "PM-001"
+      ]
+    },
+    {
+      "id": "PM-003",
+      "title": "[PM-003][P0] UX и дизайн MarkeTOB на английском",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 1,
+      "status": "planned",
+      "path": "docs/tasks/PM-003.md",
+      "depends_on": [
+        "PM-001",
+        "PM-002"
+      ]
+    },
+    {
+      "id": "PM-004",
+      "title": "[PM-004][P0] Контракт Bot API и схемы данных/интерфейса",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 1,
+      "status": "planned",
+      "path": "docs/tasks/PM-004.md",
+      "depends_on": [
+        "PM-001",
+        "PM-002",
+        "PM-003"
+      ]
+    },
+    {
+      "id": "G01",
+      "title": "[G01] Презентация: Требования, стек, дизайн и контракт",
+      "kind": "checkpoint",
+      "priority": "P0",
+      "stage": 1,
+      "status": "planned",
+      "path": "docs/reviews/G01.md",
+      "depends_on": [
+        "PM-001",
+        "PM-002",
+        "PM-003",
+        "PM-004"
+      ]
+    },
+    {
+      "id": "PM-005",
+      "title": "[PM-005][P0] Каркас репозитория, окружение и CI",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 2,
+      "status": "planned",
+      "path": "docs/tasks/PM-005.md",
+      "depends_on": [
+        "PM-002",
+        "PM-004",
+        "G01"
+      ]
+    },
+    {
+      "id": "PM-006",
+      "title": "[PM-006][P0] Google-вход, B2B/B2C роли и разграничение доступа",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 2,
+      "status": "planned",
+      "path": "docs/tasks/PM-006.md",
+      "depends_on": [
+        "PM-004",
+        "PM-005",
+        "G01"
+      ]
+    },
+    {
+      "id": "PM-007",
+      "title": "[PM-007][P0] Самостоятельная регистрация ботов и индивидуальные ключи",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 2,
+      "status": "planned",
+      "path": "docs/tasks/PM-007.md",
+      "depends_on": [
+        "PM-006",
+        "G01"
+      ]
+    },
+    {
+      "id": "PM-008",
+      "title": "[PM-008][P0] Приём сообщений и хранение актуальных данных",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 2,
+      "status": "planned",
+      "path": "docs/tasks/PM-008.md",
+      "depends_on": [
+        "PM-004",
+        "PM-007",
+        "G01"
+      ]
+    },
+    {
+      "id": "G02",
+      "title": "[G02] Презентация: Основа, доступ, боты и данные",
+      "kind": "checkpoint",
+      "priority": "P0",
+      "stage": 2,
+      "status": "planned",
+      "path": "docs/reviews/G02.md",
+      "depends_on": [
+        "PM-005",
+        "PM-006",
+        "PM-007",
+        "PM-008"
+      ]
+    },
+    {
+      "id": "PM-009",
+      "title": "[PM-009][P0] Каналы, публикация и чтение news/product/chart блоков",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 3,
+      "status": "planned",
+      "path": "docs/tasks/PM-009.md",
+      "depends_on": [
+        "PM-004",
+        "PM-008",
+        "G02"
+      ]
+    },
+    {
+      "id": "PM-010",
+      "title": "[PM-010][P0] Действия клиента, очередь для бота и статусы заявок",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 3,
+      "status": "planned",
+      "path": "docs/tasks/PM-010.md",
+      "depends_on": [
+        "PM-007",
+        "PM-008",
+        "PM-009",
+        "G02"
+      ]
+    },
+    {
+      "id": "PM-011",
+      "title": "[PM-011][P0] Python SDK, каталог-бот и новостной бот",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 3,
+      "status": "planned",
+      "path": "docs/tasks/PM-011.md",
+      "depends_on": [
+        "PM-004",
+        "PM-007",
+        "PM-008",
+        "PM-010",
+        "G02"
+      ]
+    },
+    {
+      "id": "PM-012",
+      "title": "[PM-012][P0] Проверка полного backend-цикла и восстановление после сбоев",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 3,
+      "status": "planned",
+      "path": "docs/tasks/PM-012.md",
+      "depends_on": [
+        "PM-009",
+        "PM-010",
+        "PM-011",
+        "G02"
+      ]
+    },
+    {
+      "id": "G03",
+      "title": "[G03] Презентация: Backend и интеграция ботов",
+      "kind": "checkpoint",
+      "priority": "P0",
+      "stage": 3,
+      "status": "planned",
+      "path": "docs/reviews/G03.md",
+      "depends_on": [
+        "PM-009",
+        "PM-010",
+        "PM-011",
+        "PM-012"
+      ]
+    },
+    {
+      "id": "PM-013",
+      "title": "[PM-013][P0] Общий UI runtime и работающий Web-клиент",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 4,
+      "status": "planned",
+      "path": "docs/tasks/PM-013.md",
+      "depends_on": [
+        "PM-003",
+        "PM-006",
+        "PM-009",
+        "PM-012",
+        "G03"
+      ]
+    },
+    {
+      "id": "PM-014",
+      "title": "[PM-014][P0] B2B Studio: боты, страницы и публикация",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 4,
+      "status": "planned",
+      "path": "docs/tasks/PM-014.md",
+      "depends_on": [
+        "PM-007",
+        "PM-009",
+        "PM-010",
+        "PM-013",
+        "G03"
+      ]
+    },
+    {
+      "id": "PM-015",
+      "title": "[PM-015][P0] B2C: ссылки на каналы, избранное и список витрин",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 4,
+      "status": "planned",
+      "path": "docs/tasks/PM-015.md",
+      "depends_on": [
+        "PM-009",
+        "PM-013",
+        "G03"
+      ]
+    },
+    {
+      "id": "PM-016",
+      "title": "[PM-016][P0] My Space: личная страница и выбор визуализации",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 4,
+      "status": "planned",
+      "path": "docs/tasks/PM-016.md",
+      "depends_on": [
+        "PM-004",
+        "PM-009",
+        "PM-013",
+        "PM-015",
+        "G03"
+      ]
+    },
+    {
+      "id": "G04",
+      "title": "[G04] Презентация: Web, Studio и личные страницы",
+      "kind": "checkpoint",
+      "priority": "P0",
+      "stage": 4,
+      "status": "planned",
+      "path": "docs/reviews/G04.md",
+      "depends_on": [
+        "PM-013",
+        "PM-014",
+        "PM-015",
+        "PM-016"
+      ]
+    },
+    {
+      "id": "PM-017",
+      "title": "[PM-017][P0] Обмен шаблонами через ссылку и код",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 5,
+      "status": "planned",
+      "path": "docs/tasks/PM-017.md",
+      "depends_on": [
+        "PM-004",
+        "PM-006",
+        "PM-016",
+        "G04"
+      ]
+    },
+    {
+      "id": "PM-018",
+      "title": "[PM-018][P1] Быстрые обновления и push по выбранным событиям",
+      "kind": "task",
+      "priority": "P1",
+      "stage": 5,
+      "status": "planned",
+      "path": "docs/tasks/PM-018.md",
+      "depends_on": [
+        "PM-008",
+        "PM-010",
+        "PM-013",
+        "PM-016",
+        "PM-017",
+        "G04"
+      ]
+    },
+    {
+      "id": "PM-019",
+      "title": "[PM-019][P0] Android-приложение, Google-вход и сборки APK/AAB",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 5,
+      "status": "planned",
+      "path": "docs/tasks/PM-019.md",
+      "depends_on": [
+        "PM-002",
+        "PM-013",
+        "PM-014",
+        "PM-015",
+        "PM-016",
+        "PM-017",
+        "PM-018",
+        "G04"
+      ]
+    },
+    {
+      "id": "PM-020",
+      "title": "[PM-020][P0] Новостной виджет на домашнем экране Android",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 5,
+      "status": "planned",
+      "path": "docs/tasks/PM-020.md",
+      "depends_on": [
+        "PM-002",
+        "PM-018",
+        "PM-019",
+        "G04"
+      ]
+    },
+    {
+      "id": "G05",
+      "title": "[G05] Презентация: Обмен, обновления, Android и виджет",
+      "kind": "checkpoint",
+      "priority": "P0",
+      "stage": 5,
+      "status": "planned",
+      "path": "docs/reviews/G05.md",
+      "depends_on": [
+        "PM-017",
+        "PM-018",
+        "PM-019",
+        "PM-020"
+      ]
+    },
+    {
+      "id": "PM-021",
+      "title": "[PM-021][P0] Production Docker и инструкция облачного запуска",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 6,
+      "status": "planned",
+      "path": "docs/tasks/PM-021.md",
+      "depends_on": [
+        "PM-005",
+        "PM-012",
+        "PM-018",
+        "PM-019",
+        "PM-020",
+        "G05"
+      ]
+    },
+    {
+      "id": "PM-022",
+      "title": "[PM-022][P1] Наблюдаемость, лимиты и нагрузочная проверка пилота",
+      "kind": "task",
+      "priority": "P1",
+      "stage": 6,
+      "status": "planned",
+      "path": "docs/tasks/PM-022.md",
+      "depends_on": [
+        "PM-012",
+        "PM-018",
+        "PM-021",
+        "G05"
+      ]
+    },
+    {
+      "id": "PM-023",
+      "title": "[PM-023][P0] Проверка доступа, приватности и готовности релиза",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 6,
+      "status": "planned",
+      "path": "docs/tasks/PM-023.md",
+      "depends_on": [
+        "PM-006",
+        "PM-007",
+        "PM-010",
+        "PM-017",
+        "PM-019",
+        "PM-020",
+        "PM-021",
+        "PM-022",
+        "G05"
+      ]
+    },
+    {
+      "id": "PM-024",
+      "title": "[PM-024][P0] Сквозная приёмка, релиз-кандидат и передача владельцу",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 6,
+      "status": "planned",
+      "path": "docs/tasks/PM-024.md",
+      "depends_on": [
+        "PM-011",
+        "PM-014",
+        "PM-015",
+        "PM-016",
+        "PM-017",
+        "PM-018",
+        "PM-019",
+        "PM-020",
+        "PM-021",
+        "PM-022",
+        "PM-023",
+        "G05"
+      ]
+    },
+    {
+      "id": "G06",
+      "title": "[G06] Презентация: Поставка, эксплуатация и приёмка",
+      "kind": "checkpoint",
+      "priority": "P0",
+      "stage": 6,
+      "status": "planned",
+      "path": "docs/reviews/G06.md",
+      "depends_on": [
+        "PM-021",
+        "PM-022",
+        "PM-023",
+        "PM-024"
+      ]
+    },
+    {
+      "id": "PM-025",
+      "title": "[PM-025][P2] iOS-клиент и подготовка распространения",
+      "kind": "task",
+      "priority": "P2",
+      "stage": 7,
+      "status": "deferred",
+      "path": "docs/tasks/PM-025.md",
+      "depends_on": [
+        "PM-024",
+        "G06"
+      ]
+    },
+    {
+      "id": "PM-026",
+      "title": "[PM-026][P2] Новостной виджет iOS",
+      "kind": "task",
+      "priority": "P2",
+      "stage": 7,
+      "status": "deferred",
+      "path": "docs/tasks/PM-026.md",
+      "depends_on": [
+        "PM-025",
+        "G06"
+      ]
+    },
+    {
+      "id": "PM-027",
+      "title": "[PM-027][P2] Windows-приложение и обновление",
+      "kind": "task",
+      "priority": "P2",
+      "stage": 7,
+      "status": "deferred",
+      "path": "docs/tasks/PM-027.md",
+      "depends_on": [
+        "PM-024",
+        "G06"
+      ]
+    },
+    {
+      "id": "PM-028",
+      "title": "[PM-028][P2] Исследование и проектирование встроенных платежей",
+      "kind": "task",
+      "priority": "P2",
+      "stage": 7,
+      "status": "deferred",
+      "path": "docs/tasks/PM-028.md",
+      "depends_on": [
+        "PM-024",
+        "G06"
+      ]
+    },
+    {
+      "id": "G07",
+      "title": "[G07] Презентация: iOS, Windows и коммерческий этап",
+      "kind": "checkpoint",
+      "priority": "P2",
+      "stage": 7,
+      "status": "deferred",
+      "path": "docs/reviews/G07.md",
+      "depends_on": [
+        "PM-025",
+        "PM-026",
+        "PM-027",
+        "PM-028"
+      ]
+    }
+  ]
+}

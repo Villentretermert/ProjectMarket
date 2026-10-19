@@ -1,0 +1,119 @@
+<div id="marketob-preview">
+  <style>
+    #marketob-preview{font-family:Arial,sans-serif;color:light-dark(#172b3d,#e4edf5);--mk-bg:light-dark(#eff4f8,#121f2b);--mk-panel:light-dark(#fff,#1b2b3a);--mk-line:light-dark(#dbe5ed,#354655);--mk-soft:light-dark(#e9f3fd,#233f56);--mk-muted:light-dark(#50677c,#afc1d0);--mk-blue:light-dark(#1769ab,#84c7ff);--mk-radius:14px;--mk-gap:18px;background:var(--mk-bg);border-radius:18px;overflow:hidden}
+    #marketob-preview *{box-sizing:border-box}
+    #marketob-preview button,#marketob-preview select{font:inherit;color:inherit}
+    #marketob-preview button{border:1px solid var(--mk-line);background:var(--mk-panel);border-radius:9px;padding:10px 13px;min-height:42px}
+    #marketob-preview button:focus-visible,#marketob-preview select:focus-visible{outline:3px solid var(--mk-blue);outline-offset:2px}
+    #marketob-preview button[aria-pressed="true"],#marketob-preview .mk-primary{background:var(--mk-blue);color:light-dark(#fff,#102536);border-color:var(--mk-blue)}
+    #marketob-preview .mk-top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 112px 20px 24px;background:var(--mk-panel);border-bottom:1px solid var(--mk-line)}
+    #marketob-preview .mk-brand{font-size:23px;font-weight:600;letter-spacing:-.7px}
+    #marketob-preview .mk-sub{font-size:12px;color:var(--mk-muted);margin-top:5px}
+    #marketob-preview .mk-nav{display:flex;gap:7px;flex-wrap:wrap}
+    #marketob-preview .mk-layout{display:grid;grid-template-columns:238px minmax(0,1fr)}
+    #marketob-preview .mk-sidebar{padding:20px 13px;background:var(--mk-panel);border-right:1px solid var(--mk-line)}
+    #marketob-preview .mk-caption{font-size:11px;letter-spacing:1.4px;font-weight:600;color:var(--mk-muted);margin:0 10px 14px}
+    #marketob-preview .mk-channel{width:100%;text-align:left;display:flex;gap:12px;align-items:center;margin:7px 0;border-color:transparent;padding:12px 8px}
+    #marketob-preview .mk-channel[aria-pressed="true"]{background:var(--mk-soft);color:inherit;border-color:var(--mk-line)}
+    #marketob-preview .mk-avatar{display:grid;place-items:center;width:38px;height:38px;flex-shrink:0;background:var(--mk-soft);color:var(--mk-blue);border-radius:13px;font-size:15px;font-weight:600}
+    #marketob-preview .mk-channel-name{display:block;font-size:14px;font-weight:600}
+    #marketob-preview .mk-channel-detail{display:block;font-size:12px;color:var(--mk-muted);margin-top:5px}
+    #marketob-preview main{min-width:0;padding:24px;min-height:535px}
+    #marketob-preview .mk-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+    #marketob-preview h2{font-size:22px;margin:0 0 6px;letter-spacing:-.4px}
+    #marketob-preview h3{font-size:17px;margin:0 0 9px}
+    #marketob-preview p{font-size:14px;line-height:1.5;margin:8px 0}
+    #marketob-preview .mk-meta{font-size:12px;color:var(--mk-muted)}
+    #marketob-preview .mk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--mk-gap)}
+    #marketob-preview .mk-card{background:var(--mk-panel);border:1px solid var(--mk-line);border-radius:var(--mk-radius);padding:18px;min-width:0}
+    #marketob-preview .mk-art{height:105px;background:var(--mk-soft);border-radius:9px;display:grid;place-items:center;margin-bottom:18px;color:var(--mk-blue);font-size:17px;letter-spacing:3px}
+    #marketob-preview .mk-price{font-size:21px;font-weight:600;margin:14px 0}
+    #marketob-preview .mk-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+    #marketob-preview .mk-news{display:grid;gap:12px}
+    #marketob-preview .mk-news .mk-card{display:grid;gap:4px}
+    #marketob-preview .mk-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+    #marketob-preview select{background:var(--mk-panel);border:1px solid var(--mk-line);padding:9px;border-radius:8px;min-height:42px}
+    #marketob-preview .mk-status{margin-top:20px;min-height:39px;font-size:13px;line-height:1.5;padding:11px 13px;background:var(--mk-soft);border-radius:9px}
+    #marketob-preview .mk-span{grid-column:1/-1}
+    #marketob-preview .mk-chart{width:100%;height:155px;display:block;color:var(--mk-blue)}
+    #marketob-preview .mk-code{font-size:14px;overflow-wrap:anywhere}
+    #marketob-preview [hidden]{display:none!important}
+    @media(max-width:650px){#marketob-preview .mk-top{padding:18px 18px 20px}#marketob-preview .mk-layout{grid-template-columns:1fr}#marketob-preview .mk-sidebar{border-right:0;border-bottom:1px solid var(--mk-line);padding:12px;display:flex;gap:8px;flex-wrap:wrap}#marketob-preview .mk-sidebar .mk-caption{width:100%;margin:0 6px 4px}#marketob-preview .mk-channel{width:auto;flex:1;min-width:135px;margin:0}#marketob-preview main{padding:18px;min-height:0}#marketob-preview .mk-grid{grid-template-columns:1fr}#marketob-preview .mk-channel-detail{font-size:11px}#marketob-preview .mk-brand{font-size:21px}}
+  </style>
+  <header class="mk-top">
+    <div><div class="mk-brand">MarkeTOB</div><div class="mk-sub">Concept preview · sample data</div></div>
+    <nav class="mk-nav" aria-label="Main navigation">
+      <button type="button" data-screen="channels" aria-pressed="true">Channels</button>
+      <button type="button" data-screen="space" aria-pressed="false">My Space</button>
+      <button type="button" data-screen="studio" aria-pressed="false">Studio</button>
+    </nav>
+  </header>
+  <div class="mk-layout">
+    <aside class="mk-sidebar" aria-label="Saved channels">
+      <div class="mk-caption">SAVED CHANNELS</div>
+      <button type="button" class="mk-channel" data-channel="shop" aria-pressed="true"><span class="mk-avatar">N</span><span><span class="mk-channel-name">Northstar Shop</span><span class="mk-channel-detail">Products · updated just now</span></span></button>
+      <button type="button" class="mk-channel" data-channel="news" aria-pressed="false"><span class="mk-avatar">D</span><span><span class="mk-channel-name">Daily Brief</span><span class="mk-channel-detail">News · 3 new stories</span></span></button>
+    </aside>
+    <main>
+      <section data-panel="shop" aria-label="Product channel">
+        <div class="mk-heading"><div><h2>Northstar Shop</h2><div class="mk-meta">Public channel · Product bot</div></div><button type="button" id="mk-save" aria-pressed="true">Saved</button></div>
+        <div class="mk-grid">
+          <article class="mk-card"><div class="mk-art" aria-hidden="true">NOTES / A5</div><h3>Daily notebook</h3><p>Dotted pages for everyday ideas.</p><div class="mk-meta">In stock · Sample item</div><div class="mk-price">€18.00</div><div class="mk-actions"><button type="button" class="mk-primary" data-request="Daily notebook">Send request</button><button type="button" data-add="Daily notebook">Add to My Space</button></div></article>
+          <article class="mk-card"><div class="mk-art" aria-hidden="true">DESK / KIT</div><h3>Desk essentials</h3><p>A compact set for a calmer workspace.</p><div class="mk-meta">In stock · Sample item</div><div class="mk-price">€32.00</div><div class="mk-actions"><button type="button" class="mk-primary" data-request="Desk essentials">Send request</button><button type="button" data-add="Desk essentials">Add to My Space</button></div></article>
+        </div>
+      </section>
+      <section data-panel="news" aria-label="News channel" hidden>
+        <div class="mk-heading"><div><h2>Daily Brief</h2><div class="mk-meta">Public channel · News bot · Sample stories</div></div><button type="button" data-add="Daily Brief">Add to My Space</button></div>
+        <div class="mk-news">
+          <article class="mk-card"><div class="mk-meta">PRODUCT · 2 min read</div><h3>A workspace that starts with your sources</h3><p>Keep your favorite updates together, with a layout that works for you.</p></article>
+          <article class="mk-card"><div class="mk-meta">DESIGN · 4 min read</div><h3>Small details, clearer information</h3><p>News, products and useful numbers share one familiar home.</p></article>
+          <article class="mk-card"><div class="mk-meta">YOUR HOME SCREEN</div><h3>Daily Brief widget</h3><p>Selected headlines · Updated 5 minutes ago</p><button type="button" id="mk-widget">Preview news widget</button></article>
+        </div>
+      </section>
+      <section data-panel="space" aria-label="Personal page" hidden>
+        <div class="mk-heading"><div><h2>My Space</h2><div class="mk-meta">Your layout · Sources keep their own access rules</div></div><button type="button" id="mk-share" class="mk-primary">Share layout</button></div>
+        <div class="mk-toolbar"><label for="mk-view">Catalog trend view</label><select id="mk-view"><option value="chart">Line chart</option><option value="values">Values</option></select><button type="button" id="mk-reorder">Swap blocks</button></div>
+        <div class="mk-grid" id="mk-personal-blocks">
+          <article class="mk-card" data-personal="news"><div class="mk-meta">FROM DAILY BRIEF</div><h3>Your news, together</h3><p>A workspace that starts with your sources</p><p>Small details, clearer information</p></article>
+          <article class="mk-card" data-personal="product"><div class="mk-meta">FROM NORTHSTAR SHOP</div><h3>Daily notebook</h3><div class="mk-price">€18.00</div><button type="button" data-request="Daily notebook">Send request</button></article>
+          <article class="mk-card mk-span"><div class="mk-meta">DEMO NUMERIC SERIES · CATALOG VIEWS</div><h3>Last 7 days</h3><svg class="mk-chart" viewBox="0 0 520 155" role="img" aria-label="Demo catalog views over seven days: 42, 55, 51, 68, 72, 65, 84"><path d="M30 15V125H500" stroke="currentColor" fill="none" opacity=".3"/><path d="M30 105L108 78L186 86L264 52L342 44L420 58L498 20" stroke="currentColor" stroke-width="3" fill="none"/><text x="30" y="148" fill="currentColor" font-size="13">Day 1</text><text x="460" y="148" fill="currentColor" font-size="13">Day 7</text><text x="36" y="20" fill="currentColor" font-size="13">Views</text></svg><p id="mk-values" hidden>42 · 55 · 51 · 68 · 72 · 65 · 84 views</p></article>
+        </div>
+        <p id="mk-share-code" class="mk-code" hidden>Demo code: MK-DEMO-7F2K · Layout and source links only</p>
+      </section>
+      <section data-panel="studio" aria-label="Business studio" hidden>
+        <div class="mk-heading"><div><h2>Studio</h2><div class="mk-meta">Your bot. Your data. Your storefront.</div></div></div>
+        <div class="mk-news"><article class="mk-card"><div class="mk-meta">CONNECTED BOT · DEMO</div><h3>Northstar catalog</h3><p>Latest message accepted · Public storefront</p><div class="mk-actions"><button type="button" id="mk-publish" class="mk-primary">Preview storefront</button><button type="button" id="mk-connect">Connect a bot</button></div></article><article class="mk-card"><h3>Connect → Send data → Publish</h3><p>Each bot has its own credential. Publish products, news and typed chart data, then receive customer requests through the API.</p><p class="mk-meta">No live bot is connected in this preview.</p></article></div>
+      </section>
+      <div id="mk-status" class="mk-status" aria-live="polite">Preview a channel, build My Space, or explore Studio.</div>
+    </main>
+  </div>
+  <script>
+    (()=>{
+      const root=document.getElementById('marketob-preview');
+      const status=root.querySelector('#mk-status');
+      let channel='shop';
+      const say=text=>{status.textContent=text};
+      function show(screen){
+        const panel=screen==='channels'?channel:screen;
+        root.querySelectorAll('[data-panel]').forEach(el=>{el.hidden=el.dataset.panel!==panel});
+        root.querySelectorAll('[data-screen]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.screen===screen)));
+      }
+      root.querySelectorAll('[data-screen]').forEach(b=>b.addEventListener('click',()=>{show(b.dataset.screen);say('Concept preview · sample data')}));
+      root.querySelectorAll('[data-channel]').forEach(b=>b.addEventListener('click',()=>{channel=b.dataset.channel;root.querySelectorAll('[data-channel]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));show('channels');say('Channel selected · sample data')}));
+      root.querySelectorAll('[data-request]').forEach(b=>b.addEventListener('click',()=>say('Demo: request for '+b.dataset.request+' is pending. In the app, the bot will return the result.')));
+      root.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>{show('space');say('Demo: '+b.dataset.add+' added to your layout. Source permissions still apply.')}));
+      const save=root.querySelector('#mk-save');
+      save.addEventListener('click',()=>{const saved=save.getAttribute('aria-pressed')!=='true';save.setAttribute('aria-pressed',String(saved));save.textContent=saved?'Saved':'Save channel';say(saved?'Demo: channel saved.':'Demo: channel removed from favorites.')});
+      root.querySelector('#mk-view').addEventListener('change',e=>{const chart=e.target.value==='chart';root.querySelector('.mk-chart').toggleAttribute('hidden',!chart);root.querySelector('#mk-values').hidden=chart;say('Demo: the same numeric source now uses a different view.')});
+      root.querySelector('#mk-reorder').addEventListener('click',()=>{const holder=root.querySelector('#mk-personal-blocks');const blocks=holder.querySelectorAll('[data-personal]');holder.insertBefore(blocks[1],blocks[0]);say('Demo: personal blocks reordered.')});
+      root.querySelector('#mk-share').addEventListener('click',()=>{root.querySelector('#mk-share-code').hidden=false;say('Demo code only. A real import restores layout and checks the recipient’s access separately.')});
+      root.querySelector('#mk-publish').addEventListener('click',()=>{channel='shop';root.querySelector('[data-channel="shop"]').click()});
+      root.querySelector('#mk-connect').addEventListener('click',()=>say('In MarkeTOB: sign in with Google, register your bot, and receive its unique credential.'));
+      root.querySelector('#mk-widget').addEventListener('click',()=>say('Home screen preview: Daily Brief · 2 headlines · Updated 5 min ago · Tap to open news.'));
+      const design={radius:14,density:'Comfortable'};
+      function renderDesign(){root.style.setProperty('--mk-radius',design.radius+'px');root.style.setProperty('--mk-gap',design.density==='Compact'?'10px':'18px')}
+      if(globalThis.Tweak){const tweak=new Tweak({container:root,onChange:renderDesign});tweak.addSlider(design,'radius',{label:'Card corners',min:4,max:22,unit:'px'});tweak.addSelect(design,'density',{label:'Block spacing',options:['Comfortable','Compact']})}
+      renderDesign();
+    })();
+  </script>
+</div>
