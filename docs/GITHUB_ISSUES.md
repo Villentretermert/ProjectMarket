@@ -5,7 +5,7 @@
 | ID | GitHub | Тип | План | GitHub |
 |---|---|---|---|---|
 | PM-001 | [#1](https://github.com/Villentretermert/ProjectMarket/issues/1) | task | done | closed |
-| PM-002 | [#2](https://github.com/Villentretermert/ProjectMarket/issues/2) | task | planned | open |
+| PM-002 | [#2](https://github.com/Villentretermert/ProjectMarket/issues/2) | task | done | closed |
 | PM-003 | [#3](https://github.com/Villentretermert/ProjectMarket/issues/3) | task | planned | open |
 | PM-004 | [#4](https://github.com/Villentretermert/ProjectMarket/issues/4) | task | planned | open |
 | G01 | [#5](https://github.com/Villentretermert/ProjectMarket/issues/5) | checkpoint | planned | open |
