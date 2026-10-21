@@ -1,6 +1,6 @@
 # Bot API draft — MarkeTOB
 
-**Status:** design proposal, not an implemented API. PM-004 will produce validated OpenAPI and JSON Schema; PM-007–012 implement them. Public developer documentation is in English so developers and AI tools can use the same contract.
+**Historical draft; superseded by [API 1.0](api/PROTOCOL.md) and [validated OpenAPI](../contracts/openapi.json).** PM-004 is complete as a contract task; PM-007–012 implement the server. This draft is retained for context, not as the current protocol. Public developer documentation is in English so developers and AI tools can use the same contract.
 
 ## Authentication and registration
 

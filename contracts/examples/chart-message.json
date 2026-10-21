@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "message_id": "m_1",
+  "channel_id": "ch_shop",
+  "resource_id": "item_notebook",
+  "source_revision": 1,
+  "occurred_at": "2026-10-21T09:42:00Z",
+  "kind": "data",
+  "content_type": "chart",
+  "payload": {
+    "title": "Catalog views",
+    "x_label": "Day",
+    "x_kind": "number",
+    "y_label": "Views",
+    "unit": "views",
+    "series": [
+      {
+        "name": "Main",
+        "points": [
+          {
+            "x": 1,
+            "y": 42
+          },
+          {
+            "x": 2,
+            "y": 55
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "message_id": "m_1",
+  "channel_id": "ch_shop",
+  "resource_id": "item_notebook",
+  "source_revision": 1,
+  "occurred_at": "2026-10-21T09:42:00Z",
+  "kind": "data",
+  "content_type": "product",
+  "payload": {
+    "title": "Daily notebook",
+    "description": "A5 dotted pages",
+    "price": {
+      "amount_minor": 1800,
+      "currency": "EUR"
+    },
+    "availability": "in_stock"
+  }
+}
