@@ -1,0 +1,6 @@
+{
+  "appId": "com.villentretermert.marketob.spike",
+  "appName": "MarkeTOB Local Preview",
+  "webDir": "dist",
+  "android": {"allowMixedContent": false}
+}

@@ -1,0 +1,18 @@
+[project]
+name = "marketob-client-spike"
+version = "0.1.0"
+description = "PM-002 client feasibility prototype; public demo data only"
+requires-python = ">=3.14,<3.15"
+dependencies = ["flet==1.0.4"]
+
+[tool.flet]
+org = "com.villentretermert"
+product = "MarkeTOB Preview"
+company = "MarkeTOB"
+bundle_id = "com.villentretermert.marketob.pilot"
+
+[tool.flet.app]
+path = "src"
+
+[tool.flet.web]
+route_url_strategy = "hash"

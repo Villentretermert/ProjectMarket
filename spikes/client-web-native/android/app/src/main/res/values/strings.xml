@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="widget_title">MarkeTOB · Demo news</string>
+    <string name="widget_description">Public sample headlines from the local preview</string>
+    <string name="app_name">MarkeTOB Local Preview</string>
+    <string name="title_activity_main">MarkeTOB Local Preview</string>
+    <string name="package_name">com.villentretermert.marketob.spike</string>
+    <string name="custom_url_scheme">com.villentretermert.marketob.spike</string>
+</resources>

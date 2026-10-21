@@ -10,14 +10,14 @@
 
 ```mermaid
 flowchart LR
-  Google[Google identity] --> API
+  Identity[Local identity; Google later] --> API
   B2B[B2B Studio: planned] --> API[Python API: planned]
   Web[Web client: planned] --> API
   Android[Android client: planned] --> API
   Widget[Android news widget: planned] --> Android
   API --> DB[(PostgreSQL: planned)]
   DB --> Worker[Outbox and delivery worker: planned]
-  Worker --> Push[Push provider: planned]
+  Worker -.-> Push[Cloud push: deferred]
   Push --> Web
   Push --> Android
   Bot1[Local pilot bots: planned] -->|POST text / JSON / event| API
@@ -34,7 +34,7 @@ flowchart LR
 
 | Модуль | Ответственность | Основные задачи |
 |---|---|---|
-| Identity / access | Google-вход, сессии, организации, роли, доступ к страницам | PM-006 |
+| Identity / access | Локальный вход, сессии; Google позже, организации, роли, доступ к страницам | PM-006 |
 | Bot registry | Регистрация, одноразовые credentials, рабочие ключи, ротация и отзыв | PM-007 |
 | Ingestion | Проверка text/data/event, снимки, revision, дедупликация | PM-008 |
 | Pages / rendering contracts | Каналы, версии страниц, блоки, data bindings, публикация | PM-004, PM-009 |
@@ -48,7 +48,7 @@ flowchart LR
 
 | Сущность | Ключевые данные / инвариант |
 |---|---|
-| User / Identity / Session | Стабильный user_id, Google subject, отзываемая сессия; email не единственный идентификатор |
+| User / Identity / Session | Стабильный user_id, local identity; Google subject позже, отзываемая сессия; email не единственный идентификатор |
 | Organization / Membership | B2B владелец и участники; доступ только по проверенной роли |
 | Bot / RegistrationCredential / BotKey | bot_id, owner, scopes, expiry; индивидуальная регистрация, рабочий ключ хранится в виде хеша |
 | Channel / PageVersion | Владелец, slug, visibility, draft/published version; публикации версионируются |
@@ -64,7 +64,7 @@ flowchart LR
 
 ## Поток данных и действий
 
-1. B2B пользователь входит через Google, регистрирует бота и получает его ключ через доверенный flow. Новый владелец может сделать это самостоятельно.
+1. B2B пользователь входит в локальный аккаунт, регистрирует бота и получает его ключ через доверенный flow. Новый владелец может сделать это самостоятельно.
 2. Бот отправляет валидированное сообщение с устойчивым message_id. API проверяет ключ и принадлежность источника, сохраняет snapshot/revision и outbox в одной транзакции.
 3. Web/Android получает опубликованную схему и разрешённые данные; renderer использует только поддерживаемые компоненты. Live-соединение сигнализирует обновления, при пропуске событий выполняется resync.
 4. Нажатие Buy создаёт **заявку**, а не оплату. Сервер проверяет action, source и права, записывает событие. Повторный запрос с тем же ключом не создаёт дубль.

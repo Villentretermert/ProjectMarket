@@ -4,9 +4,9 @@
 
 ## Authentication and registration
 
-A human B2B owner signs in with Google, creates a bot, and obtains a unique one-time registration credential bound to that bot. A proposed exchange issues a scoped operational key. Registration credentials and operational keys have distinct purposes. All bots, local or external, use HTTPS and their own keys. Store server-side key digests; expose raw keys only on issuance. Rotation and revocation invalidate access according to a documented transition policy.
+A human B2B owner signs in with a local account (Google identity is deferred for the local-only pilot), creates a bot, and obtains a unique one-time registration credential bound to that bot. A proposed exchange issues a scoped operational key. Registration credentials and operational keys have distinct purposes. All bots, local or external, use HTTPS and their own keys. Store server-side key digests; expose raw keys only on issuance. Rotation and revocation invalidate access according to a documented transition policy.
 
-Operational bot calls use `Authorization: Bearer <BOT_API_KEY>`. User sessions never reuse a bot key. Never put credentials in URLs, shared templates, browser storage or logs. The owner management routes, exact Google flow and limits are finalized in PM-004/006.
+Operational bot calls use `Authorization: Bearer <BOT_API_KEY>`. User sessions never reuse a bot key. Never put credentials in URLs, shared templates, browser storage or logs. The owner management routes, local session flow and limits are finalized in PM-004/006.
 
 ## Proposed endpoints
 

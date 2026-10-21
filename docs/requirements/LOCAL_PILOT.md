@@ -14,7 +14,7 @@ flowchart LR
   DB --> Worker[Local worker]
   Bot[Separate pilot bot processes] -->|POST data / GET actions| API
   Remote[External bot: after explicit network setup] -.-> API
-  API --> Google[Google identity / Firebase push]
+  LocalIdentity[Local accounts and sessions] --> API
 ```
 
 Python API, worker и отдельные боты могут разрабатываться в изолированном окружении. Итоговая поставка — Dockerfile/Compose с PostgreSQL, Web/API/worker и optional bots. Браузер находится на компьютере, Android-приложение — на телефоне. Запущенный на Windows сайт не считается отдельным Windows desktop app.
@@ -28,7 +28,7 @@ Python API, worker и отдельные боты могут разрабаты�
 
 ## Что остаётся внешним
 
-Google-вход и Firebase/push требуют сети и настроенного проекта владельца; локальный backend не заменяет Google. OAuth client secrets и service-account credentials хранятся только локально/на backend, не в чатах и не в APK. Пока проект не создан, прототип отображает явный режим demo, который не считается проверкой реального входа.
+По последнему ответу владельца внешний identity/push не входит в текущий запуск: Google/Firebase отложены. Для проверки ролей предусмотрены локальные аккаунты; в spike используются явно отмеченные demo-профили. Подробности и границы — [LOCAL_MODE.md](LOCAL_MODE.md). Скачивание SDK/пакетов при сборке не означает облачное размещение приложения.
 
 Внешний бот не сможет подключиться к loopback компьютера из интернета. Для ранней приёмки «внешний» означает отдельный процесс/устройство в доступной доверенной сети с тем же HTTP-контрактом. Доступ из интернета подключается отдельной настройкой с авторизацией владельца.
 

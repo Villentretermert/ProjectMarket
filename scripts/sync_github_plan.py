@@ -8,11 +8,13 @@ import argparse
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import time
 import urllib.error
 import urllib.request
+from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -98,6 +100,18 @@ def main():
         if not path.is_relative_to(ROOT) or not path.is_file():
             raise RuntimeError(f'Invalid source path for {stable_id}')
         body = marker + '\n\n' + path.read_text(encoding='utf-8').strip()
+        # Issue pages resolve relative links differently from repository Markdown.
+        def repository_link(match):
+            target = match.group(1)
+            if target.startswith(('https://', 'http://', '#', 'mailto:')):
+                return match.group(0)
+            file_part, separator, anchor = target.partition('#')
+            resolved = (path.parent / file_part).resolve()
+            if not resolved.is_relative_to(ROOT) or not resolved.exists():
+                raise RuntimeError(f'Invalid Markdown link in {stable_id}: {target}')
+            url = f'https://github.com/{repository}/blob/main/{quote(resolved.relative_to(ROOT).as_posix())}'
+            return '](' + url + (separator + anchor if separator else '') + ')'
+        body = re.sub(r'\]\(([^)\s]+)\)', repository_link, body)
         links = [f'[{dependency}]({mapping[dependency]["url"]})' for dependency in entry['depends_on']]
         body += '\n\n## Связи GitHub\n\n' + (', '.join(links) if links else 'Начальная задача плана.')
         body += f'\n\nИсходный документ: [{entry["path"]}](https://github.com/{repository}/blob/main/{entry["path"]}).\n'
