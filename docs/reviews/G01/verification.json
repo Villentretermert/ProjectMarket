@@ -1,0 +1,14 @@
+{
+  "slides": 9,
+  "native_tables": 3,
+  "editable_system_diagram": true,
+  "pptx_package": "PASS",
+  "pptx_geometry": "PASS",
+  "pptx_reimport": "PASS",
+  "font": "Arial",
+  "pptx_sha256": "a979b6742c6eec5919dbbc43112a65226058b4603c6bc45f5e4d9fff8d29446e",
+  "rendered_slides_reviewed": 9,
+  "pdf_pages_rendered_reviewed": 9,
+  "pdf_type": "Raster reading copy from reviewed PNGs; editable source is PPTX",
+  "native_powerpoint_opened": false
+}

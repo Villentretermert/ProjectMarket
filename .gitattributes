@@ -1,0 +1,6 @@
+# Preserve exported artifacts byte for byte, including ASCII-encoded PDF streams.
+*.pdf binary
+*.pptx binary
+*.png binary
+*.jpg binary
+*.webp binary

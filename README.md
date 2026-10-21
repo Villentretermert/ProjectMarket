@@ -31,3 +31,5 @@
 ## Текущий интерактивный дизайн
 
 [Запуск прототипа PM-003](design/prototype/README.md) · [Доказательства UI](docs/task-results/PM-003.md) · [Контракт и проверки PM-004](docs/task-results/PM-004.md). Контрольная точка G01 — перед реализацией backend.
+
+[G01: презентация, системная схема и вопросы](docs/reviews/G01/README.md).
