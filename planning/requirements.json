@@ -1,0 +1,372 @@
+{
+  "version": 1,
+  "date": "2026-10-21",
+  "task": "PM-001",
+  "requirements": [
+    {
+      "id": "R01",
+      "requirement": "UI на английском, навигация каналами вместо чатов",
+      "source": "Исходный запрос; Q01",
+      "story": "US01",
+      "tasks": [
+        "PM-003",
+        "PM-013"
+      ],
+      "scenario": "Открыть Channels на 360px и desktop: весь UI English, выбрать канал, вернуться; человеческого чата нет.",
+      "status": "specified"
+    },
+    {
+      "id": "R02",
+      "requirement": "Google-вход для B2B/B2C",
+      "source": "Q04",
+      "story": "US02",
+      "tasks": [
+        "PM-006",
+        "PM-019"
+      ],
+      "scenario": "Реальный Google-вход с двумя аккаунтами; токен с неверными issuer/audience/expiry отклоняется; logout отзывает сессию.",
+      "status": "specified"
+    },
+    {
+      "id": "R03",
+      "requirement": "Самостоятельное B2B подключение",
+      "source": "Q06",
+      "story": "US03",
+      "tasks": [
+        "PM-007",
+        "PM-014"
+      ],
+      "scenario": "Новый аккаунт создаёт своё B2B пространство и бота без ручного доступа к серверу.",
+      "status": "specified"
+    },
+    {
+      "id": "R04",
+      "requirement": "Уникальная регистрация и авторизация каждого бота",
+      "source": "Исходный запрос, пункт 4",
+      "story": "US03",
+      "tasks": [
+        "PM-004",
+        "PM-007"
+      ],
+      "scenario": "Два бота получают разные credentials; чужой ключ и повтор bootstrap запрещены; ротация/отзыв проверены.",
+      "status": "specified"
+    },
+    {
+      "id": "R05",
+      "requirement": "Любые HTTP-боты, включая Telegram-адаптер",
+      "source": "Q05",
+      "story": "US04",
+      "tasks": [
+        "PM-004",
+        "PM-011"
+      ],
+      "scenario": "Одинаковый SDK запускается рядом с API и отдельно; бот не читает БД приложения.",
+      "status": "specified"
+    },
+    {
+      "id": "R06",
+      "requirement": "POST текста, JSON и события",
+      "source": "Исходный запрос, API; Q08",
+      "story": "US04",
+      "tasks": [
+        "PM-004",
+        "PM-008"
+      ],
+      "scenario": "Отправить три типа сообщения; невалидный payload отклонён, повтор message_id не дублирует запись.",
+      "status": "specified"
+    },
+    {
+      "id": "R07",
+      "requirement": "GET входящих событий бота",
+      "source": "Исходный запрос, API",
+      "story": "US05",
+      "tasks": [
+        "PM-004",
+        "PM-010"
+      ],
+      "scenario": "Нажатие создаёт событие только нужному боту; GET не удаляет его; ACK/result и повтор доставки проверены.",
+      "status": "specified"
+    },
+    {
+      "id": "R08",
+      "requirement": "Новости, товары и графики",
+      "source": "Q02,Q08",
+      "story": "US01",
+      "tasks": [
+        "PM-009",
+        "PM-013"
+      ],
+      "scenario": "Два демо-бота дают news/product/chart; график использует числовую серию с единицами, не выдуманные значения из текста.",
+      "status": "specified"
+    },
+    {
+      "id": "R09",
+      "requirement": "B2B исходный интерфейс, публикация, ссылка",
+      "source": "Исходный запрос B2B",
+      "story": "US06",
+      "tasks": [
+        "PM-009",
+        "PM-014"
+      ],
+      "scenario": "Настроить блоки, preview/publish, открыть URL другим аккаунтом, откатить версию.",
+      "status": "specified"
+    },
+    {
+      "id": "R10",
+      "requirement": "Публичные и закрытые страницы",
+      "source": "Q07",
+      "story": "US07",
+      "tasks": [
+        "PM-006",
+        "PM-009",
+        "PM-023"
+      ],
+      "scenario": "Публичный preview доступен без входа как рабочее UX-решение; закрытая страница не раскрывает данные без grant; отзыв действует на API/live/cache.",
+      "status": "specified"
+    },
+    {
+      "id": "R11",
+      "requirement": "Избранное как контакты",
+      "source": "Исходный запрос B2C",
+      "story": "US08",
+      "tasks": [
+        "PM-015"
+      ],
+      "scenario": "Добавить канал дважды — одна запись; открыть со второго клиента; убрать избранное без удаления канала.",
+      "status": "specified"
+    },
+    {
+      "id": "R12",
+      "requirement": "Личная страница из разных источников",
+      "source": "Q10",
+      "story": "US09",
+      "tasks": [
+        "PM-016"
+      ],
+      "scenario": "Сохранить news и product из двух каналов, переставить блоки; после повторного входа layout совпадает.",
+      "status": "specified"
+    },
+    {
+      "id": "R13",
+      "requirement": "Настройка оформления и визуализации",
+      "source": "Q10",
+      "story": "US09",
+      "tasks": [
+        "PM-003",
+        "PM-016"
+      ],
+      "scenario": "Изменить theme/layout и line/bar/table представление числовой серии; неподходящие преобразования отклонены.",
+      "status": "specified"
+    },
+    {
+      "id": "R14",
+      "requirement": "Ссылка/код для друга без передачи доступа",
+      "source": "Q11",
+      "story": "US10",
+      "tasks": [
+        "PM-017"
+      ],
+      "scenario": "Импорт новым аккаунтом совпадает по layout, закрытый источник показывает Access required; в шаблоне нет данных и credentials.",
+      "status": "specified"
+    },
+    {
+      "id": "R15",
+      "requirement": "Buy как заявка боту, статус",
+      "source": "Q09",
+      "story": "US05",
+      "tasks": [
+        "PM-010",
+        "PM-013"
+      ],
+      "scenario": "Pending после приёма, confirmed/failed только после результата бота; двойное нажатие с тем же ключом не создаёт новую заявку; списаний нет.",
+      "status": "specified"
+    },
+    {
+      "id": "R16",
+      "requirement": "Быстрые обновления",
+      "source": "Q13",
+      "story": "US11",
+      "tasks": [
+        "PM-018",
+        "PM-022"
+      ],
+      "scenario": "Измерить время от durable приёма сообщения до отображения; проверить цель SLO-LIVE и resync после пропуска.",
+      "status": "specified"
+    },
+    {
+      "id": "R17",
+      "requirement": "Push по выбранным событиям",
+      "source": "Q13",
+      "story": "US11",
+      "tasks": [
+        "PM-018",
+        "PM-019"
+      ],
+      "scenario": "Разрешить выбранное событие, получить push при закрытом приложении; unselected/отозванный доступ уведомления не дают.",
+      "status": "specified"
+    },
+    {
+      "id": "R18",
+      "requirement": "Android news widget",
+      "source": "Q12",
+      "story": "US12",
+      "tasks": [
+        "PM-002",
+        "PM-020"
+      ],
+      "scenario": "Установить виджет на реальный launcher, выбрать канал, открыть новость; offline/logout/TTL не раскрывают просроченный приватный кеш.",
+      "status": "specified"
+    },
+    {
+      "id": "R19",
+      "requirement": "Android APK и Google Play",
+      "source": "Q03,Q15",
+      "story": "US13",
+      "tasks": [
+        "PM-019",
+        "PM-024"
+      ],
+      "scenario": "Установить APK на телефон; собрать AAB, проверить подпись; фактическая публикация Play отделена от наличия AAB.",
+      "status": "specified"
+    },
+    {
+      "id": "R20",
+      "requirement": "Web-клиент",
+      "source": "Q03",
+      "story": "US01",
+      "tasks": [
+        "PM-013",
+        "PM-024"
+      ],
+      "scenario": "Открыть сайт браузером на компьютере и пройти сценарии просмотра, заявки, My Space и импорта.",
+      "status": "specified"
+    },
+    {
+      "id": "R21",
+      "requirement": "Локальный пилот с переносимым Docker",
+      "source": "Уточнение 2026-10-21",
+      "story": "US13",
+      "tasks": [
+        "PM-005",
+        "PM-021",
+        "PM-024"
+      ],
+      "scenario": "Запуск на Windows с документированными prerequisites; Linux containers в Docker; сохранность после restart/backup restore; облако для пилота не требуется.",
+      "status": "specified"
+    },
+    {
+      "id": "R22",
+      "requirement": "Хранение реестра, схем и актуальных данных",
+      "source": "Исходный запрос backend",
+      "story": "US04",
+      "tasks": [
+        "PM-007",
+        "PM-008",
+        "PM-009"
+      ],
+      "scenario": "Остановить бота: клиент читает последний разрешённый snapshot с временем; рестарт API не теряет подтверждённые записи.",
+      "status": "specified"
+    },
+    {
+      "id": "R23",
+      "requirement": "Боты отдельно от платформы",
+      "source": "Исходный запрос, блок 3",
+      "story": "US04",
+      "tasks": [
+        "PM-005",
+        "PM-011"
+      ],
+      "scenario": "Остановить один demo-bot без остановки API/другого бота; интеграция только через API.",
+      "status": "specified"
+    },
+    {
+      "id": "R24",
+      "requirement": "Документация для разработчика и ИИ",
+      "source": "Исходный запрос, блок 5",
+      "story": "US14",
+      "tasks": [
+        "PM-004",
+        "PM-011"
+      ],
+      "scenario": "Валидные OpenAPI/JSON Schema и примеры позволяют пройти publish→GET→result по инструкции.",
+      "status": "specified"
+    },
+    {
+      "id": "R25",
+      "requirement": "100 ботов, 10 000 MAU, 1 000 msg/min",
+      "source": "Q14,Q17",
+      "story": "US15",
+      "tasks": [
+        "PM-001",
+        "PM-022"
+      ],
+      "scenario": "Запустить заданный нагрузочный профиль; MAU не подменяет concurrency; метрики связаны с описанным оборудованием.",
+      "status": "specified"
+    },
+    {
+      "id": "R26",
+      "requirement": "Максимум Python; прочие языки разрешены",
+      "source": "Q16",
+      "story": "US14",
+      "tasks": [
+        "PM-002"
+      ],
+      "scenario": "ADR сравнивает Python-клиент и альтернативу, фиксирует долю ответственности и причину native bridge.",
+      "status": "specified"
+    },
+    {
+      "id": "R27",
+      "requirement": "iOS позже",
+      "source": "Q03",
+      "story": "US16",
+      "tasks": [
+        "PM-025",
+        "PM-026"
+      ],
+      "scenario": "В пилоте не считать реализованным; сохранить совместимый API и последующие задачи iOS/widget.",
+      "status": "specified"
+    },
+    {
+      "id": "R28",
+      "requirement": "Windows-приложение позже",
+      "source": "Q03",
+      "story": "US16",
+      "tasks": [
+        "PM-027"
+      ],
+      "scenario": "Локальный запуск сайта на Windows не выдавать за отдельное desktop-приложение; задача остаётся после пилота.",
+      "status": "specified"
+    },
+    {
+      "id": "R29",
+      "requirement": "Журнал, задачи, проверки, презентации и вопросы",
+      "source": "Регламент пп.1–9",
+      "story": "US14",
+      "tasks": [
+        "PM-001",
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06",
+        "G07"
+      ],
+      "scenario": "Перед задачей читать регламент; результат/тесты в записке и issue; после каждых четырёх завершений презентация и >=10 отдельных вопросов.",
+      "status": "specified"
+    },
+    {
+      "id": "R30",
+      "requirement": "Google/Firebase проект создаёт владелец",
+      "source": "Ответ 2026-10-21",
+      "story": "US02",
+      "tasks": [
+        "PM-002",
+        "PM-006",
+        "PM-018"
+      ],
+      "scenario": "Предоставить инструкцию настройки; не выдавать тестовый аккаунт/имитацию за проверенный Google-вход или реальный push.",
+      "status": "specified"
+    }
+  ]
+}

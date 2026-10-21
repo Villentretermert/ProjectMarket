@@ -9,7 +9,7 @@
       "kind": "task",
       "priority": "P0",
       "stage": 1,
-      "status": "ready",
+      "status": "in_progress",
       "path": "docs/tasks/PM-001.md",
       "depends_on": []
     },
@@ -372,7 +372,7 @@
     },
     {
       "id": "PM-021",
-      "title": "[PM-021][P0] Production Docker и инструкция облачного запуска",
+      "title": "[PM-021][P0] Docker-поставка и инструкция локального запуска",
       "kind": "task",
       "priority": "P0",
       "stage": 6,

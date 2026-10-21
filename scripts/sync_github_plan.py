@@ -107,10 +107,17 @@ def main():
             item = matches[0]
             if item['title'] != entry['title'] or (item.get('body') or '').strip() != body.strip():
                 raise RuntimeError(f'{stable_id} differs from the local source.')
+            if entry['status'] == 'done' and item['state'] != 'closed':
+                raise RuntimeError(f'{stable_id} is done locally but still open remotely.')
         elif matches:
             item = matches[0]
-            if item['title'] != entry['title'] or (item.get('body') or '').strip() != body.strip():
-                item = client.call('PATCH', f'/issues/{item["number"]}', {'title': entry['title'], 'body': body})
+            needs_close = entry['status'] == 'done' and item['state'] != 'closed'
+            if item['title'] != entry['title'] or (item.get('body') or '').strip() != body.strip() or needs_close:
+                update = {'title': entry['title'], 'body': body}
+                # Only explicit local completion closes an issue; never silently reopen it.
+                if needs_close:
+                    update.update(state='closed', state_reason='completed')
+                item = client.call('PATCH', f'/issues/{item["number"]}', update)
                 changed += 1
                 time.sleep(1)
         else:
@@ -118,15 +125,15 @@ def main():
             remote.append(item)
             changed += 1
             time.sleep(1)
-        mapping[stable_id] = {'number': item['number'], 'url': item['html_url']}
+        mapping[stable_id] = {'number': item['number'], 'url': item['html_url'], 'state': item['state']}
         if arguments.sync:
             save_map(repository, mapping)
         print(f'{stable_id}: {item["html_url"]}', flush=True)
     if arguments.sync:
-        rows = ['# GitHub Issues', '', 'Все задачи опубликованы как открытые Issues. Открытая issue не означает завершённость или готовность к старту.', '', '| ID | GitHub | Тип |', '|---|---|---|']
+        rows = ['# GitHub Issues', '', 'Статусы ниже отражают последнюю синхронизацию. Открытая issue не означает готовность к старту; завершённые задачи закрываются после проверки.', '', '| ID | GitHub | Тип | План | GitHub |', '|---|---|---|---|---|']
         for entry in manifest['issues']:
             item = mapping[entry['id']]
-            rows.append(f'| {entry["id"]} | [#{item["number"]}]({item["url"]}) | {entry["kind"]} |')
+            rows.append(f'| {entry["id"]} | [#{item["number"]}]({item["url"]}) | {entry["kind"]} | {entry["status"]} | {item["state"]} |')
         rows += ['', 'Повторная синхронизация: `python scripts/sync_github_plan.py --sync`. Только проверка соответствия: `python scripts/sync_github_plan.py`.', '', 'Используется существующая локальная авторизация Git; скрипт не сохраняет и не выводит токен. Перед публикацией изменённого плана прочитать регламент и проверить Markdown.']
         (ROOT / 'docs/GITHUB_ISSUES.md').write_text('\n'.join(rows) + '\n', encoding='utf-8')
     print(json.dumps({'verified': len(mapping), 'changed': changed}), flush=True)
