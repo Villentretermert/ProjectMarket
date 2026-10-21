@@ -31,7 +31,7 @@
       "kind": "task",
       "priority": "P0",
       "stage": 1,
-      "status": "planned",
+      "status": "done",
       "path": "docs/tasks/PM-003.md",
       "depends_on": [
         "PM-001",

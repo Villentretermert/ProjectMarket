@@ -1,0 +1,82 @@
+{
+  "result": "PASS",
+  "checks": [
+    {
+      "foreground": "#213247",
+      "background": "#fff",
+      "ratio": 13.03,
+      "pass": true
+    },
+    {
+      "foreground": "#213247",
+      "background": "#f3f6fb",
+      "ratio": 12.03,
+      "pass": true
+    },
+    {
+      "foreground": "#53677f",
+      "background": "#fff",
+      "ratio": 5.81,
+      "pass": true
+    },
+    {
+      "foreground": "#53677f",
+      "background": "#f3f6fb",
+      "ratio": 5.36,
+      "pass": true
+    },
+    {
+      "foreground": "#fff",
+      "background": "#2468bc",
+      "ratio": 5.55,
+      "pass": true
+    },
+    {
+      "foreground": "#2468bc",
+      "background": "#eaf2fd",
+      "ratio": 4.92,
+      "pass": true
+    },
+    {
+      "foreground": "#1e7659",
+      "background": "#fff",
+      "ratio": 5.54,
+      "pass": true
+    },
+    {
+      "foreground": "#ab3030",
+      "background": "#fff",
+      "ratio": 6.57,
+      "pass": true
+    },
+    {
+      "foreground": "#213247",
+      "background": "#eaf0f8",
+      "ratio": 11.36,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "#253e60",
+      "background": "#dce5f3",
+      "ratio": 8.54,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "#825414",
+      "background": "#fff5df",
+      "ratio": 6.0,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "#a5630c",
+      "background": "#ffffff",
+      "ratio": 4.78,
+      "minimum": 3,
+      "pass": true
+    }
+  ],
+  "scope": "Static color pairs; browser keyboard/touch/layout checks are recorded separately."
+}
