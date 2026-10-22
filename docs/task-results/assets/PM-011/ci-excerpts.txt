@@ -1,0 +1,21 @@
+2026-10-22T18:40:14.3273053Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T18:40:14.7208111Z HTTP bot smoke passed: create, exchange, replay denied, identity, inventory, revoke
+2026-10-22T18:40:14.7208976Z HTTP identity smoke passed: register, session, business profile, CSRF, logout, deactivation
+2026-10-22T18:40:15.1864287Z HTTP channels PASS: selected default, draft isolation, publish, private access, rollback, delete
+2026-10-22T18:40:15.2025049Z ##[group]Run docker compose exec -T api python -c "import os, importlib.util; assert os.getuid() == 10001, 'runtime must be non-root'; assert not os.path.exists('/app/.env'), 'env file in image'; assert importlib.util.find_spec('pytest') is None, 'test framework in image'; assert importlib.util.find_spec('contracts') is not None, 'runtime schemas missing'; assert importlib.util.find_spec('contracts.reference_model') is None, 'reference model in runtime image'"
+2026-10-22T18:40:15.2026567Z [36;1mdocker compose exec -T api python -c "import os, importlib.util; assert os.getuid() == 10001, 'runtime must be non-root'; assert not os.path.exists('/app/.env'), 'env file in image'; assert importlib.util.find_spec('pytest') is None, 'test framework in image'; assert importlib.util.find_spec('contracts') is not None, 'runtime schemas missing'; assert importlib.util.find_spec('contracts.reference_model') is None, 'reference model in runtime image'"[0m
+2026-10-22T18:40:16.9028562Z HTTP actions before restart PASS: two requests, one pending and one ACKed
+2026-10-22T18:40:17.1582654Z HTTP smoke passed: live=200, ready=503, database=unavailable
+2026-10-22T18:40:17.6934649Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T18:40:19.4009359Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T18:40:19.7074567Z HTTP ingestion restart replay, conflict and revoked-key replay checks passed
+2026-10-22T18:40:20.0860611Z HTTP actions restart PASS: pending/ACK recovery, confirmed/failed, dedup, status
+2026-10-22T18:40:24.1087248Z {"result": "PASS", "mode": "python", "catalog_records": 4, "news_chart_records": 6, "outcomes": ["confirmed", "failed"], "restart_unchanged_data": true, "cross_bot_write_rejected": true, "private_anonymous_rejected": true}
+2026-10-22T18:40:31.3940444Z {"result": "PASS", "mode": "docker", "catalog_records": 4, "news_chart_records": 6, "outcomes": ["confirmed", "failed"], "restart_unchanged_data": true, "cross_bot_write_rejected": true, "private_anonymous_rejected": true}
+
+2026-10-22T18:40:32.7780054Z 48 passed, 69 deselected, 1 warning in 33.88s
+
+2026-10-22T18:39:43.2706005Z All checks passed!
+2026-10-22T18:39:53.8342731Z 69 passed, 48 deselected in 5.10s
+2026-10-22T18:39:55.0028655Z HTTP smoke passed: live=200, ready=503, database=not_configured
+2026-10-22T18:39:55.1369086Z {"result": "PASS", "requirements": 30, "stories": 16, "questions_covered": 17, "product_tests_run": false}
