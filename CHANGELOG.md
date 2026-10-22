@@ -192,3 +192,11 @@ Web /app/ включён в Python API/wheel/Docker: local login, каналы, 
 ## 2026-10-22 · PM-013 accepted / PM-014 started
 
 CI 39846617703 на 79a3f979: Ubuntu/Windows, PostgreSQL/Chromium и Docker PASS. 118 distinct Python/PG tests, 14 browser scenarios. Скриншоты пересняты после загрузки sidebar; повторный Edge PASS. PM-013 закрыта, счётчик 13/24, после G03 1/4. Начата PM-014 по разрешению полного блока.
+
+## 2026-10-22 · PM-014 · Studio implementation
+
+Добавлена миграция 006 и серверная матрица Owner/Admin/Editor: workspace membership, точный username, защита единственного владельца, изоляция workspace/cursors, немедленный отзыв после commit. Editor публикует/откатывает оформление; audience и grants ограничены Owner/Admin. Контракт 1.0.4 добавляет workspace/member/audience API без изменения wire 1.0. Studio подключает bots/keys/pages/team, preview/publication/rollback и expiry reminders. Проверки и приёмка выполняются; PM-014 ещё открыта.
+
+## 2026-10-22 · PM-014 · Local validation
+
+125 Python/PG/contract tests PASS (184.76s), 24 Edge UI scenarios PASS. Проверены конкурирующий отзыв, обе стадии заявки, новая сессия, audience draft vs published и все три роли. Исправлены переход после выдачи credential, доступные имена select и вертикальное размещение expiry banner. При 429 UI показывает Retry-After; обычные read quotas сохранены. Документация и реальные экраны сохранены; CI ещё ожидается.

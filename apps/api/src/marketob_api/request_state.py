@@ -71,6 +71,7 @@ def reconcile_access(connection: Connection, channel_id: str, *, disabled: bool 
         "JOIN users u ON u.user_id=r.user_id WHERE a.channel_id=r.channel_id "
         "AND u.deleted_at IS NULL AND a.deleted_at IS NULL AND a.published AND o.active "
         "AND (a.visibility='public' OR o.owner_user_id=u.user_id OR EXISTS "
+        "(SELECT 1 FROM memberships m WHERE m.org_id=o.org_id AND m.user_id=u.user_id) OR EXISTS "
         "(SELECT 1 FROM grants g WHERE g.channel_id=a.channel_id AND g.user_id=u.user_id)))) "
         "RETURNING r.*",
         (disabled, disabled, disabled, UNKNOWN, channel_id, disabled),

@@ -10,7 +10,8 @@ from fastapi import Request
 
 from marketob_api.database import Connection
 from marketob_api.errors import ApiError
-from marketob_api.identity import digest, identifier, require_business
+from marketob_api.identity import digest, identifier
+from marketob_api.workspace_access import MANAGERS, workspace
 
 SCOPES = ("messages:write", "events:read", "events:ack", "events:result")
 
@@ -22,14 +23,19 @@ def bearer(request: Request, prefix: str) -> str:
     return value[7:]
 
 
-def owned_bot(connection: Connection, bot_id: str, user_id: str) -> dict[str, Any]:
-    org_id = require_business(connection, user_id)
+def owned_bot(
+    connection: Connection, bot_id: str, user_id: str, roles: tuple[str, ...] = MANAGERS
+) -> dict[str, Any]:
+    candidate = connection.execute("SELECT org_id FROM bots WHERE bot_id=%s", (bot_id,)).fetchone()
+    if candidate is None:
+        raise ApiError(404, "object_not_found", "The bot is unavailable.")
+    org = workspace(connection, candidate["org_id"], user_id, roles)
     row = connection.execute(
-        "SELECT * FROM bots WHERE bot_id=%s AND org_id=%s FOR UPDATE", (bot_id, org_id)
+        "SELECT * FROM bots WHERE bot_id=%s AND org_id=%s FOR UPDATE", (bot_id, org["org_id"])
     ).fetchone()
     if row is None:
         raise ApiError(404, "object_not_found", "The bot is unavailable.")
-    return row
+    return {**row, "role": org["role"]}
 
 
 def bot_metadata(row: dict[str, Any]) -> dict[str, Any]:

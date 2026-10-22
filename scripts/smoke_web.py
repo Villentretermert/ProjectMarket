@@ -36,6 +36,14 @@ def main() -> None:
         for kind in ("catalog", "news"):
             run_bot(kind, state, "python", True)
         publish(owner, channels)
+        lab.query(
+            "UPDATE bot_keys SET expires_at=now()+interval '6 days' WHERE bot_id=%s",
+            (channels["catalog"]["bot_id"],),
+        )
+        lab.query(
+            "UPDATE bot_keys SET expires_at=now()-interval '1 day' WHERE bot_id=%s",
+            (channels["news"]["bot_id"],),
+        )
         log = (lab.directory / "catalog.log").open("ab")
         lab.logs.append(log)
         lab.processes["catalog"] = subprocess.Popen(

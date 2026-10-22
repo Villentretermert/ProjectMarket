@@ -236,7 +236,8 @@ def test_owner_reader_and_anonymous_access_are_distinct(settings: Settings) -> N
         private = channel(settings, org)
         public = channel(settings, org, "public")
         endpoint = f"/v1/owner/channels/{private}/grants/{reader}"
-        assert bob.put(endpoint, json={}).status_code == 403
+        # Nonmembers get the same object-denial before and after owning another workspace.
+        assert bob.put(endpoint, json={}).status_code == 404
         business(bob)
         assert bob.put(endpoint, json={}).status_code == 404
         assert alice.put(endpoint, json={}).status_code == 204

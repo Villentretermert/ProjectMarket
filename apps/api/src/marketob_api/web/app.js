@@ -69,8 +69,7 @@ routes.set('channels', async () => {
       el('section', {class:'panel'}, el('h2', {},'Published channels'),
         channels.length ? channels.map(channelLink) : message('No channels here yet. Open a link shared by a publisher.'))));
 });
-routes.set('studio', async()=>el('div', {}, heading('Studio','Publish useful spaces powered by your bots.'),
-  el('section',{class:'empty'},el('h2',{},'Studio is being connected'),message('Bot and page management will be available in the next task.'))));
+routes.set('studio', async parts => (await import('./studio.js')).studio(parts,{refresh,navigate}));
 routes.set('channel', async parts => {
   const slug=parts[1];
   if (!/^[a-z0-9-]{3,80}$/.test(slug || '')) throw new Error('Invalid channel link.');

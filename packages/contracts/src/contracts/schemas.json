@@ -2343,6 +2343,174 @@
       ],
       "additionalProperties": false
     },
+    "Workspace": {
+      "type": "object",
+      "description": "One immutable owner; members can belong to several workspaces.",
+      "properties": {
+        "org_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Opaque stable identifier; never a credential.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Workspace name."
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "owner",
+            "admin",
+            "editor"
+          ],
+          "description": "Current server-derived role."
+        }
+      },
+      "required": [
+        "org_id",
+        "name",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "WorkspaceMember": {
+      "type": "object",
+      "description": "Registered local account in this workspace.",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Opaque stable identifier; never a credential.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "username": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "description": "Unique local username.",
+          "pattern": "^[a-z0-9_-]+$"
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "User-selected public display name."
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "owner",
+            "admin",
+            "editor"
+          ],
+          "description": "Workspace role."
+        }
+      },
+      "required": [
+        "user_id",
+        "username",
+        "display_name",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "MemberWrite": {
+      "type": "object",
+      "description": "Add or change a member by exact registered username; Owner only.",
+      "properties": {
+        "username": {
+          "$ref": "#/$defs/UserUsername"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "admin",
+            "editor"
+          ],
+          "description": "Owner-assigned role; ownership transfer is not supported."
+        }
+      },
+      "required": [
+        "username",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "WorkspaceList": {
+      "type": "object",
+      "description": "Caller-scoped list with limit/cursor pagination.",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Workspace"
+          },
+          "minItems": 0,
+          "maxItems": 100,
+          "uniqueItems": false,
+          "description": "Bounded list page."
+        },
+        "next_cursor": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Null at the end of the stable scan."
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "WorkspaceMemberList": {
+      "type": "object",
+      "description": "Caller-scoped list with limit/cursor pagination.",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkspaceMember"
+          },
+          "minItems": 0,
+          "maxItems": 100,
+          "uniqueItems": false,
+          "description": "Bounded list page."
+        },
+        "next_cursor": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Null at the end of the stable scan."
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
     "BotList": {
       "type": "object",
       "description": "Caller-scoped list with limit/cursor pagination.",
@@ -2621,6 +2789,41 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/Grant"
+          },
+          "minItems": 0,
+          "maxItems": 100,
+          "uniqueItems": false,
+          "description": "Bounded list page."
+        },
+        "next_cursor": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Null at the end of the stable scan."
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "UserList": {
+      "type": "object",
+      "description": "Caller-scoped list with limit/cursor pagination.",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/User"
           },
           "minItems": 0,
           "maxItems": 100,

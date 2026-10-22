@@ -15,6 +15,7 @@ from marketob_api.errors import ApiError
 from marketob_api.identity import authenticate, digest, identifier
 from marketob_api.payloads import validate_payload
 from marketob_api.quotas import ingestion_quota
+from marketob_api.workspace_access import EDITORS, audience_guard
 
 
 def receipt(row: dict[str, Any]) -> dict[str, Any]:
@@ -34,7 +35,8 @@ def router(settings: Settings) -> APIRouter:
         body = {"visibility": "selected", **body}
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            bot = owned_bot(connection, body["bot_id"], current.user_id)
+            bot = owned_bot(connection, body["bot_id"], current.user_id, EDITORS)
+            audience_guard(bot, body["visibility"], "selected")
             if bot["state"] == "revoked":
                 raise ApiError(409, "bot_revoked", "Create a channel for a live bot.")
             channel_id = identifier("ch")

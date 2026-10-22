@@ -1,6 +1,6 @@
 # MarkeTOB API 1.0 — normative local pilot contract
 
-**PM-004 specification with additive PM-009 revision 1.0.3.** Health, identity, bot registration, ingestion and channel publication/snapshots are implemented; request/GET/ACK/result delivery is also implemented; personal client operations remain scheduled in PM-013–018. See [implemented channel API](CHANNELS.md) and [actions API](ACTIONS.md). The executable reference model checks protocol examples only; it does not prove durability, concurrent transactions, HTTP authentication or load capacity. All example content is synthetic. The contract is independent of Telegram.
+**PM-004 specification with additive PM-014 revision 1.0.4.** Health, identity, bot registration, ingestion and channel publication/snapshots are implemented; request/GET/ACK/result delivery is also implemented; personal client operations remain scheduled in PM-013–018. See [implemented channel API](CHANNELS.md) and [actions API](ACTIONS.md). The executable reference model checks protocol examples only; it does not prove durability, concurrent transactions, HTTP authentication or load capacity. All example content is synthetic. The contract is independent of Telegram.
 
 Machine-readable sources: [OpenAPI 3.1.1](../../packages/contracts/src/contracts/openapi.json), [JSON Schema 2020-12 bundle](../../packages/contracts/src/contracts/schemas.json), [Python generator](../../packages/contracts/src/contracts/build_contract.py), [valid/invalid examples](../../packages/contracts/src/contracts/examples/cases.json). `$defs` names identify the validation target. `required`, numeric/string/array bounds, descriptions and `additionalProperties: false` define each field. Unknown fields are rejected, not silently executed or retained. [Quickstart](QUICKSTART.md) walks through the complete lifecycle.
 
@@ -97,3 +97,7 @@ See [IDENTITY.md](IDENTITY.md) for implemented local sessions, personal business
 Bot registration implementation and issuance-only secret policy: [BOT_REGISTRATION.md](BOT_REGISTRATION.md).
 
 Implemented ingestion, retention worker and runtime boundaries: [INGESTION.md](INGESTION.md). Valid Unicode is required; NUL text is rejected before PostgreSQL storage.
+
+## Workspace roles (PM-014)
+
+See [workspace API](TEAMS.md). Management resources now use current Owner/Admin/Editor membership. Nonmembers receive generic 404 on resource routes, even without a personal business profile. Personal workspace defaults remain backward compatible when X-Workspace-ID is omitted. Bot wire schema_version stays 1.0.

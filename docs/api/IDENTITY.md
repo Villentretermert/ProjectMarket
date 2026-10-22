@@ -1,9 +1,9 @@
 # Local identity API — PM-006
 
 The pilot uses local accounts without Google, email or Firebase. The accepted
-protocol is extended additively as **1.0.1**: the existing wire `schema_version`
+protocol is extended additively as **1.0.4**: the existing wire `schema_version`
 remains `1.0`. Runtime `/openapi.json` lists implemented operations; the complete
-planned contract remains in `packages/contracts` (67 schemas / 48 operations).
+planned contract remains in `packages/contracts` (80 schemas / 59 operations).
 
 ## Registration and sessions
 
@@ -42,14 +42,14 @@ Both organization identity and membership come from the server. There is one
 personal owner organization per account; arbitrary `org_id`, `user_id` or `role`
 input is rejected. The same account can consume other sources as B2C.
 
-The pilot has no shared organization/team invitation flow. Owner membership is
-created with the workspace, never granted by a read invitation. Email invitations,
+[Workspace teams](TEAMS.md) use Owner/Admin/Editor and exact registered usernames.
+Owner membership is created with the workspace, never granted by a read invitation. Email invitations,
 email recovery and password reset delivery are deferred; no unconfigured SMTP or
 hidden Google dependency exists. Do not use a shared demo password for real users.
 
 ## Selected-user access
 
-A signed-in B2B owner can resolve an exact username using
+A signed-in B2B Owner/Admin can resolve an exact username using
 `GET /v1/users/by-username/{username}`. Only public `User` metadata is returned;
 deleted accounts are unavailable. There is no unauthenticated user directory.
 

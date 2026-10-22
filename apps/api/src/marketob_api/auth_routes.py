@@ -25,6 +25,7 @@ from marketob_api.identity import (
     verify_password,
 )
 from marketob_api.request_state import reconcile_access, reconcile_user
+from marketob_api.workspace_access import MANAGERS
 
 
 class ClosedModel(BaseModel):
@@ -212,7 +213,7 @@ def router(settings: Settings) -> APIRouter:
     def lookup_user(username: str, request: Request) -> dict[str, str]:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            require_business(connection, current.user_id)
+            require_business(connection, current.user_id, request.headers.get("x-workspace-id"))
             row = connection.execute(
                 "SELECT user_id,username,display_name FROM users "
                 "WHERE username=%s AND deleted_at IS NULL",
@@ -226,16 +227,15 @@ def router(settings: Settings) -> APIRouter:
     def grant(channel_id: str, user_id: str, body: Empty, request: Request) -> None:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            require_business(connection, current.user_id)
             # Deactivation locks the target user before their pending request channels.
             # Check the user first so granting does not invert that lock order.
             user = connection.execute(
                 "SELECT 1 FROM users WHERE user_id=%s AND deleted_at IS NULL FOR SHARE",
                 (user_id,),
             ).fetchone()
+            require_owner(connection, channel_id, current.user_id, roles=MANAGERS)
             if user is None:
                 raise ApiError(404, "object_not_found", "The registered user is unavailable.")
-            require_owner(connection, channel_id, current.user_id)
             connection.execute(
                 "INSERT INTO grants(channel_id,user_id) VALUES (%s,%s) ON CONFLICT DO NOTHING",
                 (channel_id, user_id),
@@ -245,7 +245,7 @@ def router(settings: Settings) -> APIRouter:
     def revoke_grant(channel_id: str, user_id: str, request: Request) -> None:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            require_owner(connection, channel_id, current.user_id)
+            require_owner(connection, channel_id, current.user_id, roles=MANAGERS)
             removed = connection.execute(
                 "DELETE FROM grants WHERE channel_id=%s AND user_id=%s RETURNING user_id",
                 (channel_id, user_id),
@@ -258,6 +258,7 @@ def router(settings: Settings) -> APIRouter:
                     (channel_id, user_id),
                 )
 
+    @api.get("/owner/channels/{channel_id}/audience")
     @api.get("/owner/channels/{channel_id}/grants")
     def list_grants(
         channel_id: str,
@@ -267,8 +268,11 @@ def router(settings: Settings) -> APIRouter:
     ) -> dict[str, Any]:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            require_owner(connection, channel_id, current.user_id)
-            binding = session_binding(current.token, "grants:" + channel_id)
+            require_owner(connection, channel_id, current.user_id, roles=MANAGERS)
+            profiles = request.url.path.endswith("/audience")
+            binding = session_binding(
+                current.token, ("audience:" if profiles else "grants:") + channel_id
+            )
             if cursor:
                 scan = decode_scan(connection, binding, cursor)
             else:
@@ -288,8 +292,20 @@ def router(settings: Settings) -> APIRouter:
                 next_cursor = encode_scan(
                     connection, binding, Scan(scan.upper, rows[limit - 1]["sequence"], scan.expires)
                 )
+            items = []
+            for row in rows[:limit]:
+                if profiles:
+                    user = connection.execute(
+                        "SELECT user_id,username,display_name FROM users WHERE user_id=%s "
+                        "AND deleted_at IS NULL",
+                        (row["user_id"],),
+                    ).fetchone()
+                    if user:
+                        items.append(user)
+                else:
+                    items.append({"user_id": row["user_id"]})
             return {
-                "items": [{"user_id": row["user_id"]} for row in rows[:limit]],
+                "items": items,
                 "next_cursor": next_cursor,
             }
 

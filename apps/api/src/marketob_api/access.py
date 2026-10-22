@@ -4,21 +4,31 @@ from typing import Any
 
 from marketob_api.database import Connection
 from marketob_api.errors import ApiError
-from marketob_api.identity import require_business
+from marketob_api.workspace_access import EDITORS, workspace
 
 
 def require_owner(
-    connection: Connection, channel_id: str, user_id: str, *, include_deleted: bool = False
+    connection: Connection,
+    channel_id: str,
+    user_id: str,
+    *,
+    include_deleted: bool = False,
+    roles: tuple[str, ...] = EDITORS,
 ) -> dict[str, Any]:
-    organization = require_business(connection, user_id)
+    candidate = connection.execute(
+        "SELECT org_id FROM channel_access WHERE channel_id=%s", (channel_id,)
+    ).fetchone()
+    if candidate is None:
+        raise ApiError(404, "object_not_found", "The requested object is unavailable.")
+    organization = workspace(connection, candidate["org_id"], user_id, roles)
     row = connection.execute(
         "SELECT * FROM channel_access WHERE channel_id=%s AND org_id=%s "
         "AND (%s OR deleted_at IS NULL) FOR UPDATE",
-        (channel_id, organization, include_deleted),
+        (channel_id, organization["org_id"], include_deleted),
     ).fetchone()
     if row is None:
         raise ApiError(404, "object_not_found", "The requested object is unavailable.")
-    return row
+    return {**row, "role": organization["role"]}
 
 
 def require_read(
@@ -41,6 +51,14 @@ def require_read(
     if row is not None:
         row["owner_user_id"] = organization["owner_user_id"]
         allowed = row["visibility"] == "public" or row["owner_user_id"] == user_id
+        if not allowed and user_id is not None:
+            allowed = (
+                connection.execute(
+                    "SELECT 1 FROM memberships WHERE org_id=%s AND user_id=%s",
+                    (row["org_id"], user_id),
+                ).fetchone()
+                is not None
+            )
         if not allowed and user_id is not None:
             allowed = (
                 connection.execute(

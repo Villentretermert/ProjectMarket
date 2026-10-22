@@ -18,6 +18,7 @@ from marketob_api.errors import ApiError
 from marketob_api.identity import COOKIE, authenticate, digest, rate_limit, require_business
 from marketob_api.payloads import validate_payload
 from marketob_api.request_state import reconcile_access
+from marketob_api.workspace_access import EDITORS, MANAGERS, audience_guard
 
 Limit = Annotated[int, Query(ge=1, le=100)]
 Cursor = Annotated[str | None, Query(max_length=1024)]
@@ -147,6 +148,7 @@ def save_draft(connection: Connection, channel_id: str, value: dict[str, Any]) -
 def publish(
     connection: Connection, access: dict[str, Any], row: dict[str, Any], value: dict[str, Any]
 ) -> dict[str, Any]:
+    audience_guard(access, value["visibility"], access["visibility"])
     validate_bindings(connection, access["channel_id"], value, publishing=True)
     bot = connection.execute(
         "SELECT state FROM bots WHERE bot_id=%s", (access["bot_id"],)
@@ -251,6 +253,7 @@ def router(settings: Settings) -> APIRouter:
             if body["layout"]["template_version"] != body["expected_template_version"] + 1:
                 raise ApiError(409, "template_conflict", "Increment the template version by one.")
             value = {key: body[key] for key in ("title", "visibility", "layout", "actions")}
+            audience_guard(access, value["visibility"], row["draft_visibility"])
             validate_bindings(connection, channel_id, value, publishing=False)
             save_draft(connection, channel_id, value)
             return channel_view(access, row, value)
@@ -281,6 +284,7 @@ def router(settings: Settings) -> APIRouter:
             if old is None:
                 raise ApiError(404, "version_unavailable", "Choose a previously published version.")
             value = deepcopy(old["definition"])
+            audience_guard(access, value["visibility"], row["draft_visibility"])
             value["layout"]["template_version"] = row["layout"]["template_version"] + 1
             validate_payload(
                 "ChannelDraft",
@@ -366,8 +370,10 @@ def router(settings: Settings) -> APIRouter:
     ) -> dict[str, Any]:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            org_id = require_business(connection, current.user_id)
-            binding = session_binding(current.token, "channels")
+            org_id = require_business(
+                connection, current.user_id, request.headers.get("x-workspace-id"), EDITORS
+            )
+            binding = session_binding(current.token, "channels:" + org_id)
             maximum = connection.execute(
                 "SELECT coalesce(max(sequence),0) AS upper FROM channel_content"
             ).fetchone()
@@ -400,7 +406,9 @@ def router(settings: Settings) -> APIRouter:
     def delete_channel(channel_id: str, request: Request) -> None:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            access = require_owner(connection, channel_id, current.user_id, include_deleted=True)
+            access = require_owner(
+                connection, channel_id, current.user_id, include_deleted=True, roles=MANAGERS
+            )
             if access["deleted_at"] is not None:
                 return
             connection.execute(

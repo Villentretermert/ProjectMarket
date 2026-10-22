@@ -17,6 +17,7 @@ from fastapi import Request, Response
 from marketob_api.config import Settings
 from marketob_api.database import Connection, Database
 from marketob_api.errors import ApiError
+from marketob_api.workspace_access import MANAGERS, workspace
 
 HASHER = PasswordHasher()
 # Nonexistent accounts still pay the password verification cost.
@@ -128,7 +129,14 @@ def new_session(
     return Identity(**user, expires_at=row["expires_at"], origin=origin, token=token)
 
 
-def require_business(connection: Connection, user_id: str) -> str:
+def require_business(
+    connection: Connection,
+    user_id: str,
+    org_id: str | None = None,
+    roles: tuple[str, ...] = MANAGERS,
+) -> str:
+    if org_id is not None:
+        return str(workspace(connection, org_id, user_id, roles)["org_id"])
     row = connection.execute(
         "SELECT o.org_id FROM organizations o JOIN memberships m USING(org_id) "
         "WHERE o.owner_user_id=%s AND m.user_id=%s AND m.role='owner' AND o.active "

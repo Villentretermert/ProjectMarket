@@ -25,6 +25,7 @@ from marketob_api.database import Connection, Database
 from marketob_api.errors import ApiError
 from marketob_api.identity import authenticate, digest, identifier, rate_limit, require_business
 from marketob_api.request_state import reconcile_access
+from marketob_api.workspace_access import EDITORS
 
 
 class BotCreate(ClosedModel):
@@ -100,7 +101,9 @@ def router(settings: Settings) -> APIRouter:
     def create_bot(body: BotCreate, request: Request) -> dict[str, Any]:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            org_id = require_business(connection, current.user_id)
+            org_id = require_business(
+                connection, current.user_id, request.headers.get("x-workspace-id")
+            )
             row = connection.execute(
                 "INSERT INTO bots(bot_id,org_id,name) VALUES (%s,%s,%s) RETURNING *",
                 (identifier("bot"), org_id, body.name),
@@ -116,13 +119,15 @@ def router(settings: Settings) -> APIRouter:
     ) -> dict[str, Any]:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            org_id = require_business(connection, current.user_id)
+            org_id = require_business(
+                connection, current.user_id, request.headers.get("x-workspace-id"), EDITORS
+            )
             return inventory(
                 connection,
                 "bots",
                 "org_id",
                 org_id,
-                session_binding(current.token, "bots"),
+                session_binding(current.token, "bots:" + org_id),
                 cursor,
                 limit,
             )
@@ -131,7 +136,7 @@ def router(settings: Settings) -> APIRouter:
     def read_bot(bot_id: str, request: Request) -> dict[str, Any]:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            bot = owned_bot(connection, bot_id, current.user_id)
+            bot = owned_bot(connection, bot_id, current.user_id, EDITORS)
             return {
                 **bot_metadata(bot),
                 "last_seen": bot["last_seen"].astimezone(UTC) if bot["last_seen"] else None,

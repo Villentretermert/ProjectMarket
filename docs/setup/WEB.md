@@ -9,8 +9,8 @@ is a different session origin. On a custom port configure `MARKETOB_ALLOWED_ORIG
 Create a local account in the browser, or sign in with the account used to
 [provision the two pilot bots](PILOT_BOTS.md). Passwords require 12–128 characters;
 usernames use lowercase letters, digits, underscores and hyphens. No cloud account
-is required. After login, My Space opens. During PM-013 its editor and Studio are
-explicit placeholders; PM-014–016 connect them to persistent APIs.
+is required. After login, My Space opens. [Studio](STUDIO.md) now manages real
+workspaces/bots/pages/team; the personal editor is connected in PM-016.
 
 Open Channels to see your published pages or paste a shared channel link/slug.
 The URL format is `/app/#/channel/<slug>`. Selected-user pages require a session

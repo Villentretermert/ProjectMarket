@@ -118,6 +118,9 @@ def collection(name):
     return cname
 
 
+define('Workspace', {'org_id':ID,'name':text('Workspace name.',80),'role':enum('Current server-derived role.','owner','admin','editor')}, 'One immutable owner; members can belong to several workspaces.')
+define('WorkspaceMember', {**SCHEMAS['User']['properties'],'role':enum('Workspace role.','owner','admin','editor')}, 'Registered local account in this workspace.')
+define('MemberWrite', {'username':ref('UserUsername'),'role':enum('Owner-assigned role; ownership transfer is not supported.','admin','editor')}, 'Add or change a member by exact registered username; Owner only.')
 PATHS={}
 def endpoint(method,path,operation,description,request=None,response=None,status=200,auth="UserSession",scope=None,listing=False,params=()):
     parameters=[]
@@ -147,6 +150,10 @@ endpoint('post','/v1/auth/login','login','Create a revocable local session; vali
 endpoint('get','/v1/auth/session','session','Read the current session and CSRF token.',response='Session')
 endpoint('delete','/v1/auth/session','logout','Revoke current session and clear cookie.',status=204)
 endpoint('get','/v1/account/business-profile','readBusinessProfile','Read your own B2B organization; no arbitrary tenant parameter.',response='BusinessProfile')
+endpoint('get','/v1/workspaces','listWorkspaces','List active workspaces of the current account.',response=collection('Workspace'),listing=True)
+endpoint('get','/v1/workspaces/{org_id}/members','listWorkspaceMembers','List members; any current workspace member may read.',response=collection('WorkspaceMember'),listing=True)
+endpoint('put','/v1/workspaces/{org_id}/members','setWorkspaceMember','Owner adds or changes Admin/Editor by exact username.','MemberWrite','WorkspaceMember')
+endpoint('delete','/v1/workspaces/{org_id}/members/{user_id}','removeWorkspaceMember','Owner revokes membership; independent public/read grants remain valid. The owner cannot be removed.',status=204)
 endpoint('put','/v1/account/business-profile','enableBusinessProfile','Enable or rename a personal B2B organization; owner membership is server-assigned.','BusinessProfileWrite','BusinessProfile')
 endpoint('delete','/v1/account','deactivateAccount','Re-authenticate, revoke sessions, disable owned sources and remove memberships/grants. Username remains reserved.','ConfirmPassword',status=204)
 endpoint('get','/v1/users/by-username/{username}','lookupRegisteredUser','Exact username lookup for a signed-in B2B owner; returns only public profile metadata.',response='User')
@@ -177,6 +184,7 @@ endpoint('get','/v1/owner/channels/{channel_id}/resources','listChannelResources
 endpoint('post','/v1/owner/channels/{channel_id}/rollback','rollbackChannel','Publish a validated copy of a formerly published definition as a new version.','Rollback','Channel')
 endpoint('delete','/v1/owner/channels/{channel_id}','deleteChannel','Unpublish immediately; revoke access and retain revision tombstones.',status=204)
 endpoint('get','/v1/owner/channels/{channel_id}/grants','listGrants','List selected-member read grants.',response=collection('Grant'),listing=True)
+endpoint('get','/v1/owner/channels/{channel_id}/audience','listAudience','Owner/Admin list public profiles of explicitly granted readers; no credentials.',response=collection('User'),listing=True)
 endpoint('put','/v1/owner/channels/{channel_id}/grants/{user_id}','grantRead','Grant read access to an existing user; does not transfer ownership.',EMPTY,status=204)
 endpoint('delete','/v1/owner/channels/{channel_id}/grants/{user_id}','revokeRead','Revoke read access and emit invalidation; recheck pending actions.',status=204)
 endpoint('get','/v1/channels/{slug}','readChannel','Read a public or explicitly granted published snapshot.',response='Snapshot',auth=None)
@@ -210,6 +218,10 @@ for session_path, method, code in (('/v1/auth/register','post','201'),('/v1/auth
         'description':'Set or expire marketob_session; HttpOnly; SameSite=Strict; Path=/; Secure except loopback HTTP. See protocol.'}
 
 
+for workspace_path, workspace_method in (('/v1/bots','get'),('/v1/bots','post'),('/v1/owner/channels','get'),('/v1/users/by-username/{username}','get')):
+    PATHS[workspace_path][workspace_method]['parameters'].append({'name':'X-Workspace-ID','in':'header','required':False,'schema':ID,'description':'Select a current workspace membership. Omission uses your personal owner workspace. Never grants access; IDs in resource routes independently resolve and verify their workspace.'})
+
+
 def replace_refs(value):
     if isinstance(value,dict):
         return {k:(v.replace('#/$defs/','#/components/schemas/') if k=='$ref' else replace_refs(v)) for k,v in value.items()}
@@ -219,7 +231,7 @@ def replace_refs(value):
 
 def artifacts():
     bundle={"$schema":"https://json-schema.org/draft/2020-12/schema", "$id":"urn:marketob:contract:1.0", "$defs":SCHEMAS}
-    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.3","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
+    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.4","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
     return {"schemas.json":bundle,"openapi.json":replace_refs(spec)}
 
 

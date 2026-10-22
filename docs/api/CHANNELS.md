@@ -1,7 +1,8 @@
 # Implemented channel publication API
 
-PM-009 · local Python/FastAPI and PostgreSQL · contract revision 1.0.3.
-This is an API workflow. The Web prototype is not connected yet (PM-013).
+PM-009/014 · local Python/FastAPI and PostgreSQL · contract revision 1.0.4.
+The working [Web Studio](../setup/STUDIO.md) exposes this workflow. Current
+[workspace roles](TEAMS.md) govern management calls; Editors cannot change audience.
 
 ## Owner workflow
 
@@ -21,7 +22,7 @@ mutations. The bot operational key cannot edit or publish a layout.
    again and atomically publishes the draft. Empty layouts are valid, including
    data_revision=0 before the first message. Publishing requires an active bot.
 7. `GET /v1/channels/{slug}` returns the published snapshot. Public channels allow
-   anonymous reads; selected channels allow their owner and explicitly granted
+   anonymous reads; selected channels allow current workspace members and explicitly granted
    users. A draft change does not change live title, visibility, blocks or actions.
 
 Example draft replacement (replace ch_assigned with the actual ID):

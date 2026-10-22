@@ -36,7 +36,16 @@ def test_web_assets_are_packaged_no_store_and_constrained() -> None:
         assert 'lang="en"' in page.text
         assert "frame-ancestors 'none'" in page.headers["content-security-policy"]
         assert page.headers["cache-control"] == "no-store"
-        for asset in ("app.js", "api.js", "dom.js", "actions.js", "render.js", "styles.css"):
+        for asset in (
+            "app.js",
+            "api.js",
+            "dom.js",
+            "actions.js",
+            "render.js",
+            "styles.css",
+            "studio.js",
+            "studio-editor.js",
+        ):
             result = http.get("/app/" + asset)
             assert result.status_code == 200
             assert result.headers["x-content-type-options"] == "nosniff"

@@ -12,6 +12,7 @@ from marketob_api.config import Settings
 from marketob_api.errors import install_error_handlers
 from marketob_api.health import LiveStatus, ReadyStatus, database_status
 from marketob_api.ingestion import router as ingestion_router
+from marketob_api.teams import router as team_router
 from marketob_api.transport import ProtocolMiddleware
 from marketob_api.web_routes import router as web_router
 
@@ -41,6 +42,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "Authorization",
             "Idempotency-Key",
             "If-None-Match",
+            "X-Workspace-ID",
         ],
         expose_headers=["ETag", "X-Request-ID", "Retry-After"],
     )
@@ -50,6 +52,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(channel_router(configuration))
     application.include_router(action_router(configuration))
     application.include_router(web_router())
+    application.include_router(team_router(configuration))
 
     @application.get("/", include_in_schema=False)
     def index() -> dict[str, str]:
