@@ -1,0 +1,43 @@
+# Opt in explicitly; bot credentials and journals are separate from the platform DB.
+services:
+  catalog-bot:
+    profiles: [demo-bots]
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.bot
+    env_file: ${MARKETOB_CATALOG_ENV_FILE:-.local/pilot/catalog.env}
+    environment:
+      MARKETOB_API_URL: http://api:8000
+      MARKETOB_ALLOW_CONTAINER_HTTP: '1'
+      MARKETOB_STATE_PATH: /data/catalog.sqlite3
+    volumes:
+      - catalog_state:/data
+    command: [python, -m, marketob_bots.catalog]
+    init: true
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  news-bot:
+    profiles: [demo-bots]
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.bot
+    env_file: ${MARKETOB_NEWS_ENV_FILE:-.local/pilot/news.env}
+    environment:
+      MARKETOB_API_URL: http://api:8000
+      MARKETOB_ALLOW_CONTAINER_HTTP: '1'
+      MARKETOB_STATE_PATH: /data/news.sqlite3
+    volumes:
+      - news_state:/data
+    command: [python, -m, marketob_bots.news]
+    init: true
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+volumes:
+  catalog_state:
+    name: ${MARKETOB_CATALOG_STATE_VOLUME:-marketob_catalog_state}
+  news_state:
+    name: ${MARKETOB_NEWS_STATE_VOLUME:-marketob_news_state}

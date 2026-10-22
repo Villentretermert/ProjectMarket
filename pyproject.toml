@@ -8,6 +8,8 @@ dependencies = []
 dev = [
   "marketob-api",
   "marketob-contracts",
+  "marketob-bot-sdk",
+  "marketob-demo-bots",
   "httpx2==2.16.0",
   "mypy==2.4.0",
   "openapi-spec-validator==0.9.0",
@@ -20,11 +22,13 @@ package = false
 required-version = "==0.13.5"
 
 [tool.uv.workspace]
-members = ["apps/api", "packages/contracts"]
+members = ["apps/api", "packages/contracts", "packages/bot-sdk", "bots/pilot"]
 
 [tool.uv.sources]
 marketob-api = { workspace = true }
 marketob-contracts = { workspace = true }
+marketob-bot-sdk = { workspace = true }
+marketob-demo-bots = { workspace = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "packages/contracts/tests"]
@@ -35,7 +39,7 @@ markers = ["integration: requires an explicitly configured PostgreSQL test datab
 [tool.ruff]
 target-version = "py314"
 line-length = 100
-include = ["apps/api/**/*.py", "tests/**/*.py", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_*.py", "bots/examples/*.py"]
+include = ["apps/api/**/*.py", "tests/**/*.py", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_*.py", "scripts/pilot_bots.py", "bots/examples/*.py", "packages/bot-sdk/**/*.py", "bots/pilot/**/*.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
@@ -44,4 +48,4 @@ select = ["E", "F", "I", "UP", "B"]
 python_version = "3.14"
 plugins = ["pydantic.mypy"]
 strict = true
-files = ["apps/api/src", "tests", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "scripts/smoke_identity.py", "scripts/smoke_ingestion.py", "scripts/smoke_channels.py", "scripts/smoke_actions.py", "bots/examples"]
+files = ["apps/api/src", "tests", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "scripts/smoke_identity.py", "scripts/smoke_ingestion.py", "scripts/smoke_channels.py", "scripts/smoke_actions.py", "scripts/smoke_bots.py", "scripts/pilot_bots.py", "bots/examples", "packages/bot-sdk/src", "bots/pilot/src"]

@@ -4,6 +4,8 @@ ENV UV_PYTHON_DOWNLOADS=never UV_LINK_MODE=copy
 RUN pip install --no-cache-dir uv==0.13.5
 COPY pyproject.toml uv.lock ./
 COPY apps/api/pyproject.toml apps/api/pyproject.toml
+COPY packages/bot-sdk/pyproject.toml packages/bot-sdk/pyproject.toml
+COPY bots/pilot/pyproject.toml bots/pilot/pyproject.toml
 COPY apps/api/src/ apps/api/src/
 COPY packages/contracts/pyproject.toml packages/contracts/pyproject.toml
 COPY packages/contracts/src/contracts/__init__.py packages/contracts/src/contracts/schemas.json packages/contracts/src/contracts/

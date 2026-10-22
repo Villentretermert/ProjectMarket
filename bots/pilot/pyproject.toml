@@ -1,0 +1,16 @@
+[project]
+name = "marketob-demo-bots"
+version = "0.1.0"
+description = "Separate local catalog and RSS examples using the public Bot API"
+requires-python = ">=3.14,<3.15"
+dependencies = ["marketob-bot-sdk", "defusedxml==0.7.1"]
+
+[tool.uv.sources]
+marketob-bot-sdk = { workspace = true }
+
+[build-system]
+requires = ["hatchling==1.32.4"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/marketob_bots"]

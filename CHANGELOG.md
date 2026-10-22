@@ -147,3 +147,14 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 ## 2026-10-22 · PM-010 — приёмка
 
 Финальный commit c9396c5: CI 39828592091 completed/success, 48 integration + 47 unit/contract, все 4 jobs PASS. Контейнерный HTTP/DB outage/restart сохраняет pending/ACKed заявки и дедупликацию результатов. Доказательства сохранены, PM-010 принята: 10/24, 2/4 после G02. Далее PM-011 SDK и два бота.
+
+## 2026-10-22 · PM-011 — SDK и пилотные боты
+
+Начаты отдельный Python HTTP SDK и два процесса ботов без доступа к БД платформы. План: журнал SQLite для повторов/ACK/result, синтетический каталог повседневных товаров, настраиваемый RSS (NASA проверен HTTP 200, 10 записей) и offline fixture, отдельный Dockerfile/profile.
+
+## 2026-10-22 — PM-011: SDK и два независимых бота
+
+- Добавлен typed HTTP SDK с bounded JSON/schema validation, retries 429/503/transport с прежним body, запретом redirects и безопасными ошибками. Bootstrap exchange не повторяется автоматически.
+- Каталог повседневных товаров и RSS/Atom бот используют собственные SQLite journals; inbox до ACK, demo ledger до result, recovery без повторного эффекта. RSS имеет offline fixture, безопасный XML parser и график окна публикаций.
+- Добавлены отдельный bot Dockerfile/Compose profile, owner provisioning через HTTP, process/container smoke и Telegram adapter. DB credentials не передаются ботам; API Docker build учитывает новые workspace packages.
+- Локально 117 тестов PASS (102.18s), в том числе 22 SDK/journal/XML; реальные два процесса PASS: 4 товара, 5 новостей+график, key isolation, private access, confirmed/failed и restart. Ruff/mypy/traceability PASS. Один предупреждающий Pydantic alias warning в конкурентном тесте; функциональных отказов нет. Контейнерная проверка ожидает CI.

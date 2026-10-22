@@ -11,14 +11,21 @@ from http.cookiejar import CookieJar
 from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError
-from urllib.request import HTTPCookieProcessor, Request, build_opener
+from urllib.request import HTTPCookieProcessor, HTTPRedirectHandler, Request, build_opener
 from uuid import uuid4
+
+
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(
+        self, req: Any, fp: Any, code: int, msg: str, headers: Any, newurl: str
+    ) -> None:
+        return None
 
 
 class Http:
     def __init__(self, origin: str):
         self.origin = origin.rstrip("/")
-        self.opener = build_opener(HTTPCookieProcessor(CookieJar()))
+        self.opener = build_opener(HTTPCookieProcessor(CookieJar()), NoRedirect())
         self.csrf = ""
 
     def call(

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>MarkeTOB synthetic test feed</title>
+<item><title>Demo: neighbourhood market opens</title><link>https://example.com/demo/market</link><pubDate>Thu, 22 Oct 2026 08:00:00 GMT</pubDate></item>
+<item><title>Demo: recycling collection schedule</title><link>https://example.com/demo/recycling</link><pubDate>Thu, 22 Oct 2026 07:00:00 GMT</pubDate></item>
+<item><title>Demo: library introduces evening hours</title><link>https://example.com/demo/library</link><pubDate>Wed, 21 Oct 2026 18:00:00 GMT</pubDate></item>
+<item><title>Demo: park path improvements</title><link>https://example.com/demo/park</link><pubDate>Wed, 21 Oct 2026 12:00:00 GMT</pubDate></item>
+<item><title>Demo: community gardening weekend</title><link>https://example.com/demo/garden</link><pubDate>Tue, 20 Oct 2026 10:00:00 GMT</pubDate></item>
+</channel></rss>
