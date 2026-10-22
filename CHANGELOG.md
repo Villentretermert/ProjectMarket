@@ -214,3 +214,11 @@ CI 39851029904: три jobs PASS; integration прошёл PostgreSQL/backend ch
 ## 2026-10-22 · PM-014 accepted
 
 CI 39853394634 на b4c26cb прошёл все 4 jobs: 125 distinct tests, 24 Chromium scenarios, backend fault/load и Docker. PM-014 закрыта; 14/24, после G03 2/4. PM-015 code 70d31e0 подготовлен к CI после 130 локальных tests и 29 Edge scenarios.
+
+## 2026-10-22 · PM-016 started
+
+На основе завершённой реализации PM-015 (130 локальных tests/29 Edge PASS; CI в финальной проверке) начат My Space. Макет показан заранее и сохранён в docs/design/MY_SPACE.md: ссылки на опубликованные блоки, автосохранение/Undo, конфликт версий, 20 страниц/50 блоков/20 Undo шагов как инженерные ограничения пилота.
+
+## 2026-10-22 · PM-015 accepted
+
+CI 39854053654 на aa9e792: все 4 jobs PASS, 130 distinct tests, 29 Chromium scenarios и Docker/backend. PM-015 закрыта; 15/24, после G03 3/4. PM-016 выполняется по разрешению всего блока.

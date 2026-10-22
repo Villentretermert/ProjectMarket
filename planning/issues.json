@@ -250,7 +250,7 @@
       "kind": "task",
       "priority": "P0",
       "stage": 4,
-      "status": "in_progress",
+      "status": "done",
       "path": "docs/tasks/PM-015.md",
       "depends_on": [
         "PM-009",
@@ -264,7 +264,7 @@
       "kind": "task",
       "priority": "P0",
       "stage": 4,
-      "status": "planned",
+      "status": "in_progress",
       "path": "docs/tasks/PM-016.md",
       "depends_on": [
         "PM-004",
