@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import {studioAcceptance} from './studio-acceptance.mjs';
 import {favoritesAcceptance} from './favorites-acceptance.mjs';
+import {spaceAcceptance} from './space-acceptance.mjs';
 let input=''; for await (const part of process.stdin) input+=part;
 const config=JSON.parse(input), checks=[];
 const browser=await chromium.launch({channel:process.env.MARKETOB_BROWSER_CHANNEL || undefined, headless:true});
@@ -124,5 +125,6 @@ try {
   assert.deepEqual(errors,[]);
   await studioAcceptance(browser,config,check);
   await favoritesAcceptance(browser,config,check);
+  await spaceAcceptance(browser,config,check);
   await writeFile(path.join(config.output,'browser-results.json'),JSON.stringify({checks,browser:browser.version(),viewport:[1440,1000,360,800],page_errors:errors},null,2)+'\n');
 } catch(error) {await save('failure');throw error;} finally {await browser.close();}

@@ -3029,6 +3029,105 @@
       ],
       "additionalProperties": false
     },
+    "ResolvedPageBlock": {
+      "type": "object",
+      "description": "Unavailable blocks reveal only block_id and available=false.",
+      "properties": {
+        "block_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Opaque stable identifier; never a credential.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "available": {
+          "type": "boolean",
+          "description": "Current source and published binding availability."
+        },
+        "record": {
+          "$ref": "#/$defs/Record"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActionDefinition"
+          },
+          "minItems": 0,
+          "maxItems": 5,
+          "uniqueItems": false,
+          "description": "Currently published allowed actions bound to this personal block."
+        },
+        "slug": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80,
+          "description": "Unique shareable channel slug.",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "data_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "description": "Current channel change revision."
+        }
+      },
+      "required": [
+        "block_id",
+        "available"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "record",
+              "actions",
+              "slug",
+              "data_revision"
+            ]
+          },
+          "else": {
+            "properties": {
+              "record": false,
+              "actions": false,
+              "slug": false,
+              "data_revision": false
+            }
+          }
+        }
+      ]
+    },
+    "PageSnapshot": {
+      "type": "object",
+      "description": "Owned layout and independently authorized live source values; source payloads are not stored in the page.",
+      "properties": {
+        "page": {
+          "$ref": "#/$defs/PersonalPage"
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResolvedPageBlock"
+          },
+          "minItems": 0,
+          "maxItems": 50,
+          "uniqueItems": false,
+          "description": "One current result per personal block, in layout order."
+        }
+      },
+      "required": [
+        "page",
+        "blocks"
+      ],
+      "additionalProperties": false
+    },
     "PersonalPageList": {
       "type": "object",
       "description": "Caller-scoped list with limit/cursor pagination.",

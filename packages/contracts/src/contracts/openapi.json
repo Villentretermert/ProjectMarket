@@ -2,7 +2,7 @@
   "openapi": "3.1.1",
   "info": {
     "title": "MarkeTOB local pilot API",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."
   },
   "servers": [
@@ -9161,13 +9161,25 @@
     "/v1/personal-pages": {
       "post": {
         "operationId": "createPage",
-        "summary": "Create an owned personal layout.",
+        "summary": "Create an owned personal layout; up to 20 active pages. Account-scoped creation key prevents duplicates.",
         "security": [
           {
             "UserSession": []
           }
         ],
         "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128,
+              "description": "Stable retry identity; retained for 30 days or until pending work resolves.",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
           {
             "name": "X-CSRF-Token",
             "in": "header",
@@ -9182,7 +9194,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Successful operation. Create an owned personal layout.",
+            "description": "Successful operation. Create an owned personal layout; up to 20 active pages. Account-scoped creation key prevents duplicates.",
             "headers": {
               "Cache-Control": {
                 "schema": {
@@ -9938,6 +9950,182 @@
                   "const": "no-store"
                 },
                 "description": "Private/session/secret responses must not be cached by shared intermediaries."
+              }
+            }
+          },
+          "400": {
+            "description": "See protocol error table for HTTP 400.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See protocol error table for HTTP 401.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See protocol error table for HTTP 403.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See protocol error table for HTTP 404.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See protocol error table for HTTP 409.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "See protocol error table for HTTP 410.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "See protocol error table for HTTP 413.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "See protocol error table for HTTP 415.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "See protocol error table for HTTP 422.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See protocol error table for HTTP 429.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "description": "Seconds before retry."
+              }
+            }
+          },
+          "500": {
+            "description": "See protocol error table for HTTP 500.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See protocol error table for HTTP 503.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/personal-pages/{page_id}/snapshot": {
+      "get": {
+        "operationId": "resolvePersonalPage",
+        "summary": "Resolve current published bindings and access independently for each source; unavailable blocks contain no source metadata.",
+        "security": [
+          {
+            "UserSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "Opaque stable identifier; never a credential.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation. Resolve current published bindings and access independently for each source; unavailable blocks contain no source metadata.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                },
+                "description": "Private/session/secret responses must not be cached by shared intermediaries."
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageSnapshot"
+                }
               }
             }
           },
@@ -14415,6 +14603,105 @@
         },
         "required": [
           "channel_id"
+        ],
+        "additionalProperties": false
+      },
+      "ResolvedPageBlock": {
+        "type": "object",
+        "description": "Unavailable blocks reveal only block_id and available=false.",
+        "properties": {
+          "block_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "available": {
+            "type": "boolean",
+            "description": "Current source and published binding availability."
+          },
+          "record": {
+            "$ref": "#/components/schemas/Record"
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActionDefinition"
+            },
+            "minItems": 0,
+            "maxItems": 5,
+            "uniqueItems": false,
+            "description": "Currently published allowed actions bound to this personal block."
+          },
+          "slug": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 80,
+            "description": "Unique shareable channel slug.",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "data_revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Current channel change revision."
+          }
+        },
+        "required": [
+          "block_id",
+          "available"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "available": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "record",
+                "actions",
+                "slug",
+                "data_revision"
+              ]
+            },
+            "else": {
+              "properties": {
+                "record": false,
+                "actions": false,
+                "slug": false,
+                "data_revision": false
+              }
+            }
+          }
+        ]
+      },
+      "PageSnapshot": {
+        "type": "object",
+        "description": "Owned layout and independently authorized live source values; source payloads are not stored in the page.",
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/PersonalPage"
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResolvedPageBlock"
+            },
+            "minItems": 0,
+            "maxItems": 50,
+            "uniqueItems": false,
+            "description": "One current result per personal block, in layout order."
+          }
+        },
+        "required": [
+          "page",
+          "blocks"
         ],
         "additionalProperties": false
       },

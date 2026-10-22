@@ -7,6 +7,7 @@ const labels = {queued:'Queued', processing:'Processing', confirmed:'Confirmed',
 const memory = new Map();
 const prefix = 'marketob-request:';
 export function clearRequests() {
+  window.dispatchEvent(new Event('private-state-cleared'));
   memory.clear();
   try { for (const key of Object.keys(sessionStorage)) if (key.startsWith(prefix)) sessionStorage.removeItem(key); }
   catch { /* Browsers may disable session storage. In-memory recovery still works. */ }

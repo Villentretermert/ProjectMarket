@@ -55,10 +55,7 @@ function openChannelForm() {
     } catch { errors.append(errorBox(new Error('Enter a channel slug or a link from this MarkeTOB server.'))); }
   }}, slug.node, el('button', {type:'submit',class:'primary'},'Open channel'), errors);
 }
-routes.set('space', async () => el('div', {}, heading('My Space','A personal home for the things you follow.'),
-  el('section', {class:'empty'}, el('h2', {},'Make room for your favorite sources'),
-    message('Open a channel to explore its news, products and charts. The personal page editor is being added in this development stage.'),
-    link('Explore channels', '#/channels'))));
+routes.set('space', async parts => (await import('./space.js')).space(parts,{navigate,refresh}));
 routes.set('channels', () => channels(openChannelForm,refresh));
 routes.set('studio', async parts => (await import('./studio.js')).studio(parts,{refresh,navigate}));
 routes.set('channel', async parts => {
@@ -80,6 +77,7 @@ routes.set('channel', async parts => {
   return node;
 });
 async function route() {
+  window.dispatchEvent(new Event('route-leave'));
   const own=++generation;
   document.querySelectorAll('dialog').forEach(d=>d.close());
   main.replaceChildren(message('Loading…')); sidebar.replaceChildren(); account();

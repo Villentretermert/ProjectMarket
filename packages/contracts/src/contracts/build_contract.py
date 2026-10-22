@@ -207,9 +207,13 @@ endpoint('put','/v1/favorites/{channel_id}/seen','markFavoriteSeen','Mark only o
 define('SourceChannel',{'channel_id':ID},'Favorite reference; saving does not grant access.')
 endpoint('put','/v1/favorites/{channel_id}','saveFavorite','Save an accessible channel idempotently.',EMPTY,status=204)
 endpoint('delete','/v1/favorites/{channel_id}','removeFavorite','Remove own favorite idempotently.',status=204)
-endpoint('post','/v1/personal-pages','createPage','Create an owned personal layout.','PageWrite','PersonalPage',201)
+define('ResolvedPageBlock', {'block_id':ID,'available':{'type':'boolean','description':'Current source and published binding availability.'},'record':ref('Record'),'actions':array(ref('ActionDefinition'),'Currently published allowed actions bound to this personal block.',5),'slug':SCHEMAS['ChannelCreate']['properties']['slug'],'data_revision':number('Current channel change revision.')}, 'Unavailable blocks reveal only block_id and available=false.', ('record','actions','slug','data_revision'))
+SCHEMAS['ResolvedPageBlock']['allOf']=[{'if':{'properties':{'available':{'const':True}}},'then':{'required':['record','actions','slug','data_revision']},'else':{'properties':{'record':False,'actions':False,'slug':False,'data_revision':False}}}]
+define('PageSnapshot', {'page':ref('PersonalPage'),'blocks':array(ref('ResolvedPageBlock'),'One current result per personal block, in layout order.',50)}, 'Owned layout and independently authorized live source values; source payloads are not stored in the page.')
+endpoint('post','/v1/personal-pages','createPage','Create an owned personal layout; up to 20 active pages. Account-scoped creation key prevents duplicates.','PageWrite','PersonalPage',201,params=(idem,))
 endpoint('get','/v1/personal-pages','listPages','List owned personal pages.',response=collection('PersonalPage'),listing=True)
 endpoint('get','/v1/personal-pages/{page_id}','readPage','Read own layout; source contents are fetched separately with current rights.',response='PersonalPage')
+endpoint('get','/v1/personal-pages/{page_id}/snapshot','resolvePersonalPage','Resolve current published bindings and access independently for each source; unavailable blocks contain no source metadata.',response='PageSnapshot')
 endpoint('put','/v1/personal-pages/{page_id}','replacePage','Replace owned layout using expected version.','PageWrite','PersonalPage')
 endpoint('delete','/v1/personal-pages/{page_id}','deletePage','Delete own page and revoke its share locators.',status=204)
 endpoint('post','/v1/personal-pages/{page_id}/shares','createShare','Store an immutable layout-only snapshot; never source payloads.','ShareCreate','Share',201)
@@ -239,7 +243,7 @@ def replace_refs(value):
 
 def artifacts():
     bundle={"$schema":"https://json-schema.org/draft/2020-12/schema", "$id":"urn:marketob:contract:1.0", "$defs":SCHEMAS}
-    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.5","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
+    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.6","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
     return {"schemas.json":bundle,"openapi.json":replace_refs(spec)}
 
 

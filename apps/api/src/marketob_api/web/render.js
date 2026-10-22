@@ -33,30 +33,37 @@ function chart(data, view) {
   if (!points.length) return message('No chart data yet.');
   const minX = Math.min(...points.map(x => x.x)), maxX = Math.max(...points.map(x => x.x));
   const minY = Math.min(0,...points.map(x => x.y)), maxY = Math.max(0,...points.map(x => x.y));
-  const x = v => 58 + (v - minX) / (maxX - minX || 1) * 640;
+  function drawing(narrow) {
+  const left=narrow?74:84, right=narrow?330:698, bottom=212, height=narrow?275:252;
+  const x = v => left + (v - minX) / (maxX - minX || 1) * (right-left);
   const y = v => 212 - (v - minY) / (maxY - minY || 1) * 180;
-  const svg = svgNode('svg', {viewBox:'0 0 740 252', class:'chart', role:'img', 'aria-label':data.title});
+  const svg = svgNode('svg', {viewBox:`0 0 ${narrow?350:740} ${height}`, class:'chart '+(narrow?'chart-narrow':'chart-wide'), role:'img', 'aria-label':data.title});
   svg.append(svgNode('title', {}, data.title + '. Exact values are available in the data table.'));
   for (let i=0; i<=4; i++) {
     const value = minY + (maxY - minY) * i / 4;
-    svg.append(svgNode('line', {x1:58,x2:698,y1:y(value),y2:y(value),class:'chart-grid'}),
-      svgNode('text', {x:50,y:y(value)+4,'text-anchor':'end',class:'chart-axis'}, Number(value.toPrecision(4))));
+    const tick=Math.abs(value)>=100000?value.toExponential(1):String(Number(value.toPrecision(4)));
+    svg.append(svgNode('line', {x1:left,x2:right,y1:y(value),y2:y(value),class:'chart-grid'}),
+      svgNode('text', {x:left-8,y:y(value)+4,'text-anchor':'end',class:'chart-axis'}, tick));
   }
-  svg.append(svgNode('text',{x:58,y:239,class:'chart-axis'},coordinate(minX,data.x_kind)),
-    svgNode('text',{x:698,y:239,'text-anchor':'end',class:'chart-axis'},coordinate(maxX,data.x_kind)));
+  const label=value=>data.x_kind==='time'?coordinate(value,data.x_kind):(Math.abs(value)>=100000?value.toExponential(1):String(Number(value.toPrecision(4))));
+  svg.append(svgNode('text',{x:left,y:narrow?252:239,class:'chart-axis'},label(minX)),
+    svgNode('text',{x:right,y:narrow?252:239,'text-anchor':'end',class:'chart-axis'},label(maxX)));
   const colors = ['#1767bd','#b15212','#25764c','#8a49a2','#9d344c'];
   data.series.forEach((series, index) => {
     const color = colors[index % colors.length];
     if (view === 'line') svg.append(svgNode('polyline', {points:series.points.map(p=>`${x(p.x)},${y(p.y)}`).join(' '),class:'chart-line',stroke:color}));
     for (const point of series.points) {
-      const width = Math.min(28, 560 / (points.length || 1));
+      const width = Math.min(28, (right-left)*0.8 / (points.length || 1));
       const node = view === 'bars' ? svgNode('rect', {x:x(point.x) + index*width - width*data.series.length/2,
         y:Math.min(y(point.y),y(0)),width:Math.max(1,width-2),height:Math.max(1,Math.abs(y(point.y)-y(0))),fill:color}) :
         svgNode('circle', {cx:x(point.x),cy:y(point.y),r:3,fill:color});
       node.append(svgNode('title', {}, `${series.name}: ${coordinate(point.x,data.x_kind)}, ${point.y}`)); svg.append(node);
     }
   });
-  return el('div', {}, message(data.x_label + ' · ' + data.y_label + ' (' + data.unit + ')'), svg,
+  return svg;
+  }
+  // Two static layouts keep axis text legible at phone width without resize listeners.
+  return el('div', {}, message(data.x_label + ' · ' + data.y_label + ' (' + data.unit + ')'), drawing(false),drawing(true),
     el('div', {class:'legend'}, data.series.map((s,i)=>el('span', {class:'series-'+i}, `${i+1}. ${s.name}`))),
     el('details', {}, el('summary', {}, 'View chart data'), chartTable(data)));
 }

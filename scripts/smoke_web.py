@@ -78,7 +78,7 @@ def main() -> None:
         if result.returncode:
             raise SystemExit(result.returncode)
         counts = lab.query("SELECT count(*) AS n FROM action_requests")
-        assert counts[0]["n"] == 3, "Uncertain browser POST must not create a duplicate request"
+        assert counts[0]["n"] == 4, "Three channel requests plus one My Space request; no duplicate"
         print("PASS: real Web/API/bot browser acceptance; disposable state removed.")
     finally:
         lab.close()

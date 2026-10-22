@@ -25,6 +25,7 @@ VALIDATORS = {
         "Result",
         "FavoriteOrder",
         "FavoriteSeen",
+        "PageWrite",
     )
 }
 
