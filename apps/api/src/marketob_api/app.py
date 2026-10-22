@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from marketob_api import __version__
 from marketob_api.auth_routes import router as auth_router
+from marketob_api.bot_routes import router as bot_router
 from marketob_api.config import Settings
 from marketob_api.errors import install_error_handlers
 from marketob_api.health import LiveStatus, ReadyStatus, database_status
@@ -16,7 +17,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application = FastAPI(
         title="MarkeTOB local API",
         version=__version__,
-        description=("Health and local identity. Runtime OpenAPI lists implemented routes only."),
+        description=(
+            "Health, local identity and bot registration. "
+            "Runtime OpenAPI lists implemented routes only."
+        ),
         docs_url=None,
         redoc_url=None,
     )
@@ -30,6 +34,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         allow_headers=["Content-Type", "X-CSRF-Token", "Authorization", "Idempotency-Key"],
     )
     application.include_router(auth_router(configuration))
+    application.include_router(bot_router(configuration))
 
     @application.get("/", include_in_schema=False)
     def index() -> dict[str, str]:

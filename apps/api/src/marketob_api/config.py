@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     database_schema: str = Field(default="public", pattern=r"^[a-z][a-z0-9_]{0,62}$")
     allowed_origins: list[str] = ["http://127.0.0.1:8000", "http://localhost:8000"]
     session_hours: int = Field(default=24, ge=1, le=24)
+    bot_read_rate_limit: int = Field(default=60, ge=1, le=10000)
     auth_rate_limit: int = Field(default=10, ge=1, le=1000)
     read_rate_limit: int = Field(default=120, ge=1, le=10000)
     write_rate_limit: int = Field(default=60, ge=1, le=10000)

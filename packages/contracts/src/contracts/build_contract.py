@@ -56,6 +56,8 @@ define("BusinessProfile", {"org_id":ID, "name":text("Workspace name.",80), "role
 define("ConfirmPassword", {"password":deepcopy(SCHEMAS["Credentials"]["properties"]["password"])}, "Re-authenticate before account deactivation.")
 define("BotCreate", {"name":text("Human-readable bot name.",80)}, "Owner creates a bot before exchanging its individual registration credential.")
 define("Bot", {"bot_id":ID, "name":text("Human-readable bot name.",80), "state":enum("Registration state.","pending","active","revoked")}, "Owned bot metadata without secrets.")
+define("BotDetails", {**SCHEMAS["Bot"]["properties"], "last_seen":{"oneOf":[TIME,{"type":"null"}],"description":"Last successful authenticated bot operation, or null."}}, "Owner-only bot detail; no credentials.")
+define("BotIdentity", {"bot_id":ID,"key_id":ID,"scopes":SCOPES,"expires_at":TIME}, "Operational key identity; no owner/session secrets.")
 define("Registration", {"bot":ref("Bot"), "registration_credential":text("One-time random credential; raw value only in this response.",256,32), "expires_at":TIME}, "Registration credential expires in 15 minutes; response is no-store.")
 define("KeyIssue", {"scopes":SCOPES, "replaces_key_id":ID}, "Issue a key; when replaces_key_id is present, revoke the old key atomically.", ("replaces_key_id",))
 define("KeyMetadata", {"key_id":ID, "prefix":text("Non-secret identification prefix.",16), "scopes":SCOPES, "expires_at":TIME, "revoked": {"type":"boolean","description":"Whether this key can no longer authenticate."}}, "Key inventory never returns a full secret.")
@@ -147,6 +149,8 @@ endpoint('delete','/v1/account','deactivateAccount','Re-authenticate, revoke ses
 endpoint('get','/v1/users/by-username/{username}','lookupRegisteredUser','Exact username lookup for a signed-in B2B owner; returns only public profile metadata.',response='User')
 endpoint('post','/v1/bots','createBot','Create an owned bot and issue a one-time registration credential.','BotCreate','Registration',201)
 endpoint('get','/v1/bots','listBots','List owned bots.',response=collection('Bot'),listing=True)
+endpoint('get','/v1/bots/{bot_id}','readBot','Read owned bot status and last_seen.',response='BotDetails')
+endpoint('get','/v1/bot/identity','readBotIdentity','Verify the operational credential and update last_seen.',response='BotIdentity',auth='BotBearer')
 endpoint('post','/v1/bots/{bot_id}/registration','renewRegistration','Invalidate prior bootstrap credentials and issue a fresh one.',EMPTY,'Registration',201)
 endpoint('post','/v1/bot-registrations/exchange','exchangeRegistration','Consume registration credential atomically; issue initial operational key.',EMPTY,'KeySecret',201,'RegistrationBearer')
 endpoint('post','/v1/bots/{bot_id}/keys','issueBotKey','Issue or atomically rotate an owned bot key.','KeyIssue','KeySecret',201)
@@ -204,7 +208,7 @@ def replace_refs(value):
 
 def artifacts():
     bundle={"$schema":"https://json-schema.org/draft/2020-12/schema", "$id":"urn:marketob:contract:1.0", "$defs":SCHEMAS}
-    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.1","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
+    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.2","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
     return {"schemas.json":bundle,"openapi.json":replace_refs(spec)}
 
 

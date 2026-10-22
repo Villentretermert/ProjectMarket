@@ -95,3 +95,7 @@ G01: .gitattributes фиксирует PDF/PPTX/изображения как bi
 ## 2026-10-22 · PM-006 принято / PM-007 начало
 
 PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tests и HTTP smoke PASS; issue закрывается с доказательствами. PM-007: начаты registry, bootstrap/operational credentials и серверные права. Зависимость PM-006 проверена; новый пользовательский UI пока не подключён.
+
+## 2026-10-22 · PM-007 registry и ключи
+
+Реализованы registry, одноразовый bootstrap, scoped operational keys, rotation/revoke, last_seen, signed inventory и квоты. Контракт 1.0.2 добавляет два read endpoints без изменения существующих ответов. 64 локальных теста PASS, включая двойной обмен на PostgreSQL; HTTP smoke расширен для Docker. CI приёмка впереди.

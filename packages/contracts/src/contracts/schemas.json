@@ -269,6 +269,107 @@
       ],
       "additionalProperties": false
     },
+    "BotDetails": {
+      "type": "object",
+      "description": "Owner-only bot detail; no credentials.",
+      "properties": {
+        "bot_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Opaque stable identifier; never a credential.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Human-readable bot name."
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "active",
+            "revoked"
+          ],
+          "description": "Registration state."
+        },
+        "last_seen": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "RFC3339 timestamp with timezone; server returns UTC.",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Last successful authenticated bot operation, or null."
+        }
+      },
+      "required": [
+        "bot_id",
+        "name",
+        "state",
+        "last_seen"
+      ],
+      "additionalProperties": false
+    },
+    "BotIdentity": {
+      "type": "object",
+      "description": "Operational key identity; no owner/session secrets.",
+      "properties": {
+        "bot_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Opaque stable identifier; never a credential.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "key_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Opaque stable identifier; never a credential.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "messages:write",
+              "events:read",
+              "events:ack",
+              "events:result"
+            ],
+            "description": "Operational bot permission."
+          },
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "description": "Explicit permissions for this bot only."
+        },
+        "expires_at": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "RFC3339 timestamp with timezone; server returns UTC.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "bot_id",
+        "key_id",
+        "scopes",
+        "expires_at"
+      ],
+      "additionalProperties": false
+    },
     "Registration": {
       "type": "object",
       "description": "Registration credential expires in 15 minutes; response is no-store.",
