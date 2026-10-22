@@ -41,3 +41,5 @@
 [G02: презентация и следующий этап](docs/reviews/G02/README.md).
 
 [Запуск пилотных ботов](docs/setup/PILOT_BOTS.md) · [Python SDK](packages/bot-sdk/README.md).
+
+[G03: результаты PM-009–012, презентация и вопросы](docs/reviews/G03/README.md).

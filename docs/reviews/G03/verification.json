@@ -1,0 +1,21 @@
+{
+  "slides": 10,
+  "pdf_pages": 10,
+  "native_tables": 5,
+  "native_diagrams": 2,
+  "all_slide_previews_inspected": true,
+  "all_pdf_pages_inspected": true,
+  "pptx_integrity": "PASS",
+  "pptx_geometry": "PASS",
+  "pptx_roundtrip_import": "PASS",
+  "native_powerpoint_opened": false,
+  "pdf": "Static raster preview copy from validated slide PNGs; use PPTX for editing",
+  "poppler_note": "Three optional nameToUnicode lookup warnings on Unicode runtime path; all 10 pages rendered successfully",
+  "files": {
+    "MarkeTOB-G03-reviewed.pptx": "3cde3b3a0e8545c415cb442af4478081ce9f23ff8bad1e61d5c28363ae569d5a",
+    "MarkeTOB-G03.pdf": "856bde485f9335571059e5221d8e106661c7e35ac2a2c4a84513d5a29ff6e866"
+  },
+  "code_ci": "https://github.com/Villentretermert/ProjectMarket/actions/runs/39835253441",
+  "questions": 13,
+  "answers_received": 0
+}
