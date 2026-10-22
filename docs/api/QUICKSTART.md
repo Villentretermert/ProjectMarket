@@ -1,8 +1,8 @@
-# Bot developer quickstart — contract only
+# Bot developer quickstart — implemented ingress and planned actions
 
-This walkthrough targets the **future** local server at `http://127.0.0.1:8000`; PM-004 does not start that server. Use HTTPS remotely. The bot is any HTTP process, including a Telegram adapter. It has no database access. Values below are placeholders, not working credentials.
+Steps 1–3 work with the local server at `http://127.0.0.1:8000` after migrations. Use the [identity](IDENTITY.md), [registration](BOT_REGISTRATION.md) and [ingestion](INGESTION.md) guides. Steps 4–8 describe planned PM-009–018 operations. Use HTTPS remotely. The bot is any HTTP process, including a Telegram adapter. It has no database access. Values below are placeholders, not working credentials.
 
-1. Owner signs in locally, creates a bot in Studio (`POST /v1/bots`) and creates its draft channel (`POST /v1/channels`). Copy the returned channel ID into the bot configuration. Keep the one-time registration credential out of source control, browser storage, command histories and chat.
+1. Owner signs in locally, creates a bot through the API (`POST /v1/bots`; Studio UI follows in PM-014) and creates its draft channel (`POST /v1/channels`). Copy the returned channel ID into the bot configuration. Keep the one-time registration credential out of source control, browser storage, command histories and chat.
 2. Bot sends `POST /v1/bot-registrations/exchange` with JSON `{}` and the registration credential as bearer authorization. Securely store the returned operational `api_key`. Do not print the entire response. Lost response: ask the owner to issue a fresh operational key; the consumed registration credential cannot be replayed.
 3. Send [the valid product message](../../packages/contracts/src/contracts/examples/product-message.json) to `POST /v1/bot/messages` using the operational bearer key. Change the example channel ID to your assigned channel and keep message ID/revision stable when retrying. Example:
 

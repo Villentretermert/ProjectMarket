@@ -9,6 +9,7 @@ from marketob_api.bot_routes import router as bot_router
 from marketob_api.config import Settings
 from marketob_api.errors import install_error_handlers
 from marketob_api.health import LiveStatus, ReadyStatus, database_status
+from marketob_api.ingestion import router as ingestion_router
 from marketob_api.transport import ProtocolMiddleware
 
 
@@ -18,7 +19,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         title="MarkeTOB local API",
         version=__version__,
         description=(
-            "Health, local identity and bot registration. "
+            "Health, local identity, bot registration and message ingestion. "
             "Runtime OpenAPI lists implemented routes only."
         ),
         docs_url=None,
@@ -35,12 +36,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     application.include_router(auth_router(configuration))
     application.include_router(bot_router(configuration))
+    application.include_router(ingestion_router(configuration))
 
     @application.get("/", include_in_schema=False)
     def index() -> dict[str, str]:
         return {
             "service": "MarkeTOB",
-            "stage": "foundation",
+            "stage": "ingestion",
             "liveness": "/health/live",
             "readiness": "/health/ready",
             "implemented_api": "/openapi.json",

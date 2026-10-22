@@ -129,21 +129,21 @@ python scripts/validate_requirements.py
 CI выполняет lint, format, strict typing, тесты и startup smoke на Windows/Linux,
 затем отдельно строит образ и проверяет PostgreSQL, отказ/восстановление и restart
 API. PM-006 добавляет отдельный PostgreSQL job для миграций и identity/grants.
-Приём сообщений, очередь и нагрузочные свойства проверяются следующими задачами.
+PM-007/008 расширяют job для ключей, транзакционного приёма и очистки; Docker проверяет replay после restart. Очередь и длительная нагрузка остаются следующими задачами.
 
 ## Раскладка кода
 
 | Каталог | Содержание сейчас | Следующий шаг |
 |---|---|---|
-| `apps/api/src/marketob_api` | Настройки, health, identity/grants, миграции | PM-007: боты/ключи |
+| `apps/api/src/marketob_api` | Identity/grants, боты/ключи, ingestion, retention | PM-009: публикация/чтение |
 | `apps/client` | Граница клиента; ссылка на принятый UX | PM-013–020 |
 | `packages/contracts` | Устанавливаемые PM-004 схемы и reference model | Проверки реального API |
 | `packages/bot-sdk` | Граница независимого SDK | PM-011 |
 | `bots/examples` | Независимый HTTP connectivity probe | PM-011: каталог/новости |
-| `deploy`, `compose.yaml` | Dockerfile, API + migration + PostgreSQL | PM-021: эксплуатационная поставка |
-| `tests` | Поведение конфигурации и health | Проверки будущих модулей |
+| `deploy`, `compose.yaml` | Dockerfile, API + migration + PostgreSQL + maintenance | PM-021: эксплуатационная поставка |
+| `tests` | Health/identity/bots/ingestion и PostgreSQL failure cases | PM-010–012 |
 
-`/openapi.json` сервера описывает только реализованные health/identity-маршруты.
+`/openapi.json` сервера описывает только реализованные health/identity/bot/draft/ingestion-маршруты.
 Полный проектный контракт находится в `packages/contracts/src/contracts/openapi.json`.
 Swagger/Redoc CDN не подключены. Английский UX-прототип продолжает отдельно
 запускаться по [инструкции PM-003](../../design/prototype/README.md).
@@ -185,4 +185,24 @@ Override явно открывает порт БД **только на loopback:
 При этой задаче Windows-тесты дополнительно выполнены на переносимой PostgreSQL
 18.6 из EDB под .local. Она не входит в Git/образ и не заменяет воспроизводимый
 Compose: исходник и причины пути описаны в ADR-0005. Локальный test server пока
-нужен для следующих PM-007/008; установка системной службы не выполнялась.
+нужен для интеграционных проверок; установка системной службы не выполнялась.
+
+## Приём данных и retention · PM-007/008
+
+[Регистрация бота](../api/BOT_REGISTRATION.md) и [передача сообщений](../api/INGESTION.md)
+работают через HTTP. Продуктовый Studio пока не подключён. В Compose maintenance
+стартует автоматически; для прямого Python во втором терминале запустите:
+
+```sh
+uv run --locked python -m marketob_api.maintenance
+```
+
+`--once` делает один проход. Остановленный worker не очищает старую историю;
+актуальные записи и tombstones не удаляются по возрасту. Квоты настраиваются
+MARKETOB_INGEST_BOT_PER_MINUTE (60) и MARKETOB_INGEST_TOTAL_PER_MINUTE (1000).
+
+На одноразовом экземпляре `python scripts/smoke_identity.py --bots` проверяет
+также ключи. `scripts/smoke_ingestion.py --phase before` выполняет короткую серию
+100 сообщений; после перезапуска API/БД `--phase after` проверяет dedup/revoke.
+Файл `.local/ingest-smoke.json` содержит временные тестовые секреты: не публиковать.
+Скрипт удаляет его в after phase. Отчёт `.local/ingestion-burst.json` секретов не содержит.

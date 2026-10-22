@@ -405,6 +405,7 @@ source = { editable = "apps/api" }
 dependencies = [
     { name = "argon2-cffi" },
     { name = "fastapi" },
+    { name = "marketob-contracts" },
     { name = "psycopg", extra = ["binary"] },
     { name = "pydantic-settings" },
     { name = "uvicorn" },
@@ -414,6 +415,7 @@ dependencies = [
 requires-dist = [
     { name = "argon2-cffi", specifier = "==25.1.0" },
     { name = "fastapi", specifier = "==0.159.1" },
+    { name = "marketob-contracts", editable = "packages/contracts" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.3.6" },
     { name = "pydantic-settings", specifier = "==2.16.1" },
     { name = "uvicorn", specifier = "==0.54.0" },

@@ -1,0 +1,14 @@
+{
+  "transport": "real loopback HTTP",
+  "bots": 4,
+  "concurrent_clients": 4,
+  "accepted": 100,
+  "payload_body_characters": 512,
+  "elapsed_seconds": 3.384,
+  "requests_per_second": 29.55,
+  "p50_ms": 108.93,
+  "p95_ms": 222.53,
+  "max_ms": 330.41,
+  "errors": 0,
+  "limitation": "Short synthetic burst, not sustained pilot capacity or UI latency."
+}

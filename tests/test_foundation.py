@@ -76,10 +76,12 @@ def test_readiness_requires_successful_query(row: tuple[int] | None, code: int) 
 def test_runtime_spec_does_not_claim_future_business_endpoints() -> None:
     with client() as http:
         spec = http.get("/openapi.json").json()
-        assert http.get("/v1/bot/messages").status_code == 404
+        assert http.get("/v1/bot/messages").status_code == 405
+        assert http.get("/v1/bot/events").status_code == 404
         assert http.get("/docs").status_code == 404  # No external CDN for local docs.
     assert {"/health/live", "/health/ready", "/v1/auth/session"} <= set(spec["paths"])
-    assert "/v1/bot/messages" not in spec["paths"]
+    assert "post" in spec["paths"]["/v1/bot/messages"]
+    assert "/v1/bot/events" not in spec["paths"]
 
 
 def test_environment_overrides_file_without_disclosing_secrets(

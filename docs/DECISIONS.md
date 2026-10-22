@@ -40,3 +40,5 @@ D26 · G01/1: текущая плотность интерфейса PM-003 со
 D27 · G01/PM-005, 22 октября: «Отлично, приступай к следующей задаче» — явное разрешение начать PM-005. Рабочие допущения по неотвеченным вопросам сохранены в [G01/answers.md](reviews/G01/answers.md); они не выдаются за ответы владельца. Облако и Android остаются отложенными.
 
 D28 · PM-006: [локальная identity](adr/0005-local-identity.md): личная B2B-организация с owner membership, без командных/email invitations; opaque отзываемые сессии; логическая деактивация с сохранением username tombstone. Это инженерная политика пилота, не новый ответ владельца.
+
+D29 · PM-007/008: [ADR-0006](adr/0006-bot-ingestion.md) — раздельные bootstrap/operational credentials, PostgreSQL snapshot/receipt/outbox в одной транзакции, durable token buckets и отдельный retention worker; draft-create входит в PM-008 для настройки источника без ручного SQL.

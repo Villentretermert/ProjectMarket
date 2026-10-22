@@ -51,5 +51,25 @@ services:
     read_only: true
     tmpfs:
       - /tmp
+  maintenance:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+    environment:
+      MARKETOB_DATABASE_URL: postgresql://marketob:${POSTGRES_PASSWORD:?Run python scripts/dev_env.py first}@db:5432/marketob
+    command: ["python", "-m", "marketob_api.maintenance"]
+    healthcheck:
+      disable: true
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
 volumes:
   postgres_data:

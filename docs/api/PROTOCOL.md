@@ -1,6 +1,6 @@
 # MarkeTOB API 1.0 — normative local pilot contract
 
-**PM-004 specification with additive PM-006/007 revision 1.0.2.** Health/identity/bot registration are implemented; ingestion and later operations remain scheduled in PM-008–018. The executable reference model checks protocol examples only; it does not prove durability, concurrent transactions, HTTP authentication or load capacity. All example content is synthetic. The contract is independent of Telegram.
+**PM-004 specification with additive PM-006/007 revision 1.0.2.** Health, identity, bot registration, draft creation and ingestion are implemented; publication/actions/client operations remain scheduled in PM-009–018. The executable reference model checks protocol examples only; it does not prove durability, concurrent transactions, HTTP authentication or load capacity. All example content is synthetic. The contract is independent of Telegram.
 
 Machine-readable sources: [OpenAPI 3.1.1](../../packages/contracts/src/contracts/openapi.json), [JSON Schema 2020-12 bundle](../../packages/contracts/src/contracts/schemas.json), [Python generator](../../packages/contracts/src/contracts/build_contract.py), [valid/invalid examples](../../packages/contracts/src/contracts/examples/cases.json). `$defs` names identify the validation target. `required`, numeric/string/array bounds, descriptions and `additionalProperties: false` define each field. Unknown fields are rejected, not silently executed or retained. [Quickstart](QUICKSTART.md) walks through the complete lifecycle.
 
@@ -93,3 +93,5 @@ Format references: [OpenAPI 3.1.1](https://spec.openapis.org/oas/v3.1.1.html), [
 See [IDENTITY.md](IDENTITY.md) for implemented local sessions, personal business profiles, username lookup, grants, account deactivation, migration commands and deferred native/email features. This additive extension has 67 schemas / 48 planned operations; data wire schema_version stays 1.0.
 
 Bot registration implementation and issuance-only secret policy: [BOT_REGISTRATION.md](BOT_REGISTRATION.md).
+
+Implemented ingestion, retention worker and runtime boundaries: [INGESTION.md](INGESTION.md). Valid Unicode is required; NUL text is rejected before PostgreSQL storage.
