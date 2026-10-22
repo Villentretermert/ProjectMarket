@@ -31,6 +31,7 @@ def router(settings: Settings) -> APIRouter:
     @api.post("/channels", status_code=201)
     def create_channel(body: dict[str, Any], request: Request) -> dict[str, Any]:
         validate_payload("ChannelCreate", body)
+        body = {"visibility": "selected", **body}
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
             bot = owned_bot(connection, body["bot_id"], current.user_id)
@@ -51,12 +52,27 @@ def router(settings: Settings) -> APIRouter:
             )
             try:
                 connection.execute(
-                    "INSERT INTO channel_content(channel_id,slug,title,layout) "
-                    "VALUES (%s,%s,%s,%s)",
-                    (channel_id, body["slug"], body["title"], Jsonb(layout)),
+                    "INSERT INTO channel_content(channel_id,slug,title,layout,draft_visibility) "
+                    "VALUES (%s,%s,%s,%s,%s)",
+                    (channel_id, body["slug"], body["title"], Jsonb(layout), body["visibility"]),
                 )
             except UniqueViolation:
                 raise ApiError(409, "slug_unavailable", "Choose another channel slug.") from None
+            connection.execute(
+                "INSERT INTO channel_versions(channel_id,template_version,definition) "
+                "VALUES (%s,1,%s)",
+                (
+                    channel_id,
+                    Jsonb(
+                        {
+                            "title": body["title"],
+                            "visibility": body["visibility"],
+                            "layout": layout,
+                            "actions": [],
+                        }
+                    ),
+                ),
+            )
             return {
                 "channel_id": channel_id,
                 **body,

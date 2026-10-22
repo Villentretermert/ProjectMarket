@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from marketob_api import __version__
 from marketob_api.auth_routes import router as auth_router
 from marketob_api.bot_routes import router as bot_router
+from marketob_api.channels import router as channel_router
 from marketob_api.config import Settings
 from marketob_api.errors import install_error_handlers
 from marketob_api.health import LiveStatus, ReadyStatus, database_status
@@ -19,7 +20,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         title="MarkeTOB local API",
         version=__version__,
         description=(
-            "Health, local identity, bot registration and message ingestion. "
+            "Health, local identity, bots, ingestion and published channel snapshots. "
             "Runtime OpenAPI lists implemented routes only."
         ),
         docs_url=None,
@@ -32,17 +33,25 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         allow_origins=configuration.allowed_origins,
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allow_headers=["Content-Type", "X-CSRF-Token", "Authorization", "Idempotency-Key"],
+        allow_headers=[
+            "Content-Type",
+            "X-CSRF-Token",
+            "Authorization",
+            "Idempotency-Key",
+            "If-None-Match",
+        ],
+        expose_headers=["ETag", "X-Request-ID", "Retry-After"],
     )
     application.include_router(auth_router(configuration))
     application.include_router(bot_router(configuration))
     application.include_router(ingestion_router(configuration))
+    application.include_router(channel_router(configuration))
 
     @application.get("/", include_in_schema=False)
     def index() -> dict[str, str]:
         return {
             "service": "MarkeTOB",
-            "stage": "ingestion",
+            "stage": "channels",
             "liveness": "/health/live",
             "readiness": "/health/ready",
             "implemented_api": "/openapi.json",

@@ -20,7 +20,7 @@ def prune(database: Database, batch: int = 5000) -> dict[str, int]:
     with database.transaction() as connection:
         history = connection.execute(
             "DELETE FROM ingest_history WHERE receipt_id IN (SELECT receipt_id FROM ingest_history "
-            "WHERE received_at<=now()-interval '7 days' ORDER BY received_at LIMIT %s "
+            "WHERE received_at<=now()-interval '30 days' ORDER BY received_at LIMIT %s "
             "FOR UPDATE SKIP LOCKED)",
             (batch,),
         ).rowcount

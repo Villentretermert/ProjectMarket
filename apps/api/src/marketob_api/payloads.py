@@ -15,7 +15,7 @@ VALIDATORS = {
     name: Draft202012Validator(
         {"$defs": SCHEMAS, "$ref": "#/$defs/" + name}, format_checker=FormatChecker()
     )
-    for name in ("Message", "ChannelCreate")
+    for name in ("Message", "ChannelCreate", "ChannelDraft", "Publish", "Rollback")
 }
 
 

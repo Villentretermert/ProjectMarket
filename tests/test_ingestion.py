@@ -287,7 +287,10 @@ def test_bounded_retention_preserves_latest_and_dedup(
     original = bot.post("/v1/bot/messages", json=body).json()
     database = Database(settings)
     with database.transaction() as connection:
-        connection.execute("UPDATE ingest_history SET received_at=now()-interval '8 days'")
+        connection.execute("UPDATE ingest_history SET received_at=now()-interval '29 days'")
+    assert prune(database) == {"history": 0, "receipts": 0}
+    with database.transaction() as connection:
+        connection.execute("UPDATE ingest_history SET received_at=now()-interval '31 days'")
     assert prune(database) == {"history": 1, "receipts": 0}
     assert bot.post("/v1/bot/messages", json=body).json() == original
     assert counts(settings) == {"records": 1, "receipts": 1, "history": 0, "outbox": 1}

@@ -42,3 +42,7 @@ D27 · G01/PM-005, 22 октября: «Отлично, приступай к с
 D28 · PM-006: [локальная identity](adr/0005-local-identity.md): личная B2B-организация с owner membership, без командных/email invitations; opaque отзываемые сессии; логическая деактивация с сохранением username tombstone. Это инженерная политика пилота, не новый ответ владельца.
 
 D29 · PM-007/008: [ADR-0006](adr/0006-bot-ingestion.md) — раздельные bootstrap/operational credentials, PostgreSQL snapshot/receipt/outbox в одной транзакции, durable token buckets и отдельный retention worker; draft-create входит в PM-008 для настройки источника без ручного SQL.
+
+D30 · G02, 22 октября: приняты все [12 ответов](reviews/G02/answers.md). Командные роли обязательны до внешнего пилота (PM-014, проверка PM-023); Selected users по умолчанию; данные обновляются сразу после публикации; Request purchase, quantity=1, без корзины/оплаты. Каталог повседневных товаров с автоматическими подтверждением/отказом, публичный настраиваемый RSS. History 30 дней, dedup 30 дней. Studio напоминает о ключах за 7 дней и при истечении. Разрешено выполнить PM-009–012, затем G03.
+
+D31 · PM-009: [ADR-0007](adr/0007-channel-publication.md) — immutable версии оформления, отдельный опубликованный указатель, живые данные, откат новой версией и ETag после проверки прав. Начальный пустой snapshot допускает data_revision=0.

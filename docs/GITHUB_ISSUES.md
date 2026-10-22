@@ -13,8 +13,8 @@
 | PM-006 | [#7](https://github.com/Villentretermert/ProjectMarket/issues/7) | task | done | closed |
 | PM-007 | [#8](https://github.com/Villentretermert/ProjectMarket/issues/8) | task | done | closed |
 | PM-008 | [#9](https://github.com/Villentretermert/ProjectMarket/issues/9) | task | done | closed |
-| G02 | [#10](https://github.com/Villentretermert/ProjectMarket/issues/10) | checkpoint | in_progress | open |
-| PM-009 | [#11](https://github.com/Villentretermert/ProjectMarket/issues/11) | task | planned | open |
+| G02 | [#10](https://github.com/Villentretermert/ProjectMarket/issues/10) | checkpoint | done | closed |
+| PM-009 | [#11](https://github.com/Villentretermert/ProjectMarket/issues/11) | task | in_progress | open |
 | PM-010 | [#12](https://github.com/Villentretermert/ProjectMarket/issues/12) | task | planned | open |
 | PM-011 | [#13](https://github.com/Villentretermert/ProjectMarket/issues/13) | task | planned | open |
 | PM-012 | [#14](https://github.com/Villentretermert/ProjectMarket/issues/14) | task | planned | open |

@@ -16,7 +16,7 @@ A signed-in business owner sends `POST /v1/channels` with cookie, Origin and CSR
 Response 201 contains a server channel ID, an empty compact layout at version 1,
 no actions and `published=false`. A bot must belong to the caller. Slugs are unique
 and never reveal a conflicting channel's private metadata. The draft accepts bot
-data. Publish/update and consumer snapshots are PM-009; this endpoint alone never
+data. Publish/update and consumer snapshots are implemented in [PM-009](CHANNELS.md); draft creation alone never
 makes a channel publicly readable. Bot creation/key exchange: [BOT_REGISTRATION.md](BOT_REGISTRATION.md).
 
 ## Send messages
@@ -60,7 +60,7 @@ revision only, not payload or credentials. Its consumer is implemented later.
   a rejected empty bucket consumes neither bucket. Counters survive API restart.
 - 429 supplies Retry-After. Retry the same message after backoff; use the original
   identity after an ambiguous network/503 response. Never replace it blindly.
-- Raw history is removed after 7 days, receipt dedup after 30 days by the local
+- Raw history is removed after 30 days, receipt dedup after 30 days by the local
   maintenance worker (5000 rows/table/pass, every 60s). Expired receipts are not
   replayed even before a cleanup pass. Latest content and tombstones remain.
 

@@ -1452,7 +1452,7 @@
     },
     "ChannelCreate": {
       "type": "object",
-      "description": "Create a draft owned channel bound to an owned bot.",
+      "description": "Create a draft owned channel bound to an owned bot. Visibility defaults to selected.",
       "properties": {
         "bot_id": {
           "type": "string",
@@ -1480,14 +1480,14 @@
             "public",
             "selected"
           ],
-          "description": "Read access policy."
+          "description": "Read access policy.",
+          "default": "selected"
         }
       },
       "required": [
         "bot_id",
         "slug",
-        "title",
-        "visibility"
+        "title"
       ],
       "additionalProperties": false
     },
@@ -1575,7 +1575,8 @@
             "public",
             "selected"
           ],
-          "description": "Read access policy."
+          "description": "Read access policy.",
+          "default": "selected"
         },
         "published": {
           "type": "boolean",
@@ -1604,6 +1605,66 @@
         "published",
         "layout",
         "actions"
+      ],
+      "additionalProperties": false
+    },
+    "Rollback": {
+      "type": "object",
+      "description": "Restore a previously published layout as a new published version; current data is unchanged.",
+      "properties": {
+        "target_template_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "description": "Monotonic revision; compare within the referenced resource."
+        },
+        "expected_template_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "description": "Monotonic revision; compare within the referenced resource."
+        }
+      },
+      "required": [
+        "target_template_version",
+        "expected_template_version"
+      ],
+      "additionalProperties": false
+    },
+    "PageVersion": {
+      "type": "object",
+      "description": "Immutable saved definition; published_at records its first publication, channel.published marks the current published version.",
+      "properties": {
+        "channel": {
+          "$ref": "#/$defs/Channel"
+        },
+        "created_at": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "RFC3339 timestamp with timezone; server returns UTC.",
+          "format": "date-time"
+        },
+        "published_at": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "RFC3339 timestamp with timezone; server returns UTC.",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "First publication time, or null for a draft never published."
+        }
+      },
+      "required": [
+        "channel",
+        "created_at",
+        "published_at"
       ],
       "additionalProperties": false
     },
@@ -1699,9 +1760,9 @@
         },
         "data_revision": {
           "type": "integer",
-          "minimum": 1,
+          "minimum": 0,
           "maximum": 9007199254740991,
-          "description": "Monotonic revision; compare within the referenced resource."
+          "description": "Current channel data revision; zero before the first message."
         },
         "records": {
           "type": "array",
@@ -2395,6 +2456,136 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/Channel"
+          },
+          "minItems": 0,
+          "maxItems": 100,
+          "uniqueItems": false,
+          "description": "Bounded list page."
+        },
+        "next_cursor": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Null at the end of the stable scan."
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "OwnedResource": {
+      "type": "object",
+      "description": "Owner-only source inventory, including sources not used in a published layout.",
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/Source"
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "description": "Monotonic revision; compare within the referenced resource."
+        },
+        "data_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "description": "Monotonic revision; compare within the referenced resource."
+        },
+        "updated_at": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "RFC3339 timestamp with timezone; server returns UTC.",
+          "format": "date-time"
+        },
+        "content": {
+          "description": "Typed payload.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/News"
+            },
+            {
+              "$ref": "#/$defs/Product"
+            },
+            {
+              "$ref": "#/$defs/Chart"
+            }
+          ]
+        },
+        "content_type": {
+          "type": "string",
+          "enum": [
+            "news",
+            "product",
+            "chart"
+          ],
+          "description": "Typed resource kind."
+        }
+      },
+      "required": [
+        "source",
+        "source_revision",
+        "data_revision",
+        "updated_at",
+        "content",
+        "content_type"
+      ],
+      "additionalProperties": false
+    },
+    "PageVersionList": {
+      "type": "object",
+      "description": "Caller-scoped list with limit/cursor pagination.",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PageVersion"
+          },
+          "minItems": 0,
+          "maxItems": 100,
+          "uniqueItems": false,
+          "description": "Bounded list page."
+        },
+        "next_cursor": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Null at the end of the stable scan."
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "OwnedResourceList": {
+      "type": "object",
+      "description": "Caller-scoped list with limit/cursor pagination.",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OwnedResource"
           },
           "minItems": 0,
           "maxItems": 100,

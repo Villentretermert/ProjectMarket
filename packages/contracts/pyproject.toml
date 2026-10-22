@@ -1,6 +1,6 @@
 [project]
 name = "marketob-contracts"
-version = "1.0.2"
+version = "1.0.3"
 description = "MarkeTOB specification and executable reference model, not a server"
 requires-python = ">=3.14,<3.15"
 dependencies = ["jsonschema==4.26.0"]

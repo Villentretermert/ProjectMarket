@@ -1,14 +1,14 @@
 # Текущее состояние
 
 **Дата:** 22 октября 2026. **Завершено:** 8/24 задач пилота, 0/4 задач развития.
-**После G01:** 4/4. **G02:** презентация показана, 12 отдельных вопросов заданы,
-ожидаются ответы или явное разрешение продолжить с допущениями. PM-009 не начата.
+**G02:** закрыта; 12 ответов сохранены, PM-009–012 разрешены.
+**После G02:** 0/4. PM-009 выполняется.
 
 - PM-001–008 завершены. PM-002 принят в Web-объёме после отсрочки Android владельцем.
 - G01 закрыта по явному указанию владельца. Плотность UI подтверждена и сохранена.
 - Работают локальный FastAPI, миграции, accounts/sessions/B2B/grants, registry/keys,
   draft-create и ingestion text/data/event/delete. PostgreSQL хранит снимки,
-  версии, квитанции и outbox. Retention worker очищает history/receipts 7/30 дней.
+  версии, квитанции и outbox. По G02 retention history/receipts меняется на 30/30 дней; проверка в PM-009.
 - [Итоговый CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39802915693):
   все 4 jobs PASS, Windows/Linux, Docker, 26 PostgreSQL + 47 unit/contract tests.
   Локально 73 tests PASS и настоящий HTTP API restart/replay/revoke PASS.

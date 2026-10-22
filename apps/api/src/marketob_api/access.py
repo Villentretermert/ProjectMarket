@@ -7,12 +7,14 @@ from marketob_api.errors import ApiError
 from marketob_api.identity import require_business
 
 
-def require_owner(connection: Connection, channel_id: str, user_id: str) -> dict[str, Any]:
+def require_owner(
+    connection: Connection, channel_id: str, user_id: str, *, include_deleted: bool = False
+) -> dict[str, Any]:
     organization = require_business(connection, user_id)
     row = connection.execute(
         "SELECT * FROM channel_access WHERE channel_id=%s AND org_id=%s "
-        "AND deleted_at IS NULL FOR UPDATE",
-        (channel_id, organization),
+        "AND (%s OR deleted_at IS NULL) FOR UPDATE",
+        (channel_id, organization, include_deleted),
     ).fetchone()
     if row is None:
         raise ApiError(404, "object_not_found", "The requested object is unavailable.")

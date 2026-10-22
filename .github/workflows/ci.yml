@@ -55,6 +55,7 @@ jobs:
       - run: docker compose up --build --detach --wait --wait-timeout 120
       - run: python scripts/smoke_api.py --database ok
       - run: python scripts/smoke_identity.py --bots
+      - run: python -m scripts.smoke_channels
       - name: Verify minimal non-root runtime
         run: |
           docker compose exec -T api python -c "import os, importlib.util; assert os.getuid() == 10001, 'runtime must be non-root'; assert not os.path.exists('/app/.env'), 'env file in image'; assert importlib.util.find_spec('pytest') is None, 'test framework in image'; assert importlib.util.find_spec('contracts') is not None, 'runtime schemas missing'; assert importlib.util.find_spec('contracts.reference_model') is None, 'reference model in runtime image'"
@@ -77,7 +78,7 @@ jobs:
         run: docker compose down --volumes
 
   integration:
-    name: PostgreSQL / identity, bots and ingestion
+    name: PostgreSQL / identity, bots, ingestion and channels
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
