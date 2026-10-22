@@ -116,7 +116,7 @@ def run_bot(
         env=bot_environment(directory, volumes),
         check=True,
         timeout=180,
-        creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+        creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0) if os.name == "nt" else 0,
     )
 
 
