@@ -200,3 +200,10 @@ CI 39846617703 на 79a3f979: Ubuntu/Windows, PostgreSQL/Chromium и Docker PASS
 ## 2026-10-22 · PM-014 · Local validation
 
 125 Python/PG/contract tests PASS (184.76s), 24 Edge UI scenarios PASS. Проверены конкурирующий отзыв, обе стадии заявки, новая сессия, audience draft vs published и все три роли. Исправлены переход после выдачи credential, доступные имена select и вертикальное размещение expiry banner. При 429 UI показывает Retry-After; обычные read quotas сохранены. Документация и реальные экраны сохранены; CI ещё ожидается.
+
+## 2026-10-22 · PM-015 implementation
+
+Начата разрешённая PM-015: избранное с синхронизацией аккаунта, ручным порядком и маркерами прочитанных ревизий. Макет и политика скрытия недоступных данных показаны до реализации. Максимум 100 каналов; конкурентная перестановка проверяет версию списка. PM-014 пока ожидает финальный браузерный job CI.
+## 2026-10-22 · PM-014/015 CI setup
+
+CI 39851029904: три jobs PASS; integration прошёл PostgreSQL/backend checks, но timeout во время загрузки apt fonts с azure.archive.ubuntu.com до браузерного прогона. Playwright теперь скачивает Chromium без повторной apt-установки имеющихся на hosted Ubuntu библиотек. Браузерные проверки сохранены полностью; следующий CI проверит runtime. Локально PM-015: 29 Edge сценариев PASS.
