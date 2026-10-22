@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-22",
+  "slides": 10,
+  "pptx": {
+    "sha256": "6bb7516ffa79d9522083b7c50b9a5da46737a6c2864b3e7c1ff03087bbe5abcf",
+    "native_tables": 5,
+    "editable_diagrams": true,
+    "package_integrity": "pass",
+    "layout": "pass",
+    "font": "Arial",
+    "import": "pass",
+    "visual_review": "All 10 final slides inspected; connector labels repaired on slide 3 and transaction geometry on slide 5."
+  },
+  "pdf": {
+    "sha256": "a93579e6221e906778df06526ad95862bf3b22983bd87414342ad755305faffc",
+    "pages": 10,
+    "format": "raster reading copy from reviewed slides",
+    "render": "Poppler, all 10 pages inspected",
+    "native_export": "unavailable: MODULE_NOT_FOUND"
+  },
+  "powerpoint_application_opened": false
+}

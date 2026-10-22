@@ -115,3 +115,7 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 ## 2026-10-22 · PM-008 состав Docker-образа
 
 После успешного healthcheck и HTTP identity/bot smoke проверка минимального образа обнаружила лишнюю reference model. Dockerfile теперь явно копирует только runtime API и два файла schema package; .dockerignore дополнительно исключает остальные contract sources. В CI у каждого packaging assert собственная причина.
+
+## 2026-10-22 · PM-008 принято / G02
+
+Финальный `6f62ac5`: все четыре CI jobs PASS, 47 unit/contract + 26 PostgreSQL tests, Docker HTTP burst/restart/revoke/retention. Локально 73 tests PASS и проверка heartbeat PASS. PM-008 закрывается. G02: 10 проверенных слайдов PPTX, PDF-копия для чтения, системный дизайн, пояснения к коду и 12 отдельных вопросов. Ответы ожидаются; PM-009 не начата. STATUS/ROADMAP/README и checkpoint-счётчик обновлены: 8/24, 4/4 после G01.

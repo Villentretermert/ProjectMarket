@@ -1,0 +1,75 @@
+{
+  "task": "PM-008",
+  "date": "2026-10-22",
+  "implementation_commit": "6f62ac541a99256bf2a27a871bb505dd48fa23ef",
+  "ci": {
+    "run_id": 39802915693,
+    "url": "https://github.com/Villentretermert/ProjectMarket/actions/runs/39802915693",
+    "required_jobs": [
+      {
+        "id": 119908342879,
+        "name": "Docker / PostgreSQL",
+        "conclusion": "success"
+      },
+      {
+        "id": 119908343502,
+        "name": "Python / ubuntu-latest",
+        "conclusion": "success"
+      },
+      {
+        "id": 119908343560,
+        "name": "Python / windows-latest",
+        "conclusion": "success"
+      },
+      {
+        "id": 119908345072,
+        "name": "PostgreSQL / identity, bots and ingestion",
+        "conclusion": "success"
+      }
+    ],
+    "python_tests": 47,
+    "postgres_tests": 26,
+    "docker": {
+      "startup": "pass",
+      "identity_and_bot_http": "pass",
+      "ingest_burst_accepted": 100,
+      "api_and_database_restart_replay": "pass",
+      "revoked_key_replay_rejected": true,
+      "maintenance_healthy": true,
+      "minimal_nonroot_image": "pass"
+    },
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "local": {
+    "os": "Windows",
+    "python": "3.14.7",
+    "postgresql": "18.6",
+    "tests_passed": 73,
+    "tests_skipped": 0,
+    "seconds": 39.88,
+    "ruff": "pass",
+    "mypy_files": 34,
+    "http_api_process_restart": "pass",
+    "maintenance_health_fresh_stale_missing": "pass",
+    "burst_report": "ingestion-burst.json"
+  },
+  "previous_ci_failures": [
+    {
+      "run": 39800525285,
+      "reason": "Compose wait required maintenance healthcheck",
+      "fixed_by": "534b227"
+    },
+    {
+      "run": 39802175134,
+      "reason": "Reference model was included by broad Docker COPY",
+      "fixed_by": "6f62ac5"
+    }
+  ],
+  "limitations": [
+    "Short synthetic burst only; sustained pilot SLO unproven",
+    "No local Docker engine",
+    "Consumer publish/read, actions, real pilot bots and product Web are subsequent tasks",
+    "Android and cloud deferred"
+  ]
+}

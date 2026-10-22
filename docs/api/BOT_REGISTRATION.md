@@ -19,8 +19,8 @@ one another. 256 random bits are generated; only SHA-256 verifiers and a public
 12-character prefix are stored. Raw secrets are returned only when issued, with
 `Cache-Control: no-store`. The API never logs request bodies/authorization headers.
 Initial scopes are `messages:write`, `events:read`, `events:ack`, `events:result`.
-This task implements their credential policy; messages and events follow in
-PM-008/010. `GET /v1/bot/identity` accepts any live operational key.
+The credential policy and messages (PM-008) are implemented; events follow in
+PM-010. `GET /v1/bot/identity` accepts any live operational key.
 
 ## Owner management
 

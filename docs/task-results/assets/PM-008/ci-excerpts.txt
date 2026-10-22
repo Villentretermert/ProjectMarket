@@ -1,0 +1,12 @@
+2026-10-22T15:15:09.2644187Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T15:15:09.8872653Z HTTP bot smoke passed: create, exchange, replay denied, identity, inventory, revoke
+2026-10-22T15:15:09.8873735Z HTTP identity smoke passed: register, session, business profile, CSRF, logout, deactivation
+2026-10-22T15:15:12.1623191Z {"transport": "real loopback HTTP", "bots": 4, "concurrent_clients": 4, "accepted": 100, "payload_body_characters": 512, "elapsed_seconds": 1.593, "requests_per_second": 62.78, "p50_ms": 59.74, "p95_ms": 74.82, "max_ms": 82.97, "errors": 0, "limitation": "Short synthetic burst, not sustained pilot capacity or UI latency."}
+2026-10-22T15:15:12.4917030Z HTTP smoke passed: live=200, ready=503, database=unavailable
+2026-10-22T15:15:12.8475863Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T15:15:15.6944655Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T15:15:16.2546568Z HTTP ingestion restart replay, conflict and revoked-key replay checks passed
+2026-10-22T15:15:17.9244039Z INFO:__main__:Retention removed history=0 receipts=0
+2026-10-22T15:15:18.1238230Z marketob-db-1            postgres:18.4-bookworm@sha256:882236b897e39051d2368c5ccc6cda944904723506b2dfc97f2a8f5bc9afa382   "docker-entrypoint.s…"   db            24 seconds ago   Up 5 seconds (healthy)            5432/tcp
+2026-10-22T15:15:18.1240814Z marketob-maintenance-1   marketob-maintenance                                                                             "python -m marketob_…"   maintenance   24 seconds ago   Up 16 seconds (healthy)           8000/tcp
+2026-10-22T15:15:09.4658794Z 26 passed, 47 deselected in 13.95s

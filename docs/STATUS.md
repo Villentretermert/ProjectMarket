@@ -1,17 +1,30 @@
 # Текущее состояние
 
-**Дата:** 22 октября 2026. **Этап:** основа, доступ, боты и данные. **Завершено:** 7/24 задач пилота, 0/4 задач развития. **После G01:** 3/4 до G02.
+**Дата:** 22 октября 2026. **Завершено:** 8/24 задач пилота, 0/4 задач развития.
+**После G01:** 4/4. **G02:** презентация показана, 12 отдельных вопросов заданы,
+ожидаются ответы или явное разрешение продолжить с допущениями. PM-009 не начата.
 
-- PM-001–007 завершены; PM-002 принят в Web-объёме после отсрочки Android владельцем.
-- G01 показана, 12 отдельных вопросов заданы. Плотность UI подтверждена; 22 октября владелец поручил перейти к следующей задаче. [Допущения и разрешение](reviews/G01/answers.md) сохранены отдельно от ответов.
-- PM-005: запускаемый FastAPI-каркас, настройки, health, uv workspace/lock, локальный Compose и CI. Чистая установка и HTTP на Windows проверены. [CI Windows/Linux/Docker](https://github.com/Villentretermert/ProjectMarket/actions/runs/39788405723) PASS; 39 unit/contract tests, линтер, формат, strict typing, отказ/восстановление PostgreSQL и restart API.
-- Docker на компьютере владельца отсутствует; контейнеры проверены в Linux CI. Identity и права реализованы; ingestion, actions/worker и подключённый к API клиент впереди. Прототип PM-003 остаётся demo.
-- Проектные цели: 100 ботов, 10 000 MAU, до 1 000 сообщений/мин; это не измеренная пропускная способность.
-- Пилот локальный, без облачных сервисов. Google/Firebase и background push отложены; предусмотрены локальные аккаунты и foreground updates. Android SDK-лицензии/сборка и телефонная проверка отложены владельцем; native gate PM-019/020.
-- Новое указание владельца: «отлично, приступай к следующим задачам». Далее последовательно PM-006 (аккаунты/права), PM-007 (регистрация/ключи ботов), PM-008 (приём/хранение). После PM-008 — G02 с презентацией и минимум 10 отдельными вопросами.
+- PM-001–008 завершены. PM-002 принят в Web-объёме после отсрочки Android владельцем.
+- G01 закрыта по явному указанию владельца. Плотность UI подтверждена и сохранена.
+- Работают локальный FastAPI, миграции, accounts/sessions/B2B/grants, registry/keys,
+  draft-create и ingestion text/data/event/delete. PostgreSQL хранит снимки,
+  версии, квитанции и outbox. Retention worker очищает history/receipts 7/30 дней.
+- [Итоговый CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39802915693):
+  все 4 jobs PASS, Windows/Linux, Docker, 26 PostgreSQL + 47 unit/contract tests.
+  Локально 73 tests PASS и настоящий HTTP API restart/replay/revoke PASS.
+- [Короткий замер](task-results/assets/PM-008/ingestion-burst.json): 100 сообщений,
+  4 бота/клиента, 29.55 req/s, p95 222.53ms, 0 errors. Длительный SLO не доказан.
+- Docker на компьютере владельца отсутствует; контейнеры проверены Linux CI.
+  Переносимая PostgreSQL работает локально на loopback:55432 без системной службы.
+- Публикация/consumer snapshots, actions/queue, SDK и пилотные боты ещё впереди.
+  Web PM-003 остаётся demo, не подключён к backend. APK/виджет не собраны.
+- Пилот локальный. Google/Firebase/облако, Android SDK-лицензия/сборка и USB-проверка
+  отложены владельцем. Эти вопросы не нужно задавать повторно.
+- После G02 следующий блок: PM-009 → PM-010 → PM-011 → PM-012, затем G03.
+  Физическое стирание аккаунтов, backup recovery и длительная нагрузка ещё не готовы.
 
-[Запуск](setup/LOCAL_DEVELOPMENT.md) · [Результат PM-005](task-results/PM-005.md) · [План](ROADMAP.md) · [GitHub Issues](GITHUB_ISSUES.md).
+[G02: презентация, код и вопросы](reviews/G02/README.md) · [Ответы](reviews/G02/answers.md)
+· [Запуск](setup/LOCAL_DEVELOPMENT.md) · [План](ROADMAP.md) · [Issues](GITHUB_ISSUES.md).
 
-Предыдущие доказательства: [PM-001](task-results/PM-001.md), [PM-002](task-results/PM-002.md), [PM-003 и изображения](task-results/PM-003.md), [PM-004 и контракт](task-results/PM-004.md), [G01](reviews/G01/README.md).
-
-PM-006 принята: локальные аккаунты, сессии, B2B workspace и grants; 58 локальных тестов и HTTP smoke PASS; все четыре CI jobs PASS. PM-007 принята: 64 tests и все четыре CI jobs PASS. PM-008 в работе: ingestion/retention, локальные PostgreSQL и HTTP restart проверки пройдены; ожидается CI.
+Результаты: [PM-005](task-results/PM-005.md), [PM-006](task-results/PM-006.md),
+[PM-007](task-results/PM-007.md), [PM-008](task-results/PM-008.md).
