@@ -140,7 +140,7 @@ def faults(lab: Lab) -> dict[str, Any]:
             try:
                 news.send_message(failed_message)
             except APIError as error:
-                assert error.status == 503
+                assert error.status == 500 and error.code == "internal_error"
             else:
                 raise AssertionError("Injected transaction failure was not reached")
             assert (

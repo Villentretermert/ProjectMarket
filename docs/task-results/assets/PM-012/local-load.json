@@ -1,0 +1,99 @@
+{
+  "result": "PASS",
+  "profile": "API baseline; not full L2, no UI",
+  "seconds": 180,
+  "elapsed_seconds": 180.139,
+  "bots": 100,
+  "read_sessions": 10,
+  "writer_threads": 16,
+  "target_messages_per_minute": 1000,
+  "scheduled": 3000,
+  "status_counts": {
+    "200": 3000
+  },
+  "successful_messages_per_minute": 999.23,
+  "successful_ingest_latency": {
+    "p50_ms": 160.49,
+    "p95_ms": 295.02,
+    "p99_ms": 353.13,
+    "max_ms": 459.88
+  },
+  "schedule_lag": {
+    "p50_ms": 0.4,
+    "p95_ms": 0.72,
+    "p99_ms": 1.64,
+    "max_ms": 17.83
+  },
+  "reads": {
+    "200": 1549
+  },
+  "read_http_latency": {
+    "p50_ms": 136.09,
+    "p95_ms": 253.76,
+    "p99_ms": 326.68,
+    "max_ms": 411.35
+  },
+  "message_bytes_min_max": [
+    3260,
+    24557
+  ],
+  "content_mix": "40% news, 40% product, 20% chart",
+  "durable_receipts_after_restart": 3000,
+  "outbox_receipts_after_restart": 3000,
+  "last_source_revisions_verified": 100,
+  "schema_bytes_before_after": [
+    2220032,
+    17981440
+  ],
+  "python": "3.14.7",
+  "os": "Windows-11-10.0.26200-SP0",
+  "logical_cpus": 16,
+  "postgres": "18.6",
+  "code_commit": "41146612ba45f205bd3d455eb110e051f0b15ef5",
+  "test_only_overrides": {
+    "auth_rate_limit": 1000,
+    "write_rate_limit": 10000
+  },
+  "production_ingest_limits_unchanged": {
+    "per_bot_per_minute": 60,
+    "global_per_minute": 1000
+  },
+  "limitations": [
+    "Client HTTP+SDK timings, not server-only latency",
+    "Synthetic loopback traffic",
+    "No UI/live SLO or 100 concurrent client acceptance",
+    "No payment actions during load",
+    "30-minute L2, burst, backup and resource monitoring remain PM-022/021"
+  ],
+  "hardware": {
+    "cpu": [
+      {
+        "Name": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+        "NumberOfCores": 8,
+        "NumberOfLogicalProcessors": 16
+      }
+    ],
+    "memory": [
+      {
+        "TotalPhysicalMemory": 68582264832
+      }
+    ],
+    "disks": [
+      {
+        "FriendlyName": "KINGSTON SA400S37960G",
+        "MediaType": "SSD",
+        "Size": 960197124096
+      },
+      {
+        "FriendlyName": "Samsung SSD 980 PRO 1TB",
+        "MediaType": "SSD",
+        "Size": 1000204886016
+      }
+    ]
+  },
+  "database_disk": "C: KINGSTON SA400S37960G, SATA SSD",
+  "harness_sha256": {
+    "scripts/load_backend.py": "078fadbeb15664e536064a73fa2b4a82ff980348be72e9eb33cae7ee29f48c9a",
+    "scripts/backend_lab.py": "d8481f3b005d5593d47e32436584d7b57be70e66f88d3561adeb1d483877001a"
+  }
+}
