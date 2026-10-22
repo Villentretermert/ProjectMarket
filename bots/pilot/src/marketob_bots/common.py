@@ -14,7 +14,7 @@ from marketob_sdk.client import identifier
 
 from marketob_bots.state import Journal, StateError
 
-RSS_URL = "https://www.nasa.gov/news-release/feed/"
+RSS_URL = "https://feeds.bbci.co.uk/news/world/rss.xml"
 ENV_KEYS = {
     "MARKETOB_API_URL",
     "MARKETOB_BOT_KEY",

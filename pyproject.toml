@@ -48,4 +48,4 @@ select = ["E", "F", "I", "UP", "B"]
 python_version = "3.14"
 plugins = ["pydantic.mypy"]
 strict = true
-files = ["apps/api/src", "tests", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "scripts/smoke_identity.py", "scripts/smoke_ingestion.py", "scripts/smoke_channels.py", "scripts/smoke_actions.py", "scripts/smoke_bots.py", "scripts/pilot_bots.py", "scripts/backend_lab.py", "scripts/load_backend.py", "scripts/fault_bot.py", "scripts/smoke_backend.py", "bots/examples", "packages/bot-sdk/src", "bots/pilot/src"]
+files = ["apps/api/src", "tests", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "scripts/smoke_identity.py", "scripts/smoke_ingestion.py", "scripts/smoke_channels.py", "scripts/smoke_actions.py", "scripts/smoke_bots.py", "scripts/pilot_bots.py", "scripts/backend_lab.py", "scripts/load_backend.py", "scripts/fault_bot.py", "scripts/smoke_backend.py", "scripts/smoke_web.py", "bots/examples", "packages/bot-sdk/src", "bots/pilot/src"]

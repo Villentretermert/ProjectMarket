@@ -31,6 +31,19 @@ def check(url: str, database: str, wait: float = 30) -> None:
                 and ready_code == expected_code
                 and ready.get("database") == database
             ):
+                for asset in (
+                    "",
+                    "app.js",
+                    "api.js",
+                    "dom.js",
+                    "actions.js",
+                    "render.js",
+                    "styles.css",
+                ):
+                    with urlopen(url.rstrip("/") + "/app/" + asset, timeout=5) as response:
+                        assert response.status == 200
+                        assert response.headers["Cache-Control"] == "no-store"
+                        assert len(response.read()) > 100
                 print(f"HTTP smoke passed: live=200, ready={ready_code}, database={database}")
                 return
         except URLError, TimeoutError, ConnectionError:

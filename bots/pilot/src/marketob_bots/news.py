@@ -162,7 +162,7 @@ def cycle(client: BotClient, journal: Journal, config: Configuration) -> dict[st
     source = (
         "Synthetic RSS fixture"
         if config.offline
-        else "NASA RSS"
+        else "BBC News · https://www.bbc.com/news"
         if config.rss_url == RSS_URL
         else "Configured RSS feed"
     )

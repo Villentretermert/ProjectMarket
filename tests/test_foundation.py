@@ -29,6 +29,21 @@ def test_liveness_requires_no_secrets_or_database() -> None:
     assert response.headers["cache-control"] == "no-store"
 
 
+def test_web_assets_are_packaged_no_store_and_constrained() -> None:
+    with client() as http:
+        page = http.get("/app/")
+        assert page.status_code == 200
+        assert 'lang="en"' in page.text
+        assert "frame-ancestors 'none'" in page.headers["content-security-policy"]
+        assert page.headers["cache-control"] == "no-store"
+        for asset in ("app.js", "api.js", "dom.js", "actions.js", "render.js", "styles.css"):
+            result = http.get("/app/" + asset)
+            assert result.status_code == 200
+            assert result.headers["x-content-type-options"] == "nosniff"
+        assert http.get("/app/.env").status_code == 404
+        assert http.get("/app/web_routes.py").status_code == 404
+
+
 def test_missing_database_is_not_ready_and_does_not_connect() -> None:
     with patch("marketob_api.health.psycopg.connect") as connect, client() as http:
         response = http.get("/health/ready")

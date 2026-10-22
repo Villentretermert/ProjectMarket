@@ -101,6 +101,12 @@ jobs:
       - run: docker compose -f compose.yaml -f deploy/compose.test.yaml up db --detach --wait
       - run: uv run --locked python scripts/test_postgres.py
       - run: uv run --locked python scripts/test_postgres.py --backend
+      - name: Browser acceptance dependencies
+        working-directory: apps/client
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - run: uv run --locked python scripts/test_postgres.py --web
       - name: Remove only disposable CI resources
         if: always()
         run: docker compose -f compose.yaml -f deploy/compose.test.yaml down --volumes

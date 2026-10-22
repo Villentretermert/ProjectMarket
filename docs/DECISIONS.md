@@ -48,3 +48,5 @@ D30 · G02, 22 октября: приняты все [12 ответов](reviews
 D31 · PM-009: [ADR-0007](adr/0007-channel-publication.md) — immutable версии оформления, отдельный опубликованный указатель, живые данные, откат новой версией и ETag после проверки прав. Начальный пустой snapshot допускает data_revision=0.
 
 D32 · PM-010: [ADR-0008](adr/0008-action-delivery.md) — PostgreSQL request/event/outbox, bot-scoped result IDs, отдельные ACK/result, unknown после 60с без ACK или 5мин без прогресса. Отзыв cancels unACKed / reconciles ACKed; незавершённое не очищается по возрасту.
+
+D33 · G03, 22 октября: все [13 ответов](reviews/G03/answers.md) приняты. Owner/Admin/Editor; Editor публикует и откатывает, ключи только Owner/Admin, добавление по username. После входа My Space; товары list, новости article; подтверждение Request purchase до отправки, unknown = Awaiting confirmation. Избранное вручную; My Space autosave + Undo; RSS общих новостей. Разрешён весь PM-013–016, затем G04.

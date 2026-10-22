@@ -141,7 +141,7 @@ def publish(owner: Http, channels: dict[str, Any]) -> None:
                 "block_id": resource,
                 "source": {"channel_id": channel["channel_id"], "resource_id": resource},
                 "content_type": content,
-                "view": {"chart": "line", "news": "compact", "product": "card"}[content],
+                "view": {"chart": "line", "news": "article", "product": "list"}[content],
                 "action_ids": [],
             }
             if content == "product":

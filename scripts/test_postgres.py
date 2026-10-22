@@ -14,6 +14,7 @@ def main() -> None:
     parser.add_argument(
         "--backend", action="store_true", help="Run process faults and a 60s paced baseline"
     )
+    parser.add_argument("--web", action="store_true", help="Run real browser/API/bot acceptance")
     args = parser.parse_args()
     environment = dict(os.environ)
     if "MARKETOB_TEST_DATABASE_URL" not in environment:
@@ -23,6 +24,9 @@ def main() -> None:
         environment["MARKETOB_TEST_DATABASE_URL"] = (
             f"postgresql://marketob:{quote(password, safe='')}@127.0.0.1:55432/marketob"
         )
+    if args.web:
+        subprocess.run([sys.executable, "-m", "scripts.smoke_web"], env=environment, check=True)
+        return
     if args.backend:
         subprocess.run([sys.executable, "-m", "scripts.smoke_backend"], env=environment, check=True)
         subprocess.run(

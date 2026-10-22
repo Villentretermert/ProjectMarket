@@ -1,7 +1,7 @@
 # Local pilot bots
 
-The Web demo is not connected to this backend yet. These commands exercise real
-API data and request statuses; use the API or owner session until PM-013/014.
+The [working Web client](WEB.md) reads these real API channels and request statuses.
+Open `/app/` and sign in with the same owner account after provisioning.
 No Google/Firebase/cloud account is needed. Python 3.14.7 and `uv==0.13.5` are pinned.
 First start the backend using [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md).
 
@@ -24,7 +24,7 @@ share or print these files. Windows files inherit directory ACLs; use a private
 user directory. The scripts request mode 0600 on platforms supporting POSIX modes.
 
 `--offline` seeds synthetic RSS data without internet. Omit it to seed the public
-NASA feed. The continuous news command above reads the real feed every 300 seconds;
+BBC World feed. The continuous news command above reads the real feed every 300 seconds;
 add `--offline` to keep synthetic data. Change `MARKETOB_RSS_URL` in `news.env`
 for another public HTTPS RSS/Atom feed. Stop each process with Ctrl+C. Restart with
 the **same** journal. Never run two writers with separate journals for one bot.

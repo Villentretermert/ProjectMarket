@@ -13,6 +13,7 @@ from marketob_api.errors import install_error_handlers
 from marketob_api.health import LiveStatus, ReadyStatus, database_status
 from marketob_api.ingestion import router as ingestion_router
 from marketob_api.transport import ProtocolMiddleware
+from marketob_api.web_routes import router as web_router
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -48,6 +49,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(ingestion_router(configuration))
     application.include_router(channel_router(configuration))
     application.include_router(action_router(configuration))
+    application.include_router(web_router())
 
     @application.get("/", include_in_schema=False)
     def index() -> dict[str, str]:
@@ -57,6 +59,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "liveness": "/health/live",
             "readiness": "/health/ready",
             "implemented_api": "/openapi.json",
+            "web": "/app/",
         }
 
     @application.get("/health/live", tags=["operations"])
