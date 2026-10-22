@@ -1,23 +1,35 @@
 """Application factory; no credentials or database connection required on import."""
 
 from fastapi import FastAPI, Response
+from fastapi.middleware.cors import CORSMiddleware
 
 from marketob_api import __version__
+from marketob_api.auth_routes import router as auth_router
 from marketob_api.config import Settings
+from marketob_api.errors import install_error_handlers
 from marketob_api.health import LiveStatus, ReadyStatus, database_status
+from marketob_api.transport import ProtocolMiddleware
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     configuration = settings if settings is not None else Settings()
     application = FastAPI(
-        title="MarkeTOB API foundation",
+        title="MarkeTOB local API",
         version=__version__,
-        description=(
-            "PM-005 health endpoints only. Product API implementation follows in PM-006–018."
-        ),
+        description=("Health and local identity. Runtime OpenAPI lists implemented routes only."),
         docs_url=None,
         redoc_url=None,
     )
+    install_error_handlers(application)
+    application.add_middleware(ProtocolMiddleware)
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=configuration.allowed_origins,
+        allow_credentials=True,
+        allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allow_headers=["Content-Type", "X-CSRF-Token", "Authorization", "Idempotency-Key"],
+    )
+    application.include_router(auth_router(configuration))
 
     @application.get("/", include_in_schema=False)
     def index() -> dict[str, str]:

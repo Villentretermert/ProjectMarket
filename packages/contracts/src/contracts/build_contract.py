@@ -51,6 +51,9 @@ define("Credentials", {"username": ref("UserUsername"), "password":text("Local p
 SCHEMAS["UserUsername"] = deepcopy(SCHEMAS["User"]["properties"]["username"])
 define("RegisterUser", {**SCHEMAS["Credentials"]["properties"], "display_name": text("Public display name.",80)}, "Create a local B2C account; the same user may own B2B bots.")
 define("Session", {"user":ref("User"), "csrf_token":text("Session-bound anti-CSRF token for unsafe cookie-authenticated operations; not a bot key.",256), "expires_at":TIME}, "Session cookie is set in response headers; never store its value in a layout.")
+define("BusinessProfileWrite", {"name":text("Name of this user's personal B2B workspace.",80)}, "Enable or rename your own B2B workspace; no client roles or tenant IDs.")
+define("BusinessProfile", {"org_id":ID, "name":text("Workspace name.",80), "role":enum("Server-derived membership; team invitations are outside this pilot.","owner")}, "Personal owner organization; one per registered user.")
+define("ConfirmPassword", {"password":deepcopy(SCHEMAS["Credentials"]["properties"]["password"])}, "Re-authenticate before account deactivation.")
 define("BotCreate", {"name":text("Human-readable bot name.",80)}, "Owner creates a bot before exchanging its individual registration credential.")
 define("Bot", {"bot_id":ID, "name":text("Human-readable bot name.",80), "state":enum("Registration state.","pending","active","revoked")}, "Owned bot metadata without secrets.")
 define("Registration", {"bot":ref("Bot"), "registration_credential":text("One-time random credential; raw value only in this response.",256,32), "expires_at":TIME}, "Registration credential expires in 15 minutes; response is no-store.")
@@ -115,7 +118,7 @@ def endpoint(method,path,operation,description,request=None,response=None,status
     parameters=[]
     for part in path.split('/'):
         if part.startswith('{'):
-            parameter_schema = SCHEMAS['ChannelCreate']['properties']['slug'] if part=='{slug}' else ID
+            parameter_schema = SCHEMAS['ChannelCreate']['properties']['slug'] if part=='{slug}' else (SCHEMAS['UserUsername'] if part=='{username}' else ID)
             parameters.append({"name":part[1:-1],"in":"path","required":True,"schema":parameter_schema})
     if listing:
         parameters += [{"name":"limit","in":"query","schema":number("Maximum results per page.",1,100)}, {"name":"cursor","in":"query","schema":CURSOR}]
@@ -138,6 +141,10 @@ endpoint('post','/v1/auth/register','registerUser','Create a local account; vali
 endpoint('post','/v1/auth/login','login','Create a revocable local session; validate same-origin request.', 'Credentials','Session',200,None)
 endpoint('get','/v1/auth/session','session','Read the current session and CSRF token.',response='Session')
 endpoint('delete','/v1/auth/session','logout','Revoke current session and clear cookie.',status=204)
+endpoint('get','/v1/account/business-profile','readBusinessProfile','Read your own B2B organization; no arbitrary tenant parameter.',response='BusinessProfile')
+endpoint('put','/v1/account/business-profile','enableBusinessProfile','Enable or rename a personal B2B organization; owner membership is server-assigned.','BusinessProfileWrite','BusinessProfile')
+endpoint('delete','/v1/account','deactivateAccount','Re-authenticate, revoke sessions, disable owned sources and remove memberships/grants. Username remains reserved.','ConfirmPassword',status=204)
+endpoint('get','/v1/users/by-username/{username}','lookupRegisteredUser','Exact username lookup for a signed-in B2B owner; returns only public profile metadata.',response='User')
 endpoint('post','/v1/bots','createBot','Create an owned bot and issue a one-time registration credential.','BotCreate','Registration',201)
 endpoint('get','/v1/bots','listBots','List owned bots.',response=collection('Bot'),listing=True)
 endpoint('post','/v1/bots/{bot_id}/registration','renewRegistration','Invalidate prior bootstrap credentials and issue a fresh one.',EMPTY,'Registration',201)
@@ -182,7 +189,7 @@ endpoint('put','/v1/preferences/{channel_id}','setPreference','Set own open-app 
 endpoint('get','/v1/preferences','listPreferences','List own event preferences.',response=collection('Preference'),listing=True)
 endpoint('get','/v1/updates','readUpdates','Poll authorized change hints; no cursor starts at current watermark and requires snapshot refresh.',response='UpdatePage',params=({'name':'cursor','in':'query','schema':CURSOR},))
 
-for session_path, method, code in (('/v1/auth/register','post','201'),('/v1/auth/login','post','200'),('/v1/auth/session','delete','204')):
+for session_path, method, code in (('/v1/auth/register','post','201'),('/v1/auth/login','post','200'),('/v1/auth/session','delete','204'),('/v1/account','delete','204')):
     PATHS[session_path][method]['responses'][code]['headers']['Set-Cookie']={
         'schema': {'type':'string'},
         'description':'Set or expire marketob_session; HttpOnly; SameSite=Strict; Path=/; Secure except loopback HTTP. See protocol.'}
@@ -197,7 +204,7 @@ def replace_refs(value):
 
 def artifacts():
     bundle={"$schema":"https://json-schema.org/draft/2020-12/schema", "$id":"urn:marketob:contract:1.0", "$defs":SCHEMAS}
-    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.0","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
+    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.1","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
     return {"schemas.json":bundle,"openapi.json":replace_refs(spec)}
 
 

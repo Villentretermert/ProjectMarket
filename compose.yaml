@@ -26,6 +26,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     init: true
     read_only: true
     tmpfs:
@@ -34,5 +36,20 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+  migrate:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+    environment:
+      MARKETOB_DATABASE_URL: postgresql://marketob:${POSTGRES_PASSWORD:?Run python scripts/dev_env.py first}@db:5432/marketob
+    command: ["python", "-m", "marketob_api.migrate"]
+    healthcheck:
+      disable: true
+    depends_on:
+      db:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp
 volumes:
   postgres_data:

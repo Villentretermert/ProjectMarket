@@ -154,6 +154,71 @@
       ],
       "additionalProperties": false
     },
+    "BusinessProfileWrite": {
+      "type": "object",
+      "description": "Enable or rename your own B2B workspace; no client roles or tenant IDs.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Name of this user's personal B2B workspace."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "BusinessProfile": {
+      "type": "object",
+      "description": "Personal owner organization; one per registered user.",
+      "properties": {
+        "org_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Opaque stable identifier; never a credential.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Workspace name."
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "owner"
+          ],
+          "description": "Server-derived membership; team invitations are outside this pilot."
+        }
+      },
+      "required": [
+        "org_id",
+        "name",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "ConfirmPassword": {
+      "type": "object",
+      "description": "Re-authenticate before account deactivation.",
+      "properties": {
+        "password": {
+          "type": "string",
+          "minLength": 12,
+          "maxLength": 128,
+          "description": "Local password; write-only, never logged.",
+          "writeOnly": true
+        }
+      },
+      "required": [
+        "password"
+      ],
+      "additionalProperties": false
+    },
     "BotCreate": {
       "type": "object",
       "description": "Owner creates a bot before exchanging its individual registration credential.",

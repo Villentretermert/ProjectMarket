@@ -35,7 +35,7 @@ markers = ["integration: requires an explicitly configured PostgreSQL test datab
 [tool.ruff]
 target-version = "py314"
 line-length = 100
-include = ["apps/api/**/*.py", "tests/**/*.py", "scripts/dev_env.py", "scripts/smoke_*.py", "bots/examples/*.py"]
+include = ["apps/api/**/*.py", "tests/**/*.py", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_*.py", "bots/examples/*.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
@@ -44,4 +44,4 @@ select = ["E", "F", "I", "UP", "B"]
 python_version = "3.14"
 plugins = ["pydantic.mypy"]
 strict = true
-files = ["apps/api/src", "tests", "scripts/dev_env.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "bots/examples"]
+files = ["apps/api/src", "tests", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "scripts/smoke_identity.py", "bots/examples"]

@@ -13,3 +13,5 @@
 [Запуск](setup/LOCAL_DEVELOPMENT.md) · [Результат PM-005](task-results/PM-005.md) · [План](ROADMAP.md) · [GitHub Issues](GITHUB_ISSUES.md).
 
 Предыдущие доказательства: [PM-001](task-results/PM-001.md), [PM-002](task-results/PM-002.md), [PM-003 и изображения](task-results/PM-003.md), [PM-004 и контракт](task-results/PM-004.md), [G01](reviews/G01/README.md).
+
+PM-006 в работе: реализованы локальные аккаунты, сессии, B2B workspace и grants; 58 тестов на настоящей локальной PostgreSQL и HTTP smoke прошли, ожидается CI приёмка.

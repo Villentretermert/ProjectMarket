@@ -1,0 +1,5 @@
+# Explicit test-only override; ordinary compose.yaml never exposes PostgreSQL.
+services:
+  db:
+    ports:
+      - "127.0.0.1:55432:5432"

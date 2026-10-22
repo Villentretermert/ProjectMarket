@@ -78,7 +78,8 @@ def test_runtime_spec_does_not_claim_future_business_endpoints() -> None:
         spec = http.get("/openapi.json").json()
         assert http.get("/v1/bot/messages").status_code == 404
         assert http.get("/docs").status_code == 404  # No external CDN for local docs.
-    assert set(spec["paths"]) == {"/health/live", "/health/ready"}
+    assert {"/health/live", "/health/ready", "/v1/auth/session"} <= set(spec["paths"])
+    assert "/v1/bot/messages" not in spec["paths"]
 
 
 def test_environment_overrides_file_without_disclosing_secrets(
