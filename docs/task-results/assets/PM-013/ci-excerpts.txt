@@ -1,0 +1,21 @@
+2026-10-22T20:12:18.2412546Z 48 passed, 70 deselected, 1 warning in 30.01s
+2026-10-22T20:14:16.9219094Z PASS: Private channel does not leak anonymously
+2026-10-22T20:14:17.0349841Z PASS: Keyboard login opens My Space
+2026-10-22T20:14:18.9403945Z PASS: Catalog renders actual bot data and confirmed request
+2026-10-22T20:14:21.1889969Z PASS: Demo supplier decline is shown
+2026-10-22T20:14:21.3261782Z PASS: Reload recovers existing request by GET
+2026-10-22T20:14:21.8807673Z PASS: Lost POST response recovers the same request after reload
+2026-10-22T20:14:22.0578953Z PASS: Expanded RSS and accessible chart from second bot
+2026-10-22T20:14:22.2511064Z PASS: 360px viewport has no horizontal overflow
+2026-10-22T20:14:22.3322712Z PASS: Offline clears private content and recovery revalidates access
+2026-10-22T20:14:22.3347992Z PASS: Plain text and unsafe links never execute
+2026-10-22T20:14:22.4421414Z PASS: Server outage clears stale data and offers retry
+2026-10-22T20:14:22.5097936Z PASS: Revoked source clears content instead of showing stale blocks
+2026-10-22T20:14:22.5770030Z PASS: Loading and empty response states are explicit
+2026-10-22T20:14:22.6420947Z PASS: Sign out clears request references and private UI
+2026-10-22T20:14:22.7404325Z PASS: real Web/API/bot browser acceptance; disposable state removed.
+
+2026-10-22T20:12:28.5539195Z All checks passed!
+2026-10-22T20:12:35.9639555Z Success: no issues found in 60 source files
+2026-10-22T20:12:46.3018418Z 70 passed, 48 deselected in 8.60s
+2026-10-22T20:12:48.6659934Z HTTP smoke passed: live=200, ready=503, database=not_configured

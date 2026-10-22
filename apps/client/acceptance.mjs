@@ -10,7 +10,10 @@ const errors=[]; page.on('pageerror',error=>errors.push(error.message));
 const check=async(name,fn)=>{await fn(); checks.push(name); console.log('PASS: '+name);};
 const waitText=async(text)=>page.getByText(text,{exact:true}).first().waitFor();
 const go=async route=>{await page.goto(config.origin+'/app/#/'+route);};
-const save=async name=>{await mkdir(config.output,{recursive:true}); await page.screenshot({path:path.join(config.output,name+'.png'),fullPage:true});};
+const save=async name=>{
+  if(name!=='failure')await page.locator('#sidebar').getByRole('link',{name:'＋ Open a channel',exact:true}).waitFor();
+  await mkdir(config.output,{recursive:true}); await page.screenshot({path:path.join(config.output,name+'.png'),fullPage:true});
+};
 const overflow=async()=>assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);
 try {
   await check('Private channel does not leak anonymously',async()=>{

@@ -188,3 +188,7 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 ## 2026-10-22 · PM-013 · Working Web
 
 Web /app/ включён в Python API/wheel/Docker: local login, каналы, news/product/chart, подтверждение Request purchase, реальные статусы и восстановление того же запроса после потери ответа. Безопасный текст/HTTPS, CSP, loading/empty/error/offline, адаптивность и keyboard. BBC World вместо NASA по G03, list/article по умолчанию. 118 Python/PG tests PASS; 14 браузерных сценариев Edge PASS, 360/1440px, SQL проверка отсутствия дубля. CI Linux/Docker/Chromium ещё ожидается. Studio/My Space пока явно отмечены до следующих задач.
+
+## 2026-10-22 · PM-013 accepted / PM-014 started
+
+CI 39846617703 на 79a3f979: Ubuntu/Windows, PostgreSQL/Chromium и Docker PASS. 118 distinct Python/PG tests, 14 browser scenarios. Скриншоты пересняты после загрузки sidebar; повторный Edge PASS. PM-013 закрыта, счётчик 13/24, после G03 1/4. Начата PM-014 по разрешению полного блока.

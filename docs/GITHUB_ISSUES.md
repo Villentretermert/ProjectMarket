@@ -19,8 +19,8 @@
 | PM-011 | [#13](https://github.com/Villentretermert/ProjectMarket/issues/13) | task | done | closed |
 | PM-012 | [#14](https://github.com/Villentretermert/ProjectMarket/issues/14) | task | done | closed |
 | G03 | [#15](https://github.com/Villentretermert/ProjectMarket/issues/15) | checkpoint | done | closed |
-| PM-013 | [#16](https://github.com/Villentretermert/ProjectMarket/issues/16) | task | in_progress | open |
-| PM-014 | [#17](https://github.com/Villentretermert/ProjectMarket/issues/17) | task | planned | open |
+| PM-013 | [#16](https://github.com/Villentretermert/ProjectMarket/issues/16) | task | done | closed |
+| PM-014 | [#17](https://github.com/Villentretermert/ProjectMarket/issues/17) | task | in_progress | open |
 | PM-015 | [#18](https://github.com/Villentretermert/ProjectMarket/issues/18) | task | planned | open |
 | PM-016 | [#19](https://github.com/Villentretermert/ProjectMarket/issues/19) | task | planned | open |
 | G04 | [#20](https://github.com/Villentretermert/ProjectMarket/issues/20) | checkpoint | planned | open |
