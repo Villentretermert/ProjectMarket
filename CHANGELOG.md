@@ -107,3 +107,7 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 ## 2026-10-22 · PM-007 принято
 
 Все четыре CI jobs PASS на `ab48d25`; issue закрывается с результатами lifecycle/изолированных ключей/конкурентного обмена. Следующая PM-008 реализуется на проверенной зависимости.
+
+## 2026-10-22 · PM-008 проверка запуска maintenance
+
+Первый CI: Python Windows/Linux и PostgreSQL PASS, Docker остановился на Compose --wait без healthcheck нового maintenance-сервиса. Добавлен heartbeat последнего успешного прохода и отдельная --health проверка (130 секунд). Failed database pass не обновляет heartbeat. Docker прогон повторяется; функциональные 73 tests локально PASS.

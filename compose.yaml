@@ -59,7 +59,11 @@ services:
       MARKETOB_DATABASE_URL: postgresql://marketob:${POSTGRES_PASSWORD:?Run python scripts/dev_env.py first}@db:5432/marketob
     command: ["python", "-m", "marketob_api.maintenance"]
     healthcheck:
-      disable: true
+      test: ["CMD", "python", "-m", "marketob_api.maintenance", "--health"]
+      interval: 10s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
     depends_on:
       migrate:
         condition: service_completed_successfully

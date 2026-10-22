@@ -67,7 +67,7 @@ revision only, not payload or credentials. Its consumer is implemented later.
 Compose starts maintenance automatically. For direct Python start a second process
 `python -m marketob_api.maintenance`; `--once` performs one bounded cleanup pass.
 If maintenance is stopped, physical retention cleanup pauses; monitor its output.
-It logs counts and safe failures only. Account/source erasure and backup policies
+It logs counts and safe failures only. Compose checks a heartbeat refreshed only after a successful pass; --health fails when it is missing or older than 130 seconds. Account/source erasure and backup policies
 remain PM-023/021; account deactivation currently prevents access immediately.
 
 ## Verification and current boundary
