@@ -99,3 +99,11 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 ## 2026-10-22 · PM-007 registry и ключи
 
 Реализованы registry, одноразовый bootstrap, scoped operational keys, rotation/revoke, last_seen, signed inventory и квоты. Контракт 1.0.2 добавляет два read endpoints без изменения существующих ответов. 64 локальных теста PASS, включая двойной обмен на PostgreSQL; HTTP smoke расширен для Docker. CI приёмка впереди.
+
+## 2026-10-22 · PM-008 приём и хранение
+
+Добавлены черновик канала, schema-validated text/data/event/delete, idempotency/versions/tombstones, атомарные receipt/history/outbox и token buckets. Retention worker включён в Compose. 9 новых PostgreSQL сценариев PASS; 100 реальных HTTP сообщений за 3.384s, p95 222.53ms; restart/replay/revoke PASS. Устаревший тест отсутствия messages обновлён. Длительная нагрузка и UI пока не проверяются; CI приёмка впереди.
+
+## 2026-10-22 · PM-007 принято
+
+Все четыре CI jobs PASS на `ab48d25`; issue закрывается с результатами lifecycle/изолированных ключей/конкурентного обмена. Следующая PM-008 реализуется на проверенной зависимости.

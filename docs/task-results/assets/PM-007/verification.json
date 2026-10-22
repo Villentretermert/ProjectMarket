@@ -1,0 +1,39 @@
+{
+  "task": "PM-007",
+  "date": "2026-10-22",
+  "implementation_commit": "ab48d2583dc03e5a39e56aa864cd72691de81984",
+  "ci": {
+    "run_id": 39797711564,
+    "url": "https://github.com/Villentretermert/ProjectMarket/actions/runs/39797711564",
+    "jobs": [
+      {
+        "id": 119889276567,
+        "name": "Docker / PostgreSQL",
+        "conclusion": "success"
+      },
+      {
+        "id": 119889277180,
+        "name": "Python / windows-latest",
+        "conclusion": "success"
+      },
+      {
+        "id": 119889277249,
+        "name": "Python / ubuntu-latest",
+        "conclusion": "success"
+      },
+      {
+        "id": 119889277462,
+        "name": "PostgreSQL / identity and bots",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "local": {
+    "tests_passed": 64,
+    "tests_skipped": 0,
+    "focused_after_validation_change": 31,
+    "ruff": "pass",
+    "mypy_files": 28,
+    "real_http_bot_smoke": "pass"
+  }
+}
