@@ -128,7 +128,8 @@ python scripts/validate_requirements.py
 
 CI выполняет lint, format, strict typing, тесты и startup smoke на Windows/Linux,
 затем отдельно строит образ и проверяет PostgreSQL, отказ/восстановление и restart
-API. Транзакции, миграции, нагрузка и продуктовые маршруты пока не проверяются.
+API. PM-006 добавляет отдельный PostgreSQL job для миграций и identity/grants.
+Приём сообщений, очередь и нагрузочные свойства проверяются следующими задачами.
 
 ## Раскладка кода
 

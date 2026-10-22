@@ -91,3 +91,7 @@ G01: .gitattributes фиксирует PDF/PPTX/изображения как bi
 - Реализованы Argon2id, 24-часовые opaque sessions, origin/CSRF, общий безопасный Error envelope, ограниченный JSON transport, PostgreSQL rate windows, личный B2B workspace и owner membership, exact username lookup, grants и подписанные курсоры. Удаление аккаунта реализовано как явно описанная деактивация.
 - Миграции SQL транзакционные, с checksum/advisory lock; Compose запускает отдельный migrate service. Контракт 1.0.1 расширен аддитивно до 67 схем/48 плановых операций; runtime не объявляет будущие маршруты готовыми.
 - Подготовлена отдельная PostgreSQL 18.6 в .local без системной службы. Кириллица в пути initdb обходится коротким Windows-путём. 58 тестов и настоящий HTTP identity smoke локально прошли; CI-проверка обновлённого контейнера продолжается.
+
+## 2026-10-22 · PM-006 принято / PM-007 начало
+
+PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tests и HTTP smoke PASS; issue закрывается с доказательствами. PM-007: начаты registry, bootstrap/operational credentials и серверные права. Зависимость PM-006 проверена; новый пользовательский UI пока не подключён.

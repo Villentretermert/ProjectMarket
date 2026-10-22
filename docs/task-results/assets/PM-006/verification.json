@@ -1,0 +1,46 @@
+{
+  "task": "PM-006",
+  "date": "2026-10-22",
+  "implementation_commit": "94a2cf36a449ea10fd523d3e507008d827529434",
+  "ci": {
+    "run_id": 39794709631,
+    "url": "https://github.com/Villentretermert/ProjectMarket/actions/runs/39794709631",
+    "jobs": [
+      {
+        "id": 119879015940,
+        "name": "PostgreSQL / identity",
+        "conclusion": "success"
+      },
+      {
+        "id": 119879016119,
+        "name": "Docker / PostgreSQL",
+        "conclusion": "success"
+      },
+      {
+        "id": 119879016149,
+        "name": "Python / windows-latest",
+        "conclusion": "success"
+      },
+      {
+        "id": 119879016307,
+        "name": "Python / ubuntu-latest",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "local": {
+    "python": "3.14.7",
+    "postgresql": "18.6",
+    "tests_passed": 58,
+    "tests_skipped": 0,
+    "ruff": "pass",
+    "mypy_files": 24,
+    "http_identity_smoke": "pass"
+  },
+  "limitations": [
+    "Docker only in CI",
+    "Channel access fixtures; no content routes yet",
+    "Android and Google deferred",
+    "Account deactivation is logical, not complete physical erasure"
+  ]
+}
