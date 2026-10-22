@@ -143,7 +143,7 @@
       "kind": "task",
       "priority": "P0",
       "stage": 3,
-      "status": "in_progress",
+      "status": "done",
       "path": "docs/tasks/PM-009.md",
       "depends_on": [
         "PM-004",

@@ -1,0 +1,9 @@
+2026-10-22T17:44:09.7358605Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T17:44:10.2121060Z HTTP bot smoke passed: create, exchange, replay denied, identity, inventory, revoke
+2026-10-22T17:44:10.2122518Z HTTP identity smoke passed: register, session, business profile, CSRF, logout, deactivation
+2026-10-22T17:44:10.7961688Z HTTP channels PASS: selected default, draft isolation, publish, private access, rollback, delete
+2026-10-22T17:44:12.6447576Z HTTP smoke passed: live=200, ready=503, database=unavailable
+2026-10-22T17:44:13.2033237Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T17:44:15.2566876Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T17:44:15.6839748Z HTTP ingestion restart replay, conflict and revoked-key replay checks passed
+2026-10-22T17:44:06.0726776Z 34 passed, 47 deselected, 1 warning in 19.21s

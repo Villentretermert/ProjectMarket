@@ -135,7 +135,7 @@ PM-007/008 расширяют job для ключей, транзакционн�
 
 | Каталог | Содержание сейчас | Следующий шаг |
 |---|---|---|
-| `apps/api/src/marketob_api` | Identity/grants, боты/ключи, ingestion, retention | PM-009: публикация/чтение |
+| `apps/api/src/marketob_api` | Identity/grants, боты/ключи, ingestion, retention, публикация/чтение | PM-010: заявки |
 | `apps/client` | Граница клиента; ссылка на принятый UX | PM-013–020 |
 | `packages/contracts` | Устанавливаемые PM-004 схемы и reference model | Проверки реального API |
 | `packages/bot-sdk` | Граница независимого SDK | PM-011 |
