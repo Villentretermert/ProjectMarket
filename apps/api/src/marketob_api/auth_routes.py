@@ -226,13 +226,16 @@ def router(settings: Settings) -> APIRouter:
     def grant(channel_id: str, user_id: str, body: Empty, request: Request) -> None:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
-            require_owner(connection, channel_id, current.user_id)
+            require_business(connection, current.user_id)
+            # Deactivation locks the target user before their pending request channels.
+            # Check the user first so granting does not invert that lock order.
             user = connection.execute(
                 "SELECT 1 FROM users WHERE user_id=%s AND deleted_at IS NULL FOR SHARE",
                 (user_id,),
             ).fetchone()
             if user is None:
                 raise ApiError(404, "object_not_found", "The registered user is unavailable.")
+            require_owner(connection, channel_id, current.user_id)
             connection.execute(
                 "INSERT INTO grants(channel_id,user_id) VALUES (%s,%s) ON CONFLICT DO NOTHING",
                 (channel_id, user_id),

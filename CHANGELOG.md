@@ -139,3 +139,7 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 ## 2026-10-22 · PM-010 — delivery и конкурентный отзыв
 
 Добавлены migration 005, actions.py/request_state.py, durable события/квитанции результатов, async long poll без удержания соединений, timeout/retention worker, hooks для grant/visibility/account/bot/channel revocation. Проверен порядок organization→bot→channel→request с учётом FK. Добавлены API guide/ADR, PostgreSQL tests и двухфазный HTTP restart smoke; CI auth quota 100 только для синтетического общего IP, normal default 10 сохранён. Первые 8 action tests PASS; полный набор проверяется.
+
+## 2026-10-22 · PM-010 — проверка grant/deactivation
+
+После полного локального набора 94 PASS и CI c49a6c4 (39828023837, success) при чтении кода найден потенциально обратный порядок блокировок grant и деактивации пользователя с pending-заявкой. Grant теперь проверяет target user до channel. Добавлен race test; связанные actions/identity/channels 32 PASS, Ruff/format/mypy PASS. Следующий CI проверит финальную правку.

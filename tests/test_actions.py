@@ -533,3 +533,22 @@ def test_account_deactivation_racing_result_preserves_real_result(
         assert connection.execute("SELECT state FROM action_requests").fetchone() == {
             "state": "confirmed"
         }
+
+
+def test_grant_racing_deactivation_with_pending_work_does_not_deadlock(
+    settings: Settings, shop: tuple[Any, ...]
+) -> None:
+    owner, _, customer, source, user_id = shop
+    queue(customer, source)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        granting = pool.submit(lambda: owner.put(path(source, "/grants/" + user_id), json={}))
+        deactivation = pool.submit(
+            lambda: customer.request("DELETE", "/v1/account", json={"password": PASSWORD})
+        )
+        grant, deleted = granting.result(), deactivation.result()
+    assert deleted.status_code == 204 and grant.status_code in {204, 404}
+    with Database(settings).transaction() as connection:
+        assert connection.execute("SELECT count(*) AS n FROM grants").fetchone() == {"n": 0}
+        assert connection.execute("SELECT state FROM action_requests").fetchone() == {
+            "state": "cancelled"
+        }
