@@ -100,6 +100,7 @@ jobs:
       - run: python scripts/dev_env.py
       - run: docker compose -f compose.yaml -f deploy/compose.test.yaml up db --detach --wait
       - run: uv run --locked python scripts/test_postgres.py
+      - run: uv run --locked python scripts/test_postgres.py --backend
       - name: Remove only disposable CI resources
         if: always()
         run: docker compose -f compose.yaml -f deploy/compose.test.yaml down --volumes

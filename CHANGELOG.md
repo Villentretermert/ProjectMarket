@@ -162,3 +162,7 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 - PM-011 CI выявил Linux-only mypy ошибку обращения к Windows CREATE_NO_WINDOW; заменено переносимым getattr. Локально mypy --platform linux и Windows, Ruff PASS.
 
 - PM-011 принята: code 49110ee, CI 39833237430, все 4 jobs PASS; 117 tests и оба Python/Docker smoke PASS. Счётчик 11/24, после G02 3/4.
+
+## 2026-10-22 — PM-012: интеграционный стенд (в работе)
+
+- Начата воспроизводимая проверка API/maintenance/bot process crash и открытого потока 1000 сообщений/мин с отдельной тестовой схемой PostgreSQL. Полный L2 30 минут/100 UI clients и live latency остаются PM-018/022; здесь baseline API и сохранность.
