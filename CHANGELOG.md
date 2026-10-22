@@ -210,3 +210,7 @@ CI 39851029904: три jobs PASS; integration прошёл PostgreSQL/backend ch
 ## 2026-10-22 · PM-015 local validation
 
 Избранное реализовано в PostgreSQL и Web; контракт 1.0.5, 84 schemas / 61 operations. 130 Python/contract/PG tests PASS (200,67с), 29 Edge scenarios PASS; Ruff/mypy Windows/Linux PASS. Три фактических экрана проверены. Сначала тест выявил неподключённые валидаторы новых запросов; исправлено. Описания полей схем дополнены и весь набор повторно пройден. Приёмка ожидает CI.
+
+## 2026-10-22 · PM-014 accepted
+
+CI 39853394634 на b4c26cb прошёл все 4 jobs: 125 distinct tests, 24 Chromium scenarios, backend fault/load и Docker. PM-014 закрыта; 14/24, после G03 2/4. PM-015 code 70d31e0 подготовлен к CI после 130 локальных tests и 29 Edge scenarios.

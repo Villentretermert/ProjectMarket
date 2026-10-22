@@ -234,7 +234,7 @@
       "kind": "task",
       "priority": "P0",
       "stage": 4,
-      "status": "in_progress",
+      "status": "done",
       "path": "docs/tasks/PM-014.md",
       "depends_on": [
         "PM-007",
