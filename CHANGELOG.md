@@ -143,3 +143,7 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 ## 2026-10-22 · PM-010 — проверка grant/deactivation
 
 После полного локального набора 94 PASS и CI c49a6c4 (39828023837, success) при чтении кода найден потенциально обратный порядок блокировок grant и деактивации пользователя с pending-заявкой. Grant теперь проверяет target user до channel. Добавлен race test; связанные actions/identity/channels 32 PASS, Ruff/format/mypy PASS. Следующий CI проверит финальную правку.
+
+## 2026-10-22 · PM-010 — приёмка
+
+Финальный commit c9396c5: CI 39828592091 completed/success, 48 integration + 47 unit/contract, все 4 jobs PASS. Контейнерный HTTP/DB outage/restart сохраняет pending/ACKed заявки и дедупликацию результатов. Доказательства сохранены, PM-010 принята: 10/24, 2/4 после G02. Далее PM-011 SDK и два бота.
