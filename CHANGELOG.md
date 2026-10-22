@@ -170,3 +170,5 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 - Устранены устаревшие формулировки Google-входа в планах PM-013/015: текущий пилот использует согласованный локальный вход. CHECKPOINTS приведён к принятым ответам G02; scope будущих задач не расширен.
 
 - PM-012 baseline PASS: 3000/3000 за180.139с, 100 bot identities, 10 read sessions, 1549/1549 чтений, p95 ingest295.02мс/read253.76мс. После API restart все3000 receipt/outbox и100 latest revisions сохранены. CI выявил неверное ожидание503 на искусственный SQL trigger error; контрактно верный ответ500/internal_error, ожидание исправлено.
+
+- PM-012 принята: b3c00f4/CI39835253441,4 jobs PASS,117 tests, fault lab и local/CI paced load PASS. Завершено12/24, после G02 4/4. Начата G03, дальнейшие PM-задачи ждут обсуждения.

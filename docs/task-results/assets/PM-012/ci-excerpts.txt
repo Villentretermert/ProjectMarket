@@ -1,0 +1,30 @@
+2026-10-22T18:54:01.2220426Z 48 passed, 69 deselected in 22.75s
+2026-10-22T18:54:04.3751426Z Crash boundary recovered: before_ack
+2026-10-22T18:54:05.3930233Z Crash boundary recovered: after_ack
+2026-10-22T18:54:06.3555946Z Crash boundary recovered: before_result
+2026-10-22T18:54:07.3334609Z Crash boundary recovered: after_result
+2026-10-22T18:54:09.1664849Z {"result": "PASS", "crash_boundaries": ["before_ack", "after_ack", "before_result", "after_result"], "api_restarts": 5, "worker_restart": true, "duplicate_writers": 8, "one_receipt_outbox": true, "http_outbox_failure_rolled_back": true, "one_demo_effect_per_request": true, "private_read_denial": true, "revoked_key_replay_denial": true, "ui_tested": false}
+2026-10-22T18:55:14.5055324Z {"result": "PASS", "profile": "API baseline; not full L2, no UI", "seconds": 60, "elapsed_seconds": 60.01, "bots": 20, "read_sessions": 2, "writer_threads": 16, "target_messages_per_minute": 1000, "scheduled": 1000, "status_counts": {"200": 1000}, "successful_messages_per_minute": 999.83, "successful_ingest_latency": {"p50_ms": 21.52, "p95_ms": 75.56, "p99_ms": 86.4, "max_ms": 151.5}, "schedule_lag": {"p50_ms": 0.12, "p95_ms": 0.18, "p99_ms": 0.24, "max_ms": 1.12}, "reads": {"200": 116}, "read_http_latency": {"p50_ms": 19.67, "p95_ms": 54.58, "p99_ms": 65.71, "max_ms": 70.82}, "message_bytes_min_max": [3260, 24557], "content_mix": "40% news, 40% product, 20% chart", "durable_receipts_after_restart": 1000, "outbox_receipts_after_restart": 1000, "last_source_revisions_verified": 20, "schema_bytes_before_after": [1253376, 6471680], "python": "3.14.7", "os": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39", "logical_cpus": 4, "postgres": "18.4 (Debian 18.4-1.pgdg12+1)", "code_commit": "b3c00f4624923abc8ec475b139b7c705965ae551", "test_only_overrides": {"auth_rate_limit": 1000, "write_rate_limit": 10000}, "production_ingest_limits_unchanged": {"per_bot_per_minute": 60, "global_per_minute": 1000}, "limitations": ["Client HTTP+SDK timings, not server-only latency", "Synthetic loopback traffic", "No UI/live SLO or 100 concurrent client acceptance", "No payment actions during load", "30-minute L2, burst, backup and resource monitoring remain PM-022/021"]}
+
+2026-10-22T18:53:49.2076558Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T18:53:49.7553705Z HTTP bot smoke passed: create, exchange, replay denied, identity, inventory, revoke
+2026-10-22T18:53:49.7554740Z HTTP identity smoke passed: register, session, business profile, CSRF, logout, deactivation
+2026-10-22T18:53:50.4598950Z HTTP channels PASS: selected default, draft isolation, publish, private access, rollback, delete
+2026-10-22T18:53:52.9611864Z HTTP actions before restart PASS: two requests, one pending and one ACKed
+2026-10-22T18:53:53.2725528Z HTTP smoke passed: live=200, ready=503, database=unavailable
+2026-10-22T18:53:53.5900406Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T18:53:56.3299614Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T18:53:56.7758220Z HTTP ingestion restart replay, conflict and revoked-key replay checks passed
+2026-10-22T18:53:57.3421599Z HTTP actions restart PASS: pending/ACK recovery, confirmed/failed, dedup, status
+2026-10-22T18:54:02.8856932Z {"result": "PASS", "mode": "python", "catalog_records": 4, "news_chart_records": 6, "outcomes": ["confirmed", "failed"], "restart_unchanged_data": true, "cross_bot_write_rejected": true, "private_anonymous_rejected": true}
+2026-10-22T18:54:11.4020999Z {"result": "PASS", "mode": "docker", "catalog_records": 4, "news_chart_records": 6, "outcomes": ["confirmed", "failed"], "restart_unchanged_data": true, "cross_bot_write_rejected": true, "private_anonymous_rejected": true}
+
+2026-10-22T18:53:19.0464248Z All checks passed!
+2026-10-22T18:53:32.8014493Z 69 passed, 48 deselected in 6.53s
+2026-10-22T18:53:34.4592088Z HTTP smoke passed: live=200, ready=503, database=not_configured
+2026-10-22T18:53:34.5530779Z {"result": "PASS", "requirements": 30, "stories": 16, "questions_covered": 17, "product_tests_run": false}
+
+2026-10-22T18:54:13.6723776Z All checks passed!
+2026-10-22T18:54:30.7482611Z 69 passed, 48 deselected in 8.37s
+2026-10-22T18:54:32.9568969Z HTTP smoke passed: live=200, ready=503, database=not_configured
+2026-10-22T18:54:33.8437556Z {"result": "PASS", "requirements": 30, "stories": 16, "questions_covered": 17, "product_tests_run": false}

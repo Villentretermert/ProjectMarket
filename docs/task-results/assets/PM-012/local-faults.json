@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "crash_boundaries": [
+    "before_ack",
+    "after_ack",
+    "before_result",
+    "after_result"
+  ],
+  "api_restarts": 5,
+  "worker_restart": true,
+  "duplicate_writers": 8,
+  "one_receipt_outbox": true,
+  "http_outbox_failure_rolled_back": true,
+  "one_demo_effect_per_request": true,
+  "private_read_denial": true,
+  "revoked_key_replay_denial": true,
+  "ui_tested": false
+}

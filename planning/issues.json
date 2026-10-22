@@ -188,7 +188,7 @@
       "kind": "task",
       "priority": "P0",
       "stage": 3,
-      "status": "in_progress",
+      "status": "done",
       "path": "docs/tasks/PM-012.md",
       "depends_on": [
         "PM-009",
@@ -203,7 +203,7 @@
       "kind": "checkpoint",
       "priority": "P0",
       "stage": 3,
-      "status": "planned",
+      "status": "in_progress",
       "path": "docs/reviews/G03.md",
       "depends_on": [
         "PM-009",
