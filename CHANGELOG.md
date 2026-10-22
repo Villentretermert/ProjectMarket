@@ -76,3 +76,10 @@ G01: .gitattributes фиксирует PDF/PPTX/изображения как bi
 - Локально: 39 passed, 1 optional PostgreSQL test skipped; lint и typing проходят. Итоговые CI/startup-доказательства будут записаны в результат PM-005 после выполнения.
 
 - Первый Linux CI подтвердил Docker/PostgreSQL, но обнаружил отсутствие корня репозитория в pytest console-entrypoint при импорте scripts.dev_env. Явный pytest pythonpath исправляет одинаковый запуск через CLI/модуль; команда CI локально повторена: 39 passed.
+
+## 2026-10-22 — PM-005: приёмка
+
+- 39 unit/contract tests прошли локально и в CI на Windows/Linux; lint, format и strict typing PASS. Чистый git archive без .env/venv устанавливается по lockfile и запускает HTTP.
+- Linux Docker CI собрал минимальный непривилегированный образ, подтвердил PostgreSQL readiness, отказ/восстановление БД и restart API. Локальная установка Docker не выполнялась. Отчёт, выдержки и ссылка CI сохранены в результате задачи.
+- Обновлены STATUS/ROADMAP/README, инструкция запуска, GitHub task и счётчик: 5/24, 1/4 до G02. AGENTS отсылает к актуальному счётчику вместо устаревшего нуля.
+- По новому указанию владельца далее выполняются PM-006–008 по очереди; затем G02.

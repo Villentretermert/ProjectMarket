@@ -1,0 +1,23 @@
+GitHub run 39788405723; commit d4a24d8c7c65be1d1422577c45ec62fc8b7c7030
+
+Windows Python
+2026-10-22T13:37:57.2984602Z All checks passed!
+2026-10-22T13:37:57.6452615Z 12 files already formatted
+2026-10-22T13:38:00.9332630Z Success: no issues found in 12 source files
+2026-10-22T13:38:04.5378843Z 39 passed, 1 deselected in 2.39s
+2026-10-22T13:38:05.8487765Z HTTP smoke passed: live=200, ready=503, database=not_configured
+2026-10-22T13:38:06.1474080Z All installed packages are compatible
+
+Linux Python
+2026-10-22T13:37:15.7219913Z All checks passed!
+2026-10-22T13:37:15.7619907Z 12 files already formatted
+2026-10-22T13:37:20.5463779Z Success: no issues found in 12 source files
+2026-10-22T13:37:25.3806846Z 39 passed, 1 deselected in 3.76s
+2026-10-22T13:37:26.5864326Z HTTP smoke passed: live=200, ready=503, database=not_configured
+2026-10-22T13:37:26.6282941Z All installed packages are compatible
+
+Docker PostgreSQL
+2026-10-22T13:37:49.4676354Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T13:37:49.8926816Z HTTP smoke passed: live=200, ready=503, database=unavailable
+2026-10-22T13:37:50.1743144Z HTTP smoke passed: live=200, ready=200, database=ok
+2026-10-22T13:37:51.9274556Z HTTP smoke passed: live=200, ready=200, database=ok

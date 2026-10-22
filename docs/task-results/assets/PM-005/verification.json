@@ -1,0 +1,263 @@
+{
+  "date": "2026-10-22",
+  "task": "PM-005",
+  "implementation_commit": "d4a24d8c7c65be1d1422577c45ec62fc8b7c7030",
+  "ci": {
+    "url": "https://github.com/Villentretermert/ProjectMarket/actions/runs/39788405723",
+    "id": 39788405723,
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 119857593816,
+        "name": "Python / windows-latest",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -m pip install uv==0.13.5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv sync --locked",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked ruff check .",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked ruff format --check .",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked mypy",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked pytest -q -m \"not integration\"",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked python -m scripts.smoke_local",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv pip check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python scripts/validate_requirements.py",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 119857594155,
+        "name": "Docker / PostgreSQL",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Reject missing Compose credentials",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python scripts/dev_env.py",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run docker compose config --quiet",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run docker compose up --build --detach --wait --wait-timeout 120",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python scripts/smoke_api.py --database ok",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify minimal non-root runtime",
+            "conclusion": "success"
+          },
+          {
+            "name": "Database outage and recovery",
+            "conclusion": "success"
+          },
+          {
+            "name": "Service status",
+            "conclusion": "success"
+          },
+          {
+            "name": "Remove only disposable CI resources",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 119857594184,
+        "name": "Python / ubuntu-latest",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -m pip install uv==0.13.5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv sync --locked",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked ruff check .",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked ruff format --check .",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked mypy",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked pytest -q -m \"not integration\"",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run --locked python -m scripts.smoke_local",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv pip check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python scripts/validate_requirements.py",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "local": {
+    "os": "Windows",
+    "python": "3.14.7",
+    "uv": "0.13.5",
+    "unit_contract_tests": {
+      "passed": 39,
+      "optional_postgres_skipped": 1,
+      "warnings": 0
+    },
+    "ruff": "pass",
+    "mypy": {
+      "status": "pass",
+      "source_files": 12
+    },
+    "pip_check": {
+      "status": "pass",
+      "packages": 49
+    },
+    "clean_archive": {
+      "commit": "19a906b99f492e29400812b43c5442f46cfb29ec",
+      "contains_env": false,
+      "contains_previous_venv": false,
+      "locked_install": "pass",
+      "actual_http_smoke": "pass",
+      "external_probe": "pass",
+      "live_status": 200,
+      "readiness_status": 503,
+      "readiness_database": "not_configured"
+    },
+    "docker_installed": false
+  },
+  "docker_ci": {
+    "build": "pass",
+    "postgres_readiness": 200,
+    "outage_readiness": 503,
+    "outage_liveness": 200,
+    "database_recovery_readiness": 200,
+    "api_restart_readiness": 200,
+    "non_root_uid": 10001,
+    "no_env_file_in_image": true,
+    "no_pytest_or_contract_package_in_runtime": true,
+    "missing_compose_credentials_rejected": true
+  },
+  "limitations": [
+    "No local Docker engine",
+    "No product auth, tables, bot endpoints or worker",
+    "No product Web client or Android build",
+    "No load or transactional-concurrency validation"
+  ]
+}
