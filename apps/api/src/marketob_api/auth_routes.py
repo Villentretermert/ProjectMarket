@@ -24,6 +24,7 @@ from marketob_api.identity import (
     require_business,
     verify_password,
 )
+from marketob_api.request_state import reconcile_access, reconcile_user
 
 
 class ClosedModel(BaseModel):
@@ -154,12 +155,16 @@ def router(settings: Settings) -> APIRouter:
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
             row = connection.execute(
-                "SELECT password_hash FROM users WHERE user_id=%s FOR UPDATE",
+                "SELECT password_hash FROM users WHERE user_id=%s FOR NO KEY UPDATE",
                 (current.user_id,),
             ).fetchone()
             assert row is not None
             if not verify_password(row["password_hash"], body.password.get_secret_value()):
                 raise ApiError(401, "invalid_credentials", "Password verification failed.")
+            connection.execute(
+                "SELECT org_id FROM organizations WHERE owner_user_id=%s FOR NO KEY UPDATE",
+                (current.user_id,),
+            )
             connection.execute("DELETE FROM sessions WHERE user_id=%s", (current.user_id,))
             connection.execute(
                 "INSERT INTO change_outbox(channel_id,user_id,kind) "
@@ -187,6 +192,14 @@ def router(settings: Settings) -> APIRouter:
                 "WHERE user_id=%s",
                 (current.user_id,),
             )
+            owned = connection.execute(
+                "SELECT channel_id FROM channel_access WHERE org_id IN "
+                "(SELECT org_id FROM organizations WHERE owner_user_id=%s)",
+                (current.user_id,),
+            ).fetchall()
+            for source in owned:
+                reconcile_access(connection, source["channel_id"], disabled=True)
+            reconcile_user(connection, current.user_id)
         response.delete_cookie(
             COOKIE,
             path="/",
@@ -235,6 +248,7 @@ def router(settings: Settings) -> APIRouter:
                 (channel_id, user_id),
             ).fetchone()
             if removed:
+                reconcile_access(connection, channel_id)
                 connection.execute(
                     "INSERT INTO change_outbox(channel_id,user_id,kind) "
                     "VALUES (%s,%s,'access.revoked')",

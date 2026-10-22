@@ -11,6 +11,7 @@ import psycopg
 from marketob_api.config import Settings
 from marketob_api.database import Database
 from marketob_api.errors import ApiError
+from marketob_api.request_state import maintain_requests
 
 LOGGER = logging.getLogger(__name__)
 HEARTBEAT = Path(tempfile.gettempdir()) / "marketob-maintenance-heartbeat"
@@ -50,14 +51,17 @@ def main() -> None:
     while True:
         try:
             result = prune(database)
+            requests = maintain_requests(database)
             if not args.once:
                 # A failed database pass must not refresh the worker heartbeat.
                 HEARTBEAT.touch()
-            if args.once or any(result.values()):
+            if args.once or any(result.values()) or any(requests.values()):
                 LOGGER.info(
-                    "Retention removed history=%d receipts=%d",
+                    "Maintenance history=%d receipts=%d unknown=%d requests_removed=%d",
                     result["history"],
                     result["receipts"],
+                    requests["unknown"],
+                    requests["requests"],
                 )
         except psycopg.Error, ApiError:
             # Never log database diagnostics, DSNs or private payloads.

@@ -21,15 +21,25 @@ def require_owner(
     return row
 
 
-def require_read(connection: Connection, channel_id: str, user_id: str | None) -> dict[str, Any]:
-    # Row lock serializes visibility/grant revocation with a protected read/action.
-    row = connection.execute(
-        "SELECT a.*, o.owner_user_id FROM channel_access a "
-        "JOIN organizations o USING(org_id) WHERE a.channel_id=%s AND o.active "
-        "AND a.deleted_at IS NULL AND a.published FOR SHARE OF a, o",
+def require_read(
+    connection: Connection, channel_id: str, user_id: str | None, *, exclusive: bool = False
+) -> dict[str, Any]:
+    # Match bot/owner lock order: organization before channel. No lock upgrades for actions.
+    organization = connection.execute(
+        "SELECT o.org_id,o.owner_user_id FROM organizations o JOIN channel_access a USING(org_id) "
+        "WHERE a.channel_id=%s AND o.active FOR SHARE OF o",
         (channel_id,),
     ).fetchone()
+    if organization is None:
+        raise ApiError(404, "source_unavailable", "This source is unavailable.")
+    lock = "FOR UPDATE" if exclusive else "FOR SHARE"
+    row = connection.execute(
+        "SELECT * FROM channel_access WHERE channel_id=%s AND org_id=%s "
+        "AND deleted_at IS NULL AND published " + lock,
+        (channel_id, organization["org_id"]),
+    ).fetchone()
     if row is not None:
+        row["owner_user_id"] = organization["owner_user_id"]
         allowed = row["visibility"] == "public" or row["owner_user_id"] == user_id
         if not allowed and user_id is not None:
             allowed = (

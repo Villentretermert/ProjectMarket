@@ -29,6 +29,7 @@ class Http:
         *,
         expected: int = 200,
         key: str = "",
+        extra_headers: dict[str, str] | None = None,
     ) -> dict[str, Any]:
         headers = {
             "Origin": self.origin,
@@ -37,6 +38,7 @@ class Http:
         }
         if key:
             headers["Authorization"] = "Bearer " + key
+        headers.update(extra_headers or {})
         request = Request(
             self.origin + path,
             method=method,

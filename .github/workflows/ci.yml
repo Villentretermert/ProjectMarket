@@ -39,6 +39,9 @@ jobs:
     name: Docker / PostgreSQL
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      # Multiple disposable identity scenarios share one loopback address in this job.
+      MARKETOB_AUTH_RATE_LIMIT: 100
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
@@ -60,6 +63,7 @@ jobs:
         run: |
           docker compose exec -T api python -c "import os, importlib.util; assert os.getuid() == 10001, 'runtime must be non-root'; assert not os.path.exists('/app/.env'), 'env file in image'; assert importlib.util.find_spec('pytest') is None, 'test framework in image'; assert importlib.util.find_spec('contracts') is not None, 'runtime schemas missing'; assert importlib.util.find_spec('contracts.reference_model') is None, 'reference model in runtime image'"
       - run: python scripts/smoke_ingestion.py --phase before
+      - run: python -m scripts.smoke_actions --phase before
       - name: Database outage and recovery
         run: |
           docker compose stop db
@@ -69,6 +73,7 @@ jobs:
           docker compose restart api
           python scripts/smoke_api.py --database ok
       - run: python scripts/smoke_ingestion.py --phase after
+      - run: python -m scripts.smoke_actions --phase after
       - run: docker compose exec -T maintenance python -m marketob_api.maintenance --once
       - name: Service status
         if: always()

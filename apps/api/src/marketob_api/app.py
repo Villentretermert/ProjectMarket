@@ -4,6 +4,7 @@ from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from marketob_api import __version__
+from marketob_api.actions import router as action_router
 from marketob_api.auth_routes import router as auth_router
 from marketob_api.bot_routes import router as bot_router
 from marketob_api.channels import router as channel_router
@@ -20,7 +21,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         title="MarkeTOB local API",
         version=__version__,
         description=(
-            "Health, local identity, bots, ingestion and published channel snapshots. "
+            "Health, local identity, bots, ingestion, channels and durable request delivery. "
             "Runtime OpenAPI lists implemented routes only."
         ),
         docs_url=None,
@@ -46,12 +47,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(bot_router(configuration))
     application.include_router(ingestion_router(configuration))
     application.include_router(channel_router(configuration))
+    application.include_router(action_router(configuration))
 
     @application.get("/", include_in_schema=False)
     def index() -> dict[str, str]:
         return {
             "service": "MarkeTOB",
-            "stage": "channels",
+            "stage": "actions",
             "liveness": "/health/live",
             "readiness": "/health/ready",
             "implemented_api": "/openapi.json",

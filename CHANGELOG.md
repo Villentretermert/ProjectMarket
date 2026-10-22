@@ -131,3 +131,11 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 ## 2026-10-22 · PM-009 — приёмка
 
 81 локальный тест, HTTP lifecycle, Ruff/format/mypy/совместимость пакетов PASS. Commit e38dc57: CI 39825150008, все 4 jobs PASS, включая контейнерный HTTP и восстановление БД. Сохранены доказательства, PM-009 принята, счётчик 9/24 (1/4 после G02). Далее PM-010.
+
+## 2026-10-22 · PM-010 — начало заявок
+
+Начата реализация атомарных action/event/outbox, отдельных GET/ACK/result, durable idempotency и обработки отзыва/таймаутов. G02: только Request purchase, quantity=1, без оплаты/корзины. Дизайн доставки сохраняет события до ACK и незавершённые заявки до результата.
+
+## 2026-10-22 · PM-010 — delivery и конкурентный отзыв
+
+Добавлены migration 005, actions.py/request_state.py, durable события/квитанции результатов, async long poll без удержания соединений, timeout/retention worker, hooks для grant/visibility/account/bot/channel revocation. Проверен порядок organization→bot→channel→request с учётом FK. Добавлены API guide/ADR, PostgreSQL tests и двухфазный HTTP restart smoke; CI auth quota 100 только для синтетического общего IP, normal default 10 сохранён. Первые 8 action tests PASS; полный набор проверяется.

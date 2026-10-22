@@ -24,6 +24,7 @@ from marketob_api.cursors import Scan, decode_scan, encode_scan, session_binding
 from marketob_api.database import Connection, Database
 from marketob_api.errors import ApiError
 from marketob_api.identity import authenticate, digest, identifier, rate_limit, require_business
+from marketob_api.request_state import reconcile_access
 
 
 class BotCreate(ClosedModel):
@@ -251,6 +252,11 @@ def router(settings: Settings) -> APIRouter:
                 "UPDATE channel_access SET deleted_at=now(),published=false WHERE bot_id=%s",
                 (bot_id,),
             )
+            channels = connection.execute(
+                "SELECT channel_id FROM channel_access WHERE bot_id=%s", (bot_id,)
+            ).fetchall()
+            for source in channels:
+                reconcile_access(connection, source["channel_id"], disabled=True)
 
     @api.get("/bot/identity")
     def bot_identity(request: Request) -> dict[str, Any]:

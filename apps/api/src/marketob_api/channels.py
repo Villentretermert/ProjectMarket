@@ -17,6 +17,7 @@ from marketob_api.database import Connection, Database
 from marketob_api.errors import ApiError
 from marketob_api.identity import COOKIE, authenticate, digest, rate_limit, require_business
 from marketob_api.payloads import validate_payload
+from marketob_api.request_state import reconcile_access
 
 Limit = Annotated[int, Query(ge=1, le=100)]
 Cursor = Annotated[str | None, Query(max_length=1024)]
@@ -176,6 +177,7 @@ def publish(
         and access["visibility"] == "public"
         and value["visibility"] == "selected"
     ):
+        reconcile_access(connection, channel_id)
         connection.execute(
             "INSERT INTO change_outbox(channel_id,kind) VALUES (%s,'access.revoked')", (channel_id,)
         )
@@ -406,6 +408,7 @@ def router(settings: Settings) -> APIRouter:
                 (channel_id,),
             )
             connection.execute("DELETE FROM grants WHERE channel_id=%s", (channel_id,))
+            reconcile_access(connection, channel_id, disabled=True)
             connection.execute(
                 "INSERT INTO change_outbox(channel_id,kind) VALUES (%s,'access.revoked')",
                 (channel_id,),

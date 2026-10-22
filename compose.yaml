@@ -21,6 +21,7 @@ services:
       dockerfile: deploy/Dockerfile
     environment:
       MARKETOB_DATABASE_URL: postgresql://marketob:${POSTGRES_PASSWORD:?Run python scripts/dev_env.py first}@db:5432/marketob
+      MARKETOB_AUTH_RATE_LIMIT: ${MARKETOB_AUTH_RATE_LIMIT:-10}
     ports:
       - "127.0.0.1:${MARKETOB_PORT:-8000}:8000"
     depends_on:
