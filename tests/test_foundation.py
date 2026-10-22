@@ -45,6 +45,7 @@ def test_web_assets_are_packaged_no_store_and_constrained() -> None:
             "styles.css",
             "studio.js",
             "studio-editor.js",
+            "favorites.js",
         ):
             result = http.get("/app/" + asset)
             assert result.status_code == 200

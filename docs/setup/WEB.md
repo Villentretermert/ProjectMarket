@@ -56,3 +56,5 @@ The suite combines actual HTTP/bot operations with explicitly simulated browser
 503/404/offline responses for presentation states. API permission/revocation rules
 are independently covered by PostgreSQL integration tests. Mobile viewport checks
 are browser checks, not Android device acceptance.
+
+[Studio/команда](STUDIO.md) и [Channels/избранное](FAVORITES.md) работают на том же локальном сервере.

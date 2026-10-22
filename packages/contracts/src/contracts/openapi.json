@@ -2,7 +2,7 @@
   "openapi": "3.1.1",
   "info": {
     "title": "MarkeTOB local pilot API",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."
   },
   "servers": [
@@ -8251,37 +8251,16 @@
     "/v1/favorites": {
       "get": {
         "operationId": "listFavorites",
-        "summary": "List saved readable channel IDs; inaccessible favorites contain no private metadata.",
+        "summary": "Read the complete bounded favorites collection with current permissions.",
         "security": [
           {
             "UserSession": []
           }
         ],
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100,
-              "description": "Maximum results per page."
-            }
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 1024,
-              "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Successful operation. List saved readable channel IDs; inaccessible favorites contain no private metadata.",
+            "description": "Successful operation. Read the complete bounded favorites collection with current permissions.",
             "headers": {
               "Cache-Control": {
                 "schema": {
@@ -8294,7 +8273,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SourceChannelList"
+                  "$ref": "#/components/schemas/Favorites"
                 }
               }
             }
@@ -8426,6 +8405,381 @@
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/favorites/order": {
+      "put": {
+        "operationId": "orderFavorites",
+        "summary": "Replace manual order with optimistic concurrency.",
+        "security": [
+          {
+            "UserSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Token returned by the current session endpoint."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation. Replace manual order with optimistic concurrency.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                },
+                "description": "Private/session/secret responses must not be cached by shared intermediaries."
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoriteRevision"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See protocol error table for HTTP 400.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See protocol error table for HTTP 401.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See protocol error table for HTTP 403.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See protocol error table for HTTP 404.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See protocol error table for HTTP 409.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "See protocol error table for HTTP 410.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "See protocol error table for HTTP 413.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "See protocol error table for HTTP 415.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "See protocol error table for HTTP 422.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See protocol error table for HTTP 429.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "description": "Seconds before retry."
+              }
+            }
+          },
+          "500": {
+            "description": "See protocol error table for HTTP 500.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See protocol error table for HTTP 503.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FavoriteOrder"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/favorites/{channel_id}/seen": {
+      "put": {
+        "operationId": "markFavoriteSeen",
+        "summary": "Mark only observed data and template revisions; never reduces seen markers.",
+        "security": [
+          {
+            "UserSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "Opaque stable identifier; never a credential.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Token returned by the current session endpoint."
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation. Mark only observed data and template revisions; never reduces seen markers.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                },
+                "description": "Private/session/secret responses must not be cached by shared intermediaries."
+              }
+            }
+          },
+          "400": {
+            "description": "See protocol error table for HTTP 400.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See protocol error table for HTTP 401.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See protocol error table for HTTP 403.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See protocol error table for HTTP 404.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See protocol error table for HTTP 409.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "See protocol error table for HTTP 410.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "See protocol error table for HTTP 413.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "See protocol error table for HTTP 415.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "See protocol error table for HTTP 422.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See protocol error table for HTTP 429.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "description": "Seconds before retry."
+              }
+            }
+          },
+          "500": {
+            "description": "See protocol error table for HTTP 500.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See protocol error table for HTTP 503.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FavoriteSeen"
               }
             }
           }
@@ -13886,38 +14240,164 @@
         ],
         "additionalProperties": false
       },
-      "SourceChannelList": {
+      "Favorite": {
         "type": "object",
-        "description": "Caller-scoped list with limit/cursor pagination.",
+        "description": "Unavailable references return only channel_id and available=false.",
         "properties": {
+          "channel_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "available": {
+            "type": "boolean",
+            "description": "Current source access."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Current readable published title."
+          },
+          "slug": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 80,
+            "description": "Unique shareable channel slug.",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "unread": {
+            "type": "boolean",
+            "description": "Published template or channel data advanced since last observation."
+          }
+        },
+        "required": [
+          "channel_id",
+          "available"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "available": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "title",
+                "slug",
+                "unread"
+              ]
+            },
+            "else": {
+              "properties": {
+                "title": false,
+                "slug": false,
+                "unread": false
+              }
+            }
+          }
+        ]
+      },
+      "Favorites": {
+        "type": "object",
+        "description": "Atomic bounded collection; no pagination. Metadata is reauthorized on every read.",
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Collection order revision."
+          },
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SourceChannel"
+              "$ref": "#/components/schemas/Favorite"
             },
             "minItems": 0,
             "maxItems": 100,
             "uniqueItems": false,
-            "description": "Bounded list page."
-          },
-          "next_cursor": {
-            "oneOf": [
-              {
-                "type": "string",
-                "minLength": 1,
-                "maxLength": 1024,
-                "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "Null at the end of the stable scan."
+            "description": "Complete manually ordered collection; at most 100 saved channels."
           }
         },
         "required": [
-          "items",
-          "next_cursor"
+          "revision",
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "FavoriteOrder": {
+        "type": "object",
+        "description": "Concurrent stale reorder returns 409; does not add or remove channels.",
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Exact collection revision."
+          },
+          "channel_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "Opaque stable identifier; never a credential.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            },
+            "minItems": 0,
+            "maxItems": 100,
+            "uniqueItems": true,
+            "description": "Exact permutation of current favorites."
+          }
+        },
+        "required": [
+          "expected_revision",
+          "channel_ids"
+        ],
+        "additionalProperties": false
+      },
+      "FavoriteRevision": {
+        "type": "object",
+        "description": "Successful order revision.",
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Current collection revision."
+          }
+        },
+        "required": [
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "FavoriteSeen": {
+        "type": "object",
+        "description": "Monotonic observed revision markers; future revisions rejected.",
+        "properties": {
+          "data_revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Observed snapshot data revision."
+          },
+          "template_version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Monotonic revision; compare within the referenced resource."
+          }
+        },
+        "required": [
+          "data_revision",
+          "template_version"
         ],
         "additionalProperties": false
       },

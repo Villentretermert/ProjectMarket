@@ -23,6 +23,8 @@ VALIDATORS = {
         "Rollback",
         "ActionInput",
         "Result",
+        "FavoriteOrder",
+        "FavoriteSeen",
     )
 }
 

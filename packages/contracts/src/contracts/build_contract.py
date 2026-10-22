@@ -195,7 +195,15 @@ PATHS['/v1/channels/{slug}']['get']['responses']['200']['headers']['ETag']={'sch
 idem={'name':'Idempotency-Key','in':'header','required':True,'schema':text('Stable retry identity; retained for 30 days or until pending work resolves.',128,8,pattern='^[A-Za-z0-9_-]+$')}
 endpoint('post','/v1/channels/{channel_id}/actions','requestAction','Queue a request after current access/revision checks; replay returns the same request.','ActionInput','ActionRequest',202,params=(idem,))
 endpoint('get','/v1/action-requests/{action_request_id}','readAction','Read own request with current source access.',response='ActionRequest')
-endpoint('get','/v1/favorites','listFavorites','List saved readable channel IDs; inaccessible favorites contain no private metadata.',response=collection('SourceChannel'),listing=True)
+define('Favorite', {'channel_id':ID,'available':{'type':'boolean','description':'Current source access.'},'title':text('Current readable published title.',80),'slug':SCHEMAS['ChannelCreate']['properties']['slug'],'unread':{'type':'boolean','description':'Published template or channel data advanced since last observation.'}}, 'Unavailable references return only channel_id and available=false.', ('title','slug','unread'))
+SCHEMAS['Favorite']['allOf']=[{'if':{'properties':{'available':{'const':True}}},'then':{'required':['title','slug','unread']},'else':{'properties':{'title':False,'slug':False,'unread':False}}}]
+define('Favorites', {'revision':number('Collection order revision.'),'items':array(ref('Favorite'),'Complete manually ordered collection; at most 100 saved channels.',100)}, 'Atomic bounded collection; no pagination. Metadata is reauthorized on every read.')
+define('FavoriteOrder', {'expected_revision':number('Exact collection revision.'),'channel_ids':array(ID,'Exact permutation of current favorites.',100,0,True)}, 'Concurrent stale reorder returns 409; does not add or remove channels.')
+define('FavoriteRevision', {'revision':number('Current collection revision.')}, 'Successful order revision.')
+define('FavoriteSeen', {'data_revision':number('Observed snapshot data revision.'),'template_version':REVISION}, 'Monotonic observed revision markers; future revisions rejected.')
+endpoint('get','/v1/favorites','listFavorites','Read the complete bounded favorites collection with current permissions.',response='Favorites')
+endpoint('put','/v1/favorites/order','orderFavorites','Replace manual order with optimistic concurrency.','FavoriteOrder','FavoriteRevision')
+endpoint('put','/v1/favorites/{channel_id}/seen','markFavoriteSeen','Mark only observed data and template revisions; never reduces seen markers.','FavoriteSeen',status=204)
 define('SourceChannel',{'channel_id':ID},'Favorite reference; saving does not grant access.')
 endpoint('put','/v1/favorites/{channel_id}','saveFavorite','Save an accessible channel idempotently.',EMPTY,status=204)
 endpoint('delete','/v1/favorites/{channel_id}','removeFavorite','Remove own favorite idempotently.',status=204)
@@ -231,7 +239,7 @@ def replace_refs(value):
 
 def artifacts():
     bundle={"$schema":"https://json-schema.org/draft/2020-12/schema", "$id":"urn:marketob:contract:1.0", "$defs":SCHEMAS}
-    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.4","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
+    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.5","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
     return {"schemas.json":bundle,"openapi.json":replace_refs(spec)}
 
 

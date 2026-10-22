@@ -1,6 +1,6 @@
 # MarkeTOB API 1.0 — normative local pilot contract
 
-**PM-004 specification with additive PM-014 revision 1.0.4.** Health, identity, bot registration, ingestion and channel publication/snapshots are implemented; request/GET/ACK/result delivery is also implemented; personal client operations remain scheduled in PM-013–018. See [implemented channel API](CHANNELS.md) and [actions API](ACTIONS.md). The executable reference model checks protocol examples only; it does not prove durability, concurrent transactions, HTTP authentication or load capacity. All example content is synthetic. The contract is independent of Telegram.
+**PM-004 specification, updated through PM-015 revision 1.0.5.** Health, local identity, teams, bot registration, ingestion, publication/snapshots, durable actions and favorites are implemented. My Space, sharing and update delivery remain scheduled in PM-016–018. The formerly planned ID-only favorites list is now a bounded ordered collection; see [Favorites API](FAVORITES.md). See [implemented channel API](CHANNELS.md) and [actions API](ACTIONS.md). The executable reference model checks protocol examples only; it does not prove durability, concurrent transactions, HTTP authentication or load capacity. All example content is synthetic. The contract is independent of Telegram.
 
 Machine-readable sources: [OpenAPI 3.1.1](../../packages/contracts/src/contracts/openapi.json), [JSON Schema 2020-12 bundle](../../packages/contracts/src/contracts/schemas.json), [Python generator](../../packages/contracts/src/contracts/build_contract.py), [valid/invalid examples](../../packages/contracts/src/contracts/examples/cases.json). `$defs` names identify the validation target. `required`, numeric/string/array bounds, descriptions and `additionalProperties: false` define each field. Unknown fields are rejected, not silently executed or retained. [Quickstart](QUICKSTART.md) walks through the complete lifecycle.
 
@@ -17,7 +17,7 @@ Machine-readable sources: [OpenAPI 3.1.1](../../packages/contracts/src/contracts
 
 ## Channels, data and interface versions
 
-An owner creates a draft channel bound to an owned bot. The bot can send data into that draft. Owner draft routes define title, visibility, layout and allowed actions; publish validates existing resources, compatible block types, unique IDs and action references before exposing a version. Only the owner publishes. Consumers see published versions only.
+An owner creates a draft channel bound to an owned bot. The bot can send data into that draft. Owner draft routes define title, visibility, layout and allowed actions; publish validates existing resources, compatible block types, unique IDs and action references before exposing a version. Owner/Admin/Editor publish within the role policy in [Teams API](TEAMS.md). Consumers see published versions only.
 
 | Field | Meaning and update rules |
 |---|---|
@@ -36,11 +36,11 @@ Layouts have ≤50 blocks with stable unique IDs. Source binding is only `(chann
 
 ## Access, shares and caching
 
-Public published channels allow anonymous read. Saved channels, actions, My Space and import require a session. Selected-member channels require owner or explicit read grant to an existing user. Grants do not assign B2B ownership. Unauthorized consumers receive generic 404 `source_unavailable` without private title/timestamps. Owners receive specific validation errors only for their own objects. Favorites and source references never grant access.
+Public published channels allow anonymous read. Saved channels, actions, My Space and import require a session. Selected-member channels require current workspace membership or an explicit read grant to an existing user. Grants do not assign B2B ownership. Unauthorized consumers receive generic 404 `source_unavailable` without private title/timestamps. Owners receive specific validation errors only for their own objects. Favorites and source references never grant access.
 
 Sharing stores an immutable layout-only snapshot server-side; the 32-character base64url code has 192 bits of entropy. It is a locator, **not encryption** and not a source authorization token. Do not place private titles or data in the copied source references. Preview/import resolve permissions independently; inaccessible blocks receive placeholders, without fetching private payloads or update times. Imports create a new personal page with version 1. Source blocks remain live references, not copied grants. Revoke/expiry prevents new imports; it does not delete previously imported layouts. Codes work only against their issuing server. A friend's device cannot reach a loopback-only server; shared network deployment/HTTPS is a later explicit setup step.
 
-Session, key, private data and all v1 responses use no-store at the HTTP layer. An application-managed private offline cache is bounded to 15 minutes since the last successful access check, cleared immediately on logout/known revocation; on expiry show Access required and hide content. Public snapshots may be displayed stale with source time. Actions are disabled offline and always revalidated online. Source deletion removes private content, shows Source unavailable for that block and leaves unrelated blocks usable. Tombstones retain only ID/revision as long as the channel exists; channel identifiers are never recycled.
+Session, key, private data and all v1 responses use no-store at the HTTP layer. Current Web does not persist source content and hides it when offline/hidden. A future application-managed private offline cache would be bounded to 15 minutes since the last successful access check, cleared immediately on logout/known revocation; on expiry show Access required and hide content. Public snapshots may be displayed stale with source time. Actions are disabled offline and always revalidated online. Source deletion removes private content, shows Source unavailable for that block and leaves unrelated blocks usable. Tombstones retain only ID/revision as long as the channel exists; channel identifiers are never recycled.
 
 ## Requests, GET, ACK and business results
 

@@ -10,6 +10,7 @@
 - [CI PM-012](https://github.com/Villentretermert/ProjectMarket/actions/runs/39835253441): все 4 jobs PASS, 117 тестов, реальные сбои API/БД/worker/ботов и восстановление.
 - Локальный baseline: 100 ботов, 10 читающих сессий, 3 000/3 000 сообщений за 180,139 с; p95 приёма 295,02 мс, чтения 253,76 мс. После restart сохранены все 3 000 receipt/outbox. Это API baseline, не полный L2/UI SLO.
 - PM-013: рабочий Web /app/, local login, каналы, новости/товары/графики, заявки и восстановление после потери ответа. [CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39846617703) 118 tests + 14 Chromium сценариев PASS, Edge PASS. Далее PM-014 Studio/команды, PM-015 избранное, PM-016 My Space, затем G04.
+- PM-014 Studio реализована, 125 локальных tests и 24 Edge scenarios PASS; CI повторяется после timeout внешнего apt mirror. PM-015 избранное реализовано: 130 локальных tests и 29 Edge scenarios PASS; ожидает CI. Приёмка этих задач ещё не увеличила счётчик.
 - Android SDK/сборка/USB и Google/Firebase/облако отложены владельцем. Docker локально отсутствует, проверен в Linux CI. Переносимая PostgreSQL работает на loopback:55432.
 - Доставка outbox в клиент — PM-018, backup — PM-021, полный L2/burst/monitoring — PM-022, приватность и релизная проверка — PM-023.
 

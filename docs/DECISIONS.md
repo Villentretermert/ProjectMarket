@@ -52,3 +52,5 @@ D32 · PM-010: [ADR-0008](adr/0008-action-delivery.md) — PostgreSQL request/ev
 D33 · G03, 22 октября: все [13 ответов](reviews/G03/answers.md) приняты. Owner/Admin/Editor; Editor публикует и откатывает, ключи только Owner/Admin, добавление по username. После входа My Space; товары list, новости article; подтверждение Request purchase до отправки, unknown = Awaiting confirmation. Избранное вручную; My Space autosave + Undo; RSS общих новостей. Разрешён весь PM-013–016, затем G04.
 
 D34 · PM-014: [ADR-0009](adr/0009-workspace-roles.md) реализует G03. Рабочая детализация: один неизменяемый Owner, только он меняет команду; Owner/Admin управляют audience/grants/ботами/ключами; Editor публикует и откатывает в пределах текущей audience. Это объявленные инженерные ограничения пилота, не новые ответы пользователя. Отзыв membership проверяется сервером после commit, машинные ключи отдельны.
+
+D35 · PM-015: [ADR-0010](adr/0010-favorites.md) — полный список до 100 избранных каналов, ручной порядок с revision guard, New по data/template revisions, недоступный источник без метаданных. Инженерная детализация G03, не новое требование владельца.
