@@ -4,7 +4,7 @@ This walkthrough targets the **future** local server at `http://127.0.0.1:8000`;
 
 1. Owner signs in locally, creates a bot in Studio (`POST /v1/bots`) and creates its draft channel (`POST /v1/channels`). Copy the returned channel ID into the bot configuration. Keep the one-time registration credential out of source control, browser storage, command histories and chat.
 2. Bot sends `POST /v1/bot-registrations/exchange` with JSON `{}` and the registration credential as bearer authorization. Securely store the returned operational `api_key`. Do not print the entire response. Lost response: ask the owner to issue a fresh operational key; the consumed registration credential cannot be replayed.
-3. Send [the valid product message](../../contracts/examples/product-message.json) to `POST /v1/bot/messages` using the operational bearer key. Change the example channel ID to your assigned channel and keep message ID/revision stable when retrying. Example:
+3. Send [the valid product message](../../packages/contracts/src/contracts/examples/product-message.json) to `POST /v1/bot/messages` using the operational bearer key. Change the example channel ID to your assigned channel and keep message ID/revision stable when retrying. Example:
 
 ```python
 import json
@@ -13,7 +13,7 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 # The local process reads its own key from configuration, never from a UI template.
-body = json.loads(Path('contracts/examples/product-message.json').read_text())
+body = json.loads(Path('packages/contracts/src/contracts/examples/product-message.json').read_text())
 body['channel_id'] = os.environ['MARKETOB_CHANNEL_ID']
 request = Request(
     'http://127.0.0.1:8000/v1/bot/messages',

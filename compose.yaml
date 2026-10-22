@@ -1,0 +1,38 @@
+name: marketob
+services:
+  db:
+    image: postgres:18.4-bookworm@sha256:882236b897e39051d2368c5ccc6cda944904723506b2dfc97f2a8f5bc9afa382
+    environment:
+      POSTGRES_USER: marketob
+      POSTGRES_DB: marketob
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/dev_env.py first}
+    volumes:
+      # PostgreSQL 18 keeps versioned PGDATA below /var/lib/postgresql.
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U marketob -d marketob"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+  api:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+    environment:
+      MARKETOB_DATABASE_URL: postgresql://marketob:${POSTGRES_PASSWORD:?Run python scripts/dev_env.py first}@db:5432/marketob
+    ports:
+      - "127.0.0.1:${MARKETOB_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  postgres_data:

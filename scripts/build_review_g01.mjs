@@ -88,7 +88,7 @@ function connect(s,a,b,from='right',to='left'){
  text(s,'Боты общаются через API. Доступ к таблицам БД им не предоставляется.',64,617,1145,40,25);
 }
 {
- const s=slide('Жизненный цикл действия','Источники: docs/api/PROTOCOL.md, contracts/reference_model.py, contracts/tests/test_protocol.py. Модель поведения проверена. Durable commit, гонки и восстановление реального PostgreSQL проверяются в PM-010/012.');
+ const s=slide('Жизненный цикл действия','Источники: docs/api/PROTOCOL.md, packages/contracts/src/contracts/reference_model.py, packages/contracts/tests/test_protocol.py. Модель поведения проверена. Durable commit, гонки и восстановление реального PostgreSQL проверяются в PM-010/012.');
  text(s,'1',64,176,70,65,46,true,c.blue);text(s,'Запись заявки',156,175,900,45,32,true);
  text(s,'Сервер проверяет права, наличие товара и его revision.\nПовтор с тем же ключом возвращает существующую заявку.',156,229,1030,90,27);
  text(s,'2',64,341,70,65,46,true,c.blue);text(s,'GET и ACK',156,340,900,45,32,true);
@@ -97,7 +97,7 @@ function connect(s,a,b,from='right',to='left'){
  text(s,'Processing, Confirmed или Failed меняют бизнес-статус.\nНеопределённый результат требует сверки, без новой покупки.',156,558,1030,90,27);
 }
 {
- const s=slide('Код, компоненты и сущности','Источники: design/prototype/prototype.js, contracts/build_contract.py, contracts/reference_model.py, docs/ARCHITECTURE.md. User/Session, Bot/Key, Channel/Grant, ActionRequest/BotEvent и SharedTemplate пока описаны контрактом, не таблицами работающей БД.');
+ const s=slide('Код, компоненты и сущности','Источники: design/prototype/prototype.js, packages/contracts/src/contracts/build_contract.py, packages/contracts/src/contracts/reference_model.py, docs/ARCHITECTURE.md. User/Session, Bot/Key, Channel/Grant, ActionRequest/BotEvent и SharedTemplate пока описаны контрактом, не таблицами работающей БД.');
  table(s,[['Файл / компонент','Что делает','Сущности'],['prototype.js','Переходы экранов в памяти','Channel, Block, My Space'],['build_contract.py','Генерирует OpenAPI и схемы','Message, Layout, Result'],['reference_model.py','Проверяет сценарии доставки','Request, Event, ACK'],['Identity / Registry','Следующий этап реализации','User, Session, Bot, Key'],['Pages / Sharing','Права и ссылки на источники','Channel, Grant, Template']], [330,440,382],156,436);
  text(s,'Python используется для контракта, проверок и будущего backend.',64,620,1140,35,26,false,c.muted);
 }

@@ -8,7 +8,7 @@ from openapi_spec_validator import validate as validate_openapi
 from contracts.build_contract import SCHEMAS, artifacts
 from contracts.reference_model import ProtocolModel, Rejected, validate
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1] / "src" / "contracts"
 MESSAGE = {'schema_version':'1.0','message_id':'m_1','channel_id':'ch_shop','resource_id':'item_notebook','source_revision':1,'occurred_at':'2026-10-21T09:42:00Z','kind':'data','content_type':'product','payload':{'title':'Daily notebook','description':'A5 dotted pages','price':{'amount_minor':1800,'currency':'EUR'},'availability':'in_stock'}}
 ACTION = {'action_id':'buy_notebook','resource_id':'item_notebook','observed_source_revision':1,'quantity':1}
 RESULT = {'result_id':'r_1','result_revision':1,'state':'confirmed','summary':'Request accepted; no payment has been taken.'}

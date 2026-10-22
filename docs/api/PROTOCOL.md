@@ -2,7 +2,7 @@
 
 **PM-004 specification, not a deployed service.** Backend implementation starts in PM-005–012. The executable reference model checks protocol examples only; it does not prove durability, concurrent transactions, HTTP authentication or load capacity. All example content is synthetic. The contract is independent of Telegram.
 
-Machine-readable sources: [OpenAPI 3.1.1](../../contracts/openapi.json), [JSON Schema 2020-12 bundle](../../contracts/schemas.json), [Python generator](../../contracts/build_contract.py), [valid/invalid examples](../../contracts/examples/cases.json). `$defs` names identify the validation target. `required`, numeric/string/array bounds, descriptions and `additionalProperties: false` define each field. Unknown fields are rejected, not silently executed or retained. [Quickstart](QUICKSTART.md) walks through the complete lifecycle.
+Machine-readable sources: [OpenAPI 3.1.1](../../packages/contracts/src/contracts/openapi.json), [JSON Schema 2020-12 bundle](../../packages/contracts/src/contracts/schemas.json), [Python generator](../../packages/contracts/src/contracts/build_contract.py), [valid/invalid examples](../../packages/contracts/src/contracts/examples/cases.json). `$defs` names identify the validation target. `required`, numeric/string/array bounds, descriptions and `additionalProperties: false` define each field. Unknown fields are rejected, not silently executed or retained. [Quickstart](QUICKSTART.md) walks through the complete lifecycle.
 
 ## Transport, identity and ownership
 
@@ -84,6 +84,6 @@ All errors contain `code`, safe English `message`, server `request_id`, `retryab
 
 ## Verification and sources
 
-Run `python contracts/build_contract.py`, then `python -m pytest contracts/tests -q`. OpenAPI structural validation and JSON Schema/format validation are separate from state-machine examples. Server-side atomicity, rights under concurrency, restart recovery, cursors/expiry and real rate limiting must be verified with the implemented backend in PM-007–012/023.
+Run `python packages/contracts/src/contracts/build_contract.py`, then `python -m pytest packages/contracts/tests -q`. OpenAPI structural validation and JSON Schema/format validation are separate from state-machine examples. Server-side atomicity, rights under concurrency, restart recovery, cursors/expiry and real rate limiting must be verified with the implemented backend in PM-007–012/023.
 
 Format references: [OpenAPI 3.1.1](https://spec.openapis.org/oas/v3.1.1.html), [JSON Schema 2020-12](https://json-schema.org/draft/2020-12), [jsonschema format validation](https://python-jsonschema.readthedocs.io/en/stable/validate/), [OpenAPI validator](https://openapi-spec-validator.readthedocs.io/en/latest/). Version3.1.1 is intentionally pinned for tooling compatibility; no claim that it is the latest specification.

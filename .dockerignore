@@ -1,0 +1,14 @@
+# Allowlist: never send .env, .git, local toolchains, research or presentations.
+**
+!pyproject.toml
+!uv.lock
+!apps/
+!apps/api/
+!apps/api/pyproject.toml
+!apps/api/src/
+!apps/api/src/**
+!packages/
+!packages/contracts/
+!packages/contracts/pyproject.toml
+**/__pycache__/
+**/*.pyc

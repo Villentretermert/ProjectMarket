@@ -20,3 +20,10 @@ dist/
 .local/
 *.log
 .DS_Store
+
+# Isolated backend environment and test artifacts
+.venv-dev/
+.mypy_cache/
+.coverage
+htmlcov/
+*.egg-info/
