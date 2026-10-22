@@ -74,3 +74,5 @@ G01: .gitattributes фиксирует PDF/PPTX/изображения как bi
 - Добавлены закреплённые Dockerfile/Compose, случайный локальный пароль без перезаписи .env, volume PostgreSQL, изоляция runtime от исходных секретов и dev-пакетов. Docker локально отсутствует; контейнерный smoke выполняется в CI.
 - Добавлены реальные GitHub Actions для Windows/Linux: lint, format, strict typing, unit/contract tests, запуск чистого процесса; отдельная сборка Compose и проверка отказа/восстановления БД.
 - Локально: 39 passed, 1 optional PostgreSQL test skipped; lint и typing проходят. Итоговые CI/startup-доказательства будут записаны в результат PM-005 после выполнения.
+
+- Первый Linux CI подтвердил Docker/PostgreSQL, но обнаружил отсутствие корня репозитория в pytest console-entrypoint при импорте scripts.dev_env. Явный pytest pythonpath исправляет одинаковый запуск через CLI/модуль; команда CI локально повторена: 39 passed.

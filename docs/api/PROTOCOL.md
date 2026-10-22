@@ -84,6 +84,6 @@ All errors contain `code`, safe English `message`, server `request_id`, `retryab
 
 ## Verification and sources
 
-Run `python packages/contracts/src/contracts/build_contract.py`, then `python -m pytest packages/contracts/tests -q`. OpenAPI structural validation and JSON Schema/format validation are separate from state-machine examples. Server-side atomicity, rights under concurrency, restart recovery, cursors/expiry and real rate limiting must be verified with the implemented backend in PM-007–012/023.
+After `uv sync --locked` at the repository root, run `uv run --locked python -m contracts.build_contract`, then `uv run --locked pytest packages/contracts/tests -q`. OpenAPI structural validation and JSON Schema/format validation are separate from state-machine examples. Server-side atomicity, rights under concurrency, restart recovery, cursors/expiry and real rate limiting must be verified with the implemented backend in PM-007–012/023.
 
 Format references: [OpenAPI 3.1.1](https://spec.openapis.org/oas/v3.1.1.html), [JSON Schema 2020-12](https://json-schema.org/draft/2020-12), [jsonschema format validation](https://python-jsonschema.readthedocs.io/en/stable/validate/), [OpenAPI validator](https://openapi-spec-validator.readthedocs.io/en/latest/). Version3.1.1 is intentionally pinned for tooling compatibility; no claim that it is the latest specification.

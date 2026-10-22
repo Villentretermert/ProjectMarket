@@ -28,6 +28,7 @@ marketob-contracts = { workspace = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "packages/contracts/tests"]
+pythonpath = ["."]
 addopts = "--strict-markers"
 markers = ["integration: requires an explicitly configured PostgreSQL test database"]
 
