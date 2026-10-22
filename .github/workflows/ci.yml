@@ -57,7 +57,7 @@ jobs:
       - run: python scripts/smoke_identity.py --bots
       - name: Verify minimal non-root runtime
         run: |
-          docker compose exec -T api python -c "import os, importlib.util; assert os.getuid() == 10001; assert not os.path.exists('/app/.env'); assert importlib.util.find_spec('pytest') is None; assert importlib.util.find_spec('contracts') is not None; assert importlib.util.find_spec('contracts.reference_model') is None"
+          docker compose exec -T api python -c "import os, importlib.util; assert os.getuid() == 10001, 'runtime must be non-root'; assert not os.path.exists('/app/.env'), 'env file in image'; assert importlib.util.find_spec('pytest') is None, 'test framework in image'; assert importlib.util.find_spec('contracts') is not None, 'runtime schemas missing'; assert importlib.util.find_spec('contracts.reference_model') is None, 'reference model in runtime image'"
       - run: python scripts/smoke_ingestion.py --phase before
       - name: Database outage and recovery
         run: |

@@ -9,10 +9,14 @@
 !apps/api/src/**
 !packages/
 !packages/contracts/
+packages/contracts/**
 !packages/contracts/pyproject.toml
 !packages/contracts/src/
+packages/contracts/src/**
 !packages/contracts/src/contracts/
+packages/contracts/src/contracts/**
 !packages/contracts/src/contracts/__init__.py
 !packages/contracts/src/contracts/schemas.json
 **/__pycache__/
 **/*.pyc
+**/.env*

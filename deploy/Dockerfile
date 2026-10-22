@@ -3,8 +3,10 @@ WORKDIR /app
 ENV UV_PYTHON_DOWNLOADS=never UV_LINK_MODE=copy
 RUN pip install --no-cache-dir uv==0.13.5
 COPY pyproject.toml uv.lock ./
-COPY apps/api/ apps/api/
-COPY packages/contracts/ packages/contracts/
+COPY apps/api/pyproject.toml apps/api/pyproject.toml
+COPY apps/api/src/ apps/api/src/
+COPY packages/contracts/pyproject.toml packages/contracts/pyproject.toml
+COPY packages/contracts/src/contracts/__init__.py packages/contracts/src/contracts/schemas.json packages/contracts/src/contracts/
 RUN uv sync --locked --package marketob-api --no-dev --no-editable
 
 FROM python:3.14.7-slim-bookworm@sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56

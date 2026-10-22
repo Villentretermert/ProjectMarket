@@ -111,3 +111,7 @@ PM-006: все четыре CI jobs PASS на `94a2cf3`, локально 58 tes
 ## 2026-10-22 · PM-008 проверка запуска maintenance
 
 Первый CI: Python Windows/Linux и PostgreSQL PASS, Docker остановился на Compose --wait без healthcheck нового maintenance-сервиса. Добавлен heartbeat последнего успешного прохода и отдельная --health проверка (130 секунд). Failed database pass не обновляет heartbeat. Docker прогон повторяется; функциональные 73 tests локально PASS.
+
+## 2026-10-22 · PM-008 состав Docker-образа
+
+После успешного healthcheck и HTTP identity/bot smoke проверка минимального образа обнаружила лишнюю reference model. Dockerfile теперь явно копирует только runtime API и два файла schema package; .dockerignore дополнительно исключает остальные contract sources. В CI у каждого packaging assert собственная причина.
