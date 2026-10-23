@@ -70,7 +70,15 @@ export async function spaceAcceptance(browser,config,check){
         const response=await route.fetch(),body=await response.json();posts++;
         if(posts===1){firstVersion=body.layout.template_version;await route.abort();}else {replayVersion=body.layout.template_version;await route.fulfill({response});}
       });
-      await page.getByLabel('Space title',{exact:true}).fill('My daily space');await page.getByLabel('Space title',{exact:true}).press('Enter');await page.getByText('Save not confirmed',{exact:true}).waitFor();
+      // Hold the source-picker response so its repaint happens during title entry.
+      let release,started;const gate=new Promise(resolve=>{release=resolve;}),waiting=new Promise(resolve=>{started=resolve;});
+      const sourcePattern='**/v1/channels/'+channels.catalog.slug;
+      await page.route(sourcePattern,async route=>{started();await gate;await route.continue();});
+      await page.getByRole('button',{name:'Refresh',exact:true}).click();await waiting;
+      await page.getByLabel('Space title',{exact:true}).fill('My daily space');release();
+      await page.getByLabel('Block to add',{exact:true}).getByRole('option').first().waitFor({state:'attached'});
+      assert.equal(await page.getByLabel('Space title',{exact:true}).inputValue(),'My daily space');await page.unroute(sourcePattern);
+      await page.getByLabel('Space title',{exact:true}).press('Enter');await page.getByText('Save not confirmed',{exact:true}).waitFor();
       await page.getByRole('button',{name:'Retry save',exact:true}).click();await saved();assert.equal(posts,2);assert.equal(firstVersion,replayVersion);await page.unroute(pattern);
     });
     await check('My Space: real revocation and deletion hide only affected sources and picker titles',async()=>{

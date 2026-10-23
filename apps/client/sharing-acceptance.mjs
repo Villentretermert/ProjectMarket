@@ -35,7 +35,7 @@ export async function sharingAcceptance(browser,config,check){
     await check('Sharing: lost import response creates one independent owned page',async()=>{
       let posts=0;const pattern='**/v1/template-imports';
       await other.route(pattern,async route=>{const response=await route.fetch();posts++;if(posts===1)await route.abort();else await route.fulfill({response});});
-      await other.getByRole('button',{name:'Import as new page',exact:true}).click();await other.getByText('Retry recovers the same imported page.',{exact:true}).waitFor();await other.getByRole('button',{name:'Import as new page',exact:true}).click();await saved(other);
+      await other.getByRole('button',{name:'Import as new page',exact:true}).click();await other.getByText('Retry recovers the same imported page.',{exact:true}).waitFor();assert.equal(await other.getByLabel('Template link or code',{exact:true}).isDisabled(),true);await other.getByRole('button',{name:'Import as new page',exact:true}).click();await saved(other);
       copyID=new URL(other.url()).hash.split('/').at(-1);assert.equal(posts,2);await other.unroute(pattern);
       assert.equal(await other.getByLabel('Space title',{exact:true}).inputValue(),'Shared everyday space (copy)');await other.getByRole('heading',{name:'Source unavailable',exact:true}).waitFor();
       const pages=await(await reader.request.get(config.origin+'/v1/personal-pages')).json();assert.equal(pages.items.length,1);

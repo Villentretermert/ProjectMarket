@@ -51,7 +51,7 @@ export function importTemplate(parts,{navigate}){
   const active=()=>root.isConnected&&session?.user.user_id===account&&!document.hidden;
   let code=null,key=null,busy=false;
   const submit=button('Import as new page',async()=>{
-    if(busy||!code||!active())return;busy=true;submit.disabled=true;errors.replaceChildren();
+    if(busy||!code||!active())return;busy=true;submit.disabled=true;input.input.disabled=true;inspect.disabled=true;errors.replaceChildren();
     key ||= crypto.randomUUID();
     try{const page=await api('/template-imports',{method:'POST',body:{code},key});if(active())navigate('/space/'+page.page_id);}
     catch(error){if(active())errors.append(errorBox(error),message('Retry recovers the same imported page.'));}

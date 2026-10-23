@@ -238,3 +238,10 @@ PM-016 принята на f2dcde7: CI 39858054474 все 4 jobs PASS, 137 disti
 ## 2026-10-23 · PM-017 implementation
 
 Добавлены migration009, Share/Import API/UI, сохранение назначения ссылки при входе, preview с проверкой прав, независимые копии, version guard, replay, сроки и отзыв. Контракт1.0.7 (87схем/63operations). Пять новых PG tests PASS; полная регрессия/визуальная проверка продолжаются. Ссылка локального сервера не предоставляет другу сетевой доступ автоматически.
+# 2026-10-23 · PM-017 final verification
+
+Import fixes the code and preview while an uncertain request is retried, preserving
+one idempotent intent. Linux CI exposed a My Space title-edit race: a late source
+picker repaint could overwrite text before blur. Repaints now preserve the focused
+title. Final browser and CI verification follows; the initial Linux browser run failed.
+

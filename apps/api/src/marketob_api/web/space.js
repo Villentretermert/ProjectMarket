@@ -137,7 +137,9 @@ export async function space(parts,{navigate,refresh}) {
   }
   function paint(){
     root.className='space '+draft.layout.theme;
-    title.input.value=draft.title;theme.input.value=draft.layout.theme;density.input.value=draft.layout.density;
+    // Source-picker requests can finish while the user is typing an unsaved title.
+    if(document.activeElement!==title.input || busy || pending)title.input.value=draft.title;
+    theme.input.value=draft.layout.theme;density.input.value=draft.layout.density;
     const currentOption=[...pageSelect.input.options].find(o=>o.value===pageID);if(currentOption)currentOption.textContent=saved.title;
     status.textContent=busy?'Saving…':pending?(failed?.status===409?'Not saved · Conflict with another client':'Save not confirmed'):'Saved · v'+saved.layout.template_version;
     errors.replaceChildren();
