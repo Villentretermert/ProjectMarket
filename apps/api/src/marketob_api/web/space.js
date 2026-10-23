@@ -1,3 +1,4 @@
+import {sharePage} from './sharing.js';
 import {api, all, session} from './api.js';
 import {el, button, link, field, heading, message, modal, errorBox, toast} from './dom.js';
 import {renderBlock} from './render.js';
@@ -35,7 +36,7 @@ export async function space(parts,{navigate,refresh}) {
   if(!pages.length){
     root.append(heading('My Space','A personal home for the things you follow.'),el('section',{class:'empty'},
       el('h2',{},'Build your own space'),message('Bring published blocks from your favorite channels together.'),
-      button('Create My Space',createPage,{class:'primary'}),link('Explore channels','#/channels')));
+      button('Create My Space',createPage,{class:'primary'}),link('Import template','#/import'),link('Explore channels','#/channels')));
     return root;
   }
   const pageID=parts[1]||pages[0].page_id, route='/personal-pages/'+encodeURIComponent(pageID), cacheKey=account+':'+pageID;
@@ -74,7 +75,7 @@ export async function space(parts,{navigate,refresh}) {
   const refreshButton=button('Refresh',()=>{if(pending){toast('Retry the edit or choose Reload saved before refreshing.');return;}reload();});
   const deleteButton=button('Delete page',()=>modal('Delete personal page',message('Delete this personal layout? Its source channels will remain available.'),close=>[
     button('Delete',async()=>{close();if(!active())return;busy=true;paint();try{await api(route,{method:'DELETE'});pendingEdits.delete(cacheKey);if(active())navigate('/space');}catch(error){busy=false;failed=error;if(active())paint();}},{class:'danger'})]),{class:'danger'});
-  root.append(heading('My Space','Your own layout, connected to live sources.',undo,previewButton,refreshButton),
+  root.append(heading('My Space','Your own layout, connected to live sources.',button('Share',()=>sharePage(saved)),link('Import template','#/import'),undo,previewButton,refreshButton),
     el('div',{class:'toolbar space-pages'},pageSelect.node,button('New page',createPage),deleteButton),status,errors,editPanel,blocks);
   title.input.addEventListener('change',()=>{if(title.input.reportValidity())change(next=>{next.title=title.input.value.trim();});});
   title.input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();title.input.blur();}});

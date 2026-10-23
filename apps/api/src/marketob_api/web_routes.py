@@ -35,6 +35,7 @@ def router() -> APIRouter:
             "studio-editor.js",
             "favorites.js",
             "space.js",
+            "sharing.js",
         }:
             from marketob_api.errors import ApiError
 

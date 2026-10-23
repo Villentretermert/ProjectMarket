@@ -103,10 +103,10 @@ define("Result", {"result_id":ID,"result_revision":REVISION,"state":enum("Bot bu
 define("Ack", {"event_id":ID,"acknowledged_at":TIME}, "Durable receipt only; does not confirm purchase or stop result reconciliation.")
 define("PersonalPage", {"page_id":ID,"title":text("Owner-selected personal page title.",80),"layout":ref("Layout")}, "Owned personal layout with independent source permissions.")
 define("PageWrite", {"title":text("Personal page title.",80),"layout":ref("Layout"),"expected_template_version":number("Zero on create; exact current version on update.")}, "Atomic replacement with optimistic concurrency.")
-define("ShareCreate", {"expires_at":TIME}, "Optional future expiry; omission means no expiry until revoked.",( "expires_at",))
+define("ShareCreate", {"expected_template_version":REVISION,"expires_at":{"oneOf":[TIME,{"type":"null"}],"description":"Future expiry; omit for 30 days, null for no expiry."}}, "Share the exact saved version.",( "expires_at",))
 define("Share", {"share_id":ID,"code":text("Random 192-bit base64url locator; never grants source access.",32,32,pattern="^[A-Za-z0-9_-]{32}$"),"expires_at":{"oneOf":[TIME,{"type":"null"}],"description":"Expiry or no time limit."}}, "Immutable server-stored template locator; sharing is not encryption.")
 define("ImportInput", {"code":deepcopy(SCHEMAS["Share"]["properties"]["code"])}, "Code from the same server origin; cross-server migration is outside v1.")
-define("ImportPreview", {"layout":ref("Layout"),"unavailable_blocks":array(ID,"Block IDs whose source cannot currently be read. No private names or timestamps.",50)}, "Layout only; source contents are never copied into a share.")
+define("ImportPreview", {"title":text("Author-provided page title, deliberately shared.",80),"layout":ref("Layout"),"unavailable_blocks":array(ID,"Block IDs whose source cannot currently be read. No private names or timestamps.",50)}, "Layout only; source contents are never copied into a share.")
 define("Preference", {"channel_id":ID,"events":array(enum("Selected event kind.","news.published","catalog.changed","request.status"),"Events shown in the open app; OS push is deferred.",3,0,True)}, "Per-user subscription; read rights are checked independently.")
 define("Update", {"update_id":ID,"kind":enum("Hint or access invalidation.","channel.changed","request.status","access.revoked"),"target_id":ID,"revision":REVISION}, "No source payload; fetch authorized snapshot/status after the hint. Revocation removes cached content.")
 define("UpdatePage", {"items":array(ref("Update"),"Authorized user update hints.",100),"next_cursor":CURSOR}, "Polling transport for v1; invalid/expired cursor requires full resync. SSE may be added later without changing payloads.")
@@ -216,7 +216,9 @@ endpoint('get','/v1/personal-pages/{page_id}','readPage','Read own layout; sourc
 endpoint('get','/v1/personal-pages/{page_id}/snapshot','resolvePersonalPage','Resolve current published bindings and access independently for each source; unavailable blocks contain no source metadata.',response='PageSnapshot')
 endpoint('put','/v1/personal-pages/{page_id}','replacePage','Replace owned layout using expected version.','PageWrite','PersonalPage')
 endpoint('delete','/v1/personal-pages/{page_id}','deletePage','Delete own page and revoke its share locators.',status=204)
-endpoint('post','/v1/personal-pages/{page_id}/shares','createShare','Store an immutable layout-only snapshot; never source payloads.','ShareCreate','Share',201)
+endpoint('post','/v1/personal-pages/{page_id}/shares','createShare','Store an immutable layout-only snapshot; never source payloads.','ShareCreate','Share',201,params=(idem,))
+define('ShareList', {'items':array(ref('Share'),'Active owned links for one page.',20)}, 'Complete bounded list, expired/revoked omitted.')
+endpoint('get','/v1/personal-pages/{page_id}/shares','listShares','List own active page links.',response='ShareList')
 endpoint('delete','/v1/shares/{share_id}','revokeShare','Stop new imports; existing copied layouts retain independent rights checks.',status=204)
 endpoint('post','/v1/template-imports/preview','previewImport','Validate supported layout and mark inaccessible sources.','ImportInput','ImportPreview')
 endpoint('post','/v1/template-imports','importTemplate','Create a new owned page; recheck access and share expiry.','ImportInput','PersonalPage',201,params=(idem,))
@@ -243,7 +245,7 @@ def replace_refs(value):
 
 def artifacts():
     bundle={"$schema":"https://json-schema.org/draft/2020-12/schema", "$id":"urn:marketob:contract:1.0", "$defs":SCHEMAS}
-    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.6","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
+    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.7","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
     return {"schemas.json":bundle,"openapi.json":replace_refs(spec)}
 
 

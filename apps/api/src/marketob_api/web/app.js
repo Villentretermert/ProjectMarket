@@ -21,7 +21,7 @@ function account() {
   }));
 }
 function signIn(register = false, returnSlug = '') {
-  const target=/^[a-z0-9-]{3,80}$/.test(returnSlug)?returnSlug:'';
+  const target=/^import\/[A-Za-z0-9_-]{32}$/.test(returnSlug)?'/'+returnSlug:(/^[a-z0-9-]{3,80}$/.test(returnSlug)?'/channel/'+returnSlug:'');
   const username = field('Username', {name:'username',required:true,minlength:3,maxlength:40,pattern:'[a-z0-9_-]+',autocomplete:'username'});
   const password = field('Password', {name:'password',type:'password',required:true,minlength:12,maxlength:128,autocomplete:register?'new-password':'current-password'});
   const name = field('Display name', {name:'display_name',required:true,maxlength:80,autocomplete:'nickname'});
@@ -32,12 +32,12 @@ function signIn(register = false, returnSlug = '') {
       const body = {username:username.input.value,password:password.input.value};
       if (register) body.display_name=name.input.value;
       const result = await api('/auth/'+(register?'register':'login'), {method:'POST',body});
-      clearRequests(); setSession(result); navigate(target?'/channel/'+target:'/space');
+      clearRequests(); setSession(result); navigate(target||'/space');
     } catch(error) { errors.append(errorBox(error)); } finally { submit.disabled=false; password.input.value=''; }
   }}, register?name.node:null, username.node, password.node, submit, errors);
   return el('section', {class:'panel auth'}, el('div', {class:'eyebrow'},'Welcome to MarkeTOB'),
     el('h1', {},register?'Create your account':'Your bots. One space.'), message('Use your local MarkeTOB account.'), form,
-    el('p', {},link(register?'Already registered? Sign in':'New here? Create an account',(register?'#/login':'#/register')+(target?'/'+target:''))));
+    el('p', {},link(register?'Already registered? Sign in':'New here? Create an account',(register?'#/login':'#/register')+(target?'/'+returnSlug:''))));
 }
 function openChannelForm() {
   const slug = field('Channel link or slug', {required:true,placeholder:'Paste a MarkeTOB channel link',maxlength:500});
@@ -56,6 +56,7 @@ function openChannelForm() {
   }}, slug.node, el('button', {type:'submit',class:'primary'},'Open channel'), errors);
 }
 routes.set('space', async parts => (await import('./space.js')).space(parts,{navigate,refresh}));
+routes.set('import', async parts => (await import('./sharing.js')).importTemplate(parts,{navigate}));
 routes.set('channels', () => channels(openChannelForm,refresh));
 routes.set('studio', async parts => (await import('./studio.js')).studio(parts,{refresh,navigate}));
 routes.set('channel', async parts => {
@@ -86,8 +87,8 @@ async function route() {
   const parts=location.hash.replace(/^#\/?/,'').split('/'), page=parts[0]||'space';
   document.querySelectorAll('nav a').forEach(a=>a.setAttribute('aria-current',a.hash==='#/'+page?'page':'false'));
   try {
-    if (page==='login'||page==='register') main.replaceChildren(signIn(page==='register',parts[1]));
-    else if (!session && !['channels','channel'].includes(page)) main.replaceChildren(signIn());
+    if (page==='login'||page==='register') main.replaceChildren(signIn(page==='register',parts.slice(1).join('/')));
+    else if (!session && !['channels','channel'].includes(page)) main.replaceChildren(signIn(false,page==='import'?'import/'+parts[1]:''));
     else {
       const fn=routes.get(page), node=fn?await fn(parts):el('h1',{},'Page not found');
       if (own!==generation) return;

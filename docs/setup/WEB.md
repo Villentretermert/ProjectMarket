@@ -60,3 +60,5 @@ are browser checks, not Android device acceptance.
 [Studio/команда](STUDIO.md) и [Channels/избранное](FAVORITES.md) работают на том же локальном сервере.
 
 [My Space: личный интерфейс и автосохранение](MY_SPACE.md).
+
+[Share / Import templates](SHARING.md).

@@ -26,6 +26,8 @@ VALIDATORS = {
         "FavoriteOrder",
         "FavoriteSeen",
         "PageWrite",
+        "ShareCreate",
+        "ImportInput",
     )
 }
 

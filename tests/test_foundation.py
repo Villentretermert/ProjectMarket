@@ -47,6 +47,7 @@ def test_web_assets_are_packaged_no_store_and_constrained() -> None:
             "studio-editor.js",
             "favorites.js",
             "space.js",
+            "sharing.js",
         ):
             result = http.get("/app/" + asset)
             assert result.status_code == 200
@@ -109,7 +110,8 @@ def test_runtime_spec_does_not_claim_future_business_endpoints() -> None:
     assert "post" in spec["paths"]["/v1/bot/messages"]
     assert "get" in spec["paths"]["/v1/bot/events"]
     assert "/v1/personal-pages" in spec["paths"]
-    assert "/v1/template-imports" not in spec["paths"]
+    assert "/v1/template-imports" in spec["paths"]
+    assert "/v1/updates" not in spec["paths"]
 
 
 def test_environment_overrides_file_without_disclosing_secrets(

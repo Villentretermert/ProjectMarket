@@ -252,6 +252,11 @@ def router(settings: Settings) -> APIRouter:
             current = authenticate(connection, request, settings)
             lock_pages(connection, current.user_id)
             connection.execute(
+                "UPDATE shared_templates SET revoked_at=coalesce(revoked_at,now()) "
+                "WHERE page_id=%s AND user_id=%s",
+                (page_id, current.user_id),
+            )
+            connection.execute(
                 "UPDATE personal_pages SET deleted_at=coalesce(deleted_at,now()),"
                 "title='Deleted page',layout=%s WHERE page_id=%s AND user_id=%s",
                 (

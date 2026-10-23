@@ -2141,17 +2141,33 @@
     },
     "ShareCreate": {
       "type": "object",
-      "description": "Optional future expiry; omission means no expiry until revoked.",
+      "description": "Share the exact saved version.",
       "properties": {
+        "expected_template_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "description": "Monotonic revision; compare within the referenced resource."
+        },
         "expires_at": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 40,
-          "description": "RFC3339 timestamp with timezone; server returns UTC.",
-          "format": "date-time"
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "RFC3339 timestamp with timezone; server returns UTC.",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Future expiry; omit for 30 days, null for no expiry."
         }
       },
-      "required": [],
+      "required": [
+        "expected_template_version"
+      ],
       "additionalProperties": false
     },
     "Share": {
@@ -2216,6 +2232,12 @@
       "type": "object",
       "description": "Layout only; source contents are never copied into a share.",
       "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Author-provided page title, deliberately shared."
+        },
         "layout": {
           "$ref": "#/$defs/Layout"
         },
@@ -2235,6 +2257,7 @@
         }
       },
       "required": [
+        "title",
         "layout",
         "unavailable_blocks"
       ],
@@ -3160,6 +3183,26 @@
       "required": [
         "items",
         "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "ShareList": {
+      "type": "object",
+      "description": "Complete bounded list, expired/revoked omitted.",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Share"
+          },
+          "minItems": 0,
+          "maxItems": 20,
+          "uniqueItems": false,
+          "description": "Active owned links for one page."
+        }
+      },
+      "required": [
+        "items"
       ],
       "additionalProperties": false
     },

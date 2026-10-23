@@ -56,3 +56,7 @@ D34 · PM-014: [ADR-0009](adr/0009-workspace-roles.md) реализует G03. �
 D35 · PM-015: [ADR-0010](adr/0010-favorites.md) — полный список до 100 избранных каналов, ручной порядок с revision guard, New по data/template revisions, недоступный источник без метаданных. Инженерная детализация G03, не новое требование владельца.
 
 D36 · PM-016: [ADR-0011](adr/0011-personal-pages.md) — независимый layout, проверка каждого источника, optimistic versions и replay, Undo новой версией. Лимиты 20 страниц/50 блоков/20 шагов Undo — инженерные границы пилота, не новые ответы пользователя.
+
+D37 · G04, 23 октября: «Продолжай» разрешает PM-017–018 с объявленными [допущениями](reviews/G04/answers.md). Это не отдельные ответы на 13 вопросов. Immutable server code, default30d, revoke on page delete, independent imports/placeholders; локальные события, Android/облако отложены.
+
+D38 · PM-017: [ADR-0012](adr/0012-template-sharing.md) — immutable layout/code, independent import rights, exact-retry recovery and transactional revoke. Default30d/max20active links: engineering bounds following G04 assumptions.
