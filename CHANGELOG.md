@@ -272,4 +272,11 @@ The Events regression test now waits for the persisted checked state before
 unchecking. Playwright may skip uncheck on the initial disabled/empty control;
 production controls already remain disabled until preferences load. Initial Linux
 run exposed this test race; the final run verifies the actual change to events[].
+## 2026-10-23 · PM-018 repeated authorization invalidation
+
+Edge exposed a fast revoke/restore/revoke race: an independent picker snapshot could
+restore DOM content while a repeated revoke hint was deduplicated. Every denial now
+clears affected content even for repeated hints; dedup only suppresses redundant
+network refresh/notifications. Picker failures paint the cleared state immediately,
+before changing request generations. Focused and full browser checks are repeated.
 

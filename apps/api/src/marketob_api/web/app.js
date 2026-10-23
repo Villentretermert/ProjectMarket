@@ -80,6 +80,7 @@ routes.set('channel', async parts => {
   const channelID=snapshot.channel.channel_id;
   node.liveChannels=()=>[channelID];
   node.onLiveUnavailable=()=>{title.querySelector('h1').textContent='Channel unavailable';saved.node.hidden=true;content.replaceChildren(message('Content hidden until access can be checked.'));};
+  node.onAccessRevoked=ids=>{if(ids.has(channelID))node.onLiveUnavailable();};
   node.onUpdates=async items=>{
     if(items===null||items.some(i=>i.channel_id===channelID&&i.kind!=='request.status')){
       try{

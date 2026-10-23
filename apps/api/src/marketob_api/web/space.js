@@ -135,7 +135,11 @@ export async function space(parts,{navigate,refresh}) {
         if(record)item.input.append(el('option',{value:block.block_id},record.content.title+' · '+block.content_type));
       }
       if(!item.input.options.length)sourceError.append(message('This channel has no available published blocks.'));
-    }catch(error){if(own===sourceGeneration&&active()){sourceError.append(errorBox(error));snapshot={page:saved,blocks:[]};try{snapshot=await api(route+'/snapshot');}catch{/* Keep unavailable placeholders. */}if(error.status===404)await refreshChoices();}}
+    }catch(error){if(own===sourceGeneration&&active()){
+      sourceError.append(errorBox(error));snapshot={page:saved,blocks:[]};paint();
+      try{const value=await api(route+'/snapshot');if(own===sourceGeneration&&active()){snapshot=value;paint();}}catch{/* Keep unavailable placeholders. */}
+      if(error.status===404)await refreshChoices();
+    }}
     finally{if(own===sourceGeneration&&active())paint();}
   }
   function paint(){
@@ -200,6 +204,7 @@ export async function space(parts,{navigate,refresh}) {
     }
     await refreshStatuses(root,items);
   };
+  root.onAccessRevoked=ids=>root.onLiveUnavailable(ids);
   window.addEventListener('route-leave',()=>scope.abort(),{once:true});
   window.addEventListener('beforeunload',event=>{if(pending){event.preventDefault();event.returnValue='';}},{signal:scope.signal});
   document.addEventListener('click',event=>{if(pending&&root.isConnected&&event.target.closest('a[href]')){event.preventDefault();toast('Retry the edit or choose Reload saved before leaving.');}},{capture:true,signal:scope.signal});

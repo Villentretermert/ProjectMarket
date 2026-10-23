@@ -47,6 +47,10 @@ export function startLive(root,initialCursor,refreshSidebar){
       [...new Set(root.liveChannels?.()||[])].slice(0,50).forEach(cid=>query.append('watch',cid));
       const page=await api('/updates?'+query,{signal:AbortSignal.any([scope.signal,AbortSignal.timeout(5000)])});
       if(!active())return;
+      // Authorization invalidations must clear the view on every poll. An independent
+      // snapshot read may have restored content between two identical revoke hints.
+      const denied=new Set(page.items.filter(i=>i.kind==='access.revoked').map(i=>i.channel_id));
+      if(denied.size)root.onAccessRevoked?.(denied);
       const fresh=page.items.filter(item=>item.kind==='access.revoked'?!unavailable.has(item.channel_id):!seen.has(item.update_id));
       if(fresh.length){await root.onUpdates?.(fresh);if(!active())return;await refreshSidebar();}
       if(!active())return;

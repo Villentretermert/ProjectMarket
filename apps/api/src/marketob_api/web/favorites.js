@@ -35,6 +35,7 @@ export async function channels(openForm, refresh) {
   root.liveChannels=()=>saved.items.map(i=>i.channel_id);
   root.onUpdates=async()=>{const value=await favorites();if(root.isConnected){saved=value;draw();}};
   root.onLiveUnavailable=()=>{saved={...saved,items:saved.items.map(i=>({channel_id:i.channel_id,available:false}))};draw();};
+  root.onAccessRevoked=ids=>{saved={...saved,items:saved.items.map(i=>ids.has(i.channel_id)?{channel_id:i.channel_id,available:false}:i)};draw();};
   return root;
 }
 export async function channelFavorite(snapshot, refresh) {
