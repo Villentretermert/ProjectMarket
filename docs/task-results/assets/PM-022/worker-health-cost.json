@@ -1,0 +1,52 @@
+{
+  "measurement": "Fresh Docker process; heartbeat probe body including imports, excludes Docker/process startup. Three diagnostic samples, not a load acceptance.",
+  "2008583": {
+    "samples": [
+      {
+        "probe_body_ms": 2037.0412140000553,
+        "heavy_modules": [
+          "fastapi",
+          "jsonschema",
+          "jsonschema_rs",
+          "psycopg"
+        ]
+      },
+      {
+        "probe_body_ms": 1945.504608000192,
+        "heavy_modules": [
+          "fastapi",
+          "jsonschema",
+          "jsonschema_rs",
+          "psycopg"
+        ]
+      },
+      {
+        "probe_body_ms": 2001.0163049992116,
+        "heavy_modules": [
+          "fastapi",
+          "jsonschema",
+          "jsonschema_rs",
+          "psycopg"
+        ]
+      }
+    ],
+    "median_probe_body_ms": 2001.0163049992116
+  },
+  "d4bd845": {
+    "samples": [
+      {
+        "probe_body_ms": 158.81916099897353,
+        "heavy_modules": []
+      },
+      {
+        "probe_body_ms": 147.57133300008718,
+        "heavy_modules": []
+      },
+      {
+        "probe_body_ms": 138.71675799964578,
+        "heavy_modules": []
+      }
+    ],
+    "median_probe_body_ms": 147.57133300008718
+  }
+}

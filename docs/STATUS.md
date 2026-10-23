@@ -27,5 +27,7 @@ PM-022 in_progress: отдельный локальный стенд, L2/burst �
 CI40034156701:162 Python-теста/47 browser scenarios,все4jobs PASS. Полный1800с+burst
 прерван после13мин по отсрочке владельца. Диагностика и предыдущие неудачные
 повторы сохранены в [отчёте PM-022](task-results/PM-022.md). Облегчённый health probe
-worker проверен отдельно; его CI выполняется. Задача и G05 не приняты, рабочий
+worker проверен отдельно; [CI d4bd845](https://github.com/Villentretermert/ProjectMarket/actions/runs/40037429124)
+успешен во всех4jobs:81unit+86integration=167 Python-тестов и47 browser scenarios.
+Новые образы d4bd845 подготовлены. Задача и G05 не приняты, рабочий
 пилот пока на6b3ffb5. Следующая PM-задача не начата.
