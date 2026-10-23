@@ -1,0 +1,23 @@
+{
+  "time": "2026-10-23T21:55:23.065928+00:00",
+  "gauges": {
+    "worker_age_seconds": -0.023228,
+    "outbox_pending": 0,
+    "outbox_lag_seconds": 0.0,
+    "outbox_rows": 24461,
+    "unresolved": 0,
+    "unknown": 0,
+    "action_lag_seconds": 0.0,
+    "history_capacity_fraction": 0.0150730200111866,
+    "history_json_bytes": 151873610,
+    "history_rows": 23781,
+    "history_age_seconds": 1518.982308,
+    "largest_bot_queue": 0,
+    "schema_bytes": 68919296,
+    "disk_free_bytes": 114492342272
+  },
+  "http": null,
+  "alerts": [
+    "disk_reserve_low"
+  ]
+}

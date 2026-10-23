@@ -11,6 +11,7 @@ from typing import Any
 from uuid import uuid4
 
 from scripts.backend_lab import Lab
+from scripts.docker_lab import DockerLab
 from scripts.host_samples import HostSamples
 from scripts.load_integrity import receipt_manifest
 from scripts.operations import log_metrics, snapshot
@@ -24,8 +25,15 @@ def main() -> None:
     parser.add_argument("--seconds", type=int, default=900)
     parser.add_argument("--bots", type=int, choices=(10, 100), default=10)
     parser.add_argument("--burst", action="store_true")
+    parser.add_argument(
+        "--docker", action="store_true", help="Use an isolated Docker delivery stack"
+    )
+    parser.add_argument("--wsl-distribution", default="Ubuntu")
+    parser.add_argument("--release", default="6b3ffb5")
     args = parser.parse_args()
-    lab = Lab(args.connection_file)
+    lab = (
+        DockerLab(args.wsl_distribution, args.release) if args.docker else Lab(args.connection_file)
+    )
     resources = HostSamples()
     resources.start()
     args.output.mkdir(parents=True, exist_ok=True)
@@ -191,6 +199,9 @@ def main() -> None:
             (lab.schema,),
         )[0]["n"]
         report["operations"] = snapshot(lab.database)
+        report["execution_target"] = "Docker/WSL" if args.docker else "native Windows"
+        if isinstance(lab, DockerLab):
+            lab.capture_logs()
         report["server"] = log_metrics(
             lab.directory / "logs", report["steady_started_at"], report["steady_finished_at"]
         )

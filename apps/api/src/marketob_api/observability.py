@@ -34,7 +34,9 @@ class SafeFormatter(logging.Formatter):
         event = {k: v for k, v in record.__dict__.items() if k in FIELDS}
         event.setdefault("event", "runtime")
         event.update(
-            time=datetime.fromtimestamp(record.created, UTC).isoformat(), level=record.levelname
+            time=datetime.fromtimestamp(record.created, UTC).isoformat(),
+            level=record.levelname,
+            process=record.process,
         )
         return json.dumps(event, separators=(",", ":"))
 

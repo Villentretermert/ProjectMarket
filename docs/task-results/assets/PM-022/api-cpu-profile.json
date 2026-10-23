@@ -1,0 +1,74 @@
+{
+  "tool": "py-spy 0.4.2",
+  "mode": "GIL-only,60s,100Hz",
+  "samples": 3740,
+  "limitations": "Diagnostic only; sampler fell behind by up to10.79s and affects latency. Not an acceptance run.",
+  "leaf_modules": {
+    "psycopg": {
+      "samples": 1292,
+      "percent": 34.55
+    },
+    "asyncio": {
+      "samples": 489,
+      "percent": 13.07
+    },
+    "fastapi": {
+      "samples": 421,
+      "percent": 11.26
+    },
+    "marketob_api": {
+      "samples": 286,
+      "percent": 7.65
+    },
+    "h11": {
+      "samples": 220,
+      "percent": 5.88
+    },
+    "json": {
+      "samples": 199,
+      "percent": 5.32
+    },
+    "starlette": {
+      "samples": 190,
+      "percent": 5.08
+    },
+    "anyio": {
+      "samples": 132,
+      "percent": 3.53
+    },
+    "psycopg_pool": {
+      "samples": 99,
+      "percent": 2.65
+    },
+    "logging": {
+      "samples": 75,
+      "percent": 2.01
+    },
+    "pydantic": {
+      "samples": 53,
+      "percent": 1.42
+    },
+    "uvicorn": {
+      "samples": 52,
+      "percent": 1.39
+    },
+    "contextlib": {
+      "samples": 27,
+      "percent": 0.72
+    },
+    "threading": {
+      "samples": 26,
+      "percent": 0.7
+    },
+    "_weakrefset": {
+      "samples": 20,
+      "percent": 0.53
+    }
+  },
+  "docker_single_api_observation": {
+    "cpu_percent_one_core": 117.02,
+    "memory_mib": 103.9,
+    "memory_limit_mib": 512
+  },
+  "source": "https://github.com/benfred/py-spy/releases/tag/v0.4.2"
+}

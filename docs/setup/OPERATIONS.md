@@ -8,7 +8,11 @@ PM-022. Команды выполняются из ProjectMarket. Инструм
 Для Python-стенда укажите в локальном `.env`
 `MARKETOB_LOG_DIRECTORY=.local/logs`, запустите API и отдельный maintenance worker.
 Файлы `api.jsonl` и `worker.jsonl` ротируются: до пяти файлов по10MiB на процесс.
-Для Docker логи ограничены драйвером local и читаются через `docker compose logs`.
+Для Docker API логи ограничены100MiB на контейнер,остальные сервисы50MiB;
+чтение через `docker compose logs`. Docker-кандидат использует2API-процесса
+с общим бюджетом32primary+8auxiliary подключений. Native по умолчанию1процесс.
+Несколько процессов допускаются только со stdout,без общего rotating-файла.
+Скорость новой конфигурации ещё не принята.
 Сырые PostgreSQL диагностические логи старого native-стенда не публикуются.
 
 ```powershell

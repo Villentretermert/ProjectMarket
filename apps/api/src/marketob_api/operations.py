@@ -35,8 +35,10 @@ def log_metrics(directory: Path, start: str, end: str) -> dict[str, Any]:
         raise ValueError("Use an ordered window of at most one hour")
     durations: dict[str, list[float]] = {}
     statuses: dict[str, int] = {}
+    processes: dict[str, int] = {}
     malformed = 0
     earliest: str | None = None
+    latest: str | None = None
     for path in sorted(directory.glob("api.jsonl*")):
         if path.stat().st_size > 11 * 1024 * 1024:
             raise ValueError("Expected bounded rotated API logs")
@@ -46,12 +48,16 @@ def log_metrics(directory: Path, start: str, end: str) -> dict[str, Any]:
                     row = json.loads(line)
                     at = datetime.fromisoformat(row["time"])
                     earliest = min(earliest, row["time"]) if earliest else row["time"]
+                    latest = max(latest, row["time"]) if latest else row["time"]
                     if row.get("event") != "http" or not left <= at <= right:
                         continue
                     key = row["method"] + " " + row["route"]
                     # Only successful API observations measure service SLO, quotas separately.
                     status = str(row["status"])
                     statuses[status] = statuses.get(status, 0) + 1
+                    if isinstance(row.get("process"), int):
+                        process = str(row["process"])
+                        processes[process] = processes.get(process, 0) + 1
                     if row["status"] < 400 and row["route"].startswith("/v1/"):
                         durations.setdefault(key, []).append(float(row["duration_ms"]))
                 except ValueError, KeyError, TypeError:
@@ -62,12 +68,16 @@ def log_metrics(directory: Path, start: str, end: str) -> dict[str, Any]:
         "end": end,
         "requests": count,
         "statuses": statuses,
+        "api_process_requests": processes,
         "unexpected_5xx_fraction": sum(n for s, n in statuses.items() if s.startswith("5")) / count
         if count
         else None,
         "routes": {k: statistics(v) for k, v in sorted(durations.items())},
         "malformed_lines": malformed,
-        "window_complete": earliest is not None and datetime.fromisoformat(earliest) <= left,
+        "window_complete": earliest is not None
+        and latest is not None
+        and datetime.fromisoformat(earliest) <= left
+        and datetime.fromisoformat(latest) >= right,
     }
 
 

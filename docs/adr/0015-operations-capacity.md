@@ -13,7 +13,7 @@ only generated request ID, authenticated bot ID, route template, method, status,
 duration and bounded worker counters. Never include bodies, URLs/query strings,
 headers, cookies, username, source titles or exception text. Native rotating files
 are bounded to five 10 MiB files per process. Docker uses its bounded local log
-driver. PostgreSQL Docker error statements/details are disabled. Local operators
+driver:100MiB for the two-process API container,50MiB for other services. PostgreSQL Docker error statements/details are disabled. Local operators
 can read metrics and evaluate alerts through a Python CLI; no public metrics
 endpoint, third-party telemetry or outbound alert destination is added.
 
@@ -23,8 +23,15 @@ min2/max8. Auxiliary capacity serves independently committed quotas and outbox
 dispatch, avoiding nested-checkout starvation when all primary connections are
 occupied. Both have a 3s wait and max40 waiters. Successful requests commit before
 return; exceptions roll back. Borrow checks detect broken connections; pools
-close at API shutdown. One API process is the measured deployment. More API
-replicas require a new connection/resource budget.
+close at API shutdown. Initial probes used one API process. After failed native
+and Docker repeats, the candidate Docker configuration uses two Uvicorn workers
+with16 primary+4 auxiliary connections each:the total remains32+8. Native defaults
+to one worker. Settings allow only1–2 workers; multiple workers require stdout,
+so independent rotating-file writers cannot corrupt a shared native log.
+The candidate still requires a new successful full L2. External replicas need
+a separate connection/resource budget.
+[Uvicorn process manager](https://uvicorn.dev/deployment/) documents spawn/factory
+support; local measurements establish whether this configuration meets our SLO.
 
 The first steady rehearsal also exceeded latency targets. Profiling identified
 the Python JSON Schema traversal of chart points as substantial CPU work.

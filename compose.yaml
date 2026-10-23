@@ -23,7 +23,9 @@ services:
       retries: 20
       start_period: 10s
   api:
-    logging: *bounded-logging
+    logging:
+      driver: local
+      options: {max-size: "20m", max-file: "5"}
     image: marketob-api:${MARKETOB_RELEASE:-local}
     build:
       context: .
@@ -32,6 +34,7 @@ services:
       MARKETOB_DATABASE_URL: postgresql://marketob:${POSTGRES_PASSWORD:?Run python scripts/dev_env.py first}@db:5432/${MARKETOB_DB_NAME:-marketob}
       MARKETOB_ALLOWED_ORIGINS: ${MARKETOB_ALLOWED_ORIGINS:-["http://127.0.0.1:8000","http://localhost:8000"]}
       MARKETOB_AUTH_RATE_LIMIT: ${MARKETOB_AUTH_RATE_LIMIT:-10}
+      MARKETOB_API_WORKERS: ${MARKETOB_API_WORKERS:-2}
     ports:
       - "127.0.0.1:${MARKETOB_PORT:-8000}:8000"
     depends_on:

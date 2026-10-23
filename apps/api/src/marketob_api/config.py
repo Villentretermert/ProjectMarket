@@ -1,10 +1,10 @@
 """Environment configuration with optional storage for foundation smoke tests."""
 
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Self
 from urllib.parse import urlsplit
 
-from pydantic import Field, PostgresDsn, PrivateAttr, SecretStr, field_validator
+from pydantic import Field, PostgresDsn, PrivateAttr, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     port: int = Field(default=8000, ge=1, le=65535)
     log_level: Literal["debug", "info", "warning", "error"] = "info"
     log_directory: Path | None = None
+    api_workers: int = Field(default=1, ge=1, le=2)
     database_url: SecretStr | None = None
     database_timeout_seconds: int = Field(default=3, ge=2, le=30)
     database_schema: str = Field(default="public", pattern=r"^[a-z][a-z0-9_]{0,62}$")
@@ -35,6 +36,13 @@ class Settings(BaseSettings):
     auth_rate_limit: int = Field(default=10, ge=1, le=1000)
     read_rate_limit: int = Field(default=120, ge=1, le=10000)
     write_rate_limit: int = Field(default=60, ge=1, le=10000)
+
+    @model_validator(mode="after")
+    def validate_process_logging(self) -> Self:
+        # Native rotating files have one writer; Docker bounds the shared stdout stream.
+        if self.api_workers > 1 and self.log_directory is not None:
+            raise ValueError("Multiple API workers require stdout logging (for example Docker).")
+        return self
 
     @field_validator("allowed_origins")
     @classmethod

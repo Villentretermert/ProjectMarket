@@ -16,6 +16,7 @@ from marketob_api.maintenance import maintain, prune, prune_updates
 from marketob_api.observability import ObservationMiddleware, SafeFormatter
 from marketob_api.transport import ProtocolMiddleware
 from marketob_api.updates import dispatch
+from pydantic import ValidationError
 
 from scripts.operations import alerts, log_metrics, snapshot
 from tests.test_actions import action_body, event_path, queue, report
@@ -26,6 +27,12 @@ from tests.test_identity import settings as settings
 from tests.test_ingestion import counts, draft, message
 from tests.test_ingestion import gateway as gateway
 from tests.test_updates import poll
+
+
+def test_multiple_api_workers_require_a_single_stdout_log_sink(tmp_path: Path) -> None:
+    assert Settings(_env_file=None, api_workers=2).api_workers == 2
+    with pytest.raises(ValidationError, match="stdout logging"):
+        Settings(_env_file=None, api_workers=2, log_directory=tmp_path)
 
 
 def test_log_allowlist_and_exception_redaction(caplog: pytest.LogCaptureFixture) -> None:
@@ -70,6 +77,7 @@ def test_log_metrics_and_alert_window(tmp_path: Path) -> None:
             "route": "/v1/bot/messages",
             "duration_ms": n,
             "status": 200 if n < 99 else 503,
+            "process": n % 2 + 10,
         }
         for n in range(100)
     ]
@@ -77,6 +85,10 @@ def test_log_metrics_and_alert_window(tmp_path: Path) -> None:
     metrics = log_metrics(tmp_path, now.isoformat(), now.isoformat())
     assert metrics["window_complete"] and metrics["unexpected_5xx_fraction"] == 0.01
     assert metrics["routes"]["POST /v1/bot/messages"]["p95_ms"] == 94
+    assert metrics["api_process_requests"] == {"10": 50, "11": 50}
+    assert not log_metrics(tmp_path, now.isoformat(), (now + timedelta(seconds=1)).isoformat())[
+        "window_complete"
+    ]
 
 
 @pytest.mark.integration
