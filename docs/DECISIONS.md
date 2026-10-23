@@ -64,3 +64,5 @@ D38 · PM-017: [ADR-0012](adr/0012-template-sharing.md) — immutable layout/cod
 D39 · PM-018: [ADR-0013](adr/0013-live-updates.md) — polling2s, serialized post-commit delivery order, session-bound10min cursor and snapshot resync, current source rights, per-channel preferences and in-app toasts. Background delivery/provider/Android remain deferred; full L2/burst is PM-022.
 
 D40 · 23 октября: владелец подтвердил «Android пока отложить; продолжить локальную поставку». Разрешена независимая часть PM-021 до PM-019/020; их native-проверки не отменены. Счётчик остаётся 18/24, после G04 2/4 до приёмки следующей полноценной задачи. Docker/WSL prerequisites и фактический запуск Windows Docker проверяются отдельно от Linux CI.
+
+D41 · PM-021: [ADR-0014](adr/0014-local-delivery.md) принят после реального запуска в уже установленной Ubuntu WSL (Docker28.1.1/Compose2.35.1). Backup в новую БД, точные migration/readiness guards, non-root local HTTPS. PM-021 завершена как локальная Web/API/worker-поставка; native-проверки остаются в PM-019/020/024. Следующий рабочий порядок PM-022 → G05 после20 завершений; перенос не засчитывает Android готовым.

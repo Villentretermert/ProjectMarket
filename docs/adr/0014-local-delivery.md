@@ -1,6 +1,6 @@
 # ADR-0014 · Local delivery and recovery
 
-Status: implemented, Windows Docker acceptance pending. 2026-10-23.
+Status: accepted; Windows/Ubuntu WSL Docker and CI acceptance passed. 2026-10-23.
 
 The owner explicitly deferred Android and authorized local delivery. PM-021's
 Web/API/worker subset can proceed independently; native acceptance and task

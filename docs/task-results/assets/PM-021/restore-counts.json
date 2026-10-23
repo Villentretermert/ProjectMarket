@@ -1,0 +1,21 @@
+{
+  "before": {
+    "users": 4,
+    "bots": 7,
+    "records": 15,
+    "receipts": 111,
+    "requests": 4,
+    "outbox": 122,
+    "migrations": 10
+  },
+  "restored": {
+    "users": 4,
+    "bots": 7,
+    "records": 15,
+    "receipts": 111,
+    "requests": 4,
+    "outbox": 122,
+    "migrations": 10
+  },
+  "equal": true
+}

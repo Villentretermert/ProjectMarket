@@ -2,15 +2,15 @@
 
 Платформа витрин для ботов: B2B владелец публикует страницу с данными своего сервиса, B2C пользователь сохраняет страницы и собирает собственный интерфейс из разрешённых блоков.
 
-**Состояние на23 октября2026:** завершены PM-001–018, **18/24** задач пилота. Работают локальные аккаунты, роли, боты, каналы, заявки, Studio, избранное, My Space и Share/Import. Открытый Web автоматически обновляет источники, сохраняет правки оформления и показывает выбранные Events. [CI PM-018](https://github.com/Villentretermert/ProjectMarket/actions/runs/39929710247):147 tests,47 Chromium scenarios, все4 jobs PASS; Edge47 PASS. Локальный L1:1500/1500 rendered, p95 2.467s, p99 2.625s. После G04:2/4. Android/виджет и Google/Firebase/облако отложены. Интерфейс — английский.
+**Состояние на23 октября2026:** завершены PM-001–018 и PM-021, **19/24** задач пилота. Работают локальные аккаунты, роли, боты, каналы, заявки, Studio, избранное, My Space и Share/Import. Открытый Web автоматически обновляет источники, сохраняет правки оформления и показывает выбранные Events. [CI PM-021](https://github.com/Villentretermert/ProjectMarket/actions/runs/39948316689):153 tests,47 Chromium scenarios, все4 jobs PASS. Локальные Docker/restore/HTTPS и Edge preview проверены. Локальный L1:1500/1500 rendered, p95 2.467s, p99 2.625s. После G04:3/4. Android/виджет и Google/Firebase/облако отложены. Интерфейс — английский.
 
 ## Запустить локальный backend
 
-[Локальная поставка](docs/setup/LOCAL_DELIVERY.md) · [Backup/restore](docs/setup/BACKUP_RESTORE.md) · [Разработка](docs/setup/LOCAL_DEVELOPMENT.md). На текущем компьютере доступны Python и Docker внутри Ubuntu WSL; PM-021 проверяется.
+[Локальная поставка](docs/setup/LOCAL_DELIVERY.md) · [Backup/restore](docs/setup/BACKUP_RESTORE.md) · [Разработка](docs/setup/LOCAL_DEVELOPMENT.md). На текущем компьютере доступны Python и Docker внутри Ubuntu WSL; PM-021 принята: HTTPS, backup/restore, restart; 153 теста и 47 браузерных сценариев PASS.
 
 ## Рабочий Web
 
-[Открыть приложение](http://127.0.0.1:8000/app/) после запуска API/БД. [Инструкция Web и проверка браузером](docs/setup/WEB.md).
+[Открыть работающий локальный пилот](http://127.0.0.1:19000/app/) (проект marketob-pm021). Создайте свой аккаунт через Create account. [Инструкция Web и проверка браузером](docs/setup/WEB.md).
 
 ## Начать работу
 

@@ -26,11 +26,11 @@
 | G04 | [#20](https://github.com/Villentretermert/ProjectMarket/issues/20) | checkpoint | done | closed |
 | PM-017 | [#21](https://github.com/Villentretermert/ProjectMarket/issues/21) | task | done | closed |
 | PM-018 | [#22](https://github.com/Villentretermert/ProjectMarket/issues/22) | task | done | closed |
-| PM-019 | [#23](https://github.com/Villentretermert/ProjectMarket/issues/23) | task | planned | open |
-| PM-020 | [#24](https://github.com/Villentretermert/ProjectMarket/issues/24) | task | planned | open |
-| G05 | [#25](https://github.com/Villentretermert/ProjectMarket/issues/25) | checkpoint | planned | open |
-| PM-021 | [#26](https://github.com/Villentretermert/ProjectMarket/issues/26) | task | in_progress | open |
+| PM-021 | [#26](https://github.com/Villentretermert/ProjectMarket/issues/26) | task | done | closed |
 | PM-022 | [#27](https://github.com/Villentretermert/ProjectMarket/issues/27) | task | planned | open |
+| G05 | [#25](https://github.com/Villentretermert/ProjectMarket/issues/25) | checkpoint | planned | open |
+| PM-019 | [#23](https://github.com/Villentretermert/ProjectMarket/issues/23) | task | deferred | open |
+| PM-020 | [#24](https://github.com/Villentretermert/ProjectMarket/issues/24) | task | deferred | open |
 | PM-023 | [#28](https://github.com/Villentretermert/ProjectMarket/issues/28) | task | planned | open |
 | PM-024 | [#29](https://github.com/Villentretermert/ProjectMarket/issues/29) | task | planned | open |
 | G06 | [#30](https://github.com/Villentretermert/ProjectMarket/issues/30) | checkpoint | planned | open |

@@ -1,10 +1,11 @@
 # Журнал изменений
 
-## 2026-10-23 — PM-021: локальная поставка (в работе)
+## 2026-10-23 — PM-021: локальная поставка и проверенное восстановление
 
 - По прямому ответу владельца начата независимая Web/API/worker-поставка; Android остаётся отложенным.
-- План: Python backup/restore с отказом от перезаписи существующей БД, проверка восстановления через API, Compose/runbook для локального запуска и безопасного обновления.
-- До проверки Docker на компьютере владельца задача остаётся открытой; завершено по-прежнему 18/24.
+- Реализованы Python backup/verify/restore, Compose local HTTPS, tags/DB switch, restart/resource limits, readiness по миграциям и отказ старого кода от более новой БД.
+- Найден и использован существующий Docker внутри Ubuntu WSL; реальные build/start, TLS/Secure session, боты, backup/restore, HTTP replay и restart PASS. Исходная БД и посторонние контейнеры сохранены.
+- Код c62c630: CI39948316689, 153 tests / 47 Chromium scenarios, все4 jobs PASS. Итог/снимки/runbooks в docs/task-results/PM-021.md. Завершено19/24, после G04:3/4; PM-022 → G05 после20. Android deferred.
 
 ## 2026-10-19 — PLAN-000: исходное планирование
 

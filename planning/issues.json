@@ -322,12 +322,57 @@
       ]
     },
     {
+      "id": "PM-021",
+      "title": "[PM-021][P0] Docker-поставка и инструкция локального запуска",
+      "kind": "task",
+      "priority": "P0",
+      "stage": 6,
+      "status": "done",
+      "path": "docs/tasks/PM-021.md",
+      "depends_on": [
+        "PM-005",
+        "PM-012",
+        "PM-018",
+        "G04"
+      ]
+    },
+    {
+      "id": "PM-022",
+      "title": "[PM-022][P1] Наблюдаемость, лимиты и нагрузочная проверка пилота",
+      "kind": "task",
+      "priority": "P1",
+      "stage": 6,
+      "status": "planned",
+      "path": "docs/tasks/PM-022.md",
+      "depends_on": [
+        "PM-012",
+        "PM-018",
+        "PM-021",
+        "G04"
+      ]
+    },
+    {
+      "id": "G05",
+      "title": "[G05] Презентация: Обмен, обновления, локальная поставка и нагрузка",
+      "kind": "checkpoint",
+      "priority": "P0",
+      "stage": 5,
+      "status": "planned",
+      "path": "docs/reviews/G05.md",
+      "depends_on": [
+        "PM-017",
+        "PM-018",
+        "PM-021",
+        "PM-022"
+      ]
+    },
+    {
       "id": "PM-019",
       "title": "[PM-019][P0] Android-приложение, локальный вход и сборки APK/AAB",
       "kind": "task",
       "priority": "P0",
       "stage": 5,
-      "status": "planned",
+      "status": "deferred",
       "path": "docs/tasks/PM-019.md",
       "depends_on": [
         "PM-002",
@@ -346,60 +391,13 @@
       "kind": "task",
       "priority": "P0",
       "stage": 5,
-      "status": "planned",
+      "status": "deferred",
       "path": "docs/tasks/PM-020.md",
       "depends_on": [
         "PM-002",
         "PM-018",
         "PM-019",
         "G04"
-      ]
-    },
-    {
-      "id": "G05",
-      "title": "[G05] Презентация: Обмен, обновления, Android и виджет",
-      "kind": "checkpoint",
-      "priority": "P0",
-      "stage": 5,
-      "status": "planned",
-      "path": "docs/reviews/G05.md",
-      "depends_on": [
-        "PM-017",
-        "PM-018",
-        "PM-019",
-        "PM-020"
-      ]
-    },
-    {
-      "id": "PM-021",
-      "title": "[PM-021][P0] Docker-поставка и инструкция локального запуска",
-      "kind": "task",
-      "priority": "P0",
-      "stage": 6,
-      "status": "in_progress",
-      "path": "docs/tasks/PM-021.md",
-      "depends_on": [
-        "PM-005",
-        "PM-012",
-        "PM-018",
-        "PM-019",
-        "PM-020",
-        "G05"
-      ]
-    },
-    {
-      "id": "PM-022",
-      "title": "[PM-022][P1] Наблюдаемость, лимиты и нагрузочная проверка пилота",
-      "kind": "task",
-      "priority": "P1",
-      "stage": 6,
-      "status": "planned",
-      "path": "docs/tasks/PM-022.md",
-      "depends_on": [
-        "PM-012",
-        "PM-018",
-        "PM-021",
-        "G05"
       ]
     },
     {

@@ -111,6 +111,21 @@
       "url": "https://github.com/Villentretermert/ProjectMarket/issues/22",
       "state": "closed"
     },
+    "PM-021": {
+      "number": 26,
+      "url": "https://github.com/Villentretermert/ProjectMarket/issues/26",
+      "state": "closed"
+    },
+    "PM-022": {
+      "number": 27,
+      "url": "https://github.com/Villentretermert/ProjectMarket/issues/27",
+      "state": "open"
+    },
+    "G05": {
+      "number": 25,
+      "url": "https://github.com/Villentretermert/ProjectMarket/issues/25",
+      "state": "open"
+    },
     "PM-019": {
       "number": 23,
       "url": "https://github.com/Villentretermert/ProjectMarket/issues/23",
@@ -119,21 +134,6 @@
     "PM-020": {
       "number": 24,
       "url": "https://github.com/Villentretermert/ProjectMarket/issues/24",
-      "state": "open"
-    },
-    "G05": {
-      "number": 25,
-      "url": "https://github.com/Villentretermert/ProjectMarket/issues/25",
-      "state": "open"
-    },
-    "PM-021": {
-      "number": 26,
-      "url": "https://github.com/Villentretermert/ProjectMarket/issues/26",
-      "state": "open"
-    },
-    "PM-022": {
-      "number": 27,
-      "url": "https://github.com/Villentretermert/ProjectMarket/issues/27",
       "state": "open"
     },
     "PM-023": {
