@@ -177,9 +177,20 @@ def router(settings: Settings) -> APIRouter:
                 (result["receipt_id"], channel_id, current.bot_id, Jsonb(body), timestamp),
             )
             connection.execute(
-                "INSERT INTO change_outbox(channel_id,kind,data_revision,resource_id,receipt_id) "
-                "VALUES (%s,'channel.changed',%s,%s,%s)",
-                (channel_id, data_revision, body["resource_id"], result["receipt_id"]),
+                "INSERT INTO change_outbox(channel_id,kind,data_revision,resource_id,"
+                "receipt_id,event_name) "
+                "VALUES (%s,'channel.changed',%s,%s,%s,%s)",
+                (
+                    channel_id,
+                    data_revision,
+                    body["resource_id"],
+                    result["receipt_id"],
+                    body.get("event_name")
+                    if body["kind"] == "event"
+                    else {"news": "news.published", "product": "catalog.changed"}.get(
+                        body.get("content_type", "news") if body["kind"] != "delete" else ""
+                    ),
+                ),
             )
             return receipt(result)
 

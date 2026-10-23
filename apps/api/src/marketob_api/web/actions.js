@@ -34,6 +34,7 @@ export function purchaseControls(channel, block, record, onAccessLost) {
   const storageKey = prefix + user + ':' + channel.channel_id + ':' + action.action_id;
   let current = read(storageKey), busy = false;
   const show = () => {
+    host.dataset.actionRequest=current?.requestID||'';
     host.replaceChildren();
     if (current) {
       host.append(el('div', {class:'status', role:'status', 'data-state':current.result?.state || 'unknown'},
@@ -48,7 +49,7 @@ export function purchaseControls(channel, block, record, onAccessLost) {
     } else host.append(button('Request purchase', confirm, {
       class:'primary', disabled:record.content.availability !== 'in_stock' || busy}));
   };
-  async function check() {
+  async function check(live = false) {
     if (busy || !current || session?.user.user_id !== user) return;
     busy = true; show();
     try {
@@ -64,7 +65,7 @@ export function purchaseControls(channel, block, record, onAccessLost) {
         busy = false; show(); host.append(errorBox(error), button('Refresh channel',onAccessLost)); return;
       }
       // A lost response retains the identical input and key for safe recovery.
-      busy = false; show(); host.append(errorBox(error)); return;
+      busy = false; show(); host.append(errorBox(error)); if(live===true)throw error;return;
     } finally { busy = false; }
     show();
   }
@@ -79,5 +80,6 @@ export function purchaseControls(channel, block, record, onAccessLost) {
       write(storageKey, current); check();
     }, {class:'primary'})]);
   }
+  host.onStatusUpdate=()=>current?.requestID?check(true):Promise.resolve();
   show(); return host;
 }

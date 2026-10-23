@@ -29,7 +29,9 @@ export async function api(path, {method = 'GET', body, key, signal} = {}) {
     }
     const retry = Number(response.headers.get('Retry-After'));
     const hint = response.status===429 && Number.isInteger(retry) && retry>0 && retry<=3600 ? ` Wait ${retry} seconds before retrying.` : '';
-    throw new ApiError(response.status, data.code, (data.message || 'Request failed.') + hint);
+    const error=new ApiError(response.status, data.code, (data.message || 'Request failed.') + hint);
+    if(hint)error.retryAfter=retry;
+    throw error;
   }
   return data;
 }

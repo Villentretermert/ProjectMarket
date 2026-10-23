@@ -73,12 +73,12 @@ def main() -> None:
             text=True,
             check=False,
             env=dict(os.environ),
-            timeout=240,
+            timeout=360,
         )
         if result.returncode:
             raise SystemExit(result.returncode)
         counts = lab.query("SELECT count(*) AS n FROM action_requests")
-        assert counts[0]["n"] == 4, "Three channel requests plus one My Space request; no duplicate"
+        assert counts[0]["n"] == 5, "Three channel, one My Space, one live request; no duplicate"
         print("PASS: real Web/API/bot browser acceptance; disposable state removed.")
     finally:
         lab.close()

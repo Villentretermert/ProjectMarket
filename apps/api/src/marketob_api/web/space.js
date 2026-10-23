@@ -3,6 +3,7 @@ import {api, all, session} from './api.js';
 import {el, button, link, field, heading, message, modal, errorBox, toast} from './dom.js';
 import {renderBlock} from './render.js';
 import {favorites} from './favorites.js';
+import {refreshStatuses} from './live.js';
 
 // Only unconfirmed layout references survive visibility/offline transitions, never source data.
 const pendingEdits=new Map();
@@ -41,7 +42,7 @@ export async function space(parts,{navigate,refresh}) {
   }
   const pageID=parts[1]||pages[0].page_id, route='/personal-pages/'+encodeURIComponent(pageID), cacheKey=account+':'+pageID;
   let snapshot=await api(route+'/snapshot'), saved=snapshot.page,draft=clone(saved),history=[],pending=null,undoing=false,previous=null;
-  let busy=false,failed=null,preview=false,sourceSnapshot=null,sourceGeneration=0;
+  let busy=false,failed=null,preview=false,sourceSnapshot=null,sourceGeneration=0,liveDirty=false;
   const recovered=pendingEdits.get(cacheKey);
   if(recovered){
     if(equalLayout(saved,recovered.pending)){pendingEdits.delete(cacheKey);}
@@ -70,7 +71,7 @@ export async function space(parts,{navigate,refresh}) {
     if(busy)return;busy=true;snapshot={page:saved,blocks:[]};paint();errors.replaceChildren();sourceSnapshot=null;item.input.replaceChildren();
     try{snapshot=await api(route+'/snapshot');saved=snapshot.page;draft=clone(saved);history=[];pending=null;failed=null;pendingEdits.delete(cacheKey);}
     catch(error){failed=error;}
-    finally{busy=false;if(active()){await refreshChoices();paint();await loadSource();}}
+    finally{busy=false;if(active()){await refreshChoices();paint();await loadSource();if(liveDirty)await root.onUpdates(null);}}
   };
   const refreshButton=button('Refresh',()=>{if(pending){toast('Retry the edit or choose Reload saved before refreshing.');return;}reload();});
   const deleteButton=button('Delete page',()=>modal('Delete personal page',message('Delete this personal layout? Its source channels will remain available.'),close=>[
@@ -110,12 +111,14 @@ export async function space(parts,{navigate,refresh}) {
     }finally{
       busy=false;
       if(active()){await refreshChoices();if(!pending)await loadSource();paint();}
+      if(liveDirty&&active())await root.onUpdates(null);
     }
   }
   async function refreshChoices(){
+    const own=++sourceGeneration;
     const selected=source.input.value;source.input.replaceChildren();item.input.replaceChildren();sourceSnapshot=null;
     try{
-      const current=await favorites();if(!active())return;
+      const current=await favorites();if(!active()||own!==sourceGeneration)return;
       current.items.filter(c=>c.available).forEach(c=>source.input.append(el('option',{value:c.slug},c.title)));
       if([...source.input.options].some(o=>o.value===selected))source.input.value=selected;
     }catch(error){if(active())sourceError.replaceChildren(errorBox(error));}
@@ -171,6 +174,32 @@ export async function space(parts,{navigate,refresh}) {
     root.dataset.unsaved=pending?'true':'false';
   }
   const scope=new AbortController();
+  root.liveChannels=()=>[...new Set(draft.layout.blocks.map(b=>b.source.channel_id))];
+  root.onLiveUnavailable=(ids=null)=>{
+    snapshot={page:snapshot.page,blocks:ids?snapshot.blocks.map(result=>{
+      const block=snapshot.page.layout.blocks.find(b=>b.block_id===result.block_id);
+      return block&&ids.has(block.source.channel_id)?{block_id:result.block_id,available:false}:result;
+    }):[]};
+    sourceGeneration++;
+    if(!ids||!sourceSnapshot||ids.has(sourceSnapshot.channel.channel_id)){sourceSnapshot=null;item.input.replaceChildren();}
+    if(!ids)source.input.replaceChildren();
+    else for(const option of [...source.input.options]){
+      if(savedChannels.some(c=>c.slug===option.value&&ids.has(c.channel_id)))option.remove();
+    }
+    paint();
+  };
+  root.onUpdates=async items=>{
+    const revoked=items?.some(i=>i.kind==='access.revoked');
+    if(revoked)root.onLiveUnavailable(new Set(items.filter(i=>i.kind==='access.revoked').map(i=>i.channel_id)));
+    if(busy){liveDirty=true;return;}
+    if(items===null||items.some(i=>i.kind!=='request.status')){
+      const value=await api(route+'/snapshot');if(!active())return;
+      // Keep saved/draft/history/version independent from refreshed source payloads.
+      snapshot=value;liveDirty=false;paint();
+      if(revoked||items===null){await refreshChoices();if(!pending)await loadSource();}
+    }
+    await refreshStatuses(root,items);
+  };
   window.addEventListener('route-leave',()=>scope.abort(),{once:true});
   window.addEventListener('beforeunload',event=>{if(pending){event.preventDefault();event.returnValue='';}},{signal:scope.signal});
   document.addEventListener('click',event=>{if(pending&&root.isConnected&&event.target.closest('a[href]')){event.preventDefault();toast('Retry the edit or choose Reload saved before leaving.');}},{capture:true,signal:scope.signal});

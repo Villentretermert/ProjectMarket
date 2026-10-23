@@ -17,6 +17,7 @@ from marketob_api.personal_pages import router as pages_router
 from marketob_api.sharing import router as sharing_router
 from marketob_api.teams import router as team_router
 from marketob_api.transport import ProtocolMiddleware
+from marketob_api.updates import router as updates_router
 from marketob_api.web_routes import router as web_router
 
 
@@ -59,6 +60,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(favorites_router(configuration))
     application.include_router(pages_router(configuration))
     application.include_router(sharing_router(configuration))
+    application.include_router(updates_router(configuration))
 
     @application.get("/", include_in_schema=False)
     def index() -> dict[str, str]:

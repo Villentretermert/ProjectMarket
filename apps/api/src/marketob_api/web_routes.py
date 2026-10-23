@@ -36,6 +36,7 @@ def router() -> APIRouter:
             "favorites.js",
             "space.js",
             "sharing.js",
+            "live.js",
         }:
             from marketob_api.errors import ApiError
 

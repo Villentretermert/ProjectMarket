@@ -9,7 +9,7 @@ export function favoriteLink(item) {
   ],'#/channel/'+item.slug,{class:'channel-link'}) : el('span',{class:'channel-link muted'},'Channel unavailable');
 }
 export async function channels(openForm, refresh) {
-  const saved=await favorites(), host=el('div',{class:'stack'}), search=field('Search favorites',{type:'search',maxlength:80});
+  let saved=await favorites();const host=el('div',{class:'stack'}), search=field('Search favorites',{type:'search',maxlength:80});
   let busy=false;
   const draw=()=>{
     host.replaceChildren();
@@ -29,9 +29,13 @@ export async function channels(openForm, refresh) {
     if(!host.children.length)host.append(message(saved.items.length?'No favorites match your search.':'No favorites yet. Open a shared channel and choose Add to favorites.'));
   };
   search.input.addEventListener('input',draw);draw();
-  return el('div',{},heading('Channels','Keep the channels you follow in your own order.',button('Refresh',refresh)),
+  const root=el('div',{},heading('Channels','Keep the channels you follow in your own order.',button('Refresh',refresh)),
     el('div',{class:'stack'},el('section',{class:'panel'},openForm()),
     el('section',{class:'panel'},el('h2',{},'Favorites'),session?search.node:link('Sign in to save channels','#/login'),host)));
+  root.liveChannels=()=>saved.items.map(i=>i.channel_id);
+  root.onUpdates=async()=>{const value=await favorites();if(root.isConnected){saved=value;draw();}};
+  root.onLiveUnavailable=()=>{saved={...saved,items:saved.items.map(i=>({channel_id:i.channel_id,available:false}))};draw();};
+  return root;
 }
 export async function channelFavorite(snapshot, refresh) {
   const channel=snapshot.channel, host=el('div',{class:'toolbar'});

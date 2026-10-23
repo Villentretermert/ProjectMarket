@@ -3,6 +3,7 @@ import {favorites, favoriteLink, channels, channelFavorite} from './favorites.js
 import {el, button, link, message, field, heading, errorBox, toast} from './dom.js';
 import {renderSnapshot} from './render.js';
 import {clearRequests} from './actions.js';
+import {liveBootstrap,startLive,eventPreferences,refreshStatuses} from './live.js';
 
 const main = document.querySelector('#main'), sidebar = document.querySelector('#sidebar');
 let generation = 0;
@@ -71,15 +72,33 @@ routes.set('channel', async parts => {
     throw error;
   }
   const saved=await channelFavorite(snapshot,refresh);
-  const node=el('div', {}, heading(snapshot.channel.title,
+  const content=el('div',{},renderSnapshot(snapshot,{onAccessLost:refresh}));
+  const title=heading(snapshot.channel.title,
     (snapshot.channel.visibility==='public'?'Public channel':'Selected users') + ' · Updated ' + new Date().toLocaleTimeString('en'),
-    button('Refresh',refresh)),saved.node, renderSnapshot(snapshot,{onAccessLost:refresh}));
+    session?button('Events',()=>eventPreferences(snapshot.channel.channel_id)):null,button('Refresh',refresh));
+  const node=el('div', {'data-live-revision':snapshot.data_revision},title,saved.node,content);
+  const channelID=snapshot.channel.channel_id;
+  node.liveChannels=()=>[channelID];
+  node.onLiveUnavailable=()=>{title.querySelector('h1').textContent='Channel unavailable';saved.node.hidden=true;content.replaceChildren(message('Content hidden until access can be checked.'));};
+  node.onUpdates=async items=>{
+    if(items===null||items.some(i=>i.channel_id===channelID&&i.kind!=='request.status')){
+      try{
+        const value=await api('/channels/'+encodeURIComponent(slug));if(!node.isConnected)return;
+        snapshot=value;title.querySelector('h1').textContent=value.channel.title;saved.node.hidden=false;
+        content.replaceChildren(renderSnapshot(value,{onAccessLost:refresh}));node.dataset.liveRevision=value.data_revision;
+        // The observed revision, not a newer unseen revision, clears the marker.
+        await api('/favorites/'+channelID+'/seen',{method:'PUT',body:{data_revision:value.data_revision,template_version:value.channel.layout.template_version}});
+      }catch(error){node.onLiveUnavailable();if(error.status!==404)throw error;}
+    }
+    await refreshStatuses(node,items);
+  };
   node.afterRender=saved.seen;
   return node;
 });
 async function route() {
   window.dispatchEvent(new Event('route-leave'));
   const own=++generation;
+  document.querySelector('#connection').textContent='';
   document.querySelectorAll('dialog').forEach(d=>d.close());
   main.replaceChildren(message('Loading…')); sidebar.replaceChildren(); account();
   if (!navigator.onLine) { main.replaceChildren(el('section',{class:'empty'},el('h1',{},'You are offline'),
@@ -90,20 +109,25 @@ async function route() {
     if (page==='login'||page==='register') main.replaceChildren(signIn(page==='register',parts.slice(1).join('/')));
     else if (!session && !['channels','channel'].includes(page)) main.replaceChildren(signIn(false,page==='import'?'import/'+parts[1]:''));
     else {
+      const cursor=session&&['space','channel','channels'].includes(page)?await liveBootstrap():null;
       const fn=routes.get(page), node=fn?await fn(parts):el('h1',{},'Page not found');
       if (own!==generation) return;
       main.replaceChildren(node);
       if(node.afterRender)await node.afterRender();
       if(own!==generation)return;
+      if(cursor)startLive(node,cursor,()=>refreshSidebar(own));
     }
-    main.focus({preventScroll:true});
+    if(document.activeElement===document.body||document.activeElement===main)main.focus({preventScroll:true});
+    await refreshSidebar(own);
+  } catch(error) { if(own===generation) main.replaceChildren(errorBox(error,refresh)); }
+}
+async function refreshSidebar(own){
     const saved=await favorites();
     if (own!==generation) return;
-    sidebar.append(el('h2',{},'Favorites'), link('＋ Open a channel','#/channels',{class:'channel-link'}),
+    sidebar.replaceChildren(el('h2',{},'Favorites'), link('＋ Open a channel','#/channels',{class:'channel-link'}),
       saved.items.map(favoriteLink).reduce((f,n)=>(f.append(n),f),document.createDocumentFragment()),
       el('p',{class:'sidebar-note'},'All your bots in one calm, useful space.'));
     sidebar.querySelectorAll('a').forEach(a=>{if(a.hash===location.hash)a.setAttribute('aria-current','page');});
-  } catch(error) { if(own===generation) main.replaceChildren(errorBox(error,refresh)); }
 }
 window.addEventListener('hashchange',route);
 window.addEventListener('session-expired',()=>{clearRequests(); navigate('/login');});
@@ -111,7 +135,7 @@ window.addEventListener('offline',()=>{document.querySelector('#connection').tex
 window.addEventListener('online',()=>{document.querySelector('#connection').textContent='';boot();});
 window.addEventListener('pageshow',event=>{if(event.persisted)boot();});
 document.addEventListener('visibilitychange',()=>{
-  if(document.hidden) { ++generation;main.replaceChildren(message('Return to refresh your space.'));sidebar.replaceChildren();document.querySelectorAll('dialog').forEach(d=>d.close()); }
+  if(document.hidden) { window.dispatchEvent(new Event('route-leave'));++generation;main.replaceChildren(message('Return to refresh your space.'));sidebar.replaceChildren();document.querySelectorAll('dialog').forEach(d=>d.close()); }
   else boot();
 });
 async function boot() {

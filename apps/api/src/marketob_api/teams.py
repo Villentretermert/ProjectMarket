@@ -113,6 +113,11 @@ def router(settings: Settings) -> APIRouter:
                 "ON CONFLICT(org_id,user_id) DO UPDATE SET role=EXCLUDED.role",
                 (org_id, user["user_id"], body.role),
             )
+            connection.execute(
+                "INSERT INTO change_outbox(channel_id,user_id,kind) "
+                "SELECT channel_id,%s,'channel.changed' FROM channel_access WHERE org_id=%s",
+                (user["user_id"], org_id),
+            )
             return {**user, "role": body.role}
 
     @api.delete("/workspaces/{org_id}/members/{user_id}", status_code=204)

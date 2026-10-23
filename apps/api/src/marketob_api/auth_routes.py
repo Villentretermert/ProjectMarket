@@ -240,6 +240,11 @@ def router(settings: Settings) -> APIRouter:
                 "INSERT INTO grants(channel_id,user_id) VALUES (%s,%s) ON CONFLICT DO NOTHING",
                 (channel_id, user_id),
             )
+            connection.execute(
+                "INSERT INTO change_outbox(channel_id,user_id,kind) "
+                "VALUES (%s,%s,'channel.changed')",
+                (channel_id, user_id),
+            )
 
     @api.delete("/owner/channels/{channel_id}/grants/{user_id}", status_code=204)
     def revoke_grant(channel_id: str, user_id: str, request: Request) -> None:

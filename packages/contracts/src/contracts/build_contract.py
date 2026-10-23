@@ -108,8 +108,9 @@ define("Share", {"share_id":ID,"code":text("Random 192-bit base64url locator; ne
 define("ImportInput", {"code":deepcopy(SCHEMAS["Share"]["properties"]["code"])}, "Code from the same server origin; cross-server migration is outside v1.")
 define("ImportPreview", {"title":text("Author-provided page title, deliberately shared.",80),"layout":ref("Layout"),"unavailable_blocks":array(ID,"Block IDs whose source cannot currently be read. No private names or timestamps.",50)}, "Layout only; source contents are never copied into a share.")
 define("Preference", {"channel_id":ID,"events":array(enum("Selected event kind.","news.published","catalog.changed","request.status"),"Events shown in the open app; OS push is deferred.",3,0,True)}, "Per-user subscription; read rights are checked independently.")
-define("Update", {"update_id":ID,"kind":enum("Hint or access invalidation.","channel.changed","request.status","access.revoked"),"target_id":ID,"revision":REVISION}, "No source payload; fetch authorized snapshot/status after the hint. Revocation removes cached content.")
-define("UpdatePage", {"items":array(ref("Update"),"Authorized user update hints.",100),"next_cursor":CURSOR}, "Polling transport for v1; invalid/expired cursor requires full resync. SSE may be added later without changing payloads.")
+define("Update", {"update_id":ID,"kind":enum("Hint or access invalidation.","channel.changed","request.status","access.revoked"),"channel_id":ID,"target_id":ID,"revision":number("Channel data revision; zero means refetch without revision comparison."),"event_name":{"anyOf":[enum("Notification vocabulary.","news.published","catalog.changed","request.status"),{"type":"null"}]},"notify":{"type":"boolean","description":"Selected by this user and currently authorized."}}, "No source payload; fetch authorized snapshot/status after the hint. Revocation removes cached content.")
+define("UpdatePage", {"items":array(ref("Update"),"Authorized user update hints.",100),"next_cursor":CURSOR,"has_more":{"type":"boolean","description":"Poll immediately to drain the next bounded batch."}}, "Polling transport for v1; invalid/expired cursor requires full resync. Bootstrap before snapshots; cursor TTL 10 minutes.")
+SCHEMAS["Update"]["properties"]["event_name"]["description"] = "Selected notification type, or null for a silent refresh."
 
 def collection(name):
     cname=name+"List"
@@ -223,8 +224,9 @@ endpoint('delete','/v1/shares/{share_id}','revokeShare','Stop new imports; exist
 endpoint('post','/v1/template-imports/preview','previewImport','Validate supported layout and mark inaccessible sources.','ImportInput','ImportPreview')
 endpoint('post','/v1/template-imports','importTemplate','Create a new owned page; recheck access and share expiry.','ImportInput','PersonalPage',201,params=(idem,))
 endpoint('put','/v1/preferences/{channel_id}','setPreference','Set own open-app event preferences for an accessible channel.','Preference','Preference')
+endpoint('get','/v1/preferences/{channel_id}','getPreference','Read own preference or request.status default for an accessible channel.',response='Preference')
 endpoint('get','/v1/preferences','listPreferences','List own event preferences.',response=collection('Preference'),listing=True)
-endpoint('get','/v1/updates','readUpdates','Poll authorized change hints; no cursor starts at current watermark and requires snapshot refresh.',response='UpdatePage',params=({'name':'cursor','in':'query','schema':CURSOR},))
+endpoint('get','/v1/updates','readUpdates','Poll authorized change hints; no cursor starts at current watermark and requires snapshot refresh.',response='UpdatePage',params=({'name':'cursor','in':'query','schema':CURSOR},{'name':'watch','in':'query','style':'form','explode':True,'schema':array(ID,'Currently displayed channels; does not grant access.',50,0,True)}))
 
 for session_path, method, code in (('/v1/auth/register','post','201'),('/v1/auth/login','post','200'),('/v1/auth/session','delete','204'),('/v1/account','delete','204')):
     PATHS[session_path][method]['responses'][code]['headers']['Set-Cookie']={
@@ -245,7 +247,7 @@ def replace_refs(value):
 
 def artifacts():
     bundle={"$schema":"https://json-schema.org/draft/2020-12/schema", "$id":"urn:marketob:contract:1.0", "$defs":SCHEMAS}
-    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.7","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
+    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.8","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
     return {"schemas.json":bundle,"openapi.json":replace_refs(spec)}
 
 

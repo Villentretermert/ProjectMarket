@@ -28,6 +28,7 @@ VALIDATORS = {
         "PageWrite",
         "ShareCreate",
         "ImportInput",
+        "Preference",
     )
 }
 

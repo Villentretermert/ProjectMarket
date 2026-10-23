@@ -44,6 +44,7 @@ def check(url: str, database: str, wait: float = 30) -> None:
                     "favorites.js",
                     "space.js",
                     "sharing.js",
+                    "live.js",
                 ):
                     with urlopen(url.rstrip("/") + "/app/" + asset, timeout=5) as response:
                         assert response.status == 200

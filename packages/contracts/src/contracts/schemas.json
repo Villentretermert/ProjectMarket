@@ -2317,6 +2317,13 @@
           ],
           "description": "Hint or access invalidation."
         },
+        "channel_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Opaque stable identifier; never a credential.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
         "target_id": {
           "type": "string",
           "minLength": 1,
@@ -2326,22 +2333,46 @@
         },
         "revision": {
           "type": "integer",
-          "minimum": 1,
+          "minimum": 0,
           "maximum": 9007199254740991,
-          "description": "Monotonic revision; compare within the referenced resource."
+          "description": "Channel data revision; zero means refetch without revision comparison."
+        },
+        "event_name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "news.published",
+                "catalog.changed",
+                "request.status"
+              ],
+              "description": "Notification vocabulary."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Selected notification type, or null for a silent refresh."
+        },
+        "notify": {
+          "type": "boolean",
+          "description": "Selected by this user and currently authorized."
         }
       },
       "required": [
         "update_id",
         "kind",
+        "channel_id",
         "target_id",
-        "revision"
+        "revision",
+        "event_name",
+        "notify"
       ],
       "additionalProperties": false
     },
     "UpdatePage": {
       "type": "object",
-      "description": "Polling transport for v1; invalid/expired cursor requires full resync. SSE may be added later without changing payloads.",
+      "description": "Polling transport for v1; invalid/expired cursor requires full resync. Bootstrap before snapshots; cursor TTL 10 minutes.",
       "properties": {
         "items": {
           "type": "array",
@@ -2358,11 +2389,16 @@
           "minLength": 1,
           "maxLength": 1024,
           "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
+        },
+        "has_more": {
+          "type": "boolean",
+          "description": "Poll immediately to drain the next bounded batch."
         }
       },
       "required": [
         "items",
-        "next_cursor"
+        "next_cursor",
+        "has_more"
       ],
       "additionalProperties": false
     },
