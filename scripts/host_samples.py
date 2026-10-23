@@ -3,6 +3,7 @@
 import ctypes
 import os
 import shutil
+import sys
 import threading
 from datetime import UTC, datetime
 from typing import Any
@@ -30,7 +31,7 @@ class HostSamples:
         self.thread = threading.Thread(target=self.run, daemon=True)
 
     def run(self) -> None:
-        if os.name != "nt":
+        if sys.platform != "win32":
             return
         # Windows FILETIME can be read as a 64-bit counter of 100ns ticks.
         kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)

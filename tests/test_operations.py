@@ -236,3 +236,30 @@ def test_bot_queue_bound_is_serialized_replayable_and_recoverable(
     gauges = snapshot(database)
     assert gauges["unknown"] == 1000 and gauges["unresolved"] == 1000
     assert "requests_need_reconciliation" in alerts(gauges)
+
+
+@pytest.mark.integration
+def test_worker_recovers_full_outbox_before_creating_timeout_notifications(
+    settings: Settings, shop: tuple[Any, ...]
+) -> None:
+    _, _, customer, source, _ = shop
+    queue(customer, source)
+    database = Database(settings)
+    with database.transaction() as conn:
+        conn.execute("SET LOCAL statement_timeout='30s'")
+        conn.execute("UPDATE action_requests SET created_at=now()-interval '2 minutes'")
+        count = conn.execute("SELECT count(*) n FROM change_outbox").fetchone()
+        assert count is not None
+        conn.execute("ALTER TABLE change_outbox DISABLE TRIGGER outbox_admission")
+        conn.execute(
+            "INSERT INTO change_outbox(channel_id,kind) SELECT %s,'channel.changed' "
+            "FROM generate_series(1,%s)",
+            (source["channel_id"], 20000 - count["n"]),
+        )
+        conn.execute("ALTER TABLE change_outbox ENABLE TRIGGER outbox_admission")
+    assert snapshot(database)["outbox_pending"] == 20000
+    result = maintain(database)
+    assert result["unknown"] == 1
+    state = snapshot(database)
+    assert state["outbox_pending"] == 15001
+    assert "worker_stale" not in alerts(state)
