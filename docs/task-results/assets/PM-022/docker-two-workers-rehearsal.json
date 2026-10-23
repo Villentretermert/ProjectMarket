@@ -1,0 +1,854 @@
+{
+  "profile": "L2",
+  "duration_seconds": 120,
+  "steady_started_at": "2026-10-23T22:39:10.476Z",
+  "steady_finished_at": "2026-10-23T22:41:10.526Z",
+  "send_elapsed_seconds": 120.05,
+  "bots": 100,
+  "active_clients": 100,
+  "messages_per_minute": 1000,
+  "steady_accepted": 2000,
+  "rendered": 2000,
+  "missing": [],
+  "live": {
+    "count": 2000,
+    "p95_ms": 2084,
+    "p99_ms": 2886,
+    "max_ms": 4091
+  },
+  "ingest_http": {
+    "count": 2000,
+    "p95_ms": 462,
+    "p99_ms": 848,
+    "max_ms": 1383
+  },
+  "read_http": {
+    "count": 2000,
+    "p95_ms": 364.786,
+    "p99_ms": 796.626,
+    "max_ms": 1193.269
+  },
+  "action_available_http": {
+    "count": 20,
+    "p95_ms": 1957,
+    "p99_ms": 2208,
+    "max_ms": 2208
+  },
+  "message_bytes": {
+    "min": 3631,
+    "max": 13769
+  },
+  "browser": "155.0.4283.62",
+  "node": "v24.20.0",
+  "reconnect_ms": 192,
+  "burst": {
+    "offered": 3000,
+    "offered_seconds": 60,
+    "accepted_during_minute": 1993,
+    "recovery_seconds": 62.32,
+    "final_snapshots": 100,
+    "accepted": 3000,
+    "quotas": {
+      "burst": 1156,
+      "recovery": 1871,
+      "steady": 0
+    }
+  },
+  "accepted": 5000,
+  "page_errors": [],
+  "http_errors": [],
+  "failures": [],
+  "transport_retries": {
+    "burst": 0,
+    "recovery": 0,
+    "steady": 0
+  },
+  "runtime": {
+    "python": "3.14.7",
+    "os": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 167 Stepping 1, GenuineIntel",
+    "logical_cpus": 16,
+    "network": "127.0.0.1 loopback"
+  },
+  "database": "PostgreSQL 18.4 (Debian 18.4-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+  "host_samples": [
+    {
+      "time": "2026-10-23T22:35:49.230511+00:00",
+      "cpu_percent": null,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31789649920,
+      "disk_free_bytes": 110113288192
+    },
+    {
+      "time": "2026-10-23T22:35:54.238077+00:00",
+      "cpu_percent": 77.78426791277259,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31692161024,
+      "disk_free_bytes": 110072262656
+    },
+    {
+      "time": "2026-10-23T22:35:59.241899+00:00",
+      "cpu_percent": 75.60546875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31707471872,
+      "disk_free_bytes": 110072328192
+    },
+    {
+      "time": "2026-10-23T22:36:04.244633+00:00",
+      "cpu_percent": 80.72265625,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31616004096,
+      "disk_free_bytes": 110032347136
+    },
+    {
+      "time": "2026-10-23T22:36:09.253450+00:00",
+      "cpu_percent": 74.8247663551402,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31466020864,
+      "disk_free_bytes": 110031167488
+    },
+    {
+      "time": "2026-10-23T22:36:14.261128+00:00",
+      "cpu_percent": 54.98046875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31643881472,
+      "disk_free_bytes": 110024450048
+    },
+    {
+      "time": "2026-10-23T22:36:19.266443+00:00",
+      "cpu_percent": 62.519470404984425,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31477006336,
+      "disk_free_bytes": 110020620288
+    },
+    {
+      "time": "2026-10-23T22:36:24.271708+00:00",
+      "cpu_percent": 69.4921875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31521505280,
+      "disk_free_bytes": 110017081344
+    },
+    {
+      "time": "2026-10-23T22:36:29.289997+00:00",
+      "cpu_percent": 71.55373831775701,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31546609664,
+      "disk_free_bytes": 110010695680
+    },
+    {
+      "time": "2026-10-23T22:36:34.292231+00:00",
+      "cpu_percent": 84.27734375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31397711872,
+      "disk_free_bytes": 110006943744
+    },
+    {
+      "time": "2026-10-23T22:36:39.296072+00:00",
+      "cpu_percent": 77.04439252336448,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31410073600,
+      "disk_free_bytes": 109998518272
+    },
+    {
+      "time": "2026-10-23T22:36:44.301310+00:00",
+      "cpu_percent": 74.58984375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31468769280,
+      "disk_free_bytes": 109998452736
+    },
+    {
+      "time": "2026-10-23T22:36:49.306210+00:00",
+      "cpu_percent": 81.6015625,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31345635328,
+      "disk_free_bytes": 109990977536
+    },
+    {
+      "time": "2026-10-23T22:36:54.312334+00:00",
+      "cpu_percent": 78.36838006230529,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31343824896,
+      "disk_free_bytes": 109990846464
+    },
+    {
+      "time": "2026-10-23T22:36:59.321205+00:00",
+      "cpu_percent": 81.54296875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31337422848,
+      "disk_free_bytes": 109980938240
+    },
+    {
+      "time": "2026-10-23T22:37:04.331928+00:00",
+      "cpu_percent": 84.92990654205607,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31135518720,
+      "disk_free_bytes": 109973172224
+    },
+    {
+      "time": "2026-10-23T22:37:09.338702+00:00",
+      "cpu_percent": 89.19921875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 30947184640,
+      "disk_free_bytes": 109956784128
+    },
+    {
+      "time": "2026-10-23T22:37:14.342776+00:00",
+      "cpu_percent": 77.88161993769471,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 30835544064,
+      "disk_free_bytes": 109956296704
+    },
+    {
+      "time": "2026-10-23T22:37:19.362094+00:00",
+      "cpu_percent": 87.87109375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 30626099200,
+      "disk_free_bytes": 109956358144
+    },
+    {
+      "time": "2026-10-23T22:37:24.367219+00:00",
+      "cpu_percent": 85.16355140186916,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 30213476352,
+      "disk_free_bytes": 109950951424
+    },
+    {
+      "time": "2026-10-23T22:37:29.381282+00:00",
+      "cpu_percent": 86.07866043613708,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 29954289664,
+      "disk_free_bytes": 109940035584
+    },
+    {
+      "time": "2026-10-23T22:37:34.384538+00:00",
+      "cpu_percent": 88.96484375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 29765517312,
+      "disk_free_bytes": 109939957760
+    },
+    {
+      "time": "2026-10-23T22:37:39.391173+00:00",
+      "cpu_percent": 84.5929100116868,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 29489995776,
+      "disk_free_bytes": 109939953664
+    },
+    {
+      "time": "2026-10-23T22:37:44.403884+00:00",
+      "cpu_percent": 84.25258234262327,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 29375299584,
+      "disk_free_bytes": 109931667456
+    },
+    {
+      "time": "2026-10-23T22:37:49.419308+00:00",
+      "cpu_percent": 79.49317738791423,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 29145546752,
+      "disk_free_bytes": 109931515904
+    },
+    {
+      "time": "2026-10-23T22:37:54.422584+00:00",
+      "cpu_percent": 88.56419248003117,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 28926377984,
+      "disk_free_bytes": 109928226816
+    },
+    {
+      "time": "2026-10-23T22:37:59.433851+00:00",
+      "cpu_percent": 85.9765625,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 28719181824,
+      "disk_free_bytes": 109918392320
+    },
+    {
+      "time": "2026-10-23T22:38:04.451081+00:00",
+      "cpu_percent": 89.39393939393939,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 28523585536,
+      "disk_free_bytes": 109918384128
+    },
+    {
+      "time": "2026-10-23T22:38:09.464240+00:00",
+      "cpu_percent": 89.51990632318501,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 28387893248,
+      "disk_free_bytes": 109915054080
+    },
+    {
+      "time": "2026-10-23T22:38:14.478632+00:00",
+      "cpu_percent": 82.22352024922118,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 28271374336,
+      "disk_free_bytes": 109912039424
+    },
+    {
+      "time": "2026-10-23T22:38:19.482872+00:00",
+      "cpu_percent": 80.3543613707165,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 28093341696,
+      "disk_free_bytes": 109907300352
+    },
+    {
+      "time": "2026-10-23T22:38:24.494680+00:00",
+      "cpu_percent": 90.3125,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 28022509568,
+      "disk_free_bytes": 109896040448
+    },
+    {
+      "time": "2026-10-23T22:38:29.509715+00:00",
+      "cpu_percent": 82.398753894081,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 27963199488,
+      "disk_free_bytes": 109895835648
+    },
+    {
+      "time": "2026-10-23T22:38:34.515676+00:00",
+      "cpu_percent": 92.99065420560748,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 27823308800,
+      "disk_free_bytes": 109890777088
+    },
+    {
+      "time": "2026-10-23T22:38:39.528219+00:00",
+      "cpu_percent": 87.8515625,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 27732221952,
+      "disk_free_bytes": 109883629568
+    },
+    {
+      "time": "2026-10-23T22:38:44.543335+00:00",
+      "cpu_percent": 88.3956386292835,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 27626094592,
+      "disk_free_bytes": 109883039744
+    },
+    {
+      "time": "2026-10-23T22:38:49.556135+00:00",
+      "cpu_percent": 88.99922118380063,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 27511549952,
+      "disk_free_bytes": 109878833152
+    },
+    {
+      "time": "2026-10-23T22:38:54.561997+00:00",
+      "cpu_percent": 87.8309968847352,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 27419750400,
+      "disk_free_bytes": 109871054848
+    },
+    {
+      "time": "2026-10-23T22:38:59.563770+00:00",
+      "cpu_percent": 95.46875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 28377915392,
+      "disk_free_bytes": 109869793280
+    },
+    {
+      "time": "2026-10-23T22:39:04.573413+00:00",
+      "cpu_percent": 97.24609375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 29666385920,
+      "disk_free_bytes": 109863297024
+    },
+    {
+      "time": "2026-10-23T22:39:09.609971+00:00",
+      "cpu_percent": 74.36145510835914,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31035342848,
+      "disk_free_bytes": 109861462016
+    },
+    {
+      "time": "2026-10-23T22:39:14.620621+00:00",
+      "cpu_percent": 73.96484375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33782243328,
+      "disk_free_bytes": 109859266560
+    },
+    {
+      "time": "2026-10-23T22:39:19.640488+00:00",
+      "cpu_percent": 99.902761571373,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33558568960,
+      "disk_free_bytes": 109857640448
+    },
+    {
+      "time": "2026-10-23T22:39:24.653048+00:00",
+      "cpu_percent": 85.39961013645224,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33395712000,
+      "disk_free_bytes": 109854453760
+    },
+    {
+      "time": "2026-10-23T22:39:29.665185+00:00",
+      "cpu_percent": 52.60903426791277,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33490055168,
+      "disk_free_bytes": 109854617600
+    },
+    {
+      "time": "2026-10-23T22:39:34.670738+00:00",
+      "cpu_percent": 60.572429906542055,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33402068992,
+      "disk_free_bytes": 109852631040
+    },
+    {
+      "time": "2026-10-23T22:39:39.673744+00:00",
+      "cpu_percent": 56.46484375000001,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33393037312,
+      "disk_free_bytes": 109852696576
+    },
+    {
+      "time": "2026-10-23T22:39:44.686059+00:00",
+      "cpu_percent": 60.63084112149533,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33426186240,
+      "disk_free_bytes": 109852827648
+    },
+    {
+      "time": "2026-10-23T22:39:49.689689+00:00",
+      "cpu_percent": 63.16406249999999,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33350012928,
+      "disk_free_bytes": 109852905472
+    },
+    {
+      "time": "2026-10-23T22:39:54.698203+00:00",
+      "cpu_percent": 50.83984375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33294389248,
+      "disk_free_bytes": 109852631040
+    },
+    {
+      "time": "2026-10-23T22:39:59.703565+00:00",
+      "cpu_percent": 60.942367601246104,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33186148352,
+      "disk_free_bytes": 109852442624
+    },
+    {
+      "time": "2026-10-23T22:40:04.715010+00:00",
+      "cpu_percent": 48.12499999999999,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 33139822592,
+      "disk_free_bytes": 109851897856
+    },
+    {
+      "time": "2026-10-23T22:40:09.719244+00:00",
+      "cpu_percent": 88.33722741433021,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 32606400512,
+      "disk_free_bytes": 109851287552
+    },
+    {
+      "time": "2026-10-23T22:40:14.723668+00:00",
+      "cpu_percent": 73.2421875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 32318537728,
+      "disk_free_bytes": 109848440832
+    },
+    {
+      "time": "2026-10-23T22:40:19.730047+00:00",
+      "cpu_percent": 68.84765625,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 32266993664,
+      "disk_free_bytes": 109848162304
+    },
+    {
+      "time": "2026-10-23T22:40:24.742046+00:00",
+      "cpu_percent": 86.81853582554517,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31989358592,
+      "disk_free_bytes": 109846171648
+    },
+    {
+      "time": "2026-10-23T22:40:29.746409+00:00",
+      "cpu_percent": 81.38671875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31742169088,
+      "disk_free_bytes": 109846061056
+    },
+    {
+      "time": "2026-10-23T22:40:34.754859+00:00",
+      "cpu_percent": 85.90342679127725,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31485886464,
+      "disk_free_bytes": 109849563136
+    },
+    {
+      "time": "2026-10-23T22:40:39.765805+00:00",
+      "cpu_percent": 84.22897196261682,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31435636736,
+      "disk_free_bytes": 109846794240
+    },
+    {
+      "time": "2026-10-23T22:40:44.773622+00:00",
+      "cpu_percent": 80.3515625,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31441125376,
+      "disk_free_bytes": 109845180416
+    },
+    {
+      "time": "2026-10-23T22:40:49.778665+00:00",
+      "cpu_percent": 83.3300800312317,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31504068608,
+      "disk_free_bytes": 109845176320
+    },
+    {
+      "time": "2026-10-23T22:40:54.782896+00:00",
+      "cpu_percent": 91.99298655756867,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31362916352,
+      "disk_free_bytes": 109844865024
+    },
+    {
+      "time": "2026-10-23T22:40:59.787295+00:00",
+      "cpu_percent": 83.0859375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31381798912,
+      "disk_free_bytes": 109844316160
+    },
+    {
+      "time": "2026-10-23T22:41:04.788186+00:00",
+      "cpu_percent": 83.84765625,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31243051008,
+      "disk_free_bytes": 109810950144
+    },
+    {
+      "time": "2026-10-23T22:41:09.793091+00:00",
+      "cpu_percent": 73.2421875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31249313792,
+      "disk_free_bytes": 109810651136
+    },
+    {
+      "time": "2026-10-23T22:41:14.801010+00:00",
+      "cpu_percent": 54.47819314641744,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31511044096,
+      "disk_free_bytes": 109810585600
+    },
+    {
+      "time": "2026-10-23T22:41:19.805386+00:00",
+      "cpu_percent": 57.10937499999999,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31684415488,
+      "disk_free_bytes": 109809819648
+    },
+    {
+      "time": "2026-10-23T22:41:24.809910+00:00",
+      "cpu_percent": 54.7261742350419,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31634833408,
+      "disk_free_bytes": 109809799168
+    },
+    {
+      "time": "2026-10-23T22:41:29.824562+00:00",
+      "cpu_percent": 77.97073170731707,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31536234496,
+      "disk_free_bytes": 109809610752
+    },
+    {
+      "time": "2026-10-23T22:41:34.828384+00:00",
+      "cpu_percent": 84.9493769470405,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31518932992,
+      "disk_free_bytes": 109809610752
+    },
+    {
+      "time": "2026-10-23T22:41:39.845212+00:00",
+      "cpu_percent": 81.61993769470405,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31686463488,
+      "disk_free_bytes": 109809278976
+    },
+    {
+      "time": "2026-10-23T22:41:44.848408+00:00",
+      "cpu_percent": 90.68359375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31459389440,
+      "disk_free_bytes": 109809315840
+    },
+    {
+      "time": "2026-10-23T22:41:49.855309+00:00",
+      "cpu_percent": 83.984375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31348559872,
+      "disk_free_bytes": 109806571520
+    },
+    {
+      "time": "2026-10-23T22:41:54.870315+00:00",
+      "cpu_percent": 73.87071651090342,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31303094272,
+      "disk_free_bytes": 109806505984
+    },
+    {
+      "time": "2026-10-23T22:41:59.873890+00:00",
+      "cpu_percent": 85.57242990654206,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31419817984,
+      "disk_free_bytes": 109806501888
+    },
+    {
+      "time": "2026-10-23T22:42:04.890416+00:00",
+      "cpu_percent": 74.31853582554517,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31403712512,
+      "disk_free_bytes": 109805137920
+    },
+    {
+      "time": "2026-10-23T22:42:09.894511+00:00",
+      "cpu_percent": 80.7421875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31648485376,
+      "disk_free_bytes": 109805621248
+    },
+    {
+      "time": "2026-10-23T22:42:14.899603+00:00",
+      "cpu_percent": 84.296875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31557021696,
+      "disk_free_bytes": 109806530560
+    },
+    {
+      "time": "2026-10-23T22:42:19.913583+00:00",
+      "cpu_percent": 78.19314641744548,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31461806080,
+      "disk_free_bytes": 109806587904
+    },
+    {
+      "time": "2026-10-23T22:42:24.924345+00:00",
+      "cpu_percent": 75.87616822429906,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31445835776,
+      "disk_free_bytes": 109772959744
+    },
+    {
+      "time": "2026-10-23T22:42:29.937507+00:00",
+      "cpu_percent": 89.58333333333334,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31456718848,
+      "disk_free_bytes": 109772922880
+    },
+    {
+      "time": "2026-10-23T22:42:34.940150+00:00",
+      "cpu_percent": 75.91796875,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31666204672,
+      "disk_free_bytes": 109772845056
+    },
+    {
+      "time": "2026-10-23T22:42:39.947199+00:00",
+      "cpu_percent": 82.265625,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31609913344,
+      "disk_free_bytes": 109772906496
+    },
+    {
+      "time": "2026-10-23T22:42:44.950803+00:00",
+      "cpu_percent": 69.9766355140187,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31680057344,
+      "disk_free_bytes": 109772972032
+    },
+    {
+      "time": "2026-10-23T22:42:49.952692+00:00",
+      "cpu_percent": 75.68359375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31683383296,
+      "disk_free_bytes": 109772873728
+    },
+    {
+      "time": "2026-10-23T22:42:54.957309+00:00",
+      "cpu_percent": 91.2109375,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31511457792,
+      "disk_free_bytes": 109772333056
+    },
+    {
+      "time": "2026-10-23T22:42:59.971918+00:00",
+      "cpu_percent": 78.81619937694704,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31485595648,
+      "disk_free_bytes": 109772328960
+    },
+    {
+      "time": "2026-10-23T22:43:04.982396+00:00",
+      "cpu_percent": 78.44626168224299,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31551553536,
+      "disk_free_bytes": 109772492800
+    },
+    {
+      "time": "2026-10-23T22:43:09.987301+00:00",
+      "cpu_percent": 86.11328125,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31515512832,
+      "disk_free_bytes": 109772431360
+    },
+    {
+      "time": "2026-10-23T22:43:14.990780+00:00",
+      "cpu_percent": 80.95703125,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31459921920,
+      "disk_free_bytes": 109772431360
+    },
+    {
+      "time": "2026-10-23T22:43:20.003417+00:00",
+      "cpu_percent": 83.97585669781932,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31498772480,
+      "disk_free_bytes": 109772488704
+    },
+    {
+      "time": "2026-10-23T22:43:25.019329+00:00",
+      "cpu_percent": 83.95638629283489,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31549177856,
+      "disk_free_bytes": 109772476416
+    },
+    {
+      "time": "2026-10-23T22:43:30.029026+00:00",
+      "cpu_percent": 83.86341463414634,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31573524480,
+      "disk_free_bytes": 109772488704
+    },
+    {
+      "time": "2026-10-23T22:43:35.039380+00:00",
+      "cpu_percent": 83.64841161566946,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 31507828736,
+      "disk_free_bytes": 109772488704
+    },
+    {
+      "time": "2026-10-23T22:43:40.044115+00:00",
+      "cpu_percent": 59.72330475448169,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 32553611264,
+      "disk_free_bytes": 109772480512
+    },
+    {
+      "time": "2026-10-23T22:43:45.059128+00:00",
+      "cpu_percent": 53.41530054644809,
+      "total_ram_bytes": 68584181760,
+      "available_ram_bytes": 34076971008,
+      "disk_free_bytes": 109772349440
+    }
+  ],
+  "receipts": 5100,
+  "outbox": 5340,
+  "schema_bytes": 18112512,
+  "operations": {
+    "worker_age_seconds": 29.278526,
+    "outbox_pending": 0,
+    "outbox_lag_seconds": 0.0,
+    "outbox_rows": 5340,
+    "unresolved": 0,
+    "unknown": 0,
+    "action_lag_seconds": 0.0,
+    "history_capacity_fraction": 0.003229208290576935,
+    "history_json_bytes": 32551470,
+    "history_rows": 5100,
+    "history_age_seconds": 443.811111,
+    "largest_bot_queue": 0,
+    "schema_bytes": 18112512
+  },
+  "execution_target": "Docker/WSL",
+  "release": "2008583",
+  "server": {
+    "start": "2026-10-23T22:39:10.476Z",
+    "end": "2026-10-23T22:41:10.526Z",
+    "requests": 13645,
+    "statuses": {
+      "200": 11643,
+      "204": 1982,
+      "202": 20
+    },
+    "api_process_requests": {
+      "58": 7344,
+      "57": 6301
+    },
+    "unexpected_5xx_fraction": 0.0,
+    "routes": {
+      "GET /v1/bot/events": {
+        "count": 20,
+        "p95_ms": 696.665,
+        "p99_ms": 851.704,
+        "max_ms": 851.704
+      },
+      "GET /v1/channels/{slug}": {
+        "count": 1983,
+        "p95_ms": 359.409,
+        "p99_ms": 791.985,
+        "max_ms": 1183.569
+      },
+      "GET /v1/favorites": {
+        "count": 1987,
+        "p95_ms": 308.341,
+        "p99_ms": 645.172,
+        "max_ms": 1225.437
+      },
+      "GET /v1/updates": {
+        "count": 5601,
+        "p95_ms": 446.514,
+        "p99_ms": 892.836,
+        "max_ms": 1590.287
+      },
+      "POST /v1/bot/events/{event_id}/ack": {
+        "count": 20,
+        "p95_ms": 905.627,
+        "p99_ms": 1190.832,
+        "max_ms": 1190.832
+      },
+      "POST /v1/bot/events/{event_id}/result": {
+        "count": 20,
+        "p95_ms": 663.34,
+        "p99_ms": 1088.987,
+        "max_ms": 1088.987
+      },
+      "POST /v1/bot/messages": {
+        "count": 2000,
+        "p95_ms": 443.539,
+        "p99_ms": 830.784,
+        "max_ms": 1335.174
+      },
+      "POST /v1/channels/{channel_id}/actions": {
+        "count": 20,
+        "p95_ms": 1176.702,
+        "p99_ms": 1317.508,
+        "max_ms": 1317.508
+      },
+      "PUT /v1/favorites/{channel_id}/seen": {
+        "count": 1982,
+        "p95_ms": 342.558,
+        "p99_ms": 788.003,
+        "max_ms": 1186.681
+      }
+    },
+    "malformed_lines": 0,
+    "window_complete": true
+  },
+  "receipt_ids_before_restart": {
+    "expected": 5100,
+    "actual": 5100,
+    "missing": 0,
+    "unexpected": 0
+  },
+  "restart_receipts": 5100,
+  "receipt_ids_after_restart": {
+    "expected": 5100,
+    "actual": 5100,
+    "missing": 0,
+    "unexpected": 0
+  }
+}

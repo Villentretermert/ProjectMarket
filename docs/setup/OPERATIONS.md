@@ -77,6 +77,18 @@ $env:MARKETOB_BROWSER_CHANNEL='msedge'
 .venv-dev/Scripts/python.exe -m scripts.live_load --connection-file .local/postgres-dev/connection.json --bots 100 --seconds 1800 --burst --output .local/pm022/L2
 ```
 
+Для целевой Docker-поставки вместо native-стенда:
+
+```powershell
+.venv-dev/Scripts/python.exe -m scripts.live_load --docker --release <built-image-tag> --bots 100 --seconds 1800 --burst --output .local/pm022/docker-L2
+```
+
+Нужен заранее собранный образ `marketob-api:<built-image-tag>`. Измеритель создаёт
+собственный случайный Compose project/volume, проверяет2 API PID и отдельно
+сохраняет CPU/RAM/PIDs контейнеров. В конце удаляется только этот временный project;
+работающий пилот не используется для нагрузки и не удаляется. Успех короткого
+`--seconds 120` прогона обязателен перед полным повтором после изменения runtime.
+
 Используются100 независимых HTTP-ботов,100 браузерных контекстов/аккаунтов,80%
 news/product ≤4KiB и20%chart ≤32KiB.10% клиентов отправляют одну заявку в минуту.
 30мин ровного потока,60с предложения3 000 сообщений/мин, затем ограниченное

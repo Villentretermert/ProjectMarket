@@ -80,7 +80,7 @@ async function shot(s,file,x,y,w,h){
  const ingest=load.server.routes['POST /v1/bot/messages'],read=load.server.routes['GET /v1/channels/{slug}'];
  table(s,[['Метрика','p95','p99','Цель p95'],['Приём сервером',ms(ingest.p95_ms),ms(ingest.p99_ms),'≤500 мс'],['Чтение сервером',ms(read.p95_ms),ms(read.p99_ms),'≤500 мс'],['Данные на экране',seconds(load.live.p95_ms),seconds(load.live.p99_ms),'≤3 с'],['Заявка доступна боту',ms(load.action_available_http.p95_ms),ms(load.action_available_http.p99_ms),'≤3 с']],[440,220,220,272],163,360);
  text(s,'30 000 из 30 000 сообщений отображены',64,549,1152,55,32,true,c.green);
- text(s,'100 ботов, 100 клиентов, 1 000 сообщений/мин, 30 минут\nWindows / PostgreSQL18.6, loopback, общий компьютер',64,614,1152,60,24,false,c.muted);
+ text(s,'100 ботов, 100 клиентов, 1 000 сообщений/мин, 30 минут\nDocker / WSL, два API-процесса, общий компьютер',64,614,1152,60,24,false,c.muted);
 }
 {
  const s=slide('Всплеск и восстановление','Source: PM-022 L2.json and tests/test_operations.py. Burst uses open-loop offered load with bounded per-bot queues, stable message IDs and Retry-After. Intermediate burst DOM revisions may coalesce; accepted receipts and final snapshots are checked. Reconnect is a real offline browser context; restart includes API/worker and durable row counts, not a forced OS/database crash.');
