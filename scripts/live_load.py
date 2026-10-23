@@ -12,7 +12,7 @@ from uuid import uuid4
 
 from scripts.backend_lab import Lab
 from scripts.host_samples import HostSamples
-from scripts.load_integrity import verify_receipts
+from scripts.load_integrity import receipt_manifest
 from scripts.operations import log_metrics, snapshot
 from scripts.smoke_ingestion import Http
 
@@ -190,29 +190,40 @@ def main() -> None:
             "WHERE n.nspname=%s AND c.relkind='r'",
             (lab.schema,),
         )[0]["n"]
-        assert report["receipts"] == report["accepted"] + args.bots
-
         report["operations"] = snapshot(lab.database)
         report["server"] = log_metrics(
             lab.directory / "logs", report["steady_started_at"], report["steady_finished_at"]
         )
+        expected_steady = int(args.seconds * config["rate"] / 60)
+        expected_burst = args.bots * 30 if args.burst else 0
+        with lab.database.transaction() as connection:
+            report["receipt_ids_before_restart"] = receipt_manifest(
+                connection, args.bots, expected_steady, expected_burst
+            )
+        # Persist diagnostics before assertions: ambiguous HTTP outcomes must remain inspectable.
+        report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         lab.stop("worker")
         lab.stop("api")
         lab.start("api")
         lab.start("worker")
         report["restart_receipts"] = lab.query("SELECT count(*) AS n FROM message_receipts")[0]["n"]
-        assert report["restart_receipts"] == report["receipts"]
-        report["receipt_ids_after_restart"] = verify_receipts(
-            lab.database,
-            args.bots,
-            report["steady_accepted"],
-            report.get("burst", {}).get("accepted", 0),
-        )
+        with lab.database.transaction() as connection:
+            report["receipt_ids_after_restart"] = receipt_manifest(
+                connection, args.bots, expected_steady, expected_burst
+            )
         report_path.write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
         if process.returncode:
             raise SystemExit(process.returncode)
+        assert report["receipts"] == report["accepted"] + args.bots
+        assert report["restart_receipts"] == report["receipts"]
+        assert report["receipt_ids_after_restart"] == {
+            "expected": args.bots + expected_steady + expected_burst,
+            "actual": report["receipts"],
+            "missing": 0,
+            "unexpected": 0,
+        }
         assert report["server"]["window_complete"]
         assert (report["server"]["unexpected_5xx_fraction"] or 0) < 0.01
         for route in ("POST /v1/bot/messages", "GET /v1/channels/{slug}"):

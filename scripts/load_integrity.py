@@ -5,7 +5,14 @@ from marketob_api.database import Connection, Database
 
 def verify_receipts(database: Database, bots: int, steady: int, burst: int) -> dict[str, int]:
     with database.transaction() as connection:
-        return receipt_manifest(connection, bots, steady, burst)
+        result = receipt_manifest(connection, bots, steady, burst)
+    assert result == {
+        "expected": bots + steady + burst,
+        "actual": bots + steady + burst,
+        "missing": 0,
+        "unexpected": 0,
+    }
+    return result
 
 
 def receipt_manifest(connection: Connection, bots: int, steady: int, burst: int) -> dict[str, int]:
@@ -25,11 +32,4 @@ def receipt_manifest(connection: Connection, bots: int, steady: int, burst: int)
         (steady, bots, burst, bots),
     ).fetchone()
     assert row is not None
-    result = {k: int(v) for k, v in row.items()}
-    assert result == {
-        "expected": bots + steady + burst,
-        "actual": bots + steady + burst,
-        "missing": 0,
-        "unexpected": 0,
-    }
-    return result
+    return {k: int(v) for k, v in row.items()}

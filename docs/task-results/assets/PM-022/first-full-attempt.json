@@ -1,0 +1,186 @@
+{
+  "profile": "L2",
+  "duration_seconds": 1800,
+  "steady_started_at": "2026-10-23T20:52:10.529Z",
+  "steady_finished_at": "2026-10-23T21:22:10.719Z",
+  "send_elapsed_seconds": 1800.19,
+  "bots": 100,
+  "active_clients": 100,
+  "messages_per_minute": 1000,
+  "steady_accepted": 30000,
+  "rendered": 30000,
+  "missing": [],
+  "live": {
+    "count": 30000,
+    "p95_ms": 1986,
+    "p99_ms": 2094,
+    "max_ms": 3842
+  },
+  "ingest_http": {
+    "count": 30000,
+    "p95_ms": 93,
+    "p99_ms": 305,
+    "max_ms": 1421
+  },
+  "read_http": {
+    "count": 30000,
+    "p95_ms": 61.939,
+    "p99_ms": 187.346,
+    "max_ms": 885.298
+  },
+  "action_available_http": {
+    "count": 300,
+    "p95_ms": 138,
+    "p99_ms": 336,
+    "max_ms": 466
+  },
+  "message_bytes": {
+    "min": 3631,
+    "max": 13772
+  },
+  "browser": "155.0.4283.62",
+  "node": "v24.20.0",
+  "reconnect_ms": 239,
+  "burst": {
+    "offered": 3000,
+    "offered_seconds": 60,
+    "accepted_during_minute": 1957,
+    "recovery_seconds": 61.755,
+    "final_snapshots": 100,
+    "accepted": 2968,
+    "quotas": {
+      "burst": 153,
+      "recovery": 1713,
+      "steady": 0
+    }
+  },
+  "accepted": 32968,
+  "page_errors": [],
+  "http_errors": [],
+  "failures": [
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout",
+    "TimeoutError: The operation was aborted due to timeout"
+  ],
+  "server": {
+    "start": "2026-10-23T20:52:10.529Z",
+    "end": "2026-10-23T21:22:10.719Z",
+    "requests": 208263,
+    "statuses": {
+      "200": 178001,
+      "204": 29962,
+      "202": 300
+    },
+    "unexpected_5xx_fraction": 0.0,
+    "routes": {
+      "GET /v1/bot/events": {
+        "count": 300,
+        "p95_ms": 40.451,
+        "p99_ms": 84.747,
+        "max_ms": 120.279
+      },
+      "GET /v1/channels/{slug}": {
+        "count": 29963,
+        "p95_ms": 52.668,
+        "p99_ms": 128.552,
+        "max_ms": 692.417
+      },
+      "GET /v1/favorites": {
+        "count": 29972,
+        "p95_ms": 45.451,
+        "p99_ms": 165.277,
+        "max_ms": 993.28
+      },
+      "GET /v1/updates": {
+        "count": 87166,
+        "p95_ms": 79.158,
+        "p99_ms": 226.427,
+        "max_ms": 1158.325
+      },
+      "POST /v1/bot/events/{event_id}/ack": {
+        "count": 300,
+        "p95_ms": 56.474,
+        "p99_ms": 106.725,
+        "max_ms": 176.871
+      },
+      "POST /v1/bot/events/{event_id}/result": {
+        "count": 300,
+        "p95_ms": 75.143,
+        "p99_ms": 158.793,
+        "max_ms": 216.575
+      },
+      "POST /v1/bot/messages": {
+        "count": 30000,
+        "p95_ms": 81.219,
+        "p99_ms": 235.595,
+        "max_ms": 983.48
+      },
+      "POST /v1/channels/{channel_id}/actions": {
+        "count": 300,
+        "p95_ms": 77.806,
+        "p99_ms": 178.606,
+        "max_ms": 271.009
+      },
+      "PUT /v1/favorites/{channel_id}/seen": {
+        "count": 29962,
+        "p95_ms": 53.646,
+        "p99_ms": 131.356,
+        "max_ms": 590.99
+      }
+    },
+    "malformed_lines": 0,
+    "window_complete": true
+  },
+  "operations": {
+    "worker_age_seconds": 188.470946,
+    "outbox_pending": 0,
+    "outbox_lag_seconds": 0.0,
+    "outbox_rows": 33900,
+    "unresolved": 0,
+    "unknown": 0,
+    "action_lag_seconds": 0.0,
+    "history_capacity_fraction": 0.020963020622730255,
+    "history_json_bytes": 211395070,
+    "history_rows": 33100,
+    "history_age_seconds": 2186.349541,
+    "largest_bot_queue": 0,
+    "schema_bytes": 93118464
+  },
+  "receipts": 33100,
+  "exact_ids_before_restart": {
+    "expected": 33100,
+    "actual": 33100,
+    "missing": 0,
+    "unexpected": 0
+  },
+  "acceptance": "FAIL: 32 ambiguous HTTP timeouts were not retried by the original load client; all offered IDs are present, no restart acceptance in this run"
+}

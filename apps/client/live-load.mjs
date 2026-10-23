@@ -37,6 +37,7 @@ try{
   }
   const ingest=[],sizes=[],chains=Array.from({length:count},()=>Promise.resolve()),revisions=Array(count).fill(1);
   const actionMinute=Array(count).fill(-1),quotas={burst:0,recovery:0,steady:0},failures=[];
+  const transportRetries={burst:0,recovery:0,steady:0};
   async function purchase(index,revision,n){
     const actor=clients[index],item=config.sources[index],queuedAt=Date.now();
     const result=await actor.context.request.post(config.origin+'/v1/channels/'+item.channel_id+'/actions',{headers:{Origin:config.origin,'X-CSRF-Token':actor.csrf,'Idempotency-Key':'load_action_'+n},data:{action_id:'purchase',resource_id:'sample',observed_source_revision:revision,quantity:1}});assert.equal(result.status(),202);
@@ -51,8 +52,16 @@ try{
     const body=JSON.stringify(message);
     while(true){
       const before=Date.now();
-      const response=await fetch(config.origin+'/v1/bot/messages',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+source.key},body,signal:AbortSignal.timeout(10000)});
-      const receipt=await response.json(),after=Date.now();
+      let response,receipt;
+      try{
+        response=await fetch(config.origin+'/v1/bot/messages',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+source.key},body,signal:AbortSignal.timeout(10000)});
+        receipt=await response.json();
+      }catch(error){
+        // A lost response may already have committed. Repeat the identical ID/body.
+        if(label!=='burst'||Date.now()>=deadline||!['TimeoutError','AbortError','TypeError'].includes(error.name))throw error;
+        transportRetries[phase]++;await wait(250+Math.random()*250);continue;
+      }
+      const after=Date.now();
       if(response.status===429&&label==='burst'){
         quotas[phase]++;assert.ok(Number(response.headers.get('Retry-After'))>0);
         assert.ok(Date.now()<deadline,'Burst recovery exceeded three minutes');
@@ -98,7 +107,7 @@ try{
     }
     report.burst.accepted=accepted.length-report.steady_accepted;report.burst.quotas=quotas;
   }
-  Object.assign(report,{accepted:accepted.length,page_errors:errors,http_errors:httpErrors,failures});
+  Object.assign(report,{accepted:accepted.length,page_errors:errors,http_errors:httpErrors,failures,transport_retries:transportRetries});
   await writeFile(path.join(config.output,'live-load.json'),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify({accepted:report.accepted,rendered:report.rendered,live:report.live,burst:report.burst,errors:failures.length}));
   assert.equal(missing.length,0);assert.deepEqual(errors,[]);assert.deepEqual(failures,[]);assert.deepEqual(httpErrors.filter(e=>e.phase==='steady'),[]);
