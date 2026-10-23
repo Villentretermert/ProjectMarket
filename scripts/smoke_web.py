@@ -18,6 +18,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--connection-file", type=Path)
     parser.add_argument("--output", type=Path, default=Path(".local/web-evidence"))
+    parser.add_argument("--live-only", action="store_true", help="Focused PM-018 browser checks.")
     args = parser.parse_args()
     lab = Lab(args.connection_file)
     args.output.mkdir(parents=True, exist_ok=True)
@@ -61,7 +62,12 @@ def main() -> None:
         )
         # Only synthetic test login and public channel IDs go to the browser process stdin.
         result = subprocess.run(
-            ["node", "apps/client/acceptance.mjs"],
+            [
+                "node",
+                "apps/client/acceptance-live.mjs"
+                if args.live_only
+                else "apps/client/acceptance.mjs",
+            ],
             input=json.dumps(
                 {
                     "origin": lab.origin,
@@ -78,7 +84,7 @@ def main() -> None:
         if result.returncode:
             raise SystemExit(result.returncode)
         counts = lab.query("SELECT count(*) AS n FROM action_requests")
-        assert counts[0]["n"] == 5, "Three channel, one My Space, one live request; no duplicate"
+        assert counts[0]["n"] == (1 if args.live_only else 5), "No duplicate purchase requests"
         print("PASS: real Web/API/bot browser acceptance; disposable state removed.")
     finally:
         lab.close()

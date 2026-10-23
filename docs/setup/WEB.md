@@ -33,7 +33,8 @@ reference; do not submit a new request without checking the existing operation.
 
 Refresh reads current data and rechecks access. Offline or hidden tabs clear source
 content; returning/reconnecting loads authorized data again. No service worker or
-persistent private-content cache is installed. Foreground update delivery is PM-018.
+persistent private-content cache is installed. [Foreground updates and Events](LIVE_UPDATES.md)
+are implemented in PM-018 for consumer screens; Studio uses explicit Refresh.
 
 ## Reproduce browser acceptance
 

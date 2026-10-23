@@ -53,9 +53,23 @@ export async function liveAcceptance(browser,config,check){
       await publish('Silent update headline');await shown('Silent update headline');
       assert.deepEqual((await customer('GET','/preferences/'+source.channel_id)).events,[]);
     });
+    await check('Live: repeated delivery does not repeat the selected toast',async()=>{
+      await customer('PUT','/preferences/'+source.channel_id,{channel_id:source.channel_id,events:['news.published']});
+      await page.evaluate(()=>{window.liveToastCount=0;new MutationObserver(()=>{if(document.querySelector('#toast').textContent==='News updated')window.liveToastCount++;}).observe(document.querySelector('#toast'),{childList:true,subtree:true});});
+      const pattern='**/v1/updates?*';let replay=null,repeated=false,done;const completed=new Promise(resolve=>{done=resolve;});
+      await page.route(pattern,async route=>{
+        if(replay){const value=replay;replay=null;repeated=true;await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(value)});done();return;}
+        const response=await route.fetch(),value=await response.json();
+        if(!repeated&&value.items?.some(i=>i.notify))replay=value;
+        await route.fulfill({response});
+      });
+      await publish('Replay-safe headline');await shown('Replay-safe headline');await completed;
+      await page.waitForTimeout(300);assert.equal(await page.evaluate(()=>window.liveToastCount),1);
+      await page.unroute(pattern);await customer('PUT','/preferences/'+source.channel_id,{channel_id:source.channel_id,events:[]});
+    });
     await check('Live: lost connection and expired cursor resync without refresh',async()=>{
       const pattern='**/v1/updates?*';await page.route(pattern,route=>route.abort());
-      await page.getByText('Reconnecting · Content hidden',{exact:true}).waitFor();assert.equal(await page.getByText('Silent update headline',{exact:true}).count(),0);
+      await page.getByText('Reconnecting · Content hidden',{exact:true}).waitFor();assert.equal(await page.getByText('Replay-safe headline',{exact:true}).count(),0);
       await publish('Recovered live headline');const start=Date.now();await page.unroute(pattern);await shown('Recovered live headline');metrics.lost_reply_recovery_ms=Date.now()-start;assert.ok(metrics.lost_reply_recovery_ms<10000);
       let expired=false;await page.route(pattern,async route=>{if(!expired){expired=true;return route.fulfill({status:410,contentType:'application/json',body:JSON.stringify({code:'cursor_expired',message:'Refresh snapshots.'})});}await route.continue();});
       await page.getByText('Reconnecting · Content hidden',{exact:true}).waitFor();await publish('After cursor expiry');await shown('After cursor expiry');await page.unroute(pattern);

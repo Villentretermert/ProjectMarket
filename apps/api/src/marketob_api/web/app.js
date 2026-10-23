@@ -99,6 +99,7 @@ async function route() {
   window.dispatchEvent(new Event('route-leave'));
   const own=++generation;
   document.querySelector('#connection').textContent='';
+  delete document.querySelector('#connection').dataset.state;
   document.querySelectorAll('dialog').forEach(d=>d.close());
   main.replaceChildren(message('Loading…')); sidebar.replaceChildren(); account();
   if (!navigator.onLine) { main.replaceChildren(el('section',{class:'empty'},el('h1',{},'You are offline'),

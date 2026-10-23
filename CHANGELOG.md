@@ -259,3 +259,10 @@ preserves title/layout/Undo. Events controls wait for saved preferences before
 allowing edits. Automatic request status uses GET. Added real PG/browser scenarios
 and ten-browser L1 measurement; final acceptance evidence follows.
 
+## 2026-10-23 · PM-018 verification refinements
+
+Fixed Events loading controls and aligned checkbox labels; Live uses a calm green
+status. Added browser replay-dedup/offline timing and an optional focused live suite,
+plus persisted-cursor/concurrent dispatcher coverage for personal-page interests.
+PM-023 explicitly tracks outbox/preferences cleanup and cursor floor after retention.
+

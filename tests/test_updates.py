@@ -1,6 +1,7 @@
 """Commit ordering, resumable delivery and current authorization on real PostgreSQL."""
 
 import time
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any
 
 import pytest
@@ -18,6 +19,7 @@ from tests.test_identity import PASSWORD, client, register
 from tests.test_identity import settings as settings
 from tests.test_ingestion import draft, message
 from tests.test_ingestion import gateway as gateway
+from tests.test_personal_pages import body, create
 
 pytestmark = pytest.mark.integration
 
@@ -168,3 +170,28 @@ def test_only_actor_receives_request_notifications(
         ).status_code
         == 422
     )
+
+
+def test_personal_references_and_restarted_apps_share_a_durable_cursor(
+    settings: Settings, gateway: tuple[TestClient, TestClient, dict[str, Any]]
+) -> None:
+    owner, bot, source = gateway
+    ready(owner, bot, source)
+    with client(settings) as reader:
+        register(reader, "personal_reader")
+        create(reader, body(owner.get(path(source)).json()))
+        assert reader.get("/v1/favorites").json()["items"] == []
+        cursor = poll(reader)["next_cursor"]
+        assert (
+            bot.post("/v1/bot/messages", json=message(source, 2, "after_restart")).status_code
+            == 200
+        )
+        # Independent app factories use the persisted session/cursor key and one delivery order.
+        with client(settings) as restarted, client(settings) as concurrent:
+            for http in (restarted, concurrent):
+                http.cookies.update(reader.cookies)
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                one, two = list(pool.map(lambda http: poll(http, cursor), [restarted, concurrent]))
+            assert one["items"] == two["items"]
+            assert len(one["items"]) == 1 and one["items"][0]["channel_id"] == source["channel_id"]
+            assert poll(restarted, one["next_cursor"])["items"] == []

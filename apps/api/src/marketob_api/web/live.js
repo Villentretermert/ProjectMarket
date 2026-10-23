@@ -4,7 +4,7 @@ import {el,button,modal,message,errorBox,toast} from './dom.js';
 export async function eventPreferences(channelID){
   const errors=el('div'),body=el('div',{class:'stack'},message('Choose events shown while MarkeTOB is open.'));
   const names=[['news.published','News updates'],['catalog.changed','Catalog changes'],['request.status','My request status']];
-  const inputs=names.map(([id,name])=>{const input=el('input',{type:'checkbox',value:id,'aria-label':name,disabled:true});body.append(el('label',{},input,name));return input;});
+  const inputs=names.map(([id,name])=>{const input=el('input',{type:'checkbox',value:id,'aria-label':name,disabled:true});body.append(el('label',{class:'event-choice'},input,name));return input;});
   let ready=false,busy=false;
   body.append(errors);
   let save;
@@ -51,7 +51,7 @@ export function startLive(root,initialCursor,refreshSidebar){
       if(fresh.length){await root.onUpdates?.(fresh);if(!active())return;await refreshSidebar();}
       if(!active())return;
       // Advance only after applying the batch; a failed read triggers a full authorized resync.
-      cursor=page.next_cursor;failures=0;indicator.textContent='Live';
+      cursor=page.next_cursor;failures=0;indicator.textContent='Live';indicator.dataset.state='live';
       const notifications=new Set();
       for(const item of fresh){
         if(item.kind==='access.revoked')unavailable.add(item.channel_id);
@@ -66,9 +66,10 @@ export function startLive(root,initialCursor,refreshSidebar){
       needsResync=true;root.onLiveUnavailable?.();document.querySelector('#sidebar').replaceChildren();
       document.querySelectorAll('dialog').forEach(d=>d.close());
       indicator.textContent='Reconnecting · Content hidden';
+      indicator.dataset.state='reconnecting';
       delay=error.retryAfter?error.retryAfter*1000:Math.min(2000*2**failures++,8000);
     }finally{if(active())timer=setTimeout(tick,delay);}
   }
-  indicator.textContent='Live';timer=setTimeout(tick,2000);
+  indicator.textContent='Live';indicator.dataset.state='live';timer=setTimeout(tick,2000);
   return stop;
 }
