@@ -1,13 +1,15 @@
 """Environment configuration with optional storage for foundation smoke tests."""
 
+from pathlib import Path
 from typing import Literal
 from urllib.parse import urlsplit
 
-from pydantic import Field, PostgresDsn, SecretStr, field_validator
+from pydantic import Field, PostgresDsn, PrivateAttr, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    _database_pools: object | None = PrivateAttr(default=None)
     model_config = SettingsConfigDict(
         env_prefix="MARKETOB_",
         env_file=".env",
@@ -19,6 +21,7 @@ class Settings(BaseSettings):
     host: str = "127.0.0.1"
     port: int = Field(default=8000, ge=1, le=65535)
     log_level: Literal["debug", "info", "warning", "error"] = "info"
+    log_directory: Path | None = None
     database_url: SecretStr | None = None
     database_timeout_seconds: int = Field(default=3, ge=2, le=30)
     database_schema: str = Field(default="public", pattern=r"^[a-z][a-z0-9_]{0,62}$")

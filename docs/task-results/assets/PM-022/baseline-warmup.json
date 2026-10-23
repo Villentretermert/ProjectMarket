@@ -1,0 +1,109 @@
+{
+  "scope": "Aborted pre-pool browser warmup; not an L2 result",
+  "metrics": {
+    "start": "2026-10-23T20:15:05.934327+00:00",
+    "end": "2026-10-23T20:35:05.934327+00:00",
+    "requests": 8721,
+    "statuses": {
+      "200": 8219,
+      "201": 401,
+      "204": 100,
+      "404": 1
+    },
+    "unexpected_5xx_fraction": 0.0,
+    "routes": {
+      "GET /v1/auth/session": {
+        "count": 92,
+        "p95_ms": 1065.369,
+        "p99_ms": 1654.16,
+        "max_ms": 1654.16
+      },
+      "GET /v1/channels/{slug}": {
+        "count": 92,
+        "p95_ms": 1385.842,
+        "p99_ms": 2275.88,
+        "max_ms": 2275.88
+      },
+      "GET /v1/favorites": {
+        "count": 184,
+        "p95_ms": 1488.037,
+        "p99_ms": 2702.402,
+        "max_ms": 3747.355
+      },
+      "GET /v1/owner/channels/{channel_id}": {
+        "count": 100,
+        "p95_ms": 239.886,
+        "p99_ms": 286.649,
+        "max_ms": 336.849
+      },
+      "GET /v1/updates": {
+        "count": 6519,
+        "p95_ms": 2785.607,
+        "p99_ms": 3340.57,
+        "max_ms": 4468.982
+      },
+      "POST /v1/auth/login": {
+        "count": 93,
+        "p95_ms": 2277.17,
+        "p99_ms": 2781.458,
+        "max_ms": 2781.458
+      },
+      "POST /v1/auth/register": {
+        "count": 101,
+        "p95_ms": 307.852,
+        "p99_ms": 375.387,
+        "max_ms": 386.917
+      },
+      "POST /v1/bot-registrations/exchange": {
+        "count": 100,
+        "p95_ms": 232.316,
+        "p99_ms": 312.159,
+        "max_ms": 318.325
+      },
+      "POST /v1/bot/messages": {
+        "count": 100,
+        "p95_ms": 311.702,
+        "p99_ms": 357.345,
+        "max_ms": 397.985
+      },
+      "POST /v1/bots": {
+        "count": 100,
+        "p95_ms": 243.871,
+        "p99_ms": 327.261,
+        "max_ms": 329.312
+      },
+      "POST /v1/channels": {
+        "count": 100,
+        "p95_ms": 265.961,
+        "p99_ms": 365.109,
+        "max_ms": 397.737
+      },
+      "POST /v1/owner/channels/{channel_id}/publish": {
+        "count": 100,
+        "p95_ms": 269.48,
+        "p99_ms": 378.353,
+        "max_ms": 471.028
+      },
+      "PUT /v1/account/business-profile": {
+        "count": 1,
+        "p95_ms": 138.237,
+        "p99_ms": 138.237,
+        "max_ms": 138.237
+      },
+      "PUT /v1/owner/channels/{channel_id}": {
+        "count": 100,
+        "p95_ms": 240.085,
+        "p99_ms": 331.228,
+        "max_ms": 332.253
+      },
+      "PUT /v1/owner/channels/{channel_id}/grants/{user_id}": {
+        "count": 100,
+        "p95_ms": 262.014,
+        "p99_ms": 333.904,
+        "max_ms": 382.724
+      }
+    },
+    "malformed_lines": 0,
+    "window_complete": false
+  }
+}

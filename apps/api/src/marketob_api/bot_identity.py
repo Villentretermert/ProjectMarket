@@ -121,6 +121,7 @@ def authenticate_bot(
     if scope is not None and scope not in key["scopes"]:
         raise ApiError(403, "insufficient_scope", "This key does not permit this operation.")
     connection.execute("UPDATE bots SET last_seen=now() WHERE bot_id=%s", (candidate["bot_id"],))
+    request.state.bot_id = candidate["bot_id"]
     return BotIdentity(**candidate, **key)
 
 

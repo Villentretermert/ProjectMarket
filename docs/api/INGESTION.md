@@ -60,6 +60,15 @@ revision only, not payload or credentials. Its consumer is implemented later.
   a rejected empty bucket consumes neither bucket. Counters survive API restart.
 - 429 supplies Retry-After. Retry the same message after backoff; use the original
   identity after an ambiguous network/503 response. Never replace it blindly.
+- PM-022 capacity admission: each bot has100,000 retained history rows/256MiB
+  uncompressed history JSON and10,000 source records including tombstones.
+  Full history rejects a new message with429/Retry-After60 in the same transaction,
+  preserving the previous snapshot/receipt. An exact replay can still read its
+  existing receipt. Unexpired history is never evicted to admit a new message.
+- Outbox admission pauses writes at20,000 pending or250,000 total hints. These
+  count-based thresholds can overshoot by concurrent in-flight writers; the
+  maintenance worker dispatches and expires old delivered hints. See
+  [operations](../setup/OPERATIONS.md) for alerts and recovery.
 - Raw history is removed after 30 days, receipt dedup after 30 days by the local
   maintenance worker (5000 rows/table/pass, every 60s). Expired receipts are not
   replayed even before a cleanup pass. Latest content and tombstones remain.
@@ -80,6 +89,6 @@ Only use a disposable test instance. The ignored state file contains ephemeral
 test credentials; never publish it. The after phase removes it and deactivates the
 test account. The report contains no credentials or source content.
 
-The short burst is not a sustained capacity result, client delivery latency or
-proof of backup recovery. Product read UI, actions, GET events and pilot bots
-remain future tasks. The PM-003 visual prototype still uses synthetic in-memory data.
+The short ingestion smoke is not a sustained capacity result or client delivery
+latency. Web, actions, GET events and pilot bots are implemented in PM-009–018;
+Docker backup/restore is PM-021. Full L2 acceptance is tracked in PM-022.

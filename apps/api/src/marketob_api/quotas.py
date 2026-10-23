@@ -13,7 +13,7 @@ def ingestion_quota(database: Database, bot_id: str, settings: Settings) -> None
         ("ingest:bot:" + bot_id, settings.ingest_bot_per_minute),
     ]
     retry_after = 0
-    with database.transaction() as connection:
+    with database.transaction(auxiliary=True) as connection:
         buckets = []
         # The global bucket is always locked first, then the bot bucket.
         for name, limit in limits:

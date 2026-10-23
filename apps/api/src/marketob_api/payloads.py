@@ -5,6 +5,7 @@ from importlib.resources import files
 from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker  # type: ignore[import-untyped]
+from jsonschema_rs import Draft202012Validator as CompiledValidator
 
 from marketob_api.errors import ApiError
 
@@ -31,12 +32,19 @@ VALIDATORS = {
         "Preference",
     )
 }
+# The canonical schema remains unchanged. Compile the high-volume graph path once.
+MESSAGE_VALIDATOR = CompiledValidator(
+    {"$defs": SCHEMAS, "$ref": "#/$defs/Message"}, validate_formats=True, offline=True
+)
 
 
 def validate_payload(name: str, body: dict[str, Any]) -> None:
     if name == "Message" and body.get("schema_version") != "1.0":
         raise ApiError(422, "unsupported_schema_version", "Use supported schema version 1.0.")
-    if next(VALIDATORS[name].iter_errors(body), None) is not None:
+    valid = (
+        MESSAGE_VALIDATOR.is_valid(body) if name == "Message" else VALIDATORS[name].is_valid(body)
+    )
+    if not valid:
         raise ApiError(422, "invalid_request", "Request fields do not match the API schema.")
     # PostgreSQL text cannot represent NUL; reject invalid Unicode before persistence.
     wire = json.dumps(body, ensure_ascii=False, allow_nan=False)

@@ -9,6 +9,7 @@ from fastapi import APIRouter, Query, Request, Response
 from fastapi.encoders import jsonable_encoder
 from psycopg import sql
 from psycopg.types.json import Jsonb
+from starlette.responses import JSONResponse
 
 from marketob_api.access import require_owner, require_read
 from marketob_api.config import Settings
@@ -444,9 +445,8 @@ def router(settings: Settings) -> APIRouter:
             )
             row = content(connection, found["channel_id"])
             result = snapshot(connection, access, row, published_definition(connection, row))
-            fingerprint = json.dumps(
-                jsonable_encoder(result), sort_keys=True, separators=(",", ":")
-            )
+            encoded = jsonable_encoder(result)
+            fingerprint = json.dumps(encoded, sort_keys=True, separators=(",", ":"))
             etag = '"' + digest((current.token if current else "anonymous") + fingerprint) + '"'
             headers = {"ETag": etag, "Vary": "Cookie, Origin"}
             # RFC 9110: authentication and normal request checks precede condition evaluation.
@@ -456,7 +456,6 @@ def router(settings: Settings) -> APIRouter:
             ]
             if etag in candidates or "*" in candidates:
                 return Response(status_code=304, headers=headers)
-            response.headers.update(headers)
-            return result
+            return JSONResponse(encoded, headers=headers)
 
     return api

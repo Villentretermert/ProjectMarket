@@ -15,6 +15,9 @@ services:
     mem_limit: 256m
     pids_limit: 128
   proxy:
+    logging:
+      driver: local
+      options: {max-size: "10m", max-file: "5"}
     image: marketob-proxy:${MARKETOB_RELEASE:-local}
     build:
       context: .

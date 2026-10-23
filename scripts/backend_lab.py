@@ -47,6 +47,7 @@ class Lab:
             MARKETOB_ALLOWED_ORIGINS=json.dumps([self.origin]),
             MARKETOB_AUTH_RATE_LIMIT="1000",
             MARKETOB_WRITE_RATE_LIMIT="10000",
+            MARKETOB_LOG_DIRECTORY=str((self.directory / "logs").resolve()),
             TMP=str(self.directory.resolve()),
             TEMP=str(self.directory.resolve()),
             TMPDIR=str(self.directory.resolve()),
@@ -59,7 +60,9 @@ class Lab:
         self.logs: list[IO[bytes]] = []
 
     def open(self) -> None:
-        with psycopg.connect(self.url.get_secret_value(), autocommit=True) as conn:
+        with psycopg.connect(
+            self.url.get_secret_value(), autocommit=True, connect_timeout=5
+        ) as conn:
             conn.execute(sql.SQL("CREATE SCHEMA {}").format(sql.Identifier(self.schema)))
         migrate(self.database)
         self.start("api")
@@ -121,7 +124,9 @@ class Lab:
         for log in self.logs:
             log.close()
         assert self.schema.startswith("lab_") and len(self.schema) == 36
-        with psycopg.connect(self.url.get_secret_value(), autocommit=True) as conn:
+        with psycopg.connect(
+            self.url.get_secret_value(), autocommit=True, connect_timeout=5
+        ) as conn:
             conn.execute(
                 sql.SQL("DROP SCHEMA IF EXISTS {} CASCADE").format(sql.Identifier(self.schema))
             )

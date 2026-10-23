@@ -39,6 +39,11 @@ def install_error_handlers(app: FastAPI) -> None:
     async def handler(request: Request, error: Any) -> JSONResponse:
         if isinstance(error, ApiError):
             safe = error
+        elif isinstance(error, psycopg.errors.CheckViolation) and error.diag.constraint_name in {
+            "history_capacity",
+            "outbox_capacity",
+        }:
+            safe = ApiError(429, "rate_limited", "Storage capacity reached. Retry later.", 60)
         elif isinstance(error, RequestValidationError):
             safe = ApiError(422, "invalid_request", "Request fields do not match the API schema.")
         elif isinstance(error, psycopg.OperationalError):

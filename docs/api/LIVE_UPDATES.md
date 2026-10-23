@@ -70,9 +70,11 @@ guarantee across tab reloads. In-session replay is deduplicated in bounded memor
 Migration010 adds event_preferences, delivery_state and delivery order metadata on
 the existing transactional outbox. A short serialized transaction numbers only
 committed rows. It releases its global lock before caller/channel authorization;
-late commits receive later delivery positions. Existing outbox rows are retained;
-physical outbox minimization is tracked for PM-023. Cursor expiry bounds replay
-promises independently of physical retention.
+late commits receive later delivery positions. PM-022 migration011 adds a monotonic
+retention floor. The worker removes a contiguous delivered prefix older than one
+hour in batches5000. A cursor behind the floor gets410/resync_required even if its
+signature/expiry are otherwise valid. Message receipts/current snapshots are
+independent of hint retention. Account/source privacy cleanup remains PM-023.
 
 Future Android foreground clients must use the same bootstrap-before-snapshot,
 session binding, deduplication, Retry-After, source revalidation and logout clearing.

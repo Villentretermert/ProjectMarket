@@ -1,4 +1,4 @@
-"""L1 live SLO: ten real browser sessions, ten bot identities, 100 messages/minute."""
+"""L1/L2 live SLO using real browser sessions and isolated bot identities."""
 
 import argparse
 import json
@@ -7,9 +7,12 @@ import platform
 import secrets
 import subprocess
 from pathlib import Path
+from typing import Any
 from uuid import uuid4
 
 from scripts.backend_lab import Lab
+from scripts.host_samples import HostSamples
+from scripts.operations import log_metrics, snapshot
 from scripts.smoke_ingestion import Http
 
 
@@ -18,11 +21,16 @@ def main() -> None:
     parser.add_argument("--connection-file", type=Path)
     parser.add_argument("--output", type=Path, default=Path(".local/live-load"))
     parser.add_argument("--seconds", type=int, default=900)
+    parser.add_argument("--bots", type=int, choices=(10, 100), default=10)
+    parser.add_argument("--burst", action="store_true")
     args = parser.parse_args()
     lab = Lab(args.connection_file)
+    resources = HostSamples()
+    resources.start()
     args.output.mkdir(parents=True, exist_ok=True)
     try:
         lab.open()
+        lab.start("worker")
         owner = Http(lab.origin)
         password = secrets.token_urlsafe(24)
         owner.csrf = owner.call(
@@ -37,8 +45,8 @@ def main() -> None:
         )["csrf_token"]
         owner.call("PUT", "/v1/account/business-profile", {"name": "L1 synthetic workspace"})
         sources = []
-        for index in range(10):
-            kind = "news" if index < 4 else "product" if index < 8 else "chart"
+        for index in range(args.bots):
+            kind = "news" if index % 10 < 4 else "product" if index % 10 < 8 else "chart"
             registration = owner.call("POST", "/v1/bots", {"name": f"L1 bot {index}"}, expected=201)
             issued = owner.call(
                 "POST",
@@ -59,6 +67,7 @@ def main() -> None:
             )
             source.update(key=issued["api_key"], kind=kind, index=index)
             title = f"L1 {index} revision 1"
+            payload: dict[str, Any]
             if kind == "news":
                 payload = {"title": title, "body": "Synthetic news. " * 210}
             elif kind == "product":
@@ -147,18 +156,20 @@ def main() -> None:
             "origin": lab.origin,
             "sources": sources,
             "seconds": args.seconds,
+            "rate": args.bots * 10,
+            "burst": args.burst,
             "output": str(args.output.resolve()),
         }
-        result = subprocess.run(
+        process = subprocess.Popen(
             ["node", "apps/client/live-load.mjs"],
-            input=json.dumps(config),
+            stdin=subprocess.PIPE,
             text=True,
             env=dict(os.environ),
-            check=False,
-            timeout=args.seconds + 180,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
         )
-        if result.returncode:
-            raise SystemExit(result.returncode)
+        # Track the browser's process tree so timeout/failure cannot leave 100 contexts running.
+        lab.processes["browser"] = process  # type: ignore[assignment]
+        process.communicate(json.dumps(config), timeout=args.seconds + 900)
         report_path = args.output / "live-load.json"
         report = json.loads(report_path.read_text(encoding="utf-8"))
         report["runtime"] = {
@@ -169,6 +180,7 @@ def main() -> None:
             "network": "127.0.0.1 loopback",
         }
         report["database"] = lab.query("SELECT version() AS version")[0]["version"]
+        report["host_samples"] = resources.finish()
         report["receipts"] = lab.query("SELECT count(*) AS n FROM message_receipts")[0]["n"]
         report["outbox"] = lab.query("SELECT count(*) AS n FROM change_outbox")[0]["n"]
         report["schema_bytes"] = lab.query(
@@ -177,12 +189,31 @@ def main() -> None:
             "WHERE n.nspname=%s AND c.relkind='r'",
             (lab.schema,),
         )[0]["n"]
-        assert report["receipts"] == report["accepted"] + 10
+        assert report["receipts"] == report["accepted"] + args.bots
+
+        report["operations"] = snapshot(lab.database)
+        report["server"] = log_metrics(
+            lab.directory / "logs", report["steady_started_at"], report["steady_finished_at"]
+        )
+        lab.stop("worker")
+        lab.stop("api")
+        lab.start("api")
+        lab.start("worker")
+        report["restart_receipts"] = lab.query("SELECT count(*) AS n FROM message_receipts")[0]["n"]
+        assert report["restart_receipts"] == report["receipts"]
         report_path.write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
-        print("PASS: live load report and durable receipt count saved; disposable state removed.")
+        if process.returncode:
+            raise SystemExit(process.returncode)
+        assert report["server"]["window_complete"]
+        assert (report["server"]["unexpected_5xx_fraction"] or 0) < 0.01
+        for route in ("POST /v1/bot/messages", "GET /v1/channels/{slug}"):
+            metric = report["server"]["routes"][route]
+            assert metric["p95_ms"] <= 500 and metric["p99_ms"] <= 2000, route
+        print("PASS: live load and restart evidence saved; disposable state removed.")
     finally:
+        resources.finish()
         lab.close()
 
 

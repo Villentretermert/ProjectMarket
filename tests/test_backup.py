@@ -16,7 +16,7 @@ import psycopg
 import pytest
 from marketob_api.config import Settings
 from marketob_api.database import Database
-from marketob_api.migrate import migrate
+from marketob_api.migrate import migrate, migration_checksums
 from psycopg import sql
 from pydantic import SecretStr
 
@@ -229,7 +229,7 @@ def test_no_overwrite_corruption_migration_mismatch_and_failed_restore_are_safe(
     with client(settings) as http:
         assert http.get("/health/ready").status_code == 503
         assert http.get("/health/live").status_code == 200
-    assert pg.query("SELECT count(*) FROM schema_migrations;") == 10
+    assert pg.query("SELECT count(*) FROM schema_migrations;") == len(migration_checksums())
 
 
 @pytest.mark.integration
@@ -249,7 +249,7 @@ def test_failed_archive_is_atomic_and_working_database_untouched(
     with pytest.raises(BackupError, match="pg_restore failed"):
         restore_backup(pg, directory, target)
     assert pg.query("SELECT count(*) FROM pg_tables WHERE schemaname='public';", target) == 0
-    assert pg.query("SELECT count(*) FROM schema_migrations;") == 10
+    assert pg.query("SELECT count(*) FROM schema_migrations;") == len(migration_checksums())
 
 
 @pytest.mark.integration

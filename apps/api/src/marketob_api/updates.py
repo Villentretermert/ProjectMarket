@@ -17,14 +17,15 @@ from marketob_api.identity import authenticate, digest
 from marketob_api.payloads import validate_payload
 
 
-def dispatch(database: Database) -> int:
+def dispatch(database: Database, batch: int = 1000) -> int:
     # Commit allocation before any caller locks sources. Late ingestion commits get later IDs.
-    with database.transaction() as connection:
+    with database.transaction(auxiliary=True) as connection:
         state = connection.execute("SELECT watermark FROM delivery_state FOR UPDATE").fetchone()
         assert state is not None
         rows = connection.execute(
             "SELECT sequence FROM change_outbox WHERE delivery_sequence IS NULL "
-            "ORDER BY sequence LIMIT 1000"
+            "ORDER BY sequence LIMIT %s",
+            (batch,),
         ).fetchall()
         if rows:
             connection.execute(
@@ -117,7 +118,9 @@ def router(settings: Settings) -> APIRouter:
             binding = session_binding(current.token, "updates")
             scan = decode_scan(connection, binding, cursor) if cursor else None
             upper = dispatch(database)
-            if scan and scan.after > upper:
+            state = connection.execute("SELECT retention_floor FROM delivery_state").fetchone()
+            assert state is not None
+            if scan and (scan.after > upper or scan.after < state["retention_floor"]):
                 raise ApiError(410, "resync_required", "Refresh snapshots with a new cursor.")
             rows = connection.execute(
                 "SELECT * FROM change_outbox WHERE delivery_sequence>%s "

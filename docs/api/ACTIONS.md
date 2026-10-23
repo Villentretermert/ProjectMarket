@@ -116,6 +116,13 @@ logical read allowance, not one allowance per second. Requests still obey the
 general write/session limits and 256KiB JSON transport limit. Back off on429/503
 or ambiguous network failure using the same message/action/result identity.
 
+PM-022 limits each bot to1,000 unresolved requests across all its channels.
+Concurrent admission is serialized by the bot row lock. Exact idempotent replay
+still reads the existing request at capacity. A terminal result frees a slot;
+ACK/unknown do not. A full queue returns429/Retry-After60 before inserting anything.
+The operator must restore/reconcile the bot; unresolved work is never silently
+deleted to make room. Outbox backpressure can also return429 for state changes.
+
 `tests/test_actions.py` uses real PostgreSQL to exercise retries, before/after ACK
 recovery, result ordering, user/bot isolation, rights changes, concurrent races,
 timeouts, retention and injected outbox rollback. `python -m scripts.smoke_actions
@@ -125,5 +132,5 @@ publish it. The after phase deactivates its own account and removes that state.
 
 Docker CI runs several disposable identities on one IP with explicit auth quota
 100; normal Compose defaults to10. Default rate enforcement is tested separately.
-Outbox hints are durable; foreground client delivery is PM-018. Web UI remains
-the PM-003 prototype until PM-013, not an implemented actions client.
+Outbox hints and foreground delivery are implemented in PM-018. Web confirmation
+and request status are available in the working PM-013 client.

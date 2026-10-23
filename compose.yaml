@@ -1,7 +1,14 @@
 name: marketob
+x-logging: &bounded-logging
+  driver: local
+  options:
+    max-size: "10m"
+    max-file: "5"
 services:
   db:
+    logging: *bounded-logging
     image: postgres:18.4-bookworm@sha256:882236b897e39051d2368c5ccc6cda944904723506b2dfc97f2a8f5bc9afa382
+    command: ["postgres", "-c", "log_min_error_statement=panic", "-c", "log_error_verbosity=terse"]
     environment:
       POSTGRES_USER: marketob
       POSTGRES_DB: ${MARKETOB_DB_NAME:-marketob}
@@ -16,6 +23,7 @@ services:
       retries: 20
       start_period: 10s
   api:
+    logging: *bounded-logging
     image: marketob-api:${MARKETOB_RELEASE:-local}
     build:
       context: .
@@ -40,6 +48,7 @@ services:
     security_opt:
       - no-new-privileges:true
   migrate:
+    logging: *bounded-logging
     image: marketob-api:${MARKETOB_RELEASE:-local}
     build:
       context: .
@@ -58,6 +67,7 @@ services:
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]
   maintenance:
+    logging: *bounded-logging
     image: marketob-api:${MARKETOB_RELEASE:-local}
     build:
       context: .

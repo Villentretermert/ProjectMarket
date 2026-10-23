@@ -101,7 +101,7 @@ def router(settings: Settings) -> APIRouter:
                 raise ApiError(404, "source_unavailable", "This source is unavailable.")
             active_bot = connection.execute(
                 "SELECT bot_id FROM bots WHERE bot_id=%s AND org_id=%s AND state='active' "
-                "FOR KEY SHARE",
+                "FOR UPDATE",
                 (organization["bot_id"], organization["org_id"]),
             ).fetchone()
             if active_bot is None:
@@ -124,6 +124,15 @@ def router(settings: Settings) -> APIRouter:
                         409, "idempotency_conflict", "This key has another request body."
                     )
                 return status_view(old)
+            pending = connection.execute(
+                "SELECT count(*) AS n FROM action_requests WHERE bot_id=%s AND terminal_at IS NULL",
+                (access["bot_id"],),
+            ).fetchone()
+            assert pending is not None
+            if pending["n"] >= 1000:
+                raise ApiError(
+                    429, "rate_limited", "This bot has too many unresolved requests.", 60
+                )
             value = published_definition(connection, content(connection, channel_id))
             action = next(
                 (a for a in value["actions"] if a["action_id"] == body["action_id"]), None

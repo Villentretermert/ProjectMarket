@@ -52,3 +52,5 @@
 
 [PM-017: обмен шаблонами](docs/task-results/PM-017.md) · [PM-018: live updates и Events](docs/task-results/PM-018.md)
 · [L1: методика и измерения](docs/task-results/PM-018-LOAD.md).
+
+[Эксплуатация, ограничения, метрики и alerts](docs/setup/OPERATIONS.md).

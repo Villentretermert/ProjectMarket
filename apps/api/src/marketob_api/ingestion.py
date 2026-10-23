@@ -114,6 +114,17 @@ def router(settings: Settings) -> APIRouter:
                 "SELECT * FROM source_records WHERE channel_id=%s AND resource_id=%s",
                 (channel_id, body["resource_id"]),
             ).fetchone()
+            if record is None:
+                records = connection.execute(
+                    "SELECT count(*) AS n FROM source_records r JOIN channel_access a "
+                    "USING(channel_id) WHERE a.bot_id=%s",
+                    (current.bot_id,),
+                ).fetchone()
+                assert records is not None
+                if records["n"] >= 10000:
+                    raise ApiError(
+                        429, "rate_limited", "This bot has reached its record limit.", 60
+                    )
             if body["kind"] == "event":
                 if record is None or record["deleted"]:
                     raise ApiError(404, "source_unavailable", "The source is unavailable.")

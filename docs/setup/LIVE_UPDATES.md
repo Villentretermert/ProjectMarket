@@ -44,6 +44,8 @@ $env:MARKETOB_BROWSER_CHANNEL='msedge'
 Это отрисовка реального приложения в headless browser, не физическое измерение
 пикселей монитора. Read/ingest/action HTTP включают локальный transport overhead.
 Отчёт сохраняет длительность, версии, счётчики, payload sizes, p95/p99, ошибки и
-размер БД. Полный L2/burst и эксплуатационные метрики остаются PM-022.
+размер БД. `--bots 100 --seconds 1800 --burst` запускает полный L2/burst PM-022.
+Его актуальная методика, ограничения и эксплуатационные команды описаны в
+[OPERATIONS.md](OPERATIONS.md).
 
 [Контракт](../api/LIVE_UPDATES.md) · [Результаты](../task-results/PM-018.md).

@@ -27,7 +27,7 @@
 | PM-017 | [#21](https://github.com/Villentretermert/ProjectMarket/issues/21) | task | done | closed |
 | PM-018 | [#22](https://github.com/Villentretermert/ProjectMarket/issues/22) | task | done | closed |
 | PM-021 | [#26](https://github.com/Villentretermert/ProjectMarket/issues/26) | task | done | closed |
-| PM-022 | [#27](https://github.com/Villentretermert/ProjectMarket/issues/27) | task | planned | open |
+| PM-022 | [#27](https://github.com/Villentretermert/ProjectMarket/issues/27) | task | in_progress | open |
 | G05 | [#25](https://github.com/Villentretermert/ProjectMarket/issues/25) | checkpoint | planned | open |
 | PM-019 | [#23](https://github.com/Villentretermert/ProjectMarket/issues/23) | task | deferred | open |
 | PM-020 | [#24](https://github.com/Villentretermert/ProjectMarket/issues/24) | task | deferred | open |

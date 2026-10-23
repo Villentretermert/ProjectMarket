@@ -150,7 +150,7 @@ def require_business(
 
 def rate_limit(database: Database, bucket: str, limit: int) -> None:
     # Commit attempts independently, including failed login/registration requests.
-    with database.transaction() as connection:
+    with database.transaction(auxiliary=True) as connection:
         row = connection.execute(
             "INSERT INTO rate_windows(bucket,window_start,hits) "
             "VALUES (%s,date_trunc('minute',now()),1) ON CONFLICT (bucket) DO UPDATE "

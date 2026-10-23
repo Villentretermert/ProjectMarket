@@ -12,8 +12,10 @@
 - PM-013: рабочий Web /app/, local login, каналы, новости/товары/графики, заявки и восстановление после потери ответа. [CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39846617703) 118 tests + 14 Chromium сценариев PASS, Edge PASS. Studio, избранное и My Space также завершены; материалы G04 ниже.
 - PM-014 Studio принята: [CI 39853394634](https://github.com/Villentretermert/ProjectMarket/actions/runs/39853394634), 125 tests и 24 Chromium scenarios PASS; локальный Edge PASS. PM-015 принята: [CI 39854053654](https://github.com/Villentretermert/ProjectMarket/actions/runs/39854053654), 130 tests и 29 Chromium scenarios PASS; Edge PASS. PM-016 принята: [CI 39858054474](https://github.com/Villentretermert/ProjectMarket/actions/runs/39858054474), 137 tests и 36 Chromium scenarios PASS; Edge PASS. My Space сохраняет layout отдельно от данных источников.
 - Android SDK/сборка/USB и Google/Firebase/облако отложены владельцем. Docker28.1.1/Compose2.35.1 обнаружены в Ubuntu WSL; локальная поставка PM-021 проверена. Переносимая PostgreSQL работает на loopback:55432.
-- Доставка outbox в открытый Web, Events/preferences и resync готовы. [Отчёт PM-018](task-results/PM-018.md). Backup/restore PM-021 проверены;, полный L2/burst/monitoring — PM-022, приватность/cleanup и релизная проверка — PM-023.
+- Доставка outbox в открытый Web, Events/preferences и resync готовы. [Отчёт PM-018](task-results/PM-018.md). Backup/restore PM-021 проверены; полный L2/burst/monitoring — PM-022, приватность/cleanup и релизная проверка — PM-023.
 
 [G04](reviews/G04/README.md) · [G03](reviews/G03/README.md) · [Отчёт PM-012](task-results/PM-012.md) · [Боты](setup/PILOT_BOTS.md) · [Стенд](setup/BACKEND_LAB.md) · [План](ROADMAP.md).
 
 PM-021 done: локальная Docker-поставка в Ubuntu WSL, HTTPS, backup/restore и restart проверены. [CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39948316689): все4 jobs PASS. [Стенд](http://127.0.0.1:19000/app/) оставлен работающим. Следующая локальная задача PM-022, затем обязательная G05 после20 завершений. Android отложен.
+
+PM-022 in_progress: отдельный локальный стенд, L2/burst и эксплуатационные ограничения; счётчик остаётся19/24 до приёмки.

@@ -1,5 +1,8 @@
 """Application factory; no credentials or database connection required on import."""
 
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -9,10 +12,12 @@ from marketob_api.auth_routes import router as auth_router
 from marketob_api.bot_routes import router as bot_router
 from marketob_api.channels import router as channel_router
 from marketob_api.config import Settings
+from marketob_api.database import Pools
 from marketob_api.errors import install_error_handlers
 from marketob_api.favorites import router as favorites_router
 from marketob_api.health import LiveStatus, ReadyStatus, database_status
 from marketob_api.ingestion import router as ingestion_router
+from marketob_api.observability import ObservationMiddleware
 from marketob_api.personal_pages import router as pages_router
 from marketob_api.sharing import router as sharing_router
 from marketob_api.teams import router as team_router
@@ -22,8 +27,21 @@ from marketob_api.web_routes import router as web_router
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
-    configuration = settings if settings is not None else Settings()
+    configuration = (settings if settings is not None else Settings()).model_copy()
+
+    @asynccontextmanager
+    async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        pools = Pools(configuration) if configuration.database_url is not None else None
+        configuration._database_pools = pools
+        try:
+            yield
+        finally:
+            configuration._database_pools = None
+            if pools:
+                pools.close()
+
     application = FastAPI(
+        lifespan=lifespan,
         title="MarkeTOB local API",
         version=__version__,
         description=(
@@ -35,6 +53,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     install_error_handlers(application)
     application.add_middleware(ProtocolMiddleware)
+    application.add_middleware(ObservationMiddleware)
     application.add_middleware(
         CORSMiddleware,
         allow_origins=configuration.allowed_origins,
