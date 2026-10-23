@@ -20,5 +20,5 @@ COPY --from=build --chown=10001:10001 /app/.venv /app/.venv
 USER 10001:10001
 EXPOSE 8000
 HEALTHCHECK --interval=10s --timeout=5s --start-period=10s --retries=3 \
-  CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/live', timeout=3).close()"]
+  CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=3).close()"]
 CMD ["python", "-m", "marketob_api"]

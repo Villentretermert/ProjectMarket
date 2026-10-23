@@ -7,6 +7,9 @@
 *.keystore
 *.jks
 secrets/
+# Backups contain private application data and server keys.
+backups/
+*.dump
 # Python
 __pycache__/
 *.py[cod]

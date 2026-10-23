@@ -78,18 +78,39 @@ jobs:
       - run: uv sync --locked
       - run: uv run --locked python -m scripts.smoke_bots --mode python
       - run: uv run --locked python -m scripts.smoke_bots --mode docker
+      - name: Local delivery with verified HTTPS
+        run: |
+          docker compose -f compose.yaml -f deploy/compose.local.yaml up --build --detach --wait --wait-timeout 180
+          mkdir -p .local/delivery
+          docker compose -f compose.yaml -f deploy/compose.local.yaml cp proxy:/data/caddy/pki/authorities/local/root.crt .local/delivery/root.crt
+          uv run --locked python -m scripts.smoke_delivery --ca .local/delivery/root.crt
+          docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy id -u | grep '^10001$'
+      - name: Consistent backup and isolated restore
+        run: |
+          uv run --locked python -m scripts.backup --compose create .local/delivery/backup
+          uv run --locked python -m scripts.backup verify .local/delivery/backup
+          uv run --locked python -m scripts.backup --compose restore .local/delivery/backup --new-database marketob_recovered
+          # Switch only the disposable CI stack, keeping its original database intact.
+          docker compose -f compose.yaml -f deploy/compose.local.yaml stop proxy api maintenance
+          MARKETOB_DB_NAME=marketob_recovered docker compose -f compose.yaml -f deploy/compose.local.yaml up --detach --wait --wait-timeout 120
+          python scripts/smoke_api.py --database ok
+          uv run --locked python -m scripts.smoke_delivery --ca .local/delivery/root.crt
+          docker compose -f compose.yaml -f deploy/compose.local.yaml stop proxy api maintenance
+          docker compose -f compose.yaml -f deploy/compose.local.yaml up --detach --wait --wait-timeout 120
       - run: docker compose exec -T maintenance python -m marketob_api.maintenance --once
       - name: Service status
         if: always()
         run: docker compose ps --all
       - name: Remove only disposable CI resources
         if: always()
-        run: docker compose down --volumes
+        run: docker compose -f compose.yaml -f deploy/compose.local.yaml down --volumes
 
   integration:
     name: PostgreSQL / identity, bots, ingestion and channels
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      BACKUP_COMPOSE: '1'
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6

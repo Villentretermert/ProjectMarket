@@ -2,6 +2,8 @@
 **
 !pyproject.toml
 !uv.lock
+!deploy/
+!deploy/Caddyfile
 !apps/
 !apps/api/
 !apps/api/pyproject.toml

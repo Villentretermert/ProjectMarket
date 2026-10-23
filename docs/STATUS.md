@@ -15,3 +15,5 @@
 - Доставка outbox в открытый Web, Events/preferences и resync готовы. [Отчёт PM-018](task-results/PM-018.md). Backup — PM-021, полный L2/burst/monitoring — PM-022, приватность/cleanup и релизная проверка — PM-023.
 
 [G04](reviews/G04/README.md) · [G03](reviews/G03/README.md) · [Отчёт PM-012](task-results/PM-012.md) · [Боты](setup/PILOT_BOTS.md) · [Стенд](setup/BACKEND_LAB.md) · [План](ROADMAP.md).
+
+PM-021 in_progress: по ответу владельца от 23 октября выполняется независимая локальная поставка; Android отложен. Приёмка Docker на Windows ещё не выполнена.

@@ -6,6 +6,7 @@ import psycopg
 from pydantic import BaseModel
 
 from marketob_api.config import Settings
+from marketob_api.migrate import migration_checksums
 
 type DatabaseStatus = Literal["ok", "not_configured", "unavailable"]
 
@@ -28,11 +29,14 @@ def database_status(settings: Settings) -> DatabaseStatus:
         with psycopg.connect(
             settings.database_url.get_secret_value(),
             connect_timeout=settings.database_timeout_seconds,
-            options=f"-c statement_timeout={settings.database_timeout_seconds * 1000}",
+            options=(
+                f"-c statement_timeout={settings.database_timeout_seconds * 1000} "
+                f"-c search_path={settings.database_schema}"
+            ),
         ) as connection:
             with connection.cursor() as cursor:
-                cursor.execute("SELECT 1")
-                return "ok" if cursor.fetchone() == (1,) else "unavailable"
+                cursor.execute("SELECT name, checksum FROM schema_migrations")
+                return "ok" if dict(cursor.fetchall()) == migration_checksums() else "unavailable"
     except psycopg.Error:
         # Connection errors can contain credentials or hostnames: return only a status.
         return "unavailable"

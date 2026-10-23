@@ -29,7 +29,7 @@
 | PM-019 | [#23](https://github.com/Villentretermert/ProjectMarket/issues/23) | task | planned | open |
 | PM-020 | [#24](https://github.com/Villentretermert/ProjectMarket/issues/24) | task | planned | open |
 | G05 | [#25](https://github.com/Villentretermert/ProjectMarket/issues/25) | checkpoint | planned | open |
-| PM-021 | [#26](https://github.com/Villentretermert/ProjectMarket/issues/26) | task | planned | open |
+| PM-021 | [#26](https://github.com/Villentretermert/ProjectMarket/issues/26) | task | in_progress | open |
 | PM-022 | [#27](https://github.com/Villentretermert/ProjectMarket/issues/27) | task | planned | open |
 | PM-023 | [#28](https://github.com/Villentretermert/ProjectMarket/issues/28) | task | planned | open |
 | PM-024 | [#29](https://github.com/Villentretermert/ProjectMarket/issues/29) | task | planned | open |

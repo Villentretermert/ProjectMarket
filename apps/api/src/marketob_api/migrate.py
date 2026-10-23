@@ -8,6 +8,16 @@ from marketob_api.config import Settings
 from marketob_api.database import Database
 
 
+def migration_checksums() -> dict[str, str]:
+    return {
+        resource.name: hashlib.sha256(
+            resource.read_text(encoding="utf-8").replace("\r\n", "\n").encode()
+        ).hexdigest()
+        for resource in files("marketob_api").joinpath("migrations").iterdir()
+        if resource.name.endswith(".sql")
+    }
+
+
 def migrate(database: Database) -> list[str]:
     applied: list[str] = []
     with database.transaction() as connection:
@@ -20,6 +30,8 @@ def migrate(database: Database) -> list[str]:
             row["name"]: row["checksum"]
             for row in connection.execute("SELECT name, checksum FROM schema_migrations")
         }
+        if existing.keys() - migration_checksums().keys():
+            raise RuntimeError("Database is newer than this release; use a compatible application.")
         for resource in sorted(
             files("marketob_api").joinpath("migrations").iterdir(), key=lambda x: x.name
         ):

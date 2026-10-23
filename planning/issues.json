@@ -376,7 +376,7 @@
       "kind": "task",
       "priority": "P0",
       "stage": 6,
-      "status": "planned",
+      "status": "in_progress",
       "path": "docs/tasks/PM-021.md",
       "depends_on": [
         "PM-005",

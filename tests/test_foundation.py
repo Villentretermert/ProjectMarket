@@ -86,17 +86,19 @@ def test_database_failure_is_sanitized_and_liveness_survives() -> None:
     assert "internal-host" not in response.text
 
 
-@pytest.mark.parametrize("row,code", [((1,), 200), (None, 503)])
-def test_readiness_requires_successful_query(row: tuple[int] | None, code: int) -> None:
+@pytest.mark.parametrize("matching,code", [(True, 200), (False, 503)])
+def test_readiness_requires_current_migrations(matching: bool, code: int) -> None:
+    from marketob_api.migrate import migration_checksums
+
     connection = MagicMock()
     cursor = connection.__enter__.return_value.cursor.return_value.__enter__.return_value
-    cursor.fetchone.return_value = row
+    cursor.fetchall.return_value = list(migration_checksums().items()) if matching else []
     with (
         patch("marketob_api.health.psycopg.connect", return_value=connection),
         client(configured()) as http,
     ):
         response = http.get("/health/ready")
-    cursor.execute.assert_called_once_with("SELECT 1")
+    cursor.execute.assert_called_once_with("SELECT name, checksum FROM schema_migrations")
     assert response.status_code == code
     connection.__exit__.assert_called_once()
 

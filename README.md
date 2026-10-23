@@ -6,7 +6,7 @@
 
 ## Запустить локальный backend
 
-[Локальный запуск на Python и Docker Compose](docs/setup/LOCAL_DEVELOPMENT.md) · [Результаты PM-005](docs/task-results/PM-005.md). На текущем компьютере работает Python; Docker ещё не установлен.
+[Локальная поставка](docs/setup/LOCAL_DELIVERY.md) · [Backup/restore](docs/setup/BACKUP_RESTORE.md) · [Разработка](docs/setup/LOCAL_DEVELOPMENT.md). На текущем компьютере доступны Python и Docker внутри Ubuntu WSL; PM-021 проверяется.
 
 ## Рабочий Web
 
