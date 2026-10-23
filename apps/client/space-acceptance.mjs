@@ -72,7 +72,7 @@ export async function spaceAcceptance(browser,config,check){
       });
       // Hold the source-picker response so its repaint happens during title entry.
       let release,started;const gate=new Promise(resolve=>{release=resolve;}),waiting=new Promise(resolve=>{started=resolve;});
-      const sourcePattern='**/v1/channels/'+channels.catalog.slug;
+      const sourcePattern='**/v1/channels/'+await page.getByLabel('Source channel',{exact:true}).inputValue();
       await page.route(sourcePattern,async route=>{started();await gate;await route.continue();});
       await page.getByRole('button',{name:'Refresh',exact:true}).click();await waiting;
       await page.getByLabel('Space title',{exact:true}).fill('My daily space');release();
