@@ -19,3 +19,9 @@
 PM-021 done: локальная Docker-поставка в Ubuntu WSL, HTTPS, backup/restore и restart проверены. [CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39948316689): все4 jobs PASS. [Стенд](http://127.0.0.1:19000/app/) оставлен работающим. Следующая локальная задача PM-022, затем обязательная G05 после20 завершений. Android отложен.
 
 PM-022 in_progress: отдельный локальный стенд, L2/burst и эксплуатационные ограничения; счётчик остаётся19/24 до приёмки.
+
+24 октября: короткий Docker-прогон runtime2008583 с2 API-процессами прошёл все SLO,
+2 000/2 000 rendered,live p95=2.084с;burst3 000/3 000,5 100 точных ID после restart.
+CI40034156701:162 Python-теста/47 browser scenarios,все4jobs PASS. Выполняется
+полный1800с+burst. Предыдущие неудачные повторы сохранены в отчёте PM-022;
+задача и G05 не приняты, рабочий пилот пока на6b3ffb5.
