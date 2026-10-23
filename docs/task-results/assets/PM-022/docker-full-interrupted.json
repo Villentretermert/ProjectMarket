@@ -1,0 +1,90 @@
+{
+  "completed": false,
+  "accepted": false,
+  "release": "2008583",
+  "reason": "Owner deferred full load acceptance until the computer is idle.",
+  "window_note": "From first steady HTTP completion, excluding 100 seed receipts. Diagnostic snapshot, not a completed L2; no DOM or restart acceptance.",
+  "captured_at": "2026-10-23T22:59:51.702528+00:00",
+  "server": {
+    "start": "2026-10-23T22:46:43.121946+00:00",
+    "end": "2026-10-23T22:59:43.126592+00:00",
+    "requests": 83234,
+    "statuses": {
+      "200": 70192,
+      "202": 130,
+      "204": 12908,
+      "503": 4
+    },
+    "api_process_requests": {
+      "57": 42591,
+      "58": 40643
+    },
+    "unexpected_5xx_fraction": 4.8057284282865177e-05,
+    "routes": {
+      "GET /v1/bot/events": {
+        "count": 130,
+        "p95_ms": 1476.296,
+        "p99_ms": 1781.509,
+        "max_ms": 1791.619
+      },
+      "GET /v1/channels/{slug}": {
+        "count": 12920,
+        "p95_ms": 1218.772,
+        "p99_ms": 1776.89,
+        "max_ms": 4058.522
+      },
+      "GET /v1/favorites": {
+        "count": 12980,
+        "p95_ms": 1535.217,
+        "p99_ms": 2311.319,
+        "max_ms": 4632.002
+      },
+      "GET /v1/updates": {
+        "count": 30843,
+        "p95_ms": 1794.401,
+        "p99_ms": 2701.665,
+        "max_ms": 4983.887
+      },
+      "POST /v1/bot/events/{event_id}/ack": {
+        "count": 130,
+        "p95_ms": 2084.683,
+        "p99_ms": 2294.883,
+        "max_ms": 2437.792
+      },
+      "POST /v1/bot/events/{event_id}/result": {
+        "count": 130,
+        "p95_ms": 2173.413,
+        "p99_ms": 2576.833,
+        "max_ms": 2719.994
+      },
+      "POST /v1/bot/messages": {
+        "count": 12989,
+        "p95_ms": 1990.961,
+        "p99_ms": 2913.372,
+        "max_ms": 4690.577
+      },
+      "POST /v1/channels/{channel_id}/actions": {
+        "count": 130,
+        "p95_ms": 2484.133,
+        "p99_ms": 3273.986,
+        "max_ms": 3389.191
+      },
+      "PUT /v1/favorites/{channel_id}/seen": {
+        "count": 12908,
+        "p95_ms": 1233.098,
+        "p99_ms": 1813.005,
+        "max_ms": 4052.665
+      }
+    },
+    "malformed_lines": 0,
+    "window_complete": true
+  },
+  "database_snapshot": {
+    "receipts": 13226,
+    "history": 13226,
+    "outbox": 13705,
+    "sources": 100
+  },
+  "observed_host_cpu_percent": 97,
+  "host_note": "Concurrent foreground applications consumed substantial CPU. This does not establish them as the only cause of latency."
+}

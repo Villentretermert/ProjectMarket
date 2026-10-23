@@ -1,20 +1,13 @@
 """Bounded local retention worker. Does not erase latest records or revision tombstones."""
 
 import argparse
-import tempfile
 import time
-from pathlib import Path
+from typing import TYPE_CHECKING
 
-import psycopg
+from marketob_api.worker_health import HEARTBEAT, healthy
 
-from marketob_api.config import Settings
-from marketob_api.database import Database
-from marketob_api.errors import ApiError
-from marketob_api.observability import LOGGER, configure_logging
-from marketob_api.request_state import maintain_requests
-from marketob_api.updates import dispatch
-
-HEARTBEAT = Path(tempfile.gettempdir()) / "marketob-maintenance-heartbeat"
+if TYPE_CHECKING:
+    from marketob_api.database import Database
 
 
 def prune(database: Database, batch: int = 5000) -> dict[str, int]:
@@ -36,6 +29,8 @@ def prune(database: Database, batch: int = 5000) -> dict[str, int]:
 
 
 def prune_updates(database: Database, batch: int = 5000) -> int:
+    from marketob_api.updates import dispatch
+
     dispatch(database, batch=5000)
     with database.transaction() as connection:
         state = connection.execute("SELECT * FROM delivery_state FOR UPDATE").fetchone()
@@ -56,6 +51,8 @@ def prune_updates(database: Database, batch: int = 5000) -> int:
 
 
 def maintain(database: Database) -> dict[str, int]:
+    from marketob_api.request_state import maintain_requests
+
     # Free delivery capacity before timeouts create their own status notifications.
     result = {"outbox": prune_updates(database), **prune(database), **maintain_requests(database)}
     with database.transaction() as connection:
@@ -78,11 +75,15 @@ def main() -> None:
     parser.add_argument("--health", action="store_true")
     args = parser.parse_args()
     if args.health:
-        try:
-            age = time.time() - HEARTBEAT.stat().st_mtime
-        except OSError:
-            raise SystemExit(1) from None
-        raise SystemExit(0 if 0 <= age <= 130 else 1)
+        raise SystemExit(0 if healthy(HEARTBEAT) else 1)
+    # The frequent health subprocess must not load API dependencies or compile schemas.
+    import psycopg
+
+    from marketob_api.config import Settings
+    from marketob_api.database import Database
+    from marketob_api.errors import ApiError
+    from marketob_api.observability import LOGGER, configure_logging
+
     settings = Settings()
     database = Database(settings)
     configure_logging(settings.log_level, settings.log_directory, "worker")

@@ -17,6 +17,11 @@ driver:100MiB for the two-process API container,50MiB for other services. Postgr
 can read metrics and evaluate alerts through a Python CLI; no public metrics
 endpoint, third-party telemetry or outbound alert destination is added.
 
+The frequent worker health subprocess reads the heartbeat using the standard
+library only. Full database/API/schema imports occur after the `--health` branch,
+avoiding repeated schema compilation every10seconds. Heartbeat freshness and
+the Compose command remain unchanged, including rollback compatibility.
+
 Repeated PostgreSQL connection establishment dominated the first 100-browser
 warmup. Use lifecycle-owned psycopg pools: primary min2/max32 and auxiliary
 min2/max8. Auxiliary capacity serves independently committed quotas and outbox
