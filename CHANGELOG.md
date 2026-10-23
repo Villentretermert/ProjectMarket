@@ -266,3 +266,10 @@ status. Added browser replay-dedup/offline timing and an optional focused live s
 plus persisted-cursor/concurrent dispatcher coverage for personal-page interests.
 PM-023 explicitly tracks outbox/preferences cleanup and cursor floor after retention.
 
+## 2026-10-23 · PM-018 browser synchronization
+
+The Events regression test now waits for the persisted checked state before
+unchecking. Playwright may skip uncheck on the initial disabled/empty control;
+production controls already remain disabled until preferences load. Initial Linux
+run exposed this test race; the final run verifies the actual change to events[].
+

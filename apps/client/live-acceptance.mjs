@@ -49,7 +49,10 @@ export async function liveAcceptance(browser,config,check){
       await page.screenshot({path:path.join(config.output,'live-events.png'),fullPage:true});
       await page.getByRole('button',{name:'Save',exact:true}).click();
       await publish('Selected event headline');await shown('Selected event headline');await page.getByText('News updated',{exact:true}).waitFor();
-      await page.getByRole('button',{name:'Events',exact:true}).click();await page.getByLabel('News updates',{exact:true}).uncheck();await page.getByRole('button',{name:'Save',exact:true}).click();
+      await page.getByRole('button',{name:'Events',exact:true}).click();
+      // uncheck() can return early for a still-loading disabled checkbox; await saved state.
+      await page.waitForFunction(()=>document.querySelector('input[aria-label="News updates"]')?.checked);
+      await page.getByLabel('News updates',{exact:true}).uncheck();await page.getByRole('button',{name:'Save',exact:true}).click();
       await publish('Silent update headline');await shown('Silent update headline');
       assert.deepEqual((await customer('GET','/preferences/'+source.channel_id)).events,[]);
     });
