@@ -1,0 +1,54 @@
+{
+  "profile": "L1",
+  "duration_seconds": 900,
+  "send_elapsed_seconds": 899.639,
+  "bots": 10,
+  "active_clients": 10,
+  "messages_per_minute": 100,
+  "accepted": 1500,
+  "rendered": 1500,
+  "missing": [],
+  "live": {
+    "count": 1500,
+    "p95_ms": 2467,
+    "p99_ms": 2625,
+    "max_ms": 2822
+  },
+  "ingest_http": {
+    "count": 1500,
+    "p95_ms": 356,
+    "p99_ms": 431,
+    "max_ms": 569
+  },
+  "read_http": {
+    "count": 1510,
+    "p95_ms": 326.027,
+    "p99_ms": 394.341,
+    "max_ms": 478.528
+  },
+  "action_available_http": {
+    "count": 15,
+    "p95_ms": 579,
+    "p99_ms": 579,
+    "max_ms": 579
+  },
+  "message_bytes": {
+    "min": 3625,
+    "max": 13764
+  },
+  "browser": "155.0.4283.62",
+  "node": "v24.20.0",
+  "page_errors": [],
+  "http_errors": [],
+  "runtime": {
+    "python": "3.14.7",
+    "os": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 167 Stepping 1, GenuineIntel",
+    "logical_cpus": 16,
+    "network": "127.0.0.1 loopback"
+  },
+  "database": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+  "receipts": 1510,
+  "outbox": 1560,
+  "schema_bytes": 5668864
+}

@@ -286,3 +286,7 @@ Access denial now also replaces the matching sidebar title immediately, before
 snapshot refresh. Browser acceptance waits for both cleared content and sidebar
 metadata before capturing the revoked state.
 
+
+## 2026-10-23 · PM-018 accepted
+
+[Final CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39929710247) on5c20d9f: all4 jobs PASS,147 tests / 47 Chromium scenarios. Edge47 PASS. L1 10bots/10clients/100msg/min/900s:1500/1500 rendered, p95 2467ms/p99 2625ms, no HTTP/page errors. Reconnect2371ms, offline840ms. Reports/screens/API/ADR saved, counters18/24 and G04 2/4. Android/background/cloud remain deferred; no G05 until four completions.

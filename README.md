@@ -2,7 +2,7 @@
 
 Платформа витрин для ботов: B2B владелец публикует страницу с данными своего сервиса, B2C пользователь сохраняет страницы и собирает собственный интерфейс из разрешённых блоков.
 
-**Состояние на 23 октября 2026:** завершены PM-001–017, **17/24** задач пилота. Работают локальные аккаунты, командные роли, боты, каналы, заявки, Studio, избранное и My Space. Добавлены Share/Import независимых шаблонов с проверкой доступа. [CI PM-017](https://github.com/Villentretermert/ProjectMarket/actions/runs/39924166312): 142 tests, 41 Chromium scenarios, все 4 jobs PASS; Edge PASS. После указания «Продолжай» выполняется PM-018: локальные live updates. Android/виджет и Google/Firebase/облако отложены. Интерфейс — английский.
+**Состояние на23 октября2026:** завершены PM-001–018, **18/24** задач пилота. Работают локальные аккаунты, роли, боты, каналы, заявки, Studio, избранное, My Space и Share/Import. Открытый Web автоматически обновляет источники, сохраняет правки оформления и показывает выбранные Events. [CI PM-018](https://github.com/Villentretermert/ProjectMarket/actions/runs/39929710247):147 tests,47 Chromium scenarios, все4 jobs PASS; Edge47 PASS. Локальный L1:1500/1500 rendered, p95 2.467s, p99 2.625s. После G04:2/4. Android/виджет и Google/Firebase/облако отложены. Интерфейс — английский.
 
 ## Запустить локальный backend
 
@@ -49,3 +49,6 @@
 [G03: результаты PM-009–012, презентация и вопросы](docs/reviews/G03/README.md).
 
 [G04: Web, Studio, избранное и My Space](docs/reviews/G04/README.md).
+
+[PM-017: обмен шаблонами](docs/task-results/PM-017.md) · [PM-018: live updates и Events](docs/task-results/PM-018.md)
+· [L1: методика и измерения](docs/task-results/PM-018-LOAD.md).

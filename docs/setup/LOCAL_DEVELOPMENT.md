@@ -162,7 +162,7 @@ uv run --locked marketob-api
 изменение применённого файла. Для нового порта/UI-origin задайте точный JSON-массив
 `MARKETOB_ALLOWED_ORIGINS` в .env. Wildcard, HTTP вне loopback и URL с путём не принимаются.
 [API identity и правила локального аккаунта](../api/IDENTITY.md) — обязательный контракт
-для будущего клиента; пока нет формы входа в продуктовом Web-интерфейсе.
+клиента; форма локального входа и остальные Web-сценарии описаны в [WEB.md](WEB.md).
 
 На одноразовом тестовом экземпляре API можно выполнить
 `python scripts/smoke_identity.py`: создаёт случайный smoke-аккаунт, проверяет HTTP
@@ -190,7 +190,7 @@ Compose: исходник и причины пути описаны в ADR-0005.
 ## Приём данных и retention · PM-007/008
 
 [Регистрация бота](../api/BOT_REGISTRATION.md) и [передача сообщений](../api/INGESTION.md)
-работают через HTTP. Продуктовый Studio пока не подключён. В Compose maintenance
+работают через HTTP и [продуктовый Studio](STUDIO.md). В Compose maintenance
 стартует автоматически; для прямого Python во втором терминале запустите:
 
 ```sh

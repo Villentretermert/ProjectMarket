@@ -1,6 +1,15 @@
 # PM-018 · live updates на локальном компьютере
 
-Примените миграции обычным локальным запуском API; отдельный брокер/облако не нужен.
+Для прямого Python остановите старый API и из корня проекта, с настроенной `.env`
+для вашей PostgreSQL, примените миграции и запустите API:
+
+```powershell
+.venv-dev/Scripts/python.exe -m marketob_api.migrate
+.venv-dev/Scripts/python.exe -m marketob_api
+```
+
+Сам API автоматически миграции не применяет. Compose выполняет migration service
+при запуске обновлённого образа. Отдельный брокер/облако не нужен.
 В Channels, открытом канале и My Space индикатор **Live** означает работающий
 foreground polling. После сообщения бота источник обновляется без Refresh.
 

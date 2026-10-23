@@ -1,0 +1,21 @@
+{
+  "checks": [
+    "Live: automatic source updates preserve a focused title and layout",
+    "Live: opt-in events work when OS notifications are denied",
+    "Live: repeated delivery does not repeat the selected toast",
+    "Live: lost connection and expired cursor resync without refresh",
+    "Live: real revocation, restoration and second revocation clear private content",
+    "Live: own purchase status arrives automatically from the real bot"
+  ],
+  "browser": "155.0.4283.62",
+  "viewport": [
+    1440,
+    1000,
+    360,
+    800
+  ],
+  "live_metrics": {
+    "lost_reply_recovery_ms": 2377,
+    "offline_recovery_ms": 826
+  }
+}
