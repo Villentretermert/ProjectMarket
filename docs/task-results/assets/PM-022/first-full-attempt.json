@@ -182,5 +182,19 @@
     "missing": 0,
     "unexpected": 0
   },
-  "acceptance": "FAIL: 32 ambiguous HTTP timeouts were not retried by the original load client; all offered IDs are present, no restart acceptance in this run"
+  "acceptance": "FAIL: 32 ambiguous HTTP timeouts were not retried by the original load client; all offered IDs are present, no restart acceptance in this run",
+  "separate_restart_verification": {
+    "before": {
+      "expected": 33100,
+      "actual": 33100,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "after": {
+      "expected": 33100,
+      "actual": 33100,
+      "missing": 0,
+      "unexpected": 0
+    }
+  }
 }

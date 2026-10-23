@@ -105,7 +105,7 @@ async function shot(s,file,x,y,w,h){
 }
 {
  const s=slide('Код и основные сущности','Sources: sharing.py, updates.py, database.py, ingestion.py, request_state.py, maintenance.py and migrations009–011. Table describes actual responsibilities. Canonical schemas remain the API source of truth.');
- table(s,[['Компонент','Сущность','Ответственность'],['sharing.py','template_shares','Immutable копия оформления'],['updates.py','change_outbox / delivery_state','Порядок доставки и resync'],['actions.py','action_requests / results','ACK, результат и идемпотентность'],['database.py','Primary / auxiliary pools','Короткие транзакции без starvation'],['maintenance.py','history_usage / worker_state','Очистка, ёмкость, heartbeat']],[270,420,462],155,420);
+ table(s,[['Компонент','Сущность','Ответственность'],['sharing.py','shared_templates','Immutable копия оформления'],['updates.py','change_outbox / delivery_state','Порядок доставки и resync'],['actions.py','action_requests / results','ACK, результат и идемпотентность'],['database.py','Primary / auxiliary pools','Короткие транзакции без starvation'],['maintenance.py','history_usage / worker_state','Очистка, ёмкость, heartbeat']],[270,420,462],155,420);
  text(s,'Snapshot, receipt и outbox записываются одной транзакцией.',64,613,1152,60,27,true,c.blue);
 }
 {
