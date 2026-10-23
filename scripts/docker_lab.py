@@ -5,7 +5,10 @@ import os
 import secrets
 import socket
 import subprocess
+import threading
+from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 from uuid import uuid4
 
 from marketob_api.config import Settings
@@ -35,6 +38,9 @@ class DockerLab(Lab):
         )
         self.processes = {}
         self.logs = []
+        self.resource_samples: list[dict[str, Any]] = []
+        self.sampling_stop = threading.Event()
+        self.sampling_thread: threading.Thread | None = None
         env_path = self.directory / "docker.env"
         env_path.write_text(
             f"POSTGRES_PASSWORD={password}\nMARKETOB_PORT={port}\n"
@@ -124,7 +130,34 @@ class DockerLab(Lab):
                 chunk.extend(line)
             (directory / f"{name}.jsonl.{index}").write_bytes(chunk)
 
+    def start_sampling(self) -> None:
+        def sample() -> None:
+            while not self.sampling_stop.is_set():
+                try:
+                    rows = self.run("stats", "--no-stream", "--format", "json", timeout=10)
+                    self.resource_samples.append(
+                        {
+                            "time": datetime.now(UTC).isoformat(),
+                            "containers": [json.loads(line) for line in rows.splitlines() if line],
+                        }
+                    )
+                except RuntimeError, subprocess.TimeoutExpired, ValueError:
+                    self.resource_samples.append(
+                        {"time": datetime.now(UTC).isoformat(), "error": "sample_unavailable"}
+                    )
+                self.sampling_stop.wait(15)
+
+        self.sampling_thread = threading.Thread(target=sample, daemon=True)
+        self.sampling_thread.start()
+
+    def finish_sampling(self) -> list[dict[str, Any]]:
+        self.sampling_stop.set()
+        if self.sampling_thread:
+            self.sampling_thread.join(timeout=11)
+        return self.resource_samples
+
     def close(self) -> None:
+        self.finish_sampling()
         for kind in list(self.processes):
             super().stop(kind)
         # Never use the owner's project name here; only this newly created fixture is removed.

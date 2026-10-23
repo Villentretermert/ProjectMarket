@@ -29,8 +29,10 @@ def main() -> None:
         "--docker", action="store_true", help="Use an isolated Docker delivery stack"
     )
     parser.add_argument("--wsl-distribution", default="Ubuntu")
-    parser.add_argument("--release", default="6b3ffb5")
+    parser.add_argument("--release", help="Explicit already-built Docker image tag")
     args = parser.parse_args()
+    if args.docker and not args.release:
+        parser.error("--docker requires an explicit --release image tag")
     lab = (
         DockerLab(args.wsl_distribution, args.release) if args.docker else Lab(args.connection_file)
     )
@@ -169,6 +171,8 @@ def main() -> None:
             "burst": args.burst,
             "output": str(args.output.resolve()),
         }
+        if isinstance(lab, DockerLab):
+            lab.start_sampling()
         process = subprocess.Popen(
             ["node", "apps/client/live-load.mjs"],
             stdin=subprocess.PIPE,
@@ -200,7 +204,9 @@ def main() -> None:
         )[0]["n"]
         report["operations"] = snapshot(lab.database)
         report["execution_target"] = "Docker/WSL" if args.docker else "native Windows"
+        report["release"] = args.release if args.docker else None
         if isinstance(lab, DockerLab):
+            report["container_samples"] = lab.finish_sampling()
             lab.capture_logs()
         report["server"] = log_metrics(
             lab.directory / "logs", report["steady_started_at"], report["steady_finished_at"]
@@ -236,6 +242,8 @@ def main() -> None:
             "unexpected": 0,
         }
         assert report["server"]["window_complete"]
+        if args.docker:
+            assert len(report["server"]["api_process_requests"]) == 2
         assert (report["server"]["unexpected_5xx_fraction"] or 0) < 0.01
         for route in ("POST /v1/bot/messages", "GET /v1/channels/{slug}"):
             metric = report["server"]["routes"][route]
