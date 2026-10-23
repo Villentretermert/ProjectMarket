@@ -6,7 +6,7 @@ export function favoriteLink(item) {
   return item.available ? link([
     el('span',{class:'avatar','aria-hidden':'true'},item.title.slice(0,1)),
     el('span',{},item.title), item.unread?el('span',{class:'badge'},'New'):null,
-  ],'#/channel/'+item.slug,{class:'channel-link'}) : el('span',{class:'channel-link muted'},'Channel unavailable');
+  ],'#/channel/'+item.slug,{class:'channel-link','data-channel-ref':item.channel_id}) : el('span',{class:'channel-link muted','data-channel-ref':item.channel_id},'Channel unavailable');
 }
 export async function channels(openForm, refresh) {
   let saved=await favorites();const host=el('div',{class:'stack'}), search=field('Search favorites',{type:'search',maxlength:80});

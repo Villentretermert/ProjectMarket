@@ -50,7 +50,12 @@ export function startLive(root,initialCursor,refreshSidebar){
       // Authorization invalidations must clear the view on every poll. An independent
       // snapshot read may have restored content between two identical revoke hints.
       const denied=new Set(page.items.filter(i=>i.kind==='access.revoked').map(i=>i.channel_id));
-      if(denied.size)root.onAccessRevoked?.(denied);
+      if(denied.size){
+        for(const node of document.querySelectorAll('#sidebar [data-channel-ref]')){
+          if(denied.has(node.dataset.channelRef))node.replaceWith(el('span',{class:'channel-link muted','data-channel-ref':node.dataset.channelRef},'Channel unavailable'));
+        }
+        root.onAccessRevoked?.(denied);
+      }
       const fresh=page.items.filter(item=>item.kind==='access.revoked'?!unavailable.has(item.channel_id):!seen.has(item.update_id));
       if(fresh.length){await root.onUpdates?.(fresh);if(!active())return;await refreshSidebar();}
       if(!active())return;

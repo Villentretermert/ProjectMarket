@@ -280,3 +280,9 @@ clears affected content even for repeated hints; dedup only suppresses redundant
 network refresh/notifications. Picker failures paint the cleared state immediately,
 before changing request generations. Focused and full browser checks are repeated.
 
+## 2026-10-23 · PM-018 sidebar revocation
+
+Access denial now also replaces the matching sidebar title immediately, before
+snapshot refresh. Browser acceptance waits for both cleared content and sidebar
+metadata before capturing the revoked state.
+

@@ -84,6 +84,7 @@ export async function liveAcceptance(browser,config,check){
       for(let n=0;n<2;n++){
         await manage('DELETE','/owner/channels/'+source.channel_id+'/grants/'+user);await shown('Source unavailable');
         assert.equal(await page.getByText('After network recovery',{exact:true}).count(),0);
+        await page.locator('#sidebar').getByText('Channel unavailable',{exact:true}).waitFor();
         if(n===0){await manage('PUT','/owner/channels/'+source.channel_id+'/grants/'+user,{});await shown('After network recovery');}
       }
       await page.setViewportSize({width:360,height:800});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
