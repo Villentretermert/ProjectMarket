@@ -245,3 +245,17 @@ one idempotent intent. Linux CI exposed a My Space title-edit race: a late sourc
 picker repaint could overwrite text before blur. Repaints now preserve the focused
 title. Final browser and CI verification follows; the initial Linux browser run failed.
 
+
+## 2026-10-23 · PM-017 accepted / PM-018
+
+PM-017 принята: 142 tests, 41 browser scenarios; [final CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39924166312) all four PASS. Счётчик17/24, послеG04 1/4. PM-018 начата: предварительный макет, polling2s, delivery order after commit, session cursors/preferences; runtime проверяется далее.
+# 2026-10-23 · PM-018 implementation
+
+Migration010/updates.py add post-commit delivery ordering, rolling session cursor,
+bounded scans, current authorization, own preferences and actor-only request hints.
+Grant/team restoration emits refresh hints. Contract1.0.8:87schemas/64operations.
+Web polls every2s, resyncs after failure/expiry, clears inaccessible sources and
+preserves title/layout/Undo. Events controls wait for saved preferences before
+allowing edits. Automatic request status uses GET. Added real PG/browser scenarios
+and ten-browser L1 measurement; final acceptance evidence follows.
+

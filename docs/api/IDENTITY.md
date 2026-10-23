@@ -1,9 +1,9 @@
 # Local identity API — PM-006
 
 The pilot uses local accounts without Google, email or Firebase. The accepted
-protocol is extended additively as **1.0.7**: the existing wire `schema_version`
+protocol is extended additively as **1.0.8**: the existing wire `schema_version`
 remains `1.0`. Runtime `/openapi.json` lists implemented operations; the complete
-planned contract remains in `packages/contracts` (87 schemas / 63 operations).
+planned contract remains in `packages/contracts` (87 schemas / 64 operations).
 
 ## Registration and sessions
 
