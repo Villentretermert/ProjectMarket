@@ -12,6 +12,7 @@ from uuid import uuid4
 
 from scripts.backend_lab import Lab
 from scripts.host_samples import HostSamples
+from scripts.load_integrity import verify_receipts
 from scripts.operations import log_metrics, snapshot
 from scripts.smoke_ingestion import Http
 
@@ -201,6 +202,12 @@ def main() -> None:
         lab.start("worker")
         report["restart_receipts"] = lab.query("SELECT count(*) AS n FROM message_receipts")[0]["n"]
         assert report["restart_receipts"] == report["receipts"]
+        report["receipt_ids_after_restart"] = verify_receipts(
+            lab.database,
+            args.bots,
+            report["steady_accepted"],
+            report.get("burst", {}).get("accepted", 0),
+        )
         report_path.write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
