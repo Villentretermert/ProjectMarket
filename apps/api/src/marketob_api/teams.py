@@ -108,11 +108,15 @@ def router(settings: Settings) -> APIRouter:
                 raise ApiError(
                     409, "owner_protected", "The pilot workspace owner cannot be changed."
                 )
-            connection.execute(
+            changed = connection.execute(
                 "INSERT INTO memberships(org_id,user_id,role) VALUES (%s,%s,%s) "
-                "ON CONFLICT(org_id,user_id) DO UPDATE SET role=EXCLUDED.role",
+                "ON CONFLICT(org_id,user_id) DO UPDATE SET role=EXCLUDED.role "
+                "WHERE memberships.role IS DISTINCT FROM EXCLUDED.role RETURNING user_id",
                 (org_id, user["user_id"], body.role),
-            )
+            ).fetchone()
+            # An exact replay has no access change and must not generate more notifications.
+            if changed is None:
+                return {**user, "role": body.role}
             connection.execute(
                 "INSERT INTO change_outbox(channel_id,user_id,kind) "
                 "SELECT channel_id,%s,'channel.changed' FROM channel_access WHERE org_id=%s",

@@ -25,6 +25,8 @@ FIELDS = {
     "outbox",
     "unknown",
     "requests",
+    "privacy_preferences",
+    "privacy_updates",
     "error_class",
 }
 

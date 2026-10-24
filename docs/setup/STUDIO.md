@@ -39,9 +39,9 @@ to multiple workspaces; select the workspace before working.
 Removing a member takes effect on later server operations immediately after commit.
 Machine keys belong to the workspace's bot, not to the member who issued them;
 rotate/revoke a key separately if its holder should no longer use it.
-Independently granted read access remains separate. Until PM-018, an already open
-visible page requires Refresh to detect a remote revocation; hidden/offline content
-is cleared and revalidated when returning. The backend always checks current rights.
+Independently granted read access remains separate. Foreground consumer screens
+detect remote revocation through live updates; Studio uses Refresh. Hidden/offline
+content is cleared and revalidated when returning. The backend always checks current rights.
 
 The **Delete page** confirmation unpublishes and retains historical records; it does
 not erase source/history data. It cannot be reactivated through Studio in this pilot.

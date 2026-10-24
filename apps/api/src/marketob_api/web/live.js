@@ -51,6 +51,8 @@ export function startLive(root,initialCursor,refreshSidebar){
       // snapshot read may have restored content between two identical revoke hints.
       const denied=new Set(page.items.filter(i=>i.kind==='access.revoked').map(i=>i.channel_id));
       if(denied.size){
+        // A confirmation dialog can still contain a title from the revoked source.
+        document.querySelectorAll('dialog').forEach(d=>d.close());
         for(const node of document.querySelectorAll('#sidebar [data-channel-ref]')){
           if(denied.has(node.dataset.channelRef))node.replaceWith(el('span',{class:'channel-link muted','data-channel-ref':node.dataset.channelRef},'Channel unavailable'));
         }

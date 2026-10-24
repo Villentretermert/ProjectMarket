@@ -90,6 +90,22 @@ export async function liveAcceptance(browser,config,check){
       await page.setViewportSize({width:360,height:800});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
       await page.screenshot({path:path.join(config.output,'live-revoked-phone.png'),fullPage:true});
     });
+    await check('Privacy: revocation closes an open purchase confirmation without sending it',async()=>{
+      const submitted=[];
+      const observe=request=>{if(request.method()==='POST'&&new URL(request.url()).pathname.endsWith('/actions'))submitted.push(request.url());};
+      page.on('request',observe);
+      await manage('PUT','/owner/channels/'+config.channels.catalog.channel_id+'/grants/'+user,{});
+      await go('channel/'+config.channels.catalog.slug);await shown('Hand soap');
+      await page.locator('[data-block="soap"]').getByRole('button',{name:'Request purchase',exact:true}).click();
+      await page.getByRole('dialog').waitFor();
+      await manage('DELETE','/owner/channels/'+config.channels.catalog.channel_id+'/grants/'+user);
+      await page.getByRole('dialog').waitFor({state:'hidden',timeout:10000});
+      await shown('Channel unavailable');
+      assert.equal(await page.getByRole('heading',{name:'Hand soap',exact:true}).count(),0);
+      assert.equal(submitted.length,0,'Revocation must not submit the pending confirmation');
+      page.off('request',observe);
+      await page.screenshot({path:path.join(config.output,'privacy-revoked-dialog.png'),fullPage:true});
+    });
     await check('Live: own purchase status arrives automatically from the real bot',async()=>{
       await manage('PUT','/owner/channels/'+config.channels.catalog.channel_id+'/grants/'+user,{});
       await go('channel/'+config.channels.catalog.slug);await shown('Hand soap');

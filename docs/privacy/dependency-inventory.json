@@ -1,0 +1,530 @@
+{
+  "date": "2026-10-24",
+  "scope": "Locked Python workspace, browser acceptance dependencies and container declarations; not a CVE or license audit",
+  "sources": [
+    {
+      "path": "uv.lock",
+      "sha256": "69e7fb9b10a7138f54f9afb6304ecb0548ccdb778079383262549df8132f2920"
+    },
+    {
+      "path": "apps/client/package-lock.json",
+      "sha256": "6ea04c0d52a2d2ca17a408ef5f6a3d8ad6ae7e003b5c14ee3f4c1db6e6ae5e46"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "c44f28f500dfd638dabb3e8efdbe97cf219301e1e410f5f530f3dd480e3a7706"
+    },
+    {
+      "path": "apps/api/pyproject.toml",
+      "sha256": "12ed7a8d5497832b21365d2a62556bff436b38feb3f249a6e5c34be0e2428964"
+    },
+    {
+      "path": "packages/contracts/pyproject.toml",
+      "sha256": "05efcd27dc262150c203f33df53d35f2f4cab36657ebccb311d6c6bed3a40822"
+    },
+    {
+      "path": "packages/bot-sdk/pyproject.toml",
+      "sha256": "296a0dfae27d24e9e93b6e447247532407910f5502847895b865a6d23bb67552"
+    },
+    {
+      "path": "bots/pilot/pyproject.toml",
+      "sha256": "610ed6ac6abcc70e0c9a6e2edb978aeae8766edec5df66341a0281288ac0cd5c"
+    },
+    {
+      "path": "deploy/Dockerfile",
+      "sha256": "dbb3a52a86ba894cda00abaa2c6e0235322f6c56aba58356c6cb4500d155dfb1"
+    },
+    {
+      "path": "deploy/Dockerfile.bot",
+      "sha256": "83d3d8f5ff9c1acb718061c942e5795663189d89288228d6b1b66430c1dd7781"
+    },
+    {
+      "path": "deploy/Dockerfile.proxy",
+      "sha256": "6dab923398b75173c7afbc77a7050ae2c31a05330f0409fd8187b42a18bd0a96"
+    },
+    {
+      "path": "compose.yaml",
+      "sha256": "2ecd2b145884cda82ba3cdb5e50b292f1fdf8d3fa083996c1b50405179004b53"
+    }
+  ],
+  "python_packages": [
+    {
+      "name": "annotated-doc",
+      "version": "0.0.5",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "anyio",
+      "version": "4.15.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "argon2-cffi",
+      "version": "25.1.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "argon2-cffi-bindings",
+      "version": "26.1.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "ast-serialize",
+      "version": "0.13.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "defusedxml",
+      "version": "0.7.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "fastapi",
+      "version": "0.159.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "httpcore2",
+      "version": "2.16.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "httpx2",
+      "version": "2.16.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "httpx2-jsfetch",
+      "version": "1.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.26.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "jsonschema-path",
+      "version": "0.5.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "jsonschema-rs",
+      "version": "0.57.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "lazy-object-proxy",
+      "version": "1.13.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "librt",
+      "version": "0.16.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "marketob-api",
+      "version": "0.1.0",
+      "source": {
+        "editable": "apps/api"
+      }
+    },
+    {
+      "name": "marketob-bot-sdk",
+      "version": "0.1.0",
+      "source": {
+        "editable": "packages/bot-sdk"
+      }
+    },
+    {
+      "name": "marketob-contracts",
+      "version": "1.0.3",
+      "source": {
+        "editable": "packages/contracts"
+      }
+    },
+    {
+      "name": "marketob-demo-bots",
+      "version": "0.1.0",
+      "source": {
+        "editable": "bots/pilot"
+      }
+    },
+    {
+      "name": "marketob-workspace",
+      "version": "0.1.0",
+      "source": {
+        "virtual": "."
+      }
+    },
+    {
+      "name": "mypy",
+      "version": "2.4.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "mypy-extensions",
+      "version": "1.1.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "openapi-schema-validator",
+      "version": "0.9.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "openapi-spec-validator",
+      "version": "0.9.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pathable",
+      "version": "0.6.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pathspec",
+      "version": "1.1.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pluggy",
+      "version": "1.7.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "psycopg",
+      "version": "3.3.6",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "psycopg-binary",
+      "version": "3.3.6",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "psycopg-pool",
+      "version": "3.3.3",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pycparser",
+      "version": "3.12",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pydantic-core",
+      "version": "2.50.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pydantic-settings",
+      "version": "2.16.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pygments",
+      "version": "2.21.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pytest",
+      "version": "9.1.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.2.4",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "pyyaml",
+      "version": "6.0.3",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "rfc3339-validator",
+      "version": "0.1.4",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "rpds-py",
+      "version": "2026.9.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "ruff",
+      "version": "0.17.1",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "six",
+      "version": "1.17.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "starlette",
+      "version": "1.9.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "truststore",
+      "version": "0.10.5",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.4",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.5",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.54.0",
+      "source": {
+        "registry": "https://pypi.org/simple"
+      }
+    }
+  ],
+  "node_packages": [
+    {
+      "path": "node_modules/fsevents",
+      "version": "2.3.2",
+      "dev": true,
+      "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+    },
+    {
+      "path": "node_modules/playwright",
+      "version": "1.62.1",
+      "dev": true,
+      "integrity": "sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg=="
+    },
+    {
+      "path": "node_modules/playwright-core",
+      "version": "1.62.1",
+      "dev": true,
+      "integrity": "sha512-wPYSwEBJY9GHraISXqyqtx0na0LpO3XEX7jNDhntbex7tzUS7kLnZsOlFruFJB4Hi/rhDMjXGqHewDZ68nYZVw=="
+    }
+  ],
+  "containers": [
+    {
+      "path": "deploy/Dockerfile",
+      "declaration": "FROM python:3.14.7-slim-bookworm@sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56 AS build"
+    },
+    {
+      "path": "deploy/Dockerfile",
+      "declaration": "FROM python:3.14.7-slim-bookworm@sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56"
+    },
+    {
+      "path": "deploy/Dockerfile.bot",
+      "declaration": "FROM python:3.14.7-slim-bookworm@sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56 AS build"
+    },
+    {
+      "path": "deploy/Dockerfile.bot",
+      "declaration": "FROM python:3.14.7-slim-bookworm@sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56"
+    },
+    {
+      "path": "deploy/Dockerfile.proxy",
+      "declaration": "FROM caddy:2.10.2-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d"
+    },
+    {
+      "path": "compose.yaml",
+      "declaration": "image: postgres:18.4-bookworm@sha256:882236b897e39051d2368c5ccc6cda944904723506b2dfc97f2a8f5bc9afa382"
+    },
+    {
+      "path": "compose.yaml",
+      "declaration": "image: marketob-api:${MARKETOB_RELEASE:-local}"
+    },
+    {
+      "path": "compose.yaml",
+      "declaration": "image: marketob-api:${MARKETOB_RELEASE:-local}"
+    },
+    {
+      "path": "compose.yaml",
+      "declaration": "image: marketob-api:${MARKETOB_RELEASE:-local}"
+    }
+  ]
+}

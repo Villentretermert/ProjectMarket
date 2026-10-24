@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="700" viewBox="0 0 1080 700">
+<rect width="1080" height="700" fill="#f3f6fa"/>
+<g font-family="Segoe UI,Arial,sans-serif" fill="#172535">
+<rect width="1080" height="70" fill="white"/><text x="30" y="43" font-size="25" font-weight="700">MarkeTOB</text>
+<text x="235" y="42" font-size="17">My Space</text><text x="360" y="42" font-size="17">Channels</text><text x="485" y="42" font-size="17">Studio</text>
+<text x="815" y="42" font-size="17" fill="#2369ab">Data &amp; privacy</text><text x="965" y="42" font-size="16">Sign out</text>
+<rect x="0" y="71" width="220" height="629" fill="#fff"/>
+<text x="25" y="117" font-size="18" font-weight="600">Favorites</text><text x="25" y="157" font-size="16" fill="#2369ab">+ Open a channel</text>
+<text x="255" y="112" font-size="12" fill="#617284">PROTOTYPE · DEMONSTRATION ACCOUNT</text>
+<text x="255" y="151" font-size="31" font-weight="650">Data &amp; privacy</text>
+<text x="255" y="183" font-size="16" fill="#617284">Manage your local MarkeTOB account.</text>
+<rect x="255" y="211" width="785" height="159" rx="12" fill="white" stroke="#d9e2ed"/>
+<text x="280" y="247" font-size="22" font-weight="600">Download your data</text>
+<text x="280" y="277" font-size="16">Save a readable JSON copy of your personal data.</text>
+<text x="280" y="301" font-size="15" fill="#617284">The exact contents are being confirmed with the project owner.</text>
+<rect x="280" y="320" width="161" height="32" rx="6" fill="#2477bd"/>
+<text x="298" y="342" font-size="15" fill="white">Download JSON</text>
+<rect x="255" y="395" width="785" height="238" rx="12" fill="white" stroke="#e4c4c6"/>
+<text x="280" y="433" font-size="22" font-weight="600">Delete account</text>
+<text x="280" y="464" font-size="16">Review affected pages, workspace and requests before continuing.</text>
+<text x="280" y="490" font-size="15" fill="#617284">Deletion cannot recall data already sent to external bots or downloaded copies.</text>
+<text x="280" y="529" font-size="15">Current password</text><rect x="280" y="542" width="400" height="36" rx="5" fill="#f7f9fc" stroke="#acbccc"/>
+<rect x="280" y="590" width="162" height="30" rx="5" fill="#a52e3c"/>
+<text x="299" y="611" font-size="15" fill="white">Review deletion</text>
+<text x="255" y="670" font-size="13" fill="#617284">Flow: account → data preview → download / review deletion → confirmation → signed out</text>
+</g></svg>

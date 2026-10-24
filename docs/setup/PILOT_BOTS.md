@@ -57,7 +57,7 @@ The local pilot network is not a production network isolation boundary.
 
 Stop bots with `docker compose -f compose.yaml -f compose.bots.yaml --profile demo-bots stop catalog-bot news-bot`.
 Do not delete journal volumes as a way to retry a request. Back up journals together
-with deployment state before migrating; backups/recovery procedures are a later task.
+with deployment state before migrating; see [backup/restore](BACKUP_RESTORE.md).
 
 ## Expected behaviour
 
@@ -73,8 +73,8 @@ There are no payments or shipments. Quantity is one. Existing feed data remains
 available if fetching/parsing fails. The parser rejects DTD/external entities,
 limits XML to 1 MiB and examines at most 100 items; it publishes no full articles.
 Missing dates are omitted from the chart. Missing feed slots get explicit placeholders.
-The source is configurable; NASA is an initial example, not a fixed product category.
-Source: [NASA RSS feeds](https://www.nasa.gov/rss-feeds/).
+The source is configurable; the current default is BBC World following the owner's
+general-news preference. Offline fixtures are synthetic and do not fetch this feed.
 
 The catalog commits an inbox before ACK and a unique request ledger before result.
 On restart it resumes local unfinished events, including accepted results whose

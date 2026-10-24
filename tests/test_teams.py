@@ -42,6 +42,32 @@ def add(owner: TestClient, org: str, username: str, role: str) -> dict[str, Any]
     return dict(result.json())
 
 
+def test_identical_membership_replay_does_not_fill_or_require_outbox_capacity(
+    settings: Settings, gateway: tuple[TestClient, TestClient, dict[str, Any]]
+) -> None:
+    owner, _, source = gateway
+    org = owner.get("/v1/account/business-profile").json()["org_id"]
+    database = Database(settings)
+    with client(settings) as member:
+        register(member, "replayed_member")
+        expected = add(owner, org, "replayed_member", "editor")
+        with database.transaction() as connection:
+            connection.execute("SET LOCAL statement_timeout='30s'")
+            connection.execute("ALTER TABLE change_outbox DISABLE TRIGGER outbox_admission")
+            connection.execute(
+                "INSERT INTO change_outbox(channel_id,kind) SELECT %s,'channel.changed' "
+                "FROM generate_series(1,20000-(SELECT count(*) FROM change_outbox))",
+                (source["channel_id"],),
+            )
+            connection.execute("ALTER TABLE change_outbox ENABLE TRIGGER outbox_admission")
+        for _ in range(3):
+            assert add(owner, org, "replayed_member", "editor") == expected
+        with database.transaction() as connection:
+            assert connection.execute("SELECT count(*) n FROM change_outbox").fetchone() == {
+                "n": 20000
+            }
+
+
 def test_owner_protection_and_workspace_isolation(settings: Settings) -> None:
     with client(settings) as owner, client(settings) as admin, client(settings) as outsider:
         owner_id = register(owner, "owner")

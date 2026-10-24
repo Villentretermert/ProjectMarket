@@ -50,11 +50,43 @@ def prune_updates(database: Database, batch: int = 5000) -> int:
         return len(rows)
 
 
+def prune_private_metadata(database: Database, batch: int = 5000) -> dict[str, int]:
+    """Remove unusable preferences/hints without changing delivery cursors or requests."""
+    with database.transaction() as connection:
+        preferences = connection.execute(
+            "DELETE FROM event_preferences WHERE ctid IN (SELECT p.ctid "
+            "FROM event_preferences p JOIN users u USING(user_id) "
+            "JOIN channel_access a USING(channel_id) JOIN organizations o USING(org_id) "
+            "WHERE u.deleted_at IS NOT NULL OR a.deleted_at IS NOT NULL OR NOT o.active "
+            "ORDER BY p.sequence LIMIT %s FOR UPDATE OF p SKIP LOCKED)",
+            (batch,),
+        ).rowcount
+        updates = connection.execute(
+            "DELETE FROM change_outbox WHERE sequence IN (SELECT c.sequence "
+            "FROM change_outbox c JOIN channel_access a USING(channel_id) "
+            "JOIN organizations o USING(org_id) LEFT JOIN users u ON u.user_id=c.user_id "
+            "WHERE u.deleted_at IS NOT NULL OR ((a.deleted_at IS NOT NULL OR NOT o.active) "
+            "AND NOT (c.user_id IS NULL AND c.kind IN ('access.revoked','source.deleted') "
+            "AND c.data_revision IS NULL AND c.resource_id IS NULL AND c.receipt_id IS NULL "
+            "AND c.action_request_id IS NULL AND c.event_name IS NULL)) "
+            "ORDER BY c.sequence LIMIT %s FOR UPDATE OF c SKIP LOCKED)",
+            (batch,),
+        ).rowcount
+    # Keep minimal source revocation hints until normal prefix retention expires.
+    # Holes are safe: delivery IDs are never reused and unrelated events remain intact.
+    return {"privacy_preferences": preferences, "privacy_updates": updates}
+
+
 def maintain(database: Database) -> dict[str, int]:
     from marketob_api.request_state import maintain_requests
 
     # Free delivery capacity before timeouts create their own status notifications.
-    result = {"outbox": prune_updates(database), **prune(database), **maintain_requests(database)}
+    result = {
+        "outbox": prune_updates(database),
+        **prune(database),
+        **maintain_requests(database),
+        **prune_private_metadata(database),
+    }
     with database.transaction() as connection:
         for table, column in (
             ("sessions", "expires_at"),
