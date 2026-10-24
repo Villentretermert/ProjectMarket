@@ -60,7 +60,8 @@ def notify_status(connection: Connection, row: dict[str, Any]) -> None:
 
 def reconcile_access(connection: Connection, channel_id: str, *, disabled: bool = False) -> None:
     # Caller owns the channel lock. ACK takes the same lock before acknowledging.
-    rows = connection.execute(
+    # Caller invalidates delivery once after reconciliation, even with a full outbox.
+    connection.execute(
         "UPDATE action_requests r SET state=CASE WHEN %s OR acknowledged_at IS NOT NULL "
         "THEN 'unknown' ELSE 'cancelled' END, "
         "terminal_at=CASE WHEN NOT %s AND acknowledged_at IS NULL THEN now() ELSE NULL END, "
@@ -72,12 +73,9 @@ def reconcile_access(connection: Connection, channel_id: str, *, disabled: bool 
         "AND u.deleted_at IS NULL AND a.deleted_at IS NULL AND a.published AND o.active "
         "AND (a.visibility='public' OR o.owner_user_id=u.user_id OR EXISTS "
         "(SELECT 1 FROM memberships m WHERE m.org_id=o.org_id AND m.user_id=u.user_id) OR EXISTS "
-        "(SELECT 1 FROM grants g WHERE g.channel_id=a.channel_id AND g.user_id=u.user_id)))) "
-        "RETURNING r.*",
+        "(SELECT 1 FROM grants g WHERE g.channel_id=a.channel_id AND g.user_id=u.user_id))))",
         (disabled, disabled, disabled, UNKNOWN, channel_id, disabled),
-    ).fetchall()
-    for row in rows:
-        notify_status(connection, row)
+    )
 
 
 def reconcile_user(connection: Connection, user_id: str) -> None:

@@ -8,6 +8,7 @@ from psycopg.errors import UniqueViolation
 from pydantic import BaseModel, ConfigDict, Field, SecretStr
 
 from marketob_api.access import require_owner
+from marketob_api.access_changes import invalidate_access
 from marketob_api.config import Settings
 from marketob_api.cursors import Scan, decode_scan, encode_scan, session_binding
 from marketob_api.database import Database
@@ -167,17 +168,7 @@ def router(settings: Settings) -> APIRouter:
                 (current.user_id,),
             )
             connection.execute("DELETE FROM sessions WHERE user_id=%s", (current.user_id,))
-            connection.execute(
-                "INSERT INTO change_outbox(channel_id,user_id,kind) "
-                "SELECT channel_id,%s,'access.revoked' FROM grants WHERE user_id=%s",
-                (current.user_id, current.user_id),
-            )
             connection.execute("DELETE FROM grants WHERE user_id=%s", (current.user_id,))
-            connection.execute(
-                "INSERT INTO change_outbox(channel_id,kind) SELECT a.channel_id,'source.deleted' "
-                "FROM channel_access a JOIN organizations o USING(org_id) WHERE o.owner_user_id=%s",
-                (current.user_id,),
-            )
             connection.execute(
                 "UPDATE channel_access SET deleted_at=now(),published=false WHERE org_id IN "
                 "(SELECT org_id FROM organizations WHERE owner_user_id=%s)",
@@ -201,6 +192,7 @@ def router(settings: Settings) -> APIRouter:
             for source in owned:
                 reconcile_access(connection, source["channel_id"], disabled=True)
             reconcile_user(connection, current.user_id)
+            invalidate_access(connection)
         response.delete_cookie(
             COOKIE,
             path="/",
@@ -236,15 +228,13 @@ def router(settings: Settings) -> APIRouter:
             require_owner(connection, channel_id, current.user_id, roles=MANAGERS)
             if user is None:
                 raise ApiError(404, "object_not_found", "The registered user is unavailable.")
-            connection.execute(
-                "INSERT INTO grants(channel_id,user_id) VALUES (%s,%s) ON CONFLICT DO NOTHING",
+            added = connection.execute(
+                "INSERT INTO grants(channel_id,user_id) VALUES (%s,%s) "
+                "ON CONFLICT DO NOTHING RETURNING user_id",
                 (channel_id, user_id),
-            )
-            connection.execute(
-                "INSERT INTO change_outbox(channel_id,user_id,kind) "
-                "VALUES (%s,%s,'channel.changed')",
-                (channel_id, user_id),
-            )
+            ).fetchone()
+            if added:
+                invalidate_access(connection)
 
     @api.delete("/owner/channels/{channel_id}/grants/{user_id}", status_code=204)
     def revoke_grant(channel_id: str, user_id: str, request: Request) -> None:
@@ -257,11 +247,7 @@ def router(settings: Settings) -> APIRouter:
             ).fetchone()
             if removed:
                 reconcile_access(connection, channel_id)
-                connection.execute(
-                    "INSERT INTO change_outbox(channel_id,user_id,kind) "
-                    "VALUES (%s,%s,'access.revoked')",
-                    (channel_id, user_id),
-                )
+                invalidate_access(connection)
 
     @api.get("/owner/channels/{channel_id}/audience")
     @api.get("/owner/channels/{channel_id}/grants")

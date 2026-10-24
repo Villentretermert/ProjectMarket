@@ -8,6 +8,7 @@ from fastapi import APIRouter, Query, Request
 from psycopg import sql
 from pydantic import Field, field_validator
 
+from marketob_api.access_changes import invalidate_access
 from marketob_api.auth_routes import ClosedModel, Empty
 from marketob_api.bot_identity import (
     SCOPES,
@@ -249,11 +250,6 @@ def router(settings: Settings) -> APIRouter:
             connection.execute("DELETE FROM bot_registrations WHERE bot_id=%s", (bot_id,))
             connection.execute("UPDATE bot_keys SET revoked=true WHERE bot_id=%s", (bot_id,))
             connection.execute(
-                "INSERT INTO change_outbox(channel_id,kind) "
-                "SELECT channel_id,'access.revoked' FROM channel_access WHERE bot_id=%s",
-                (bot_id,),
-            )
-            connection.execute(
                 "UPDATE channel_access SET deleted_at=now(),published=false WHERE bot_id=%s",
                 (bot_id,),
             )
@@ -262,6 +258,7 @@ def router(settings: Settings) -> APIRouter:
             ).fetchall()
             for source in channels:
                 reconcile_access(connection, source["channel_id"], disabled=True)
+            invalidate_access(connection)
 
     @api.get("/bot/identity")
     def bot_identity(request: Request) -> dict[str, Any]:

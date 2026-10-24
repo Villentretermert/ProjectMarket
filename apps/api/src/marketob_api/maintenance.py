@@ -46,7 +46,9 @@ def prune_updates(database: Database, batch: int = 5000) -> int:
         if rows:
             floor = rows[-1]["delivery_sequence"]
             connection.execute("DELETE FROM change_outbox WHERE delivery_sequence<=%s", (floor,))
-            connection.execute("UPDATE delivery_state SET retention_floor=%s", (floor,))
+            connection.execute(
+                "UPDATE delivery_state SET retention_floor=greatest(retention_floor,%s)", (floor,)
+            )
         return len(rows)
 
 

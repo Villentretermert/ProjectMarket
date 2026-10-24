@@ -216,7 +216,10 @@ def test_revoke_bot_and_account_disable_channels_and_keys(settings: Settings) ->
             assert row and row["deleted_at"] is not None and not row["published"]
             assert connection.execute(
                 "SELECT count(*) AS count FROM change_outbox WHERE channel_id=%s", (source,)
-            ).fetchone() == {"count": 1}
+            ).fetchone() == {"count": 0}
+            assert connection.execute(
+                "SELECT watermark,retention_floor FROM delivery_state"
+            ).fetchone() == {"watermark": 1, "retention_floor": 1}
         another = create_bot(owner)
         active = exchange(bot, another["registration_credential"])["api_key"]
         assert (

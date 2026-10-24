@@ -6,6 +6,7 @@ from typing import Any, Literal
 from fastapi import APIRouter, Request
 from pydantic import Field
 
+from marketob_api.access_changes import invalidate_access
 from marketob_api.auth_routes import ClosedModel
 from marketob_api.channels import Cursor, Limit, scan_rows
 from marketob_api.config import Settings
@@ -117,11 +118,7 @@ def router(settings: Settings) -> APIRouter:
             # An exact replay has no access change and must not generate more notifications.
             if changed is None:
                 return {**user, "role": body.role}
-            connection.execute(
-                "INSERT INTO change_outbox(channel_id,user_id,kind) "
-                "SELECT channel_id,%s,'channel.changed' FROM channel_access WHERE org_id=%s",
-                (user["user_id"], org_id),
-            )
+            invalidate_access(connection)
             return {**user, "role": body.role}
 
     @api.delete("/workspaces/{org_id}/members/{user_id}", status_code=204)
@@ -146,10 +143,6 @@ def router(settings: Settings) -> APIRouter:
                 ).fetchall()
                 for source in sources:
                     reconcile_access(connection, source["channel_id"])
-                    connection.execute(
-                        "INSERT INTO change_outbox(channel_id,user_id,kind) "
-                        "VALUES (%s,%s,'access.revoked')",
-                        (source["channel_id"], user_id),
-                    )
+                invalidate_access(connection)
 
     return api

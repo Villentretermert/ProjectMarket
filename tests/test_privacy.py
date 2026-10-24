@@ -92,12 +92,22 @@ def test_deleted_source_cleanup_preserves_revocation_and_other_delivery_ids(
         delivered = poll(reader, cursor)
         preserved = next(i for i in delivered["items"] if i["channel_id"] == other["channel_id"])
         assert owner.delete(path(source)).status_code == 204
+        # Existing deployments may still contain legacy revocation hints during an upgrade.
+        with database.transaction() as connection:
+            connection.execute(
+                "INSERT INTO change_outbox(channel_id,kind) VALUES (%s,'access.revoked')",
+                (source["channel_id"],),
+            )
         result = prune_private_metadata(database)
         assert result["privacy_preferences"] == 1 and result["privacy_updates"] > 0
-        recovered = poll(reader, cursor)
-        assert preserved in recovered["items"]
+        assert reader.get("/v1/updates", params={"cursor": cursor}).status_code == 410
+        recovered = poll(reader, watch=source["channel_id"])
         assert any(i["kind"] == "access.revoked" for i in recovered["items"])
         with database.transaction() as connection:
+            assert connection.execute(
+                "SELECT 1 FROM change_outbox WHERE channel_id=%s AND delivery_sequence=%s",
+                (other["channel_id"], int(preserved["update_id"].split("_")[1])),
+            ).fetchone()
             remaining = connection.execute(
                 "SELECT * FROM change_outbox WHERE channel_id=%s", (source["channel_id"],)
             ).fetchall()
@@ -129,6 +139,11 @@ def test_cleanup_is_bounded_and_covers_owner_deactivation(
             owner.request("DELETE", "/v1/account", json={"password": PASSWORD}).status_code == 204
         )
         database = Database(settings)
+        with database.transaction() as connection:
+            connection.execute(
+                "INSERT INTO change_outbox(channel_id,kind) VALUES (%s,'source.deleted')",
+                (source["channel_id"],),
+            )
         first = prune_private_metadata(database, batch=1)
         assert first["privacy_preferences"] == 1 and first["privacy_updates"] <= 1
         second = prune_private_metadata(database)

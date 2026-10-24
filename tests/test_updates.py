@@ -64,14 +64,24 @@ def test_interest_preferences_privacy_revocation_and_restoration(
         page = poll(reader, updates["next_cursor"])
         assert len(page["items"]) == 1 and page["items"][0]["notify"]
         assert owner.delete(path(source, "/grants/" + uid)).status_code == 204
-        revoked = poll(reader, page["next_cursor"], cid)
+        assert reader.get("/v1/updates", params={"cursor": page["next_cursor"]}).status_code == 410
+        revoked = poll(reader, watch=cid)
         assert all(i["kind"] == "access.revoked" and not i["notify"] for i in revoked["items"])
         assert reader.get("/v1/preferences").json()["items"] == []
         assert owner.put(path(source, "/grants/" + uid), json={}).status_code == 204
-        restored = poll(reader, revoked["next_cursor"], cid)
+        assert (
+            reader.get("/v1/updates", params={"cursor": revoked["next_cursor"]}).status_code == 410
+        )
+        restored_cursor = poll(reader)["next_cursor"]
+        assert reader.get("/v1/channels/" + source["slug"]).status_code == 200
+        assert bot.post("/v1/bot/messages", json=message(source, 4, "restored")).status_code == 200
+        restored = poll(reader, restored_cursor, cid)
         assert restored["items"][0]["kind"] == "channel.changed"
         assert owner.delete(path(source, "/grants/" + uid)).status_code == 204
-        assert poll(reader, restored["next_cursor"], cid)["items"][0]["kind"] == "access.revoked"
+        assert (
+            reader.get("/v1/updates", params={"cursor": restored["next_cursor"]}).status_code == 410
+        )
+        assert poll(reader, watch=cid)["items"][0]["kind"] == "access.revoked"
         # Rechecking a displayed ID never returns an unknown source's metadata.
         assert poll(stranger, watch="unknown")["items"][0]["target_id"] == "unknown"
 

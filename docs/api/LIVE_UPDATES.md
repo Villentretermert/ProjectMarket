@@ -76,6 +76,16 @@ hour in batches5000. A cursor behind the floor gets410/resync_required even if i
 signature/expiry are otherwise valid. Message receipts/current snapshots are
 independent of hint retention. Account/source privacy cleanup remains PM-023.
 
+PM-023 additionally advances the same floor atomically on a real permission change
+(grant, membership, account/bot/channel deactivation, or public-to-selected
+publication/rollback). This marker occupies no outbox row and works even at queue
+capacity. All older cursors receive `410 resync_required`, including those of
+unaffected users. Bootstrap **before** re-reading snapshots/statuses/favorites;
+do not resume from the rejected cursor. Exact no-op changes do not invalidate.
+Old hints need not replay as toasts after resync; authoritative source/request
+state remains available through authorized GETs. Ordinary data, results and
+publication still use the bounded outbox. [ADR-0016](../adr/0016-permission-invalidation.md).
+
 Future Android foreground clients must use the same bootstrap-before-snapshot,
 session binding, deduplication, Retry-After, source revalidation and logout clearing.
 A future push provider may send a generic wake-up hint; neither that hint nor a

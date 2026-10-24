@@ -12,6 +12,7 @@ from psycopg.types.json import Jsonb
 from starlette.responses import JSONResponse
 
 from marketob_api.access import require_owner, require_read
+from marketob_api.access_changes import invalidate_access
 from marketob_api.config import Settings
 from marketob_api.cursors import Scan, decode_scan, encode_scan, session_binding
 from marketob_api.database import Connection, Database
@@ -171,18 +172,18 @@ def publish(
         "WHERE channel_id=%s AND template_version=%s",
         (channel_id, version),
     )
-    connection.execute(
-        "INSERT INTO change_outbox(channel_id,kind,data_revision) VALUES (%s,'channel.changed',%s)",
-        (channel_id, row["data_revision"]),
-    )
     if (
         access["published"]
         and access["visibility"] == "public"
         and value["visibility"] == "selected"
     ):
         reconcile_access(connection, channel_id)
+        invalidate_access(connection)
+    else:
         connection.execute(
-            "INSERT INTO change_outbox(channel_id,kind) VALUES (%s,'access.revoked')", (channel_id,)
+            "INSERT INTO change_outbox(channel_id,kind,data_revision) "
+            "VALUES (%s,'channel.changed',%s)",
+            (channel_id, row["data_revision"]),
         )
     return channel_view({**access, "published": True}, row, value)
 
@@ -418,10 +419,7 @@ def router(settings: Settings) -> APIRouter:
             )
             connection.execute("DELETE FROM grants WHERE channel_id=%s", (channel_id,))
             reconcile_access(connection, channel_id, disabled=True)
-            connection.execute(
-                "INSERT INTO change_outbox(channel_id,kind) VALUES (%s,'access.revoked')",
-                (channel_id,),
-            )
+            invalidate_access(connection)
 
     @api.get("/channels/{slug}", response_model=None)
     def read_channel(slug: str, request: Request, response: Response) -> Any:

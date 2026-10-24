@@ -49,3 +49,10 @@ PM-024: [инструкция передачи](setup/PILOT_HANDOFF.md) подг
 [CI 3d82143](https://github.com/Villentretermert/ProjectMarket/actions/runs/40045091707):
 все4 jobs PASS, 81 unit +90 integration =171 Python tests и48 Chromium scenarios;
 Docker/HTTPS/restore PASS. Рабочий локальный Docker этой проверкой не обновлялся.
+
+**Последнее продолжение, D45:** ответ «Продолжай» после прямого запроса разрешил
+исправление общей очереди. Оно применено; повторное разрешение не требуется.
+[Отчёт](task-results/PM-023-queue-fix.md):76 targeted tests +3 усиленных controls,
+49 Edge scenarios PASS; независимый review без конкретных обходов/регрессий.
+Общий CI ожидается. Предыдущие сообщения об ожидании разрешения исторические.
+P1–P3 export/delete открыты; Android/облако/L2 отложены;19/24, G05 ещё не наступила.

@@ -258,7 +258,7 @@ def test_owner_reader_and_anonymous_access_are_distinct(settings: Settings) -> N
             with pytest.raises(ApiError, match="source_unavailable"):
                 require_read(connection, private, reader)
             assert connection.execute(
-                "SELECT 1 FROM change_outbox WHERE kind='access.revoked'"
+                "SELECT 1 FROM delivery_state WHERE retention_floor=watermark AND watermark>0"
             ).fetchone()
         assert alice.delete(endpoint).status_code == 204
 

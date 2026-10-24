@@ -39,6 +39,18 @@ export async function liveAcceptance(browser,config,check){
       await page.getByLabel('Space title',{exact:true}).press('Enter');await page.getByText('Saved · v2',{exact:true}).waitFor();
       await page.screenshot({path:path.join(config.output,'live-space.png'),fullPage:true});
     });
+    await check('Access: real permission marker resync preserves the saved My Space layout',async()=>{
+      const before=await customer('GET','/personal-pages/'+personal.page_id);
+      const invalidated=page.waitForResponse(r=>r.url().includes('/v1/updates?')&&r.status()===410);
+      await manage('PUT','/owner/channels/'+config.channels.catalog.channel_id+'/grants/'+user,{});
+      assert.equal((await (await invalidated).json()).code,'resync_required');
+      await page.getByText('Reconnecting · Content hidden',{exact:true}).waitFor();
+      await shown('Second live headline');await page.locator('#connection').filter({hasText:/^Live$/}).waitFor();
+      const after=await customer('GET','/personal-pages/'+personal.page_id);
+      assert.deepEqual(after.layout,before.layout);assert.equal(after.title,before.title);
+      assert.equal(await page.getByLabel('Space title',{exact:true}).inputValue(),'Still typing this title');
+      await page.screenshot({path:path.join(config.output,'access-resync-space.png'),fullPage:true});
+    });
     await check('Live: opt-in events work when OS notifications are denied',async()=>{
       await go('channel/'+source.slug);await shown('Second live headline');
       assert.equal(await page.evaluate(()=>Notification.permission),'denied');

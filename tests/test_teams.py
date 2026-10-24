@@ -222,8 +222,10 @@ def test_member_removal_preserves_explicit_read_grants(
         rows = connection.execute(
             "SELECT kind FROM change_outbox WHERE user_id=%s", (user_id,)
         ).fetchall()
-        assert sum(row["kind"] == "access.revoked" for row in rows) == 2
-        assert sum(row["kind"] == "channel.changed" for row in rows) == 2
+        assert rows == []
+        assert connection.execute(
+            "SELECT watermark,retention_floor FROM delivery_state"
+        ).fetchone() == {"watermark": 4, "retention_floor": 4}
 
 
 def test_team_revocation_reconciles_pending_and_acked_requests(
