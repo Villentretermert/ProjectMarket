@@ -1,0 +1,176 @@
+{
+  "before": {
+    "completed_at": "2026-10-24T20:00:28.519481+00:00",
+    "scanner": {
+      "Version": "0.76.1",
+      "VulnerabilityDB": {
+        "Version": 2,
+        "NextUpdate": "2026-10-25T13:07:23.340317232Z",
+        "UpdatedAt": "2026-10-24T13:07:23.340317483Z",
+        "DownloadedAt": "2026-10-24T19:59:00.394310272Z"
+      }
+    },
+    "targets": [
+      {
+        "name": "locked-dependencies",
+        "image_id": null,
+        "packages": 120,
+        "findings": 0,
+        "unique_advisory_ids": 0,
+        "severity": {},
+        "fixable_high_critical": 0
+      },
+      {
+        "name": "marketob-api:a7deaab",
+        "image_id": "sha256:e891505a7b8fcac9fc2e57444f537da0e76d45e999a85029cc0e7a84a567ddca",
+        "packages": 147,
+        "findings": 291,
+        "unique_advisory_ids": 146,
+        "severity": {
+          "LOW": 100,
+          "HIGH": 70,
+          "MEDIUM": 111,
+          "UNKNOWN": 4,
+          "CRITICAL": 6
+        },
+        "fixable_high_critical": 13
+      },
+      {
+        "name": "marketob-proxy:a7deaab",
+        "image_id": "sha256:1a892aad7d452b1053f8b51329a9ed38a1974085b044f4ecffa374c01058afed",
+        "packages": 162,
+        "findings": 257,
+        "unique_advisory_ids": 189,
+        "severity": {
+          "HIGH": 94,
+          "MEDIUM": 104,
+          "LOW": 45,
+          "UNKNOWN": 8,
+          "CRITICAL": 6
+        },
+        "fixable_high_critical": 100
+      },
+      {
+        "name": "postgres:18.4-bookworm@sha256:882236b897e39051d2368c5ccc6cda944904723506b2dfc97f2a8f5bc9afa382",
+        "image_id": "sha256:526573c93ea530a230b553cc513075ab9d70b63bfd2300ef5eb5ad1cafbbc595",
+        "packages": 151,
+        "findings": 550,
+        "unique_advisory_ids": 234,
+        "severity": {
+          "LOW": 181,
+          "HIGH": 116,
+          "MEDIUM": 226,
+          "UNKNOWN": 11,
+          "CRITICAL": 16
+        },
+        "fixable_high_critical": 58
+      }
+    ]
+  },
+  "candidate": {
+    "completed_at": "2026-10-24T20:05:34.298393+00:00",
+    "scanner": {
+      "Version": "0.76.1",
+      "VulnerabilityDB": {
+        "Version": 2,
+        "NextUpdate": "2026-10-25T13:07:23.340317232Z",
+        "UpdatedAt": "2026-10-24T13:07:23.340317483Z",
+        "DownloadedAt": "2026-10-24T19:59:00.394310272Z"
+      }
+    },
+    "targets": [
+      {
+        "name": "locked-dependencies",
+        "image_id": null,
+        "packages": 120,
+        "findings": 0,
+        "unique_advisory_ids": 0,
+        "severity": {},
+        "fixable_high_critical": 0
+      },
+      {
+        "name": "marketob-api:pm023-deps",
+        "image_id": "sha256:3ce7e9ceb1d94ca5820cded235de11beb9da93a564bd7040e17a1416dd5ffbae",
+        "packages": 128,
+        "findings": 255,
+        "unique_advisory_ids": 116,
+        "severity": {
+          "LOW": 91,
+          "HIGH": 61,
+          "MEDIUM": 99,
+          "CRITICAL": 2,
+          "UNKNOWN": 2
+        },
+        "fixable_high_critical": 0
+      },
+      {
+        "name": "marketob-proxy:pm023-deps",
+        "image_id": "sha256:d5b2e323eac40eafdfaca1b54d60b8352a147e6b0fe4823f80ac7581e1150b85",
+        "packages": 181,
+        "findings": 22,
+        "unique_advisory_ids": 17,
+        "severity": {
+          "HIGH": 6,
+          "MEDIUM": 14,
+          "UNKNOWN": 1,
+          "LOW": 1
+        },
+        "fixable_high_critical": 6
+      },
+      {
+        "name": "marketob-bot:pm023-deps",
+        "image_id": "sha256:6086c9186da0fef1c0c51921595cbd76e8f6fa5eaec1aa8c68b5d02287fe605a",
+        "packages": 106,
+        "findings": 255,
+        "unique_advisory_ids": 116,
+        "severity": {
+          "LOW": 91,
+          "HIGH": 61,
+          "MEDIUM": 99,
+          "CRITICAL": 2,
+          "UNKNOWN": 2
+        },
+        "fixable_high_critical": 0
+      },
+      {
+        "name": "postgres:18.6-bookworm@sha256:bbf83594798e144bff365a9c191c5d779f181fb3135902064ab8ff11918020fc",
+        "image_id": "sha256:63d4ad6f3de5e288238b3044970a677dcb0e77004d8b6050732aa0cbbeedf5d7",
+        "packages": 151,
+        "findings": 474,
+        "unique_advisory_ids": 205,
+        "severity": {
+          "LOW": 173,
+          "HIGH": 96,
+          "MEDIUM": 195,
+          "UNKNOWN": 6,
+          "CRITICAL": 4
+        },
+        "fixable_high_critical": 26
+      }
+    ],
+    "sboms": [
+      {
+        "file": "image-0.cdx.json.gz",
+        "sha256_uncompressed": "29f1d8b3d36f71c31b7046624e4b9205b26b0833aa1c3b3b2617feae4faf73b2"
+      },
+      {
+        "file": "image-1.cdx.json.gz",
+        "sha256_uncompressed": "02dd3eccf86008c1a19892027eeb361c43b00688381d720252156e165dbd142f"
+      },
+      {
+        "file": "image-2.cdx.json.gz",
+        "sha256_uncompressed": "c0af4b5a5468f6aad1df161478c51e10c0c2b25117d6d05893f925607c3bb344"
+      },
+      {
+        "file": "image-3.cdx.json.gz",
+        "sha256_uncompressed": "c7f645312599f4a50b1c9b1118d5cfc387796fccc81838efdd6b6676461a67c5"
+      }
+    ]
+  },
+  "scanner_download": {
+    "version": "0.76.1",
+    "archive": "trivy_0.76.1_Linux-64bit.tar.gz",
+    "sha256": "c7cbe3137fb8a48a17574bede3dd6beb16742d1e9772929940fc90082c39d9c0",
+    "verified_against": "https://github.com/aquasecurity/trivy/releases/download/v0.76.1/trivy_0.76.1_checksums.txt"
+  }
+}

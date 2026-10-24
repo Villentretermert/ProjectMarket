@@ -1,4 +1,4 @@
-FROM caddy:2.10.2-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d
+FROM caddy:2.11.7-alpine@sha256:eb4d35b7452d1ab6171fbdbe8d9275b2301dad6dad92115d91e19fb9b24d510f
 # We bind 8443, so remove the upstream privileged-port file capability before cap_drop=ALL.
 RUN setcap -r /usr/bin/caddy && mkdir -p /data/caddy /config/caddy && chown -R 10001:10001 /data /config
 COPY deploy/Caddyfile /etc/caddy/Caddyfile

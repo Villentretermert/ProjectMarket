@@ -12,7 +12,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256_lf_normalized": "9d375ee7db659f620ec5f2694cd2d05303272904831e42c5c74739ae223938c5"
+      "sha256_lf_normalized": "7f5246f026702c134e8edab56c6053b34e810556a8eb3b79655a770f7cede6c2"
     },
     {
       "path": "apps/api/pyproject.toml",
@@ -32,19 +32,19 @@
     },
     {
       "path": "deploy/Dockerfile",
-      "sha256_lf_normalized": "dbb3a52a86ba894cda00abaa2c6e0235322f6c56aba58356c6cb4500d155dfb1"
+      "sha256_lf_normalized": "bd4275177352fe9ee2f09f0dd9f69653c4781efe5bafe69f5dc6b313657a512c"
     },
     {
       "path": "deploy/Dockerfile.bot",
-      "sha256_lf_normalized": "83d3d8f5ff9c1acb718061c942e5795663189d89288228d6b1b66430c1dd7781"
+      "sha256_lf_normalized": "1e49f59d7cfa9e5b6adf829a6c5f4e3da2fb4248c30d65b08a130eb831105ae2"
     },
     {
       "path": "deploy/Dockerfile.proxy",
-      "sha256_lf_normalized": "6dab923398b75173c7afbc77a7050ae2c31a05330f0409fd8187b42a18bd0a96"
+      "sha256_lf_normalized": "acd13ab486694e8644173d233ec2cad6d1c37b05a2776e7ab6ad804a6ac1c95e"
     },
     {
       "path": "compose.yaml",
-      "sha256_lf_normalized": "2ecd2b145884cda82ba3cdb5e50b292f1fdf8d3fa083996c1b50405179004b53"
+      "sha256_lf_normalized": "e9f78ece1a54f3eeb5d6fb8d83caeb357c7925a972f689750d74d64c20f5075c"
     }
   ],
   "python_packages": [
@@ -492,27 +492,27 @@
   "containers": [
     {
       "path": "deploy/Dockerfile",
-      "declaration": "FROM python:3.14.7-slim-bookworm@sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56 AS build"
+      "declaration": "FROM python:3.14.9-slim-bookworm@sha256:945c2676dc2b18e0c1f16879244122c57c0ffede60006bf3df159c507a31bcae AS build"
     },
     {
       "path": "deploy/Dockerfile",
-      "declaration": "FROM python:3.14.7-slim-bookworm@sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56"
+      "declaration": "FROM python:3.14.9-slim-bookworm@sha256:945c2676dc2b18e0c1f16879244122c57c0ffede60006bf3df159c507a31bcae"
     },
     {
       "path": "deploy/Dockerfile.bot",
-      "declaration": "FROM python:3.14.7-slim-bookworm@sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56 AS build"
+      "declaration": "FROM python:3.14.9-slim-bookworm@sha256:945c2676dc2b18e0c1f16879244122c57c0ffede60006bf3df159c507a31bcae AS build"
     },
     {
       "path": "deploy/Dockerfile.bot",
-      "declaration": "FROM python:3.14.7-slim-bookworm@sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56"
+      "declaration": "FROM python:3.14.9-slim-bookworm@sha256:945c2676dc2b18e0c1f16879244122c57c0ffede60006bf3df159c507a31bcae"
     },
     {
       "path": "deploy/Dockerfile.proxy",
-      "declaration": "FROM caddy:2.10.2-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d"
+      "declaration": "FROM caddy:2.11.7-alpine@sha256:eb4d35b7452d1ab6171fbdbe8d9275b2301dad6dad92115d91e19fb9b24d510f"
     },
     {
       "path": "compose.yaml",
-      "declaration": "image: postgres:18.4-bookworm@sha256:882236b897e39051d2368c5ccc6cda944904723506b2dfc97f2a8f5bc9afa382"
+      "declaration": "image: postgres:18.6-bookworm@sha256:bbf83594798e144bff365a9c191c5d779f181fb3135902064ab8ff11918020fc"
     },
     {
       "path": "compose.yaml",

@@ -1,5 +1,19 @@
 # Журнал изменений
 
+## 2026-10-24 — PM-023: зависимости и обновление базовых образов (проверка)
+
+- Добавлен read-only `scripts.audit_dependencies`: allowlist manifests, полный
+  охват lock/dev/platform и явных build pins, PyPI license metadata, Trivy image
+  CVE/license inventory и CycloneDX. Неполная проверка возвращает exit2,
+  найденные advisory — exit1; отсутствие известных advisory не означает приёмку.
+- Первый полный снимок показал 0 advisory в lock/build pins, но устаревшие
+  системные/vendored компоненты установленных образов. Подготовлены отдельные
+  candidate с Python3.14.9, PostgreSQL18.6 и Caddy2.11.7, закреплённые digest.
+  CI переводится на Python3.14.9. Работающий a7deaab пока не заменён.
+- 9 целевых проверок инструмента PASS; Ruff/mypy PASS. Сравнение сканирований,
+  CI и итоговые ограничения будут записаны перед поставкой. L2/Android/облако
+  не возобновлялись; счётчик остаётся19/24.
+
 ## 2026-10-24 — PM-023: установка проверенного локального обновления
 
 - Установлен a7deaab в marketob-pm021 после успешного CI: 191 Python tests / 54 browser scenarios.
