@@ -376,7 +376,12 @@ def test_account_deactivation_and_channel_disable_keep_correct_uncertainty(
     queue(customer, source, "acknowledged")
     events = bot.get("/v1/bot/events").json()["items"]
     bot.post(event_path(events[1], "ack"), json={})
-    assert customer.request("DELETE", "/v1/account", json={"password": PASSWORD}).status_code == 204
+    assert (
+        customer.request(
+            "DELETE", "/v1/account", json={"password": PASSWORD, "confirmation": "DELETE"}
+        ).status_code
+        == 204
+    )
     assert bot.post(event_path(events[0], "ack"), json={}).status_code == 409
     assert bot.post(event_path(events[1], "result"), json=report()).json()["state"] == "confirmed"
     queue(owner, source, "owner_request")
@@ -525,7 +530,9 @@ def test_account_deactivation_racing_result_preserves_real_result(
     with ThreadPoolExecutor(max_workers=2) as pool:
         reporting = pool.submit(lambda: bot.post(event_path(event, "result"), json=report()))
         deactivation = pool.submit(
-            lambda: customer.request("DELETE", "/v1/account", json={"password": PASSWORD})
+            lambda: customer.request(
+                "DELETE", "/v1/account", json={"password": PASSWORD, "confirmation": "DELETE"}
+            )
         )
         result, deleted = reporting.result(), deactivation.result()
     assert result.status_code == 200 and deleted.status_code == 204
@@ -543,7 +550,9 @@ def test_grant_racing_deactivation_with_pending_work_does_not_deadlock(
     with ThreadPoolExecutor(max_workers=2) as pool:
         granting = pool.submit(lambda: owner.put(path(source, "/grants/" + user_id), json={}))
         deactivation = pool.submit(
-            lambda: customer.request("DELETE", "/v1/account", json={"password": PASSWORD})
+            lambda: customer.request(
+                "DELETE", "/v1/account", json={"password": PASSWORD, "confirmation": "DELETE"}
+            )
         )
         grant, deleted = granting.result(), deactivation.result()
     assert deleted.status_code == 204 and grant.status_code in {204, 404}

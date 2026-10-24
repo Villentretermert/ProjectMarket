@@ -1,6 +1,6 @@
 # Workspace API · PM-014
 
-Contract revision 1.0.4, unchanged bot wire schema 1.0. The role matrix and lock
+Contract revision 1.1.0, unchanged bot wire schema 1.0. The role matrix and lock
 ordering are specified in [ADR-0009](../adr/0009-workspace-roles.md).
 
 | Method / route | Behavior |
@@ -8,7 +8,7 @@ ordering are specified in [ADR-0009](../adr/0009-workspace-roles.md).
 | GET /v1/workspaces | Paginated active workspaces of current session; org_id, name, role |
 | GET /v1/workspaces/{org_id}/members | Paginated public account profiles plus role; current members only |
 | PUT /v1/workspaces/{org_id}/members | Owner upserts `{username, role}`; exact registered username, role admin/editor |
-| DELETE /v1/workspaces/{org_id}/members/{user_id} | Owner removes membership; idempotent, immutable owner protected |
+| DELETE /v1/workspaces/{org_id}/members/{user_id} | Owner removes membership; idempotent, current owner protected |
 | GET /v1/owner/channels/{channel_id}/audience | Owner/Admin reads explicitly granted public account profiles |
 
 All routes require a session. Mutations require exact allowed Origin and the session's
@@ -29,14 +29,17 @@ role or extra input: 422. Unknown registered username is 404 after owner authori
 Editors read bot metadata and source inventories, create Selected-user drafts,
 edit allowed blocks/actions and publish/rollback. Audience changes, read grants,
 page deletion and all credential/bot mutations require Owner/Admin. Team mutation
-requires Owner. There is no ownership-transfer endpoint.
+requires Owner. [Ownership transfer](PRIVACY.md) requires the current Owner’s password
+and an active Admin recipient with no owned workspace.
 
 Membership removal commits before returning. Existing authorized transactions can
 finish before that commit; subsequent requests recheck the current membership.
 Private source reads and pending requests also honor memberships. Removal preserves
 independent public/read grants; otherwise unACKed requests cancel and ACKed requests
-remain unknown for reconciliation. Account deactivation continues to disable its
-owned workspace and remove its memberships.
+remain unknown for reconciliation. Account deletion requires prior ownership transfer; it removes personal
+memberships without disabling the transferred workspace.
 
 Migration 006 only expands the existing role constraint and adds a sequence/index
 for paginated member lookup; old owner identities and existing bot keys are preserved.
+
+D46 supersedes immutable ownership in ADR-0009; see [ADR-0017](../adr/0017-personal-data-and-transfer.md).

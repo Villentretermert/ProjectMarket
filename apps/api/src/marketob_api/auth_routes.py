@@ -1,7 +1,7 @@
 """Local identity endpoints; every successful mutation commits before responding."""
 
 import time
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 
 from fastapi import APIRouter, Query, Request, Response
 from psycopg.errors import UniqueViolation
@@ -48,6 +48,10 @@ class BusinessProfile(ClosedModel):
 
 class ConfirmPassword(ClosedModel):
     password: SecretStr = Field(min_length=12, max_length=128)
+
+
+class DeleteAccount(ConfirmPassword):
+    confirmation: Literal["DELETE"]
 
 
 class Empty(ClosedModel):
@@ -152,7 +156,7 @@ def router(settings: Settings) -> APIRouter:
             return {"org_id": row["org_id"], "name": row["name"], "role": "owner"}
 
     @api.delete("/account", status_code=204)
-    def delete_account(body: ConfirmPassword, request: Request, response: Response) -> None:
+    def delete_account(body: DeleteAccount, request: Request, response: Response) -> None:
         auth_attempt(request)
         with database.transaction() as connection:
             current = authenticate(connection, request, settings)
@@ -162,36 +166,38 @@ def router(settings: Settings) -> APIRouter:
             ).fetchone()
             assert row is not None
             if not verify_password(row["password_hash"], body.password.get_secret_value()):
-                raise ApiError(401, "invalid_credentials", "Password verification failed.")
-            connection.execute(
-                "SELECT org_id FROM organizations WHERE owner_user_id=%s FOR NO KEY UPDATE",
+                raise ApiError(403, "password_confirmation_failed", "Password verification failed.")
+            owned = connection.execute(
+                "SELECT org_id FROM organizations WHERE owner_user_id=%s AND active "
+                "FOR NO KEY UPDATE",
                 (current.user_id,),
-            )
+            ).fetchall()
+            if owned:
+                raise ApiError(
+                    409,
+                    "ownership_transfer_required",
+                    "Transfer ownership of your workspace in Studio before deleting your account.",
+                )
             connection.execute("DELETE FROM sessions WHERE user_id=%s", (current.user_id,))
             connection.execute("DELETE FROM grants WHERE user_id=%s", (current.user_id,))
-            connection.execute(
-                "UPDATE channel_access SET deleted_at=now(),published=false WHERE org_id IN "
-                "(SELECT org_id FROM organizations WHERE owner_user_id=%s)",
-                (current.user_id,),
-            )
-            connection.execute(
-                "UPDATE organizations SET active=false WHERE owner_user_id=%s",
-                (current.user_id,),
-            )
             connection.execute("DELETE FROM memberships WHERE user_id=%s", (current.user_id,))
+            # Shared templates reference personal pages; erase them first. Other users' imports
+            # are independent layouts and remain governed by their own source permissions.
+            for table in (
+                "shared_templates",
+                "personal_pages",
+                "favorites",
+                "favorite_state",
+                "event_preferences",
+            ):
+                connection.execute("DELETE FROM " + table + " WHERE user_id=%s", (current.user_id,))
             connection.execute(
                 "UPDATE users SET deleted_at=now(),display_name='Deleted user',password_hash=NULL "
                 "WHERE user_id=%s",
                 (current.user_id,),
             )
-            owned = connection.execute(
-                "SELECT channel_id FROM channel_access WHERE org_id IN "
-                "(SELECT org_id FROM organizations WHERE owner_user_id=%s)",
-                (current.user_id,),
-            ).fetchall()
-            for source in owned:
-                reconcile_access(connection, source["channel_id"], disabled=True)
             reconcile_user(connection, current.user_id)
+            connection.execute("DELETE FROM change_outbox WHERE user_id=%s", (current.user_id,))
             invalidate_access(connection)
         response.delete_cookie(
             COOKIE,

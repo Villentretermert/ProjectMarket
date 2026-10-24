@@ -106,7 +106,7 @@ def main() -> None:
             "private access, rollback, delete"
         )
     finally:
-        owner.call("DELETE", "/v1/account", {"password": password}, expected=204)
+        owner.retire_test_workspace()
 
 
 if __name__ == "__main__":

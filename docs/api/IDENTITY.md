@@ -1,9 +1,10 @@
 # Local identity API — PM-006
 
 The pilot uses local accounts without Google, email or Firebase. The accepted
-protocol is extended additively as **1.0.8**: the existing wire `schema_version`
-remains `1.0`. Runtime `/openapi.json` lists implemented operations; the complete
-planned contract remains in `packages/contracts` (87 schemas / 64 operations).
+contract revision is **1.1.0**; bot wire `schema_version` remains `1.0`.
+Account deletion now requires `confirmation: DELETE` and prior ownership transfer.
+See [Privacy API](PRIVACY.md). Runtime `/openapi.json` lists implemented operations;
+`packages/contracts` contains 96 schemas / 67 specified operations.
 
 ## Registration and sessions
 
@@ -56,7 +57,7 @@ deleted accounts are unavailable. There is no unauthenticated user directory.
 - `PUT /v1/owner/channels/{channel_id}/grants/{user_id}` with `{}` grants read
   access to an existing user. Repetition is idempotent.
 - `DELETE` revokes the grant transactionally and writes an access invalidation
-  to the outbox. Repeated deletion by the owner is harmless.
+  via an atomic delivery-state marker (ADR-0016). Repeated deletion by the owner is harmless.
 - `GET /v1/owner/channels/{channel_id}/grants?limit=100` lists owned grants using
   a signed 60-second fixed scan. Cursor binding includes the current session and
   channel; altered/foreign cursors fail, expired scans must restart.
@@ -75,14 +76,12 @@ on revoke will be added transactionally in PM-010 before those routes are enable
 
 ## Account deactivation policy
 
-`DELETE /v1/account` requires current session/CSRF/origin plus `{"password":"…"}`.
-The transaction revokes all sessions, clears password hash and display name,
-removes memberships and received grants, and disables owned sources/workspace.
-Invalidations are recorded. The opaque user ID and reserved username remain as
-tombstones to prevent identity reuse; this is logical account deactivation,
-not physical erasure of historical business records or backups. Payload/backup
-retention and cleanup remain governed by the pilot targets and later storage tasks.
-Email recovery of a deactivated account is not implemented.
+`DELETE /v1/account` requires current session/CSRF/origin, current password and
+exact `confirmation: "DELETE"`. Active owners receive409 until they transfer the
+workspace to an existing Admin. Workspace channels and bot credentials continue
+under the new owner. Personal setup, shares, sessions/grants/memberships are erased;
+username/ID tombstone and reconciled request records remain under retention.
+See [Privacy API](PRIVACY.md) for export, deletion preview, transfer and exact limits.
 
 ## Transport and storage
 

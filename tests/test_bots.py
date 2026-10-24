@@ -193,7 +193,7 @@ def test_exchange_is_single_use_under_concurrency(settings: Settings) -> None:
         }
 
 
-def test_revoke_bot_and_account_disable_channels_and_keys(settings: Settings) -> None:
+def test_revoke_bot_disables_keys_but_transfer_preserves_other_bots(settings: Settings) -> None:
     with client(settings) as owner, client(settings) as bot:
         register(owner, "alice")
         org_id = business(owner)
@@ -220,12 +220,18 @@ def test_revoke_bot_and_account_disable_channels_and_keys(settings: Settings) ->
             assert connection.execute(
                 "SELECT watermark,retention_floor FROM delivery_state"
             ).fetchone() == {"watermark": 1, "retention_floor": 1}
+        from tests.test_identity import transfer_for_test
+
         another = create_bot(owner)
         active = exchange(bot, another["registration_credential"])["api_key"]
+        transfer_for_test(owner, settings)
         assert (
-            owner.request("DELETE", "/v1/account", json={"password": PASSWORD}).status_code == 204
+            owner.request(
+                "DELETE", "/v1/account", json={"password": PASSWORD, "confirmation": "DELETE"}
+            ).status_code
+            == 204
         )
-        assert bot.get("/v1/bot/identity", headers=auth(active)).status_code == 401
+        assert bot.get("/v1/bot/identity", headers=auth(active)).status_code == 200
 
 
 def test_metadata_scans_and_quotas_survive_new_instance(settings: Settings) -> None:

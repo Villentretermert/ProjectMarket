@@ -119,9 +119,19 @@ def collection(name):
     return cname
 
 
-define('Workspace', {'org_id':ID,'name':text('Workspace name.',80),'role':enum('Current server-derived role.','owner','admin','editor')}, 'One immutable owner; members can belong to several workspaces.')
+define('Workspace', {'org_id':ID,'name':text('Workspace name.',80),'role':enum('Current server-derived role.','owner','admin','editor')}, 'One current owner; password-confirmed transfer is separate from member role changes.')
 define('WorkspaceMember', {**SCHEMAS['User']['properties'],'role':enum('Workspace role.','owner','admin','editor')}, 'Registered local account in this workspace.')
-define('MemberWrite', {'username':ref('UserUsername'),'role':enum('Owner-assigned role; ownership transfer is not supported.','admin','editor')}, 'Add or change a member by exact registered username; Owner only.')
+define('MemberWrite', {'username':ref('UserUsername'),'role':enum('Owner-assigned role; use the separate endpoint for ownership transfer.','admin','editor')}, 'Add or change a member by exact registered username; Owner only.')
+
+define('DeleteAccount', {**SCHEMAS['ConfirmPassword']['properties'],'confirmation':enum('Exact deletion confirmation.','DELETE')}, 'Re-authenticate and explicitly confirm account deletion.')
+define('TransferOwnership', {**SCHEMAS['ConfirmPassword']['properties'],'username':ref('UserUsername')}, 'Current Owner transfers to an active Admin who owns no workspace.')
+define('OwnershipTransfer', {'org_id':ID,'owner_user_id':ID,'role':enum('Former owner role after transfer.','admin')}, 'Channels and credentials remain with the workspace.')
+define('OwnedWorkspace', {'org_id':ID,'name':text('Workspace name.',80)}, 'Workspace blocking account deletion.')
+define('DeletionPreview', {'owned_workspaces':array(ref('OwnedWorkspace'),'Transfer these workspaces before deleting.',1),'can_delete':{'type':'boolean','description':'False while the account owns an active workspace.'},'personal_pages':number('Active personal pages.',0,20),'unresolved_requests':number('Nonterminal requests retained for reconciliation.')}, 'Informational preview; deletion rechecks current ownership.')
+define('ExportProfile', {**SCHEMAS['User']['properties'],'created_at':TIME}, 'Own public profile and creation date.')
+define('ExportFavorite', {'channel_id':ID,'position':number('Manual order.'),'seen_data':number('Last seen data revision.'),'seen_template':number('Last seen template revision.')}, 'Reference only, no source title or data.')
+define('ExportRequest', {k:v for k,v in SCHEMAS['ActionRequest']['properties'].items() if k!='summary'} | {'observed_source_revision':REVISION,'quantity':{'type':'integer','const':1,'description':'One unit in the local pilot.'},'acknowledged_at':{'oneOf':[TIME,{'type':'null'}],'description':'Durable bot receipt time, or null.'},'terminal_at':{'oneOf':[TIME,{'type':'null'}],'description':'Terminal result time, or null for unresolved requests.'}}, 'Own request metadata; excludes source contents and bot summaries.')
+
 PATHS={}
 def endpoint(method,path,operation,description,request=None,response=None,status=200,auth="UserSession",scope=None,listing=False,params=()):
     parameters=[]
@@ -156,7 +166,7 @@ endpoint('get','/v1/workspaces/{org_id}/members','listWorkspaceMembers','List me
 endpoint('put','/v1/workspaces/{org_id}/members','setWorkspaceMember','Owner adds or changes Admin/Editor by exact username.','MemberWrite','WorkspaceMember')
 endpoint('delete','/v1/workspaces/{org_id}/members/{user_id}','removeWorkspaceMember','Owner revokes membership; independent public/read grants remain valid. The owner cannot be removed.',status=204)
 endpoint('put','/v1/account/business-profile','enableBusinessProfile','Enable or rename a personal B2B organization; owner membership is server-assigned.','BusinessProfileWrite','BusinessProfile')
-endpoint('delete','/v1/account','deactivateAccount','Re-authenticate, revoke sessions, disable owned sources and remove memberships/grants. Username remains reserved.','ConfirmPassword',status=204)
+endpoint('delete','/v1/account','deactivateAccount','Require password and DELETE; block owners until transfer. Remove personal setup and sessions; retain username/ID and reconciled request records.','DeleteAccount',status=204)
 endpoint('get','/v1/users/by-username/{username}','lookupRegisteredUser','Exact username lookup for a signed-in B2B owner; returns only public profile metadata.',response='User')
 endpoint('post','/v1/bots','createBot','Create an owned bot and issue a one-time registration credential.','BotCreate','Registration',201)
 endpoint('get','/v1/bots','listBots','List owned bots.',response=collection('Bot'),listing=True)
@@ -238,6 +248,12 @@ for workspace_path, workspace_method in (('/v1/bots','get'),('/v1/bots','post'),
     PATHS[workspace_path][workspace_method]['parameters'].append({'name':'X-Workspace-ID','in':'header','required':False,'schema':ID,'description':'Select a current workspace membership. Omission uses your personal owner workspace. Never grants access; IDs in resource routes independently resolve and verify their workspace.'})
 
 
+define('PersonalExportPage', {'schema_version':VERSION,'section':enum('Export section.','profile','favorites','spaces','requests','events'),'items':array({'oneOf':[ref('ExportProfile'),ref('ExportFavorite'),ref('PersonalPage'),ref('ExportRequest'),ref('Preference')]},'Explicit personal projection; never credentials or source contents.',100),'next_cursor':{'oneOf':[CURSOR,{'type':'null'}],'description':'Continue this section, or null when complete.'},'exported_at':TIME}, 'Session-bound export page; requests and Events use 10-minute fixed upper scans. Not a cross-section point-in-time snapshot.')
+endpoint('get','/v1/account/export','exportPersonalData','Read personal data in explicit sections. Complete every cursor before assembling a JSON download.',response='PersonalExportPage',listing=True,params=({'name':'section','in':'query','schema':enum('Section; default profile.','profile','favorites','spaces','requests','events')},))
+endpoint('get','/v1/account/deletion-preview','previewAccountDeletion','Count own spaces and unresolved requests; list owned workspaces that must be transferred.',response='DeletionPreview')
+endpoint('post','/v1/workspaces/{org_id}/ownership','transferOwnership','Current Owner confirms password to transfer to an active Admin with no owned workspace. Former Owner becomes Admin.','TransferOwnership','OwnershipTransfer')
+
+
 def replace_refs(value):
     if isinstance(value,dict):
         return {k:(v.replace('#/$defs/','#/components/schemas/') if k=='$ref' else replace_refs(v)) for k,v in value.items()}
@@ -247,7 +263,7 @@ def replace_refs(value):
 
 def artifacts():
     bundle={"$schema":"https://json-schema.org/draft/2020-12/schema", "$id":"urn:marketob:contract:1.0", "$defs":SCHEMAS}
-    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.0.8","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
+    spec={"openapi":"3.1.1","info":{"title":"MarkeTOB local pilot API","version":"1.1.0","description":"PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."},"servers":[{"url":"http://127.0.0.1:8000","description":"Loopback development only; remote deployments require HTTPS."}],"paths":PATHS,"components":{"schemas":SCHEMAS,"securitySchemes":{"UserSession":{"type":"apiKey","in":"cookie","name":"marketob_session","description":"HttpOnly server session; mutations require X-CSRF-Token and exact allowed Origin."},"BotBearer":{"type":"http","scheme":"bearer","description":"Per-bot operational key; never a user session or bootstrap credential."},"RegistrationBearer":{"type":"http","scheme":"bearer","description":"Single-use 15-minute registration credential, exchange endpoint only."}}}}
     return {"schemas.json":bundle,"openapi.json":replace_refs(spec)}
 
 

@@ -117,7 +117,7 @@ def smoke(origin: str, mode: str, report: Path) -> None:
         report.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(result))
     finally:
-        owner.call("DELETE", "/v1/account", {"password": credentials["password"]}, expected=204)
+        owner.retire_test_workspace()
         # Only these randomly named disposable volumes belong to this invocation.
         if mode == "docker":
             assert volumes.startswith("marketob-test-") and len(volumes) == 46

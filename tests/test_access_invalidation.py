@@ -68,7 +68,7 @@ def set_visibility(owner: TestClient, source: dict[str, Any], visibility: str) -
 
 @pytest.mark.parametrize(
     "operation",
-    ["grant", "member", "demote", "reader", "owner", "bot", "channel", "publish", "rollback"],
+    ["grant", "member", "demote", "reader", "bot", "channel", "publish", "rollback"],
 )
 def test_permission_changes_commit_with_full_pending_queue(
     settings: Settings, shop: tuple[Any, ...], operation: str
@@ -104,9 +104,9 @@ def test_permission_changes_commit_with_full_pending_queue(
         result = owner.put(
             f"/v1/workspaces/{org}/members", json={"username": "customer", "role": "editor"}
         )
-    elif operation in {"reader", "owner"}:
-        result = (reader if operation == "reader" else owner).request(
-            "DELETE", "/v1/account", json={"password": PASSWORD}
+    elif operation == "reader":
+        result = reader.request(
+            "DELETE", "/v1/account", json={"password": PASSWORD, "confirmation": "DELETE"}
         )
     elif operation == "bot":
         result = owner.delete("/v1/bots/" + source["bot_id"])
@@ -128,7 +128,7 @@ def test_permission_changes_commit_with_full_pending_queue(
             "retention_floor": marker_before["watermark"] + 1,
         }
         assert connection.execute("SELECT count(*) n FROM change_outbox").fetchone() == {
-            "n": before
+            "n": before - (2 if operation == "reader" else 0)
         }
         states = connection.execute(
             "SELECT action_request_id,state FROM action_requests"

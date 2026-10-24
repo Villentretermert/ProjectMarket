@@ -1,19 +1,20 @@
-"""Self-service teams for existing local accounts, with an immutable pilot owner."""
+"""Self-service teams and password-confirmed ownership transfer to an existing Admin."""
 
 import time
 from typing import Any, Literal
 
 from fastapi import APIRouter, Request
+from psycopg.errors import UniqueViolation
 from pydantic import Field
 
 from marketob_api.access_changes import invalidate_access
-from marketob_api.auth_routes import ClosedModel
+from marketob_api.auth_routes import ClosedModel, ConfirmPassword
 from marketob_api.channels import Cursor, Limit, scan_rows
 from marketob_api.config import Settings
 from marketob_api.cursors import Scan, decode_scan, encode_scan, session_binding
 from marketob_api.database import Database
 from marketob_api.errors import ApiError
-from marketob_api.identity import authenticate
+from marketob_api.identity import authenticate, digest, rate_limit, request_origin, verify_password
 from marketob_api.request_state import reconcile_access
 from marketob_api.workspace_access import workspace
 
@@ -26,9 +27,74 @@ class UsernameMember(MemberWrite):
     username: str = Field(min_length=3, max_length=40, pattern=r"^[a-z0-9_-]+$")
 
 
+class TransferOwnership(ConfirmPassword):
+    username: str = Field(min_length=3, max_length=40, pattern=r"^[a-z0-9_-]+$")
+
+
 def router(settings: Settings) -> APIRouter:
     api = APIRouter(prefix="/v1", tags=["workspaces"])
     database = Database(settings)
+
+    @api.post("/workspaces/{org_id}/ownership")
+    def transfer_ownership(
+        org_id: str, body: TransferOwnership, request: Request
+    ) -> dict[str, str]:
+        request_origin(request, settings, unsafe=True)
+        peer = request.client.host if request.client else "unknown"
+        rate_limit(database, "auth:" + digest(peer), settings.auth_rate_limit)
+        try:
+            with database.transaction() as connection:
+                current = authenticate(connection, request, settings)
+                user = connection.execute(
+                    "SELECT password_hash FROM users WHERE user_id=%s FOR NO KEY UPDATE",
+                    (current.user_id,),
+                ).fetchone()
+                assert user is not None
+                if not verify_password(user["password_hash"], body.password.get_secret_value()):
+                    raise ApiError(
+                        403, "password_confirmation_failed", "Password verification failed."
+                    )
+                # The recipient lock serializes transfer with deletion/business-profile creation.
+                target = connection.execute(
+                    "SELECT user_id FROM users WHERE username=%s AND deleted_at IS NULL "
+                    "FOR NO KEY UPDATE",
+                    (body.username,),
+                ).fetchone()
+                workspace(connection, org_id, current.user_id, ("owner",), exclusive=True)
+                if target is None or target["user_id"] == current.user_id:
+                    raise ApiError(409, "transfer_target_invalid", "Choose another active Admin.")
+                member = connection.execute(
+                    "SELECT role FROM memberships WHERE org_id=%s AND user_id=%s",
+                    (org_id, target["user_id"]),
+                ).fetchone()
+                if not member or member["role"] != "admin":
+                    raise ApiError(409, "transfer_target_invalid", "Choose another active Admin.")
+                # Preserve the existing one-owned-workspace limit, including legacy tombstones.
+                if connection.execute(
+                    "SELECT 1 FROM organizations WHERE owner_user_id=%s",
+                    (target["user_id"],),
+                ).fetchone():
+                    raise ApiError(
+                        409, "workspace_owner_limit", "This Admin already owns a workspace."
+                    )
+                connection.execute(
+                    "UPDATE memberships SET role='admin' WHERE org_id=%s AND user_id=%s",
+                    (org_id, current.user_id),
+                )
+                connection.execute(
+                    "UPDATE memberships SET role='owner' WHERE org_id=%s AND user_id=%s",
+                    (org_id, target["user_id"]),
+                )
+                connection.execute(
+                    "UPDATE organizations SET owner_user_id=%s WHERE org_id=%s",
+                    (target["user_id"], org_id),
+                )
+                invalidate_access(connection)
+                return {"org_id": org_id, "owner_user_id": target["user_id"], "role": "admin"}
+        except UniqueViolation:
+            raise ApiError(
+                409, "workspace_owner_limit", "This Admin already owns a workspace."
+            ) from None
 
     @api.get("/workspaces")
     def list_workspaces(
@@ -107,7 +173,7 @@ def router(settings: Settings) -> APIRouter:
                 raise ApiError(404, "object_not_found", "The registered user is unavailable.")
             if user["user_id"] == org["owner_user_id"]:
                 raise ApiError(
-                    409, "owner_protected", "The pilot workspace owner cannot be changed."
+                    409, "owner_protected", "Use ownership transfer to change the workspace owner."
                 )
             changed = connection.execute(
                 "INSERT INTO memberships(org_id,user_id,role) VALUES (%s,%s,%s) "

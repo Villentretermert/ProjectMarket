@@ -16,7 +16,7 @@ export function channelLink(channel) {
 function account() {
   const host = document.querySelector('#account'); host.replaceChildren();
   if (!session) host.append(link('Sign in', '#/login'));
-  else host.append(el('span', {}, session.user.display_name), button('Sign out', async () => {
+  else host.append(el('span', {}, session.user.display_name), link('Data & privacy','#/privacy'), button('Sign out', async () => {
     try { await api('/auth/session', {method:'DELETE'}); clearRequests(); setSession(null); navigate('/login'); }
     catch (error) { toast(error.message); }
   }));
@@ -60,6 +60,7 @@ routes.set('space', async parts => (await import('./space.js')).space(parts,{nav
 routes.set('import', async parts => (await import('./sharing.js')).importTemplate(parts,{navigate}));
 routes.set('channels', () => channels(openChannelForm,refresh));
 routes.set('studio', async parts => (await import('./studio.js')).studio(parts,{refresh,navigate}));
+routes.set('privacy', async () => (await import('./privacy.js')).privacy({refresh,navigate}));
 routes.set('channel', async parts => {
   const slug=parts[1];
   if (!/^[a-z0-9-]{3,80}$/.test(slug || '')) throw new Error('Invalid channel link.');

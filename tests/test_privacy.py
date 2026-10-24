@@ -45,10 +45,15 @@ def test_deleted_user_preferences_and_hints_removed_without_losing_request(
     assert bot.post(event_path(event, "ack"), json={}).status_code == 200
     choose(customer, source["channel_id"])
     choose(owner, source["channel_id"])
-    assert customer.request("DELETE", "/v1/account", json={"password": PASSWORD}).status_code == 204
+    assert (
+        customer.request(
+            "DELETE", "/v1/account", json={"password": PASSWORD, "confirmation": "DELETE"}
+        ).status_code
+        == 204
+    )
     database = Database(settings)
     result = prune_private_metadata(database)
-    assert result["privacy_preferences"] == 1 and result["privacy_updates"] >= 1
+    assert result == {"privacy_preferences": 0, "privacy_updates": 0}
     with database.transaction() as connection:
         assert not connection.execute(
             "SELECT 1 FROM event_preferences WHERE user_id=%s", (user_id,)
@@ -135,10 +140,11 @@ def test_cleanup_is_bounded_and_covers_owner_deactivation(
         register(reader, "remaining_reader")
         choose(owner, source["channel_id"])
         choose(reader, source["channel_id"])
-        assert (
-            owner.request("DELETE", "/v1/account", json={"password": PASSWORD}).status_code == 204
-        )
         database = Database(settings)
+        # Upgrade compatibility: rows left by the pre-D46 owner-deactivation contract.
+        with database.transaction() as connection:
+            connection.execute("UPDATE organizations SET active=false")
+            connection.execute("UPDATE users SET deleted_at=now() WHERE username='alice'")
         with database.transaction() as connection:
             connection.execute(
                 "INSERT INTO change_outbox(channel_id,kind) VALUES (%s,'source.deleted')",

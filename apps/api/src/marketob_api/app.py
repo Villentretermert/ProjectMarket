@@ -19,6 +19,7 @@ from marketob_api.health import LiveStatus, ReadyStatus, database_status
 from marketob_api.ingestion import router as ingestion_router
 from marketob_api.observability import ObservationMiddleware
 from marketob_api.personal_pages import router as pages_router
+from marketob_api.privacy import router as privacy_router
 from marketob_api.sharing import router as sharing_router
 from marketob_api.teams import router as team_router
 from marketob_api.transport import ProtocolMiddleware
@@ -80,6 +81,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(pages_router(configuration))
     application.include_router(sharing_router(configuration))
     application.include_router(updates_router(configuration))
+    application.include_router(privacy_router(configuration))
 
     @application.get("/", include_in_schema=False)
     def index() -> dict[str, str]:

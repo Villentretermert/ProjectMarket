@@ -248,7 +248,7 @@ def faults(lab: Lab) -> dict[str, Any]:
             "ui_tested": False,
         }
     finally:
-        owner.call("DELETE", "/v1/account", {"password": password}, expected=204)
+        owner.retire_test_workspace()
         for kind in ("catalog", "news"):
             (directory / (kind + ".env")).unlink(missing_ok=True)
 

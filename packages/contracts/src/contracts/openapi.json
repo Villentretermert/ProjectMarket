@@ -2,7 +2,7 @@
   "openapi": "3.1.1",
   "info": {
     "title": "MarkeTOB local pilot API",
-    "version": "1.0.8",
+    "version": "1.1.0",
     "description": "PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."
   },
   "servers": [
@@ -1813,7 +1813,7 @@
     "/v1/account": {
       "delete": {
         "operationId": "deactivateAccount",
-        "summary": "Re-authenticate, revoke sessions, disable owned sources and remove memberships/grants. Username remains reserved.",
+        "summary": "Require password and DELETE; block owners until transfer. Remove personal setup and sessions; retain username/ID and reconciled request records.",
         "security": [
           {
             "UserSession": []
@@ -1834,7 +1834,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Successful operation. Re-authenticate, revoke sessions, disable owned sources and remove memberships/grants. Username remains reserved.",
+            "description": "Successful operation. Require password and DELETE; block owners until transfer. Remove personal setup and sessions; retain username/ID and reconciled request records.",
             "headers": {
               "Cache-Control": {
                 "schema": {
@@ -1987,7 +1987,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ConfirmPassword"
+                "$ref": "#/components/schemas/DeleteAccount"
               }
             }
           }
@@ -11955,6 +11955,565 @@
           }
         }
       }
+    },
+    "/v1/account/export": {
+      "get": {
+        "operationId": "exportPersonalData",
+        "summary": "Read personal data in explicit sections. Complete every cursor before assembling a JSON download.",
+        "security": [
+          {
+            "UserSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "description": "Maximum results per page."
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
+            }
+          },
+          {
+            "name": "section",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "profile",
+                "favorites",
+                "spaces",
+                "requests",
+                "events"
+              ],
+              "description": "Section; default profile."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation. Read personal data in explicit sections. Complete every cursor before assembling a JSON download.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                },
+                "description": "Private/session/secret responses must not be cached by shared intermediaries."
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalExportPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See protocol error table for HTTP 400.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See protocol error table for HTTP 401.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See protocol error table for HTTP 403.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See protocol error table for HTTP 404.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See protocol error table for HTTP 409.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "See protocol error table for HTTP 410.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "See protocol error table for HTTP 413.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "See protocol error table for HTTP 415.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "See protocol error table for HTTP 422.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See protocol error table for HTTP 429.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "description": "Seconds before retry."
+              }
+            }
+          },
+          "500": {
+            "description": "See protocol error table for HTTP 500.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See protocol error table for HTTP 503.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/account/deletion-preview": {
+      "get": {
+        "operationId": "previewAccountDeletion",
+        "summary": "Count own spaces and unresolved requests; list owned workspaces that must be transferred.",
+        "security": [
+          {
+            "UserSession": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation. Count own spaces and unresolved requests; list owned workspaces that must be transferred.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                },
+                "description": "Private/session/secret responses must not be cached by shared intermediaries."
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletionPreview"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See protocol error table for HTTP 400.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See protocol error table for HTTP 401.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See protocol error table for HTTP 403.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See protocol error table for HTTP 404.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See protocol error table for HTTP 409.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "See protocol error table for HTTP 410.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "See protocol error table for HTTP 413.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "See protocol error table for HTTP 415.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "See protocol error table for HTTP 422.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See protocol error table for HTTP 429.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "description": "Seconds before retry."
+              }
+            }
+          },
+          "500": {
+            "description": "See protocol error table for HTTP 500.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See protocol error table for HTTP 503.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workspaces/{org_id}/ownership": {
+      "post": {
+        "operationId": "transferOwnership",
+        "summary": "Current Owner confirms password to transfer to an active Admin with no owned workspace. Former Owner becomes Admin.",
+        "security": [
+          {
+            "UserSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "Opaque stable identifier; never a credential.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Token returned by the current session endpoint."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation. Current Owner confirms password to transfer to an active Admin with no owned workspace. Former Owner becomes Admin.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                },
+                "description": "Private/session/secret responses must not be cached by shared intermediaries."
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnershipTransfer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See protocol error table for HTTP 400.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See protocol error table for HTTP 401.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See protocol error table for HTTP 403.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See protocol error table for HTTP 404.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See protocol error table for HTTP 409.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "See protocol error table for HTTP 410.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "See protocol error table for HTTP 413.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "See protocol error table for HTTP 415.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "See protocol error table for HTTP 422.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See protocol error table for HTTP 429.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "description": "Seconds before retry."
+              }
+            }
+          },
+          "500": {
+            "description": "See protocol error table for HTTP 500.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See protocol error table for HTTP 503.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferOwnership"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -14361,7 +14920,7 @@
       },
       "Workspace": {
         "type": "object",
-        "description": "One immutable owner; members can belong to several workspaces.",
+        "description": "One current owner; password-confirmed transfer is separate from member role changes.",
         "properties": {
           "org_id": {
             "type": "string",
@@ -14448,12 +15007,347 @@
               "admin",
               "editor"
             ],
-            "description": "Owner-assigned role; ownership transfer is not supported."
+            "description": "Owner-assigned role; use the separate endpoint for ownership transfer."
           }
         },
         "required": [
           "username",
           "role"
+        ],
+        "additionalProperties": false
+      },
+      "DeleteAccount": {
+        "type": "object",
+        "description": "Re-authenticate and explicitly confirm account deletion.",
+        "properties": {
+          "password": {
+            "type": "string",
+            "minLength": 12,
+            "maxLength": 128,
+            "description": "Local password; write-only, never logged.",
+            "writeOnly": true
+          },
+          "confirmation": {
+            "type": "string",
+            "enum": [
+              "DELETE"
+            ],
+            "description": "Exact deletion confirmation."
+          }
+        },
+        "required": [
+          "password",
+          "confirmation"
+        ],
+        "additionalProperties": false
+      },
+      "TransferOwnership": {
+        "type": "object",
+        "description": "Current Owner transfers to an active Admin who owns no workspace.",
+        "properties": {
+          "password": {
+            "type": "string",
+            "minLength": 12,
+            "maxLength": 128,
+            "description": "Local password; write-only, never logged.",
+            "writeOnly": true
+          },
+          "username": {
+            "$ref": "#/components/schemas/UserUsername"
+          }
+        },
+        "required": [
+          "password",
+          "username"
+        ],
+        "additionalProperties": false
+      },
+      "OwnershipTransfer": {
+        "type": "object",
+        "description": "Channels and credentials remain with the workspace.",
+        "properties": {
+          "org_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "owner_user_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "admin"
+            ],
+            "description": "Former owner role after transfer."
+          }
+        },
+        "required": [
+          "org_id",
+          "owner_user_id",
+          "role"
+        ],
+        "additionalProperties": false
+      },
+      "OwnedWorkspace": {
+        "type": "object",
+        "description": "Workspace blocking account deletion.",
+        "properties": {
+          "org_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Workspace name."
+          }
+        },
+        "required": [
+          "org_id",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "DeletionPreview": {
+        "type": "object",
+        "description": "Informational preview; deletion rechecks current ownership.",
+        "properties": {
+          "owned_workspaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OwnedWorkspace"
+            },
+            "minItems": 0,
+            "maxItems": 1,
+            "uniqueItems": false,
+            "description": "Transfer these workspaces before deleting."
+          },
+          "can_delete": {
+            "type": "boolean",
+            "description": "False while the account owns an active workspace."
+          },
+          "personal_pages": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 20,
+            "description": "Active personal pages."
+          },
+          "unresolved_requests": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Nonterminal requests retained for reconciliation."
+          }
+        },
+        "required": [
+          "owned_workspaces",
+          "can_delete",
+          "personal_pages",
+          "unresolved_requests"
+        ],
+        "additionalProperties": false
+      },
+      "ExportProfile": {
+        "type": "object",
+        "description": "Own public profile and creation date.",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "username": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 40,
+            "description": "Unique local username.",
+            "pattern": "^[a-z0-9_-]+$"
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "User-selected public display name."
+          },
+          "created_at": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "description": "RFC3339 timestamp with timezone; server returns UTC.",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "user_id",
+          "username",
+          "display_name",
+          "created_at"
+        ],
+        "additionalProperties": false
+      },
+      "ExportFavorite": {
+        "type": "object",
+        "description": "Reference only, no source title or data.",
+        "properties": {
+          "channel_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Manual order."
+          },
+          "seen_data": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Last seen data revision."
+          },
+          "seen_template": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Last seen template revision."
+          }
+        },
+        "required": [
+          "channel_id",
+          "position",
+          "seen_data",
+          "seen_template"
+        ],
+        "additionalProperties": false
+      },
+      "ExportRequest": {
+        "type": "object",
+        "description": "Own request metadata; excludes source contents and bot summaries.",
+        "properties": {
+          "action_request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "channel_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "resource_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "action_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Opaque stable identifier; never a credential.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "processing",
+              "confirmed",
+              "failed",
+              "unknown",
+              "cancelled"
+            ],
+            "description": "Business state; unknown is an unresolved display state, never success."
+          },
+          "created_at": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "description": "RFC3339 timestamp with timezone; server returns UTC.",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "description": "RFC3339 timestamp with timezone; server returns UTC.",
+            "format": "date-time"
+          },
+          "observed_source_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Monotonic revision; compare within the referenced resource."
+          },
+          "quantity": {
+            "type": "integer",
+            "const": 1,
+            "description": "One unit in the local pilot."
+          },
+          "acknowledged_at": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40,
+                "description": "RFC3339 timestamp with timezone; server returns UTC.",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Durable bot receipt time, or null."
+          },
+          "terminal_at": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40,
+                "description": "RFC3339 timestamp with timezone; server returns UTC.",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Terminal result time, or null for unresolved requests."
+          }
+        },
+        "required": [
+          "action_request_id",
+          "channel_id",
+          "resource_id",
+          "action_id",
+          "state",
+          "created_at",
+          "updated_at",
+          "observed_source_revision",
+          "quantity",
+          "acknowledged_at",
+          "terminal_at"
         ],
         "additionalProperties": false
       },
@@ -15231,6 +16125,83 @@
         "required": [
           "items",
           "next_cursor"
+        ],
+        "additionalProperties": false
+      },
+      "PersonalExportPage": {
+        "type": "object",
+        "description": "Session-bound export page; requests and Events use 10-minute fixed upper scans. Not a cross-section point-in-time snapshot.",
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "1.0",
+            "description": "Wire schema version; unsupported values are rejected."
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "profile",
+              "favorites",
+              "spaces",
+              "requests",
+              "events"
+            ],
+            "description": "Export section."
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ExportProfile"
+                },
+                {
+                  "$ref": "#/components/schemas/ExportFavorite"
+                },
+                {
+                  "$ref": "#/components/schemas/PersonalPage"
+                },
+                {
+                  "$ref": "#/components/schemas/ExportRequest"
+                },
+                {
+                  "$ref": "#/components/schemas/Preference"
+                }
+              ]
+            },
+            "minItems": 0,
+            "maxItems": 100,
+            "uniqueItems": false,
+            "description": "Explicit personal projection; never credentials or source contents."
+          },
+          "next_cursor": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024,
+                "description": "Opaque, caller-bound scan cursor. Never an acknowledgement."
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Continue this section, or null when complete."
+          },
+          "exported_at": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "description": "RFC3339 timestamp with timezone; server returns UTC.",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "schema_version",
+          "section",
+          "items",
+          "next_cursor",
+          "exported_at"
         ],
         "additionalProperties": false
       }

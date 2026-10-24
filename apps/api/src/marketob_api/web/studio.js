@@ -51,7 +51,7 @@ export async function studio(parts,{refresh,navigate}) {
     const members=await all('/workspaces/'+org.org_id+'/members');
     root.append(el('section',{class:'panel'},el('h2',{},'Workspace team'),
       message('Owner manages the team. Admin manages bots, keys and access. Editor designs and publishes pages.'),
-      el('p',{class:'notice'},'The pilot has one permanent Owner. Ownership transfer is not available.')));
+      el('p',{class:'notice'},'One Owner per workspace. Transfer ownership before deleting the Owner’s account.')));
     if(org.role==='owner') {
       const name=field('Registered username',{required:true,pattern:'[a-z0-9_-]+',maxlength:40});
       const role=choose('Team role',[['editor','Editor'],['admin','Admin']],'editor');
@@ -60,6 +60,28 @@ export async function studio(parts,{refresh,navigate}) {
         await api('/workspaces/'+org.org_id+'/members',{method:'PUT',body:{username:name.input.value,role:role.input.value}});
         if(active())refresh();
       }).finally(()=>{submit.disabled=false;});}},name.node,role.node,submit));
+      const admins=members.filter(m=>m.role==='admin');
+      const transfer=el('section',{class:'panel'},el('h2',{},'Transfer ownership'),
+        message('The selected Admin becomes Owner. You become Admin. Channels, bots and keys continue working. The recipient must not already own a workspace.'));
+      if(admins.length){
+        const target=choose('New owner',admins.map(m=>[m.username,'@'+m.username]),admins[0].username);
+        const password=field('Current password for transfer',{type:'password',required:true,minlength:12,maxlength:128,autocomplete:'current-password'});
+        const send=el('button',{type:'submit',class:'danger'},'Review transfer');
+        window.addEventListener('route-leave',()=>{password.input.value='';},{once:true});
+        transfer.append(el('form',{onsubmit:event=>{
+          event.preventDefault();const username=target.input.value;
+          const dialog=modal('Transfer workspace to @'+username+'?',message('Only the new Owner will manage the team. You will remain an Admin until you leave or delete your account.'),close=>[
+            button('Transfer ownership now',event=>{
+              event.currentTarget.disabled=true;send.disabled=true;
+              run(async()=>{
+                await api('/workspaces/'+org.org_id+'/ownership',{method:'POST',body:{username,password:password.input.value}});
+                close();if(active())refresh();
+              }).finally(()=>{password.input.value='';send.disabled=false;close();});
+            },{class:'danger'})]);
+          dialog.addEventListener('close',()=>{password.input.value='';});
+        }},target.node,password.node,send));
+      }else transfer.append(message('Add an existing registered user as Admin before transferring ownership.'));
+      root.append(transfer);
     }
     for(const member of members) {
       const panel=el('section',{class:'panel'},el('h3',{},member.display_name),message('@'+member.username+' · '+member.role));

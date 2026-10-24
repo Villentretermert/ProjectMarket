@@ -284,7 +284,7 @@ def test_grant_cursor_is_signed_and_bound_to_session(settings: Settings) -> None
         assert alice.get(endpoint, params={"cursor": cursor}).status_code == 400
 
 
-def test_deactivation_revokes_all_sessions_and_owned_sources(settings: Settings) -> None:
+def test_deactivation_revokes_sessions_after_ownership_transfer(settings: Settings) -> None:
     with client(settings) as alice, client(settings) as other:
         user_id = register(alice, "alice")
         source = channel(settings, business(alice), "public")
@@ -294,7 +294,10 @@ def test_deactivation_revokes_all_sessions_and_owned_sources(settings: Settings)
             ).status_code
             == 200
         )
-        response = alice.request("DELETE", "/v1/account", json={"password": PASSWORD})
+        transfer_for_test(alice, settings)
+        response = alice.request(
+            "DELETE", "/v1/account", json={"password": PASSWORD, "confirmation": "DELETE"}
+        )
         assert response.status_code == 204
         assert other.get("/v1/auth/session").status_code == 401
         assert (
@@ -304,7 +307,24 @@ def test_deactivation_revokes_all_sessions_and_owned_sources(settings: Settings)
             == 401
         )
         with Database(settings).transaction() as connection:
-            with pytest.raises(ApiError):
-                require_read(connection, source, None)
+            require_read(connection, source, None)
             row = connection.execute("SELECT * FROM users WHERE user_id=%s", (user_id,)).fetchone()
             assert row and row["password_hash"] is None and row["display_name"] == "Deleted user"
+
+
+def transfer_for_test(owner: TestClient, settings: Settings) -> None:
+    """Keep the fixture workspace active under a distinct registered successor."""
+    org = owner.get("/v1/account/business-profile").json()["org_id"]
+    name = "successor_" + uuid4().hex[:12]
+    with client(settings) as successor:
+        register(successor, name)
+        assert (
+            owner.put(
+                f"/v1/workspaces/{org}/members", json={"username": name, "role": "admin"}
+            ).status_code
+            == 200
+        )
+        result = owner.post(
+            f"/v1/workspaces/{org}/ownership", json={"username": name, "password": PASSWORD}
+        )
+        assert result.status_code == 200, result.text

@@ -40,3 +40,9 @@ auditable and migration small.
 Studio shows raw registration/operational secrets only in the issuance dialog; no
 browser storage, URLs, logs or page previews retain them. Lost issuance responses
 require a fresh registration or key rotation. Expiry banners use server key metadata.
+
+## Superseded ownership rule
+
+D46 / [ADR-0017](0017-personal-data-and-transfer.md) replaces immutable ownership and
+owner-account workspace deactivation with explicit transfer and a deletion guard.
+All other roles and source authorization remain unchanged.

@@ -188,7 +188,10 @@ def test_invalid_oversized_unknown_version_and_inactive_author(settings: Setting
         )
         valid = share(owner, page, "valid_again")
         assert (
-            owner.request("DELETE", "/v1/account", json={"password": PASSWORD}).status_code == 204
+            owner.request(
+                "DELETE", "/v1/account", json={"password": PASSWORD, "confirmation": "DELETE"}
+            ).status_code
+            == 204
         )
         assert (
             reader.post("/v1/template-imports/preview", json={"code": valid["code"]}).status_code

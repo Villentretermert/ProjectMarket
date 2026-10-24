@@ -33,7 +33,7 @@ If an issuance response is lost, renew registration or issue/rotate a new key.
 **Team:** Owner adds an existing account by username as Editor or Admin. Owner alone
 changes/removes team members. Admin manages bots, keys, audience and pages. Editor
 can design, publish and roll back within the current audience, but cannot change
-publicity or read grants. The pilot has one immutable Owner. A team member can belong
+publicity or read grants. The pilot has one current Owner. A team member can belong
 to multiple workspaces; select the workspace before working.
 
 Removing a member takes effect on later server operations immediately after commit.
@@ -45,3 +45,14 @@ content is cleared and revalidated when returning. The backend always checks cur
 
 The **Delete page** confirmation unpublishes and retains historical records; it does
 not erase source/history data. It cannot be reactivated through Studio in this pilot.
+
+**Transfer ownership:** open Team, choose an existing Admin and enter your current
+password. Review the recipient before confirming. That Admin must not already own
+a workspace. You become Admin; the new Owner controls the team. Existing bot keys
+continue to work and can be rotated by the new Owner. After a lost response,
+Refresh to inspect actual roles. Account deletion is blocked until ownership is transferred.
+
+**Data & privacy:** open the link next to Sign out. Download JSON exports your
+personal setup and request metadata. Review deletion requires current password and
+`DELETE`; the final dialog explains retained requests, username/ID and external
+copies. See [Privacy API](../api/PRIVACY.md) for the exact technical policy.

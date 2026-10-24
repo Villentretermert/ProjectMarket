@@ -126,7 +126,7 @@ def prepare(origin: str, path: Path) -> None:
             json.dump(state, file)
         print("HTTP actions before restart PASS: two requests, one pending and one ACKed")
     except BaseException:
-        owner.call("DELETE", "/v1/account", {"password": credentials["password"]}, expected=204)
+        owner.retire_test_workspace()
         raise
 
 
@@ -164,9 +164,7 @@ def recover(origin: str, path: Path) -> None:
         assert replay["state"] == "confirmed"
         print("HTTP actions restart PASS: pending/ACK recovery, confirmed/failed, dedup, status")
     finally:
-        owner.call(
-            "DELETE", "/v1/account", {"password": state["credentials"]["password"]}, expected=204
-        )
+        owner.retire_test_workspace()
         path.unlink()
 
 

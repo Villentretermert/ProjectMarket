@@ -95,7 +95,9 @@ export async function spaceAcceptance(browser,config,check){
       await page.getByRole('button',{name:'Refresh',exact:true}).click();await page.getByRole('heading',{name:'Updated pilot headline',exact:true}).waitFor();await saved();
       const deletion={schema_version:'1.0',message_id:'space_delete_'+randomUUID(),channel_id:channels.news.channel_id,resource_id:newsRecord.source.resource_id,source_revision:newsRecord.source_revision+2,occurred_at:new Date().toISOString(),kind:'delete'};
       const response=await fetch(config.origin+'/v1/bot/messages',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+newsKey},body:JSON.stringify(deletion)});assert.equal(response.status,200);
-      await page.getByRole('button',{name:'Refresh',exact:true}).click();await saved();await page.getByRole('heading',{name:'Source unavailable',exact:true}).waitFor();
+      await page.getByRole('button',{name:'Refresh',exact:true}).click();await saved();
+      // A late permission resync can temporarily hide all three blocks together.
+      await page.waitForFunction(()=>[...document.querySelectorAll('h3')].filter(n=>n.textContent==='Source unavailable').length===1&&[...document.querySelectorAll('h2')].some(n=>n.textContent==='Hand soap'));
       assert.equal(await page.getByRole('heading',{name:'Hand soap',exact:true}).count(),1);assert.equal(await page.getByRole('img').count(),1);
       const stored=await page.evaluate(()=>JSON.stringify({local:{...localStorage},session:{...sessionStorage}}));assert.ok(!stored.includes('Updated pilot headline')&&!stored.includes(newsKey));
     });

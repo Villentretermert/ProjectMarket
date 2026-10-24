@@ -78,10 +78,16 @@ def main() -> None:
     finally:
         logged_in = call("POST", "/v1/auth/login", credentials, 200)
         csrf = logged_in["csrf_token"]
-        call("DELETE", "/v1/account", {"password": credentials["password"]}, 204)
+        call(
+            "DELETE",
+            "/v1/account",
+            {"password": credentials["password"], "confirmation": "DELETE"},
+            409,
+        )
+        call("DELETE", "/v1/auth/session", None, 204)
     print(
         "HTTP identity smoke passed: register, session, business profile, "
-        "CSRF, logout, deactivation"
+        "CSRF, logout, ownership deletion guard"
     )
 
 

@@ -62,6 +62,22 @@ class Http:
             raw = response.read()
         return json.loads(raw) if raw else {}
 
+    def retire_test_workspace(self) -> None:
+        """Revoke this synthetic owner's bots and sign out; D46 forbids owner deletion.
+
+        Fixtures live in disposable test storage. Do not transfer or erase a workspace
+        just to clean up a smoke run; its owner row remains until that storage is removed.
+        """
+        cursor = None
+        while True:
+            page = self.call("GET", "/v1/bots?limit=100" + ("&cursor=" + cursor if cursor else ""))
+            for bot in page["items"]:
+                self.call("DELETE", "/v1/bots/" + bot["bot_id"], expected=204)
+            cursor = page["next_cursor"]
+            if not cursor:
+                break
+        self.call("DELETE", "/v1/auth/session", expected=204)
+
 
 def prepare(origin: str, state_path: Path, report_path: Path) -> None:
     if state_path.exists():
@@ -163,7 +179,7 @@ def prepare(origin: str, state_path: Path, report_path: Path) -> None:
         report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(report))
     except BaseException:
-        owner.call("DELETE", "/v1/account", {"password": credentials["password"]}, expected=204)
+        owner.retire_test_workspace()
         raise
 
 
@@ -183,9 +199,7 @@ def replay(origin: str, state_path: Path) -> None:
         print("HTTP ingestion restart replay, conflict and revoked-key replay checks passed")
     finally:
         owner.csrf = owner.call("POST", "/v1/auth/login", state["credentials"])["csrf_token"]
-        owner.call(
-            "DELETE", "/v1/account", {"password": state["credentials"]["password"]}, expected=204
-        )
+        owner.retire_test_workspace()
         state_path.unlink()
 
 

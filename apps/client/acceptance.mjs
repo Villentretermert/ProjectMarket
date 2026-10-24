@@ -130,5 +130,7 @@ try {
   await spaceAcceptance(browser,config,check);
   await sharingAcceptance(browser,config,check);
   await liveAcceptance(browser,config,check);
+  const {privacyAcceptance}=await import('./privacy-acceptance.mjs');
+  await privacyAcceptance(browser,config,check);
   await writeFile(path.join(config.output,'browser-results.json'),JSON.stringify({checks,browser:browser.version(),viewport:[1440,1000,360,800],page_errors:errors,live_metrics:config.liveMetrics},null,2)+'\n');
 } catch(error) {await save('failure');throw error;} finally {await browser.close();}

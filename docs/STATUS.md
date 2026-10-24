@@ -6,6 +6,13 @@
 **G02:** закрыта, все 12 ответов приняты. **После G02:** 4/4, PM-009–012 завершены.
 **G03:** закрыта, все 13 ответов сохранены. Разрешён весь блок PM-013–016. После G03: 4/4; PM-013–016 done. G04 закрыта по указанию «Продолжай» 23 октября; допущения записаны отдельно. PM-017 done ([CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39924166312)), PM-018 done ([CI](https://github.com/Villentretermert/ProjectMarket/actions/runs/39929710247)). После G04: 3/4. Текущий результат:153 tests / 47 browser scenarios PASS; L1 1500/1500 rendered, p95 2.467s/p99 2.625s. PM-019/020 остаются отложены владельцем; G05 ещё не требуется.
 
+**Последний результат D46:** реализованы личный JSON export, передача workspace
+Owner → Admin и удаление с паролем + DELETE. [Отчёт](task-results/PM-023-account-privacy.md).
+187 локальных tests PASS +4 Docker-only skips; contract25 и targeted7 PASS,
+54 Edge-сценария PASS. CI ожидается. P1–P3 отвечены.
+Исправление очереди отдельно принято по [CI40077334919](https://github.com/Villentretermert/ProjectMarket/actions/runs/40077334919):185 tests/49 Chromium, все4jobs PASS.
+Ниже сохраняется хронология предыдущих этапов; её ожидания superseded D45/D46.
+
 - Работают локальные аккаунты, сессии, B2B и права доступа; регистрация ботов и индивидуальные ключи; приём данных и хранение истории/квитанций по 30 дней.
 - Готовы версии оформления, публикация и откат, snapshots с проверкой прав и ETag; Request purchase, GET/ACK/result, unknown и сверка результатов.
 - Python SDK, независимые каталог/RSS-боты, инструкция запуска и Docker profile проверены.
@@ -54,5 +61,5 @@ Docker/HTTPS/restore PASS. Рабочий локальный Docker этой п�
 исправление общей очереди. Оно применено; повторное разрешение не требуется.
 [Отчёт](task-results/PM-023-queue-fix.md):76 targeted tests +3 усиленных controls,
 49 Edge scenarios PASS; независимый review без конкретных обходов/регрессий.
-Общий CI ожидается. Предыдущие сообщения об ожидании разрешения исторические.
-P1–P3 export/delete открыты; Android/облако/L2 отложены;19/24, G05 ещё не наступила.
+CI40077334919 прошёл все4jobs. Предыдущие сообщения об ожидании разрешения исторические.
+P1–P3 export/delete отвечены D46; Android/облако/L2 отложены;19/24, G05 ещё не наступила.

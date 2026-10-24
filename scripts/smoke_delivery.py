@@ -46,7 +46,7 @@ def main() -> None:
     csrf = account["csrf_token"]
     assert any(cookie.secure for cookie in jar), "TLS session must have a Secure cookie"
     assert json.loads(call("GET", "/v1/auth/session"))["user"] == account["user"]
-    call("DELETE", "/v1/account", {"password": password})
+    call("DELETE", "/v1/account", {"password": password, "confirmation": "DELETE"})
     print("HTTPS CA verification, Web, local login, Secure session and account deletion: PASS")
 
 
