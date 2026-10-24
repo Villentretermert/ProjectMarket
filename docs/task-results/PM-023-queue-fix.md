@@ -39,7 +39,11 @@ publish также покрывает rollback). Убран fanout только 
   My Space layout. [JSON](assets/PM-023/queue-fix/browser-results.json).
 - Независимый read-only review: конкретных surviving bypasses/regressions не найдено.
   Это одна проверка текущего diff, не повтор полного security scan.
-- Общий CI: результат добавляется после публикации commit.
+- CI40076750756: Python Windows/Ubuntu, PostgreSQL API/backend и Docker PASS;
+  браузер остановился в старой проверке My Space: assertion читал временно скрытый
+  источник до окончания resync. Проверка теперь ждёт возвращения разрешённого
+  товара; проверки отозванной новости и отсутствия её названия сохранены.
+  Повторный CI требуется; это не изменение runtime.
 
 Фактический экран после resync: title, layout v2 и источник сохранены.
 

@@ -85,6 +85,8 @@ export async function spaceAcceptance(browser,config,check){
       const newsTitle=(await manage('GET','/owner/channels/'+channels.news.channel_id)).title;
       await manage('DELETE','/owner/channels/'+channels.news.channel_id+'/grants/'+userID);
       await page.getByRole('button',{name:'Refresh',exact:true}).click();await page.getByRole('heading',{name:'Source unavailable',exact:true}).first().waitFor();await saved();
+      // A permission marker briefly hides every source; wait for authorized resync.
+      await page.getByRole('heading',{name:'Hand soap',exact:true}).waitFor();
       assert.equal(await page.getByRole('heading',{name:'Hand soap',exact:true}).count(),1);assert.equal(await page.getByText('Updated pilot headline',{exact:true}).count(),0);
       assert.equal(await page.getByLabel('Source channel',{exact:true}).getByRole('option',{name:newsTitle,exact:true}).count(),0);
       await shot('space-revoked');
