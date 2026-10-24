@@ -1,0 +1,13 @@
+{
+  "origin": "http://127.0.0.1:19000",
+  "release": "9afe3ec",
+  "existing_demo_login": true,
+  "populated_space": true,
+  "live": true,
+  "privacy_owner_guard": true,
+  "downloaded_json": true,
+  "no_credentials_in_export": true,
+  "logout": true,
+  "page_errors": [],
+  "browser": "156.0.4314.42"
+}

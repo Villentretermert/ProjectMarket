@@ -112,5 +112,7 @@ Data & privacy → Download JSON. Для Owner сначала Studio → Team �
 удалить аккаунт: пароль + DELETE → Review deletion → Delete account permanently.
 Каналы и боты сохраняются у нового владельца. Проверьте выгрузку, Cancel, ошибочный
 пароль и вход второго аккаунта до намеренного удаления тестового пользователя.
-Точное содержимое/retention: [Privacy API](../api/PRIVACY.md). Эти возможности установлены
-локально в a7deaab. Полная приёмка RC ещё не объявлена.
+Точное содержимое/retention: [Privacy API](../api/PRIVACY.md). Эти возможности
+вошли в a7deaab и сохранены в установленном 9afe3ec. [Dependency update и SBOM](../task-results/PM-023-dependencies.md):
+CI200 Python/54 Chromium PASS; обновление с backup18.4→restore18.6 проверено.
+Оставшиеся Critical/High в базовых компонентах требуют отдельного разбора. Полная приёмка RC ещё не объявлена.

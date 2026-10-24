@@ -71,7 +71,12 @@ flowchart LR
   workspace basetemp прошёл. Общий sandbox unit запуск остановлен после зависания
   на22 tests; его нельзя считать успешным. Полные checks выполняет CI.
 - Сборка трёх candidate images прошла; PostgreSQL получен по immutable digest.
-  CI и проверка установки будут добавлены после фактического завершения.
+- [CI40128462069](https://github.com/Villentretermert/ProjectMarket/actions/runs/40128462069)
+  на9afe3ec: все4 jobs PASS,90unit +110integration =200 Python tests,
+  54 Chromium scenarios, Docker/HTTPS/два бота/backup/restore PASS.
+  [Машиночитаемый итог и перечень браузерных сценариев](assets/PM-023/dependencies/ci-results.json).
+  Один прежний Pydantic warning не является failure. CI проверяет новый
+  Python3.14.9; локальный tooling virtualenv пока3.14.7, его версия не подменяется.
 
 ## Оставшаяся работа и ограничения
 
@@ -92,10 +97,42 @@ flowchart LR
 3. Инструмент не выполняет exploitability/legal verdict, Git history secret scan,
    полный license header scan, scan developer OS/browser binaries или transitives
    изолированного build backend. Полный source scan был отдельной предыдущей работой.
-4. Текущий рабочий a7deaab и candidate различаются до отдельной проверенной установки.
-   Новые Docker pins сами по себе не означают обновление работающего контейнера.
+4. Образы candidate установлены как9afe3ec; предыдущие images/backup сохранены.
+   JSON snapshot сохраняет исходные candidate tags и проверенные immutable IDs.
 
 Источники обновления: [Python3.14.9 security release](https://www.python.org/downloads/release/python-3149/),
 [PostgreSQL18.6 release notes](https://www.postgresql.org/docs/release/18.6/),
 [Caddy2.11.7](https://github.com/caddyserver/caddy/releases/tag/v2.11.7).
 Задача [#28](https://github.com/Villentretermert/ProjectMarket/issues/28) остаётся открытой.
+
+
+## Локальная установка после CI
+
+Установлен9afe3ec; [evidence](assets/PM-023/dependencies/local-delivery.json).
+Рабочий marketob-pm021 обновлён,4services healthy. Перед этим backup из18.4
+восстановлен в новом независимом18.6: все29таблиц/10sequences совпали.
+Индексы только btree, extension только plpgsql; GIN/btree_gist/ltree upgrade notes
+к этому набору не относятся. Исходная marketob_pm022 сохранилась; upgrade/migrate
+не изменили контрольные данные до возобновления записи. Immutable IDs работающих
+образов совпали с audited candidate. Старая конфигурация и backup приватны:
+`.local/pm023/dependency-delivery-02/`; независимый restore stack остановлен,
+volume сохранён. Другие приложения не менялись.
+
+Первая local prepare попытка не запустила restore container из-за Windows-path
+в аргументе WSL. Исходная БД не менялась; старые writers были автоматически
+возобновлены. После исправления пути выполнен новый backup в новый каталог и
+успешная проверка. Первая копия сохранена отдельно, она не основание приёмки.
+
+HTTPS с доверенной CA, Secure session и удалением B2C fixture PASS. Существующий
+demo login → My Space с данными → Live → Data & privacy → JSON → logout PASS,
+page_errors=[]; [браузерный итог](assets/PM-023/dependencies/deployed-browser.json).
+UI соответствует прежнему D46; [фактический screenshot](assets/PM-023/dependencies/deployed-privacy.png).
+После новых записей нельзя откатывать старый backup поверх текущей базы:
+используйте [runbook](../setup/LOCAL_DELIVERY.md).
+
+Перед публикацией полностью просмотрены три новые JSON-сводки: только названия
+CI-сценариев, версии, counts/flags и image digests, без export payload/credentials.
+Новый screenshot побайтово совпадает с уже опубликованным D46 screenshot
+(SHA-256 `f1cdf0856ff92f9d01dee18d25b832ab8715be12ba47114bb8070160963a4984`).
+Backup, скачанный JSON и env остаются игнорируемыми в `.local`. Эта проверка
+выполнена после первоначального отказа автоматической проверки публикации.

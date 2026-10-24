@@ -2,10 +2,12 @@
 
 **Дата:** 24 октября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
 **Текущая независимая работа:** [PM-023 dependency review](task-results/PM-023-dependencies.md).
-Добавлены повторяемый audit/SBOM и pinned candidate Python3.14.9/PostgreSQL18.6/Caddy2.11.7.
-В locks57Python/3Node advisory не найдено; в images остаются Critical/High.
-9 targeted controls, Ruff/mypy PASS; CI/поставка candidate проверяются отдельно.
-Установленный a7deaab сохраняется до проверенного обновления.
+Добавлены повторяемый audit/SBOM и pinned Python3.14.9/PostgreSQL18.6/Caddy2.11.7.
+**Установлен9afe3ec:** CI40128462069 все4jobs PASS,200 Python/54 Chromium.
+Backup18.4→restore18.6:29таблиц/10sequences совпали; оригинальная БД сохранена.
+HTTPS, existing demo login/My Space/Live/privacy/export PASS;4services healthy.
+В locks57Python/3Node advisory не найдено; в images остаются Critical/High,
+полная PM-023 не принята. Следующий P0: разбор оставшихся proxy/helper/base findings.
 
 **Текущий gate:** полный L2 PM-022 отложен владельцем до свободного компьютера
 (D43). Нагрузочный стенд остановлен. Не запускать новый L2 без продолжения владельца.
@@ -17,7 +19,7 @@ Owner → Admin и удаление с паролем + DELETE. [Отчёт](tas
 187 локальных tests PASS +4 Docker-only skips; contract25 и targeted7 PASS,
 54 Edge-сценария PASS. [CI 40078644698](https://github.com/Villentretermert/ProjectMarket/actions/runs/40078644698):
 191 tests/54 Chromium, все 4 jobs PASS. P1–P3 отвечены.
-**Рабочий локальный Docker — a7deaab**, установлен после backup/restore:29 таблиц / 10 sequences
+**Прежняя поставка D46 — a7deaab**, была установлена после backup/restore:29 таблиц / 10 sequences
 совпали; HTTPS и существующий demo My Space/Live/privacy/export проверены.
 Все 4 services healthy; прежняя БД marketob_pm022 сохранена.
 Исправление очереди отдельно принято по [CI 40077334919](https://github.com/Villentretermert/ProjectMarket/actions/runs/40077334919):185 tests/49 Chromium, все 4 jobs PASS.
