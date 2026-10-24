@@ -10,7 +10,10 @@
 [MarkeTOB](http://127.0.0.1:19000/app/) и создайте свой аккаунт через Create account.
 Приложение использует восстановленную `marketob_pm022`; прежние БД `marketob_recovered` и `marketob` сохранены.
 На стенде есть синтетические проверки/demo, это не публичный сервис.
-Приватная конфигурация — `.local/pm021/docker.env`, images закреплены тегом6b3ffb5. PM-022 обновлена через отдельный restore;
+Приватная конфигурация — `.local/pm021/docker.env`, images закреплены тегом a7deaab. PM-023 установлен после CI: 191 Python tests / 54 browser scenarios
+и backup/restore со сверкой 29 таблиц / 10 sequences. Private backup и прежняя конфигурация:
+`.local/pm023/local-delivery/`; независимая проверочная БД marketob_pm023_verified
+сохранена. HTTPS и existing demo Web проверены. PM-022 ранее обновлялась через отдельный restore;
 backup до обновления находится в игнорируемом `.local/pm022/pre-upgrade-backup`,
 предыдущая конфигурация — `.local/pm022/docker-before-upgrade.env`.
 Семь основных таблиц сверены до/после, migration011 применена; HTTPS и CLI gauges PASS.

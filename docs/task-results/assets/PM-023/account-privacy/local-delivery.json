@@ -1,0 +1,19 @@
+{
+  "release": "a7deaab",
+  "previous_release": "6b3ffb5",
+  "project": "marketob-pm021",
+  "source_database": "marketob_pm022",
+  "verified_restore_database": "marketob_pm023_verified",
+  "backup_verified": true,
+  "restored_tables_and_sequences": {
+    "tables": 29,
+    "sequences": 10,
+    "all_equal": true
+  },
+  "data_unchanged_through_migration": true,
+  "migrations": "already current (001-011)",
+  "api_worker_db_proxy_healthy": true,
+  "https_ca_secure_cookie_and_synthetic_deletion": "PASS",
+  "other_projects_modified": false,
+  "l2_load_test_run": false
+}

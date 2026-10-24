@@ -9,8 +9,12 @@
 **Последний результат D46:** реализованы личный JSON export, передача workspace
 Owner → Admin и удаление с паролем + DELETE. [Отчёт](task-results/PM-023-account-privacy.md).
 187 локальных tests PASS +4 Docker-only skips; contract25 и targeted7 PASS,
-54 Edge-сценария PASS. CI ожидается. P1–P3 отвечены.
-Исправление очереди отдельно принято по [CI40077334919](https://github.com/Villentretermert/ProjectMarket/actions/runs/40077334919):185 tests/49 Chromium, все4jobs PASS.
+54 Edge-сценария PASS. [CI 40078644698](https://github.com/Villentretermert/ProjectMarket/actions/runs/40078644698):
+191 tests/54 Chromium, все 4 jobs PASS. P1–P3 отвечены.
+**Рабочий локальный Docker — a7deaab**, установлен после backup/restore:29 таблиц / 10 sequences
+совпали; HTTPS и существующий demo My Space/Live/privacy/export проверены.
+Все 4 services healthy; прежняя БД marketob_pm022 сохранена.
+Исправление очереди отдельно принято по [CI 40077334919](https://github.com/Villentretermert/ProjectMarket/actions/runs/40077334919):185 tests/49 Chromium, все 4 jobs PASS.
 Ниже сохраняется хронология предыдущих этапов; её ожидания superseded D45/D46.
 
 - Работают локальные аккаунты, сессии, B2B и права доступа; регистрация ботов и индивидуальные ключи; приём данных и хранение истории/квитанций по 30 дней.
@@ -31,7 +35,7 @@ PM-022 in_progress: отдельный локальный стенд, L2/burst �
 
 24 октября: короткий Docker-прогон runtime2008583 с2 API-процессами прошёл все SLO,
 2 000/2 000 rendered,live p95=2.084с;burst3 000/3 000,5 100 точных ID после restart.
-CI40034156701:162 Python-теста/47 browser scenarios,все4jobs PASS. Полный1800с+burst
+CI40034156701:162 Python-теста/47 browser scenarios,все 4 jobs PASS. Полный1800с+burst
 прерван после13мин по отсрочке владельца. Диагностика и предыдущие неудачные
 повторы сохранены в [отчёте PM-022](task-results/PM-022.md). Облегчённый health probe
 worker проверен отдельно; [CI d4bd845](https://github.com/Villentretermert/ProjectMarket/actions/runs/40037429124)
@@ -61,5 +65,5 @@ Docker/HTTPS/restore PASS. Рабочий локальный Docker этой п�
 исправление общей очереди. Оно применено; повторное разрешение не требуется.
 [Отчёт](task-results/PM-023-queue-fix.md):76 targeted tests +3 усиленных controls,
 49 Edge scenarios PASS; независимый review без конкретных обходов/регрессий.
-CI40077334919 прошёл все4jobs. Предыдущие сообщения об ожидании разрешения исторические.
+CI 40077334919 прошёл все 4 jobs. Предыдущие сообщения об ожидании разрешения исторические.
 P1–P3 export/delete отвечены D46; Android/облако/L2 отложены;19/24, G05 ещё не наступила.

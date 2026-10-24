@@ -2,7 +2,7 @@
 
 24 октября 2026. Независимая Web/API-часть, ответы D46 выполнены в исходниках.
 Полная PM-023 остаётся in_progress: Android/виджет, Google/Firebase, L2 и G05 не
-подменяются этими проверками. Счётчик19/24.
+подменяются этими проверками. Счётчик 19/24.
 
 ## Поведение
 
@@ -55,7 +55,12 @@ TTL10мин. Файл собирается только после всех ст
   пароль, DELETE, Cancel, удаление и доступ нового владельца проверены.
 - Полный Edge Web/API/2 bots:54 scenarios PASS, page_errors=[];
   [browser JSON](assets/PM-023/account-privacy/browser-results.json).
-- CI: результат добавляется после публикации commit.
+- [CI 40078644698](https://github.com/Villentretermert/ProjectMarket/actions/runs/40078644698)
+  на a7deaab:все 4 jobs PASS,81unit+110integration=191 Python tests,54 Chromium
+  scenarios, Docker/HTTPS и isolated restore. [Машиночитаемые результаты](assets/PM-023/account-privacy/ci-results.json).
+- 119 локальных Markdown-ссылок проверены;424 текстовых файла проверены на
+  известные форматы GitHub/session/bot credentials, совпадений нет. Это ограниченная
+  проверка форматов, не полный аудит истории Git/секретов.
 
 Первый локальный запуск ошибочно пропустил БД из-за неверного имени поля private
 connection file. Затем песочница блокировала loopback TCP; запуск с разрешённым
@@ -80,5 +85,28 @@ overflow. Фактические снимки:
 [Передача](assets/PM-023/account-privacy/privacy-transfer.png) ·
 [Подтверждение удаления](assets/PM-023/account-privacy/privacy-delete.png).
 
-Рабочий Docker6b3ffb5 пока не обновлялся. Полная приёмка приложения, Android,
-облако, полный L2 и ручная приёмка владельцем этим результатом не выполнены.
+## Установленная локальная версия
+
+После успешного CI образы a7deaab собраны и установлены в `marketob-pm021`.
+[Рабочий Web](http://127.0.0.1:19000/app/) использует прежнюю БД marketob_pm022.
+Перед установкой остановлены только его API/proxy/worker; активных пилотных
+ботов не было. Backup проверен checksum и восстановлен в отдельную
+marketob_pm023_verified:29 таблиц и10 последовательностей совпали полностью.
+Исходная БД и старые образы сохранены. Повторная сверка после migrate показала
+отсутствие изменений; схема 001–011 уже актуальна. Все 4 services healthy.
+[Метаданные проверки](assets/PM-023/account-privacy/local-delivery.json).
+
+Private backup/config лежат в `.local/pm023/local-delivery/`; они не опубликованы.
+После возобновления записи откат через старую копию потеряет новые данные и не
+является разрешённым способом rollback. Следовать LOCAL_DELIVERY runbook.
+
+Реальный Edge вошёл в существующий демонстрационный аккаунт, прочитал populated
+My Space и Live, открыл Data & privacy, скачал и разобрал JSON, проверил отсутствие
+credentials, затем завершил сессию. [Результат](assets/PM-023/account-privacy/deployed-browser.json).
+Отдельный HTTPS smoke прошёл CA verification, Secure cookie, login и удаление
+синтетического B2C аккаунта. Другие Docker-проекты не менялись; L2 не запускался.
+
+![Установленный Web](assets/PM-023/account-privacy/deployed-privacy.png)
+
+Полная приёмка приложения, Android, облако, полный L2 и ручная приёмка владельцем
+этим результатом не выполнены. PM-023 остаётся in_progress;19/24, G05 ещё не требуется.

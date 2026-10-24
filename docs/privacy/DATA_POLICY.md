@@ -66,5 +66,5 @@ bot summaries исключены. Разделы живые, не point-in-time 
 P1–P3 согласованы (D46). Остаются реальный Android/виджет, Google/Firebase,
 background push и актуальные правила магазинов при возобновлении этапов.
 [Решения](OPEN_DECISIONS.md) и [результаты](../task-results/PM-023-account-privacy.md).
-Логи не содержат private payloads или credentials. Рабочая Docker-поставка пока
-не обновлена и имеет прежнее поведение; не путать её с проверяемым candidate.
+Логи не содержат private payloads или credentials. Рабочая Docker-поставка
+обновлена до a7deaab после CI и проверенного backup/restore; новые правила действуют локально.
