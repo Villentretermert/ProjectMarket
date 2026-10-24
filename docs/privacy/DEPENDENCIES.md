@@ -2,7 +2,8 @@
 
 24 октября 2026. [Машиночитаемый снимок](dependency-inventory.json) получен из
 `uv.lock`, `apps/client/package-lock.json` и Docker/Compose declarations без
-изменения зависимостей. Он включает SHA-256 исходных manifest/lock файлов,
+изменения зависимостей. Он включает SHA-256 исходных manifest/lock файлов
+после нормализации CRLF → LF (одинаково для Windows/Linux),
 60 Python entries (включая локальные workspace/dev packages), 3 Node entries
 и закреплённые container digests. Это не полный SBOM системных пакетов образа.
 

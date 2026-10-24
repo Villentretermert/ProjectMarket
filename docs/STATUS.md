@@ -45,3 +45,7 @@ scan: один Low finding переполнения общей очереди; �
 Три решения об export/delete ожидают ответов. Рабочий Docker всё ещё на6b3ffb5.
 PM-024: [инструкция передачи](setup/PILOT_HANDOFF.md) подготовлена независимо,
 полный RC и приёмка владельцем не выполнены. Счётчик остаётся19/24.
+
+[CI 3d82143](https://github.com/Villentretermert/ProjectMarket/actions/runs/40045091707):
+все4 jobs PASS, 81 unit +90 integration =171 Python tests и48 Chromium scenarios;
+Docker/HTTPS/restore PASS. Рабочий локальный Docker этой проверкой не обновлялся.

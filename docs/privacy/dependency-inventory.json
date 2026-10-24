@@ -4,47 +4,47 @@
   "sources": [
     {
       "path": "uv.lock",
-      "sha256": "69e7fb9b10a7138f54f9afb6304ecb0548ccdb778079383262549df8132f2920"
+      "sha256_lf_normalized": "69e7fb9b10a7138f54f9afb6304ecb0548ccdb778079383262549df8132f2920"
     },
     {
       "path": "apps/client/package-lock.json",
-      "sha256": "6ea04c0d52a2d2ca17a408ef5f6a3d8ad6ae7e003b5c14ee3f4c1db6e6ae5e46"
+      "sha256_lf_normalized": "6ea04c0d52a2d2ca17a408ef5f6a3d8ad6ae7e003b5c14ee3f4c1db6e6ae5e46"
     },
     {
       "path": "pyproject.toml",
-      "sha256": "c44f28f500dfd638dabb3e8efdbe97cf219301e1e410f5f530f3dd480e3a7706"
+      "sha256_lf_normalized": "9d375ee7db659f620ec5f2694cd2d05303272904831e42c5c74739ae223938c5"
     },
     {
       "path": "apps/api/pyproject.toml",
-      "sha256": "12ed7a8d5497832b21365d2a62556bff436b38feb3f249a6e5c34be0e2428964"
+      "sha256_lf_normalized": "12ed7a8d5497832b21365d2a62556bff436b38feb3f249a6e5c34be0e2428964"
     },
     {
       "path": "packages/contracts/pyproject.toml",
-      "sha256": "05efcd27dc262150c203f33df53d35f2f4cab36657ebccb311d6c6bed3a40822"
+      "sha256_lf_normalized": "3164d257de2339903a49bfb4901ce74921855394b2d7a3036f7d3ab432c3994e"
     },
     {
       "path": "packages/bot-sdk/pyproject.toml",
-      "sha256": "296a0dfae27d24e9e93b6e447247532407910f5502847895b865a6d23bb67552"
+      "sha256_lf_normalized": "296a0dfae27d24e9e93b6e447247532407910f5502847895b865a6d23bb67552"
     },
     {
       "path": "bots/pilot/pyproject.toml",
-      "sha256": "610ed6ac6abcc70e0c9a6e2edb978aeae8766edec5df66341a0281288ac0cd5c"
+      "sha256_lf_normalized": "610ed6ac6abcc70e0c9a6e2edb978aeae8766edec5df66341a0281288ac0cd5c"
     },
     {
       "path": "deploy/Dockerfile",
-      "sha256": "dbb3a52a86ba894cda00abaa2c6e0235322f6c56aba58356c6cb4500d155dfb1"
+      "sha256_lf_normalized": "dbb3a52a86ba894cda00abaa2c6e0235322f6c56aba58356c6cb4500d155dfb1"
     },
     {
       "path": "deploy/Dockerfile.bot",
-      "sha256": "83d3d8f5ff9c1acb718061c942e5795663189d89288228d6b1b66430c1dd7781"
+      "sha256_lf_normalized": "83d3d8f5ff9c1acb718061c942e5795663189d89288228d6b1b66430c1dd7781"
     },
     {
       "path": "deploy/Dockerfile.proxy",
-      "sha256": "6dab923398b75173c7afbc77a7050ae2c31a05330f0409fd8187b42a18bd0a96"
+      "sha256_lf_normalized": "6dab923398b75173c7afbc77a7050ae2c31a05330f0409fd8187b42a18bd0a96"
     },
     {
       "path": "compose.yaml",
-      "sha256": "2ecd2b145884cda82ba3cdb5e50b292f1fdf8d3fa083996c1b50405179004b53"
+      "sha256_lf_normalized": "2ecd2b145884cda82ba3cdb5e50b292f1fdf8d3fa083996c1b50405179004b53"
     }
   ],
   "python_packages": [

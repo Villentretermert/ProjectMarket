@@ -1,0 +1,33 @@
+{
+  "run_id": 40045091707,
+  "commit": "3d82143d4127f43ed95a26565aec22ebf2342a4b",
+  "url": "https://github.com/Villentretermert/ProjectMarket/actions/runs/40045091707",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 120724887432,
+      "name": "Docker / PostgreSQL",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 120724887543,
+      "name": "Python / ubuntu-latest",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 120724887572,
+      "name": "Python / windows-latest",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 120724887586,
+      "name": "PostgreSQL / identity, bots, ingestion and channels",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
+}
