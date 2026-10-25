@@ -525,6 +525,21 @@
         "PM-027",
         "PM-028"
       ]
+    },
+    {
+      "id": "SR-2026-10-25",
+      "title": "[SR-2026-10-25] Визуальный каталог блоков, фото и демонстрация пилота",
+      "kind": "change_request",
+      "priority": "P1",
+      "stage": 6,
+      "status": "planned",
+      "path": "docs/follow-ups/STATUS-2026-10-25.md",
+      "depends_on": [
+        "PM-013",
+        "PM-016",
+        "PM-023",
+        "PM-024"
+      ]
     }
   ]
 }

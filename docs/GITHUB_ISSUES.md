@@ -39,6 +39,7 @@
 | PM-027 | [#33](https://github.com/Villentretermert/ProjectMarket/issues/33) | task | deferred | open |
 | PM-028 | [#34](https://github.com/Villentretermert/ProjectMarket/issues/34) | task | deferred | open |
 | G07 | [#35](https://github.com/Villentretermert/ProjectMarket/issues/35) | checkpoint | deferred | open |
+| SR-2026-10-25 | [#36](https://github.com/Villentretermert/ProjectMarket/issues/36) | change_request | planned | open |
 
 Повторная синхронизация: `python scripts/sync_github_plan.py --sync`. Только проверка соответствия: `python scripts/sync_github_plan.py`.
 

@@ -1,0 +1,679 @@
+{
+  "base_commit": "0e7054a528c7935464a9210ae6f1b652fed67798",
+  "completed_at": "2026-10-25T11:01:10.641974+00:00",
+  "scanner": {
+    "Version": "0.76.1",
+    "VulnerabilityDB": {
+      "Version": 2,
+      "NextUpdate": "2026-10-25T13:07:23.340317232Z",
+      "UpdatedAt": "2026-10-24T13:07:23.340317483Z",
+      "DownloadedAt": "2026-10-24T19:59:00.394310272Z"
+    }
+  },
+  "coverage_missing": [],
+  "audit_exit_status": 1,
+  "images": [
+    {
+      "name": "locked-dependencies",
+      "image_id": null,
+      "packages": 120,
+      "findings": 0,
+      "severity": {},
+      "fixable_high_critical": 0
+    },
+    {
+      "name": "marketob-api:9afe3ec",
+      "image_id": "sha256:3ce7e9ceb1d94ca5820cded235de11beb9da93a564bd7040e17a1416dd5ffbae",
+      "packages": 128,
+      "findings": 255,
+      "severity": {
+        "LOW": 91,
+        "HIGH": 61,
+        "MEDIUM": 99,
+        "CRITICAL": 2,
+        "UNKNOWN": 2
+      },
+      "fixable_high_critical": 0
+    },
+    {
+      "name": "marketob-proxy:9afe3ec",
+      "image_id": "sha256:d5b2e323eac40eafdfaca1b54d60b8352a147e6b0fe4823f80ac7581e1150b85",
+      "packages": 181,
+      "findings": 22,
+      "severity": {
+        "HIGH": 6,
+        "MEDIUM": 14,
+        "UNKNOWN": 1,
+        "LOW": 1
+      },
+      "fixable_high_critical": 6
+    },
+    {
+      "name": "marketob-proxy:pm023-deps25",
+      "image_id": "sha256:1e7443886b3912c4ec387dc6908ea16b1314632c5ef4141a643905825d7056e1",
+      "packages": 194,
+      "findings": 2,
+      "severity": {
+        "MEDIUM": 1,
+        "UNKNOWN": 1
+      },
+      "fixable_high_critical": 0
+    },
+    {
+      "name": "marketob-bot:pm023-deps",
+      "image_id": "sha256:6086c9186da0fef1c0c51921595cbd76e8f6fa5eaec1aa8c68b5d02287fe605a",
+      "packages": 106,
+      "findings": 255,
+      "severity": {
+        "LOW": 91,
+        "HIGH": 61,
+        "MEDIUM": 99,
+        "CRITICAL": 2,
+        "UNKNOWN": 2
+      },
+      "fixable_high_critical": 0
+    },
+    {
+      "name": "postgres:18.6-bookworm@sha256:bbf83594798e144bff365a9c191c5d779f181fb3135902064ab8ff11918020fc",
+      "image_id": "sha256:63d4ad6f3de5e288238b3044970a677dcb0e77004d8b6050732aa0cbbeedf5d7",
+      "packages": 151,
+      "findings": 474,
+      "severity": {
+        "LOW": 173,
+        "HIGH": 96,
+        "MEDIUM": 195,
+        "UNKNOWN": 6,
+        "CRITICAL": 4
+      },
+      "fixable_high_critical": 26
+    },
+    {
+      "name": "marketob-db:pm023-deps25",
+      "image_id": "sha256:94790ae07cc0cf89a28cd9910adc658ae9ef7de047fabcc3ebc160a9c9faa751",
+      "packages": 151,
+      "findings": 415,
+      "severity": {
+        "LOW": 170,
+        "HIGH": 71,
+        "MEDIUM": 165,
+        "UNKNOWN": 6,
+        "CRITICAL": 3
+      },
+      "fixable_high_critical": 0
+    }
+  ],
+  "pairs": [
+    {
+      "before": "sha256:d5b2e323eac40eafdfaca1b54d60b8352a147e6b0fe4823f80ac7581e1150b85",
+      "after": "sha256:1e7443886b3912c4ec387dc6908ea16b1314632c5ef4141a643905825d7056e1",
+      "targeted_matches_removed": [
+        {
+          "target": "sha256:d5b2e323eac40eafdfaca1b54d60b8352a147e6b0fe4823f80ac7581e1150b85 (alpine 3.23.7)",
+          "type": "alpine",
+          "VulnerabilityID": "CVE-2026-111497",
+          "PkgName": "brotli-libs",
+          "InstalledVersion": "1.2.0-r0",
+          "FixedVersion": "1.2.1-r0",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-111497",
+          "DataSource": {
+            "ID": "alpine",
+            "Name": "Alpine Secdb",
+            "URL": "https://secdb.alpinelinux.org/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/bin/caddy",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-78669",
+          "PkgName": "golang.org/x/net",
+          "InstalledVersion": "v0.59.0",
+          "FixedVersion": "0.60.0",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-78669",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/bin/caddy",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-111943",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.26.8",
+          "FixedVersion": "1.26.10, 1.27.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-111943",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/bin/caddy",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-78667",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.26.8",
+          "FixedVersion": "1.26.9, 1.27.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-78667",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/bin/caddy",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-78669",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.26.8",
+          "FixedVersion": "1.26.9, 1.27.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-78669",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/bin/caddy",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-97031",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.26.8",
+          "FixedVersion": "1.26.9, 1.27.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-97031",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        }
+      ],
+      "targeted_matches_remaining": 0
+    },
+    {
+      "before": "sha256:63d4ad6f3de5e288238b3044970a677dcb0e77004d8b6050732aa0cbbeedf5d7",
+      "after": "sha256:94790ae07cc0cf89a28cd9910adc658ae9ef7de047fabcc3ebc160a9c9faa751",
+      "targeted_matches_removed": [
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2025-68121",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.24.13, 1.25.7, 1.26.0-rc.3",
+          "Severity": "CRITICAL",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-68121",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": "nvd"
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2025-61726",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.24.12, 1.25.6",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-61726",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2025-61729",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.24.11, 1.25.5",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-61729",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-111943",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.26.10, 1.27.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-111943",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-25679",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.8, 1.26.1",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-25679",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-27145",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.11, 1.26.4",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-27145",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-32280",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.9, 1.26.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-32280",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-32281",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.9, 1.26.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-32281",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": "nvd"
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-32283",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.9, 1.26.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-32283",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": "nvd"
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-33811",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.10, 1.26.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-33811",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": "nvd"
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-33814",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.10, 1.26.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-33814",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": "nvd"
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-33818",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.13, 1.26.6, 1.27.0-rc.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-33818",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-39820",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.10, 1.26.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-39820",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": "nvd"
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-39821",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.13, 1.26.6, 1.27.0-rc.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-39821",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-39822",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.12, 1.26.5, 1.27.0-rc.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-39822",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-39836",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.10, 1.26.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-39836",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": "nvd"
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-42499",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.10, 1.26.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-42499",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-42504",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.11, 1.26.4",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-42504",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-56853",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.13, 1.26.6, 1.27.0-rc.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-56853",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-56858",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.13, 1.26.6, 1.27.0-rc.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-56858",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-56859",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.13, 1.26.6, 1.27.0-rc.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-56859",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-56860",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.13, 1.26.6, 1.27.0-rc.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-56860",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-56862",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.25.13, 1.26.6, 1.27.0-rc.3",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-56862",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-78667",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.26.9, 1.27.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-78667",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-78669",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.26.9, 1.27.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-78669",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "type": "gobinary",
+          "VulnerabilityID": "CVE-2026-97031",
+          "PkgName": "stdlib",
+          "InstalledVersion": "v1.24.6",
+          "FixedVersion": "1.26.9, 1.27.2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-97031",
+          "DataSource": {
+            "ID": "govulndb",
+            "Name": "The Go Vulnerability Database",
+            "URL": "https://pkg.go.dev/vuln/"
+          },
+          "SeveritySource": null
+        }
+      ],
+      "targeted_matches_remaining": 0
+    }
+  ],
+  "artifacts": {
+    "audit.json.gz": {
+      "sha256": "2fb6f5d221728d59c9c20f45c26b043fe1f02b424b6270aad45f0fb2f00b3c08",
+      "uncompressed_sha256": "bd8a70b987bb035aa00084b65a46ee753246eb119000439497b3350efdc85599"
+    },
+    "proxy.cdx.json.gz": {
+      "sha256": "11cd1903012af8452a1a4b0af0691d2907af1ad67db5c5e8b82796634ba3ac0a",
+      "uncompressed_sha256": "cfee39cd139104cd4730a84815b50c03a26086b18f2f9b5556ff21d2f7ed2d34"
+    },
+    "db.cdx.json.gz": {
+      "sha256": "40ea5bfbfad9eed9fcf63c13590acb87c046030acbe09d24c667c5997910edb8",
+      "uncompressed_sha256": "40953515a9daf90ded3e50f5cd2a01b1165e654cecc536351cf7995d5553e37d"
+    }
+  }
+}

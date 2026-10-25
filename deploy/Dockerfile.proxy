@@ -1,6 +1,22 @@
+FROM golang:1.26.10-alpine3.23@sha256:0525c952defebc693cdaf62cdf43afa32be5a7f377e99260642ea19c240c708e AS builder
+ENV CGO_ENABLED=0 GOTOOLCHAIN=local
+WORKDIR /src
+# A wrapper preserves the upstream Caddy version in binary/SBOM module metadata.
+RUN go mod init marketob.local/caddy \
+    && go get github.com/caddyserver/caddy/v2@v2.11.7 golang.org/x/net@v0.60.0 \
+    && cp /go/pkg/mod/github.com/caddyserver/caddy/v2@v2.11.7/cmd/caddy/main.go ./main.go \
+    && go mod tidy && go mod verify \
+    && go build -trimpath -o /out/caddy . \
+    && go version -m /out/caddy \
+    && /out/caddy version
+
 FROM caddy:2.11.7-alpine@sha256:eb4d35b7452d1ab6171fbdbe8d9275b2301dad6dad92115d91e19fb9b24d510f
 # We bind 8443, so remove the upstream privileged-port file capability before cap_drop=ALL.
-RUN setcap -r /usr/bin/caddy && mkdir -p /data/caddy /config/caddy && chown -R 10001:10001 /data /config
+RUN setcap -r /usr/bin/caddy \
+    && apk add --no-cache brotli-libs=1.2.1-r0 \
+    && mkdir -p /data/caddy /config/caddy && chown -R 10001:10001 /data /config
+# The fresh binary has no file capability; preserve the upstream CMD and data paths.
+COPY --from=builder /out/caddy /usr/bin/caddy
 COPY deploy/Caddyfile /etc/caddy/Caddyfile
 USER 10001:10001
 EXPOSE 8443

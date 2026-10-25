@@ -1,0 +1,15 @@
+FROM golang:1.26.10-alpine3.23@sha256:0525c952defebc693cdaf62cdf43afa32be5a7f377e99260642ea19c240c708e AS builder
+ENV CGO_ENABLED=0 GOTOOLCHAIN=local
+WORKDIR /src
+ADD --checksum=sha256:cd9719b775dbfedae53923c9b0dc792b66d42c51e0b36652ed6f747fbadc0164 https://codeload.github.com/tianon/gosu/tar.gz/refs/tags/1.19 /src/gosu.tar.gz
+RUN tar -xzf gosu.tar.gz --strip-components=1 \
+    && go mod download && go mod verify \
+    && go build -trimpath -o /out/gosu . \
+    && go version -m /out/gosu \
+    && /out/gosu --version
+
+FROM postgres:18.6-bookworm@sha256:bbf83594798e144bff365a9c191c5d779f181fb3135902064ab8ff11918020fc
+# Keep the PostgreSQL engine, entrypoint, PGDATA and extensions unchanged.
+COPY --from=builder /out/gosu /usr/local/bin/gosu
+COPY --from=builder /src/LICENSE /usr/local/share/licenses/gosu/LICENSE
+RUN gosu nobody true

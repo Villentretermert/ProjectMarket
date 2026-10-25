@@ -83,7 +83,8 @@ $env:MARKETOB_BROWSER_CHANNEL='msedge'
 .venv-dev/Scripts/python.exe -m scripts.live_load --docker --release <built-image-tag> --bots 100 --seconds 1800 --burst --output .local/pm022/docker-L2
 ```
 
-Нужен заранее собранный образ `marketob-api:<built-image-tag>`. Измеритель создаёт
+Нужны заранее собранные образы `marketob-api:<built-image-tag>` и
+`marketob-db:<built-image-tag>` из текущего Compose. Измеритель создаёт
 собственный случайный Compose project/volume, проверяет2 API PID и отдельно
 сохраняет CPU/RAM/PIDs контейнеров. В конце удаляется только этот временный project;
 работающий пилот не используется для нагрузки и не удаляется. Успех короткого

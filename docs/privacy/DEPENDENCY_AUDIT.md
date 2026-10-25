@@ -19,11 +19,13 @@
 Пример для подготовленных локальных образов (тег candidate не означает установленный релиз):
 
 ```powershell
-.venv-dev/Scripts/python.exe -m scripts.audit_dependencies --trivy .local/tools/trivy-0.76.1/trivy --wsl Ubuntu --output .local/audit-unique-name --image marketob-api:pm023-deps --image marketob-proxy:pm023-deps --image marketob-bot:pm023-deps --image postgres:18.6-bookworm@sha256:bbf83594798e144bff365a9c191c5d779f181fb3135902064ab8ff11918020fc
+.venv-dev/Scripts/python.exe -m scripts.audit_dependencies --trivy .local/tools/trivy-0.76.1/trivy --wsl Ubuntu --output .local/audit-unique-name --image marketob-api:pm023-deps25 --image marketob-proxy:pm023-deps25 --image marketob-bot:pm023-deps25 --image marketob-db:pm023-deps25
 ```
 
 `--image` повторяется для каждого **существующего локального образа**; выберите
 теги проверяемой сборки. Без этого параметра проверяются только lock/build pins.
+Сканируйте итоговый `marketob-db`, а не только upstream PostgreSQL: начиная с
+25 октября `deploy/Dockerfile.db` пересобирает его startup-helper `gosu`.
 `--output` обязан быть новым каталогом внутри repo: старый результат не перезаписывается.
 Сканируется ID, полученный `docker image inspect`; совпадение ID проверяется в JSON.
 Не выполняйте команды runbook с новым Compose на рабочем volume до backup/restore.

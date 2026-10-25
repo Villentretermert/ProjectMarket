@@ -31,6 +31,7 @@ MANIFESTS = (
     "deploy/Dockerfile",
     "deploy/Dockerfile.bot",
     "deploy/Dockerfile.proxy",
+    "deploy/Dockerfile.db",
     "compose.yaml",
 )
 

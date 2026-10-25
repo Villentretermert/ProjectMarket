@@ -3,14 +3,18 @@
 **Дата:** 25 октября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
 По запросу владельца подготовлен [обзор статуса](reviews/STATUS-2026-10-25/README.md)
 в PPTX/PDF с пояснениями и 12 отдельными вопросами. G05 остаётся planned,
-после G04 3/4; последующие задачи этим обзором не начаты. Доказательства ниже от 24 октября.
-**Текущая независимая работа:** [PM-023 dependency review](task-results/PM-023-dependencies.md).
-Добавлены повторяемый audit/SBOM и pinned Python3.14.9/PostgreSQL18.6/Caddy2.11.7.
+после G04 3/4. Все [ответы S01–S12](reviews/STATUS-2026-10-25/answers.md) получены:
+разрешено продолжение зависимостей PM-023, [доработки](follow-ups/STATUS-2026-10-25.md)
+запланированы отдельно. Доказательства установленной поставки ниже от 24 октября.
+**Текущая независимая работа:** [PM-023 Go dependencies](task-results/PM-023-dependencies-20261025.md).
+Кандидаты proxy/gosu собраны Go1.26.10; x/net0.60.0 и brotli1.2.1.
+Повторный audit: все32 выбранные High/Critical отсутствуют; основные образы
+169→137 High/Critical (5 Critical/132 High). Целевой CI и установка ожидаются.
 **Установлен9afe3ec:** CI40128462069 все4jobs PASS,200 Python/54 Chromium.
 Backup18.4→restore18.6:29таблиц/10sequences совпали; оригинальная БД сохранена.
 HTTPS, existing demo login/My Space/Live/privacy/export PASS;4services healthy.
 В locks57Python/3Node advisory не найдено; в images остаются Critical/High,
-полная PM-023 не принята. Следующий P0: разбор оставшихся proxy/helper/base findings.
+полная PM-023 не принята. Следующий P0: совместимость candidate и оставшиеся base findings.
 
 **Текущий gate:** полный L2 PM-022 отложен владельцем до свободного компьютера
 (D43). Нагрузочный стенд остановлен. Не запускать новый L2 без продолжения владельца.
