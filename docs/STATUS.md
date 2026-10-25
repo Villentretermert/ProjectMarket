@@ -5,16 +5,17 @@
 в PPTX/PDF с пояснениями и 12 отдельными вопросами. G05 остаётся planned,
 после G04 3/4. Все [ответы S01–S12](reviews/STATUS-2026-10-25/answers.md) получены:
 разрешено продолжение зависимостей PM-023, [доработки](follow-ups/STATUS-2026-10-25.md)
-запланированы отдельно. Доказательства установленной поставки ниже от 24 октября.
+запланированы отдельно. Локальная поставка обновлена и проверена 25 октября.
 **Текущая независимая работа:** [PM-023 Go dependencies](task-results/PM-023-dependencies-20261025.md).
 Кандидаты proxy/gosu собраны Go1.26.10; x/net0.60.0 и brotli1.2.1.
 Повторный audit: все32 выбранные High/Critical отсутствуют; основные образы
-169→137 High/Critical (5 Critical/132 High). Целевой CI и установка ожидаются.
-**Установлен9afe3ec:** CI40128462069 все4jobs PASS,200 Python/54 Chromium.
-Backup18.4→restore18.6:29таблиц/10sequences совпали; оригинальная БД сохранена.
-HTTPS, existing demo login/My Space/Live/privacy/export PASS;4services healthy.
+169→137 High/Critical (5 Critical/132 High).
+**Установлен dac119f:** CI40187348787 все4jobs PASS,200 Python/54 Chromium.
+Backup/restore18.6:29таблиц/10sequences совпали; оригинальная БД сохранена.
+HTTPS/HTTP2, existing demo login/My Space/Live/privacy/export PASS;4services healthy.
 В locks57Python/3Node advisory не найдено; в images остаются Critical/High,
-полная PM-023 не принята. Следующий P0: совместимость candidate и оставшиеся base findings.
+полная PM-023 не принята. Следующий P0: применимость оставшихся base findings,
+затем notices и согласованные доработки/видео. Android/облако/L2 не возобновлены.
 
 **Текущий gate:** полный L2 PM-022 отложен владельцем до свободного компьютера
 (D43). Нагрузочный стенд остановлен. Не запускать новый L2 без продолжения владельца.

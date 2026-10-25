@@ -11,7 +11,11 @@
   собственный DB image; CI проверяет версии и реальный HTTP/2. Audit учитывает
   Dockerfile.db, runbooks обновлены. Сборки,9 audit tests,Ruff/mypy PASS;
   audit подтверждает отсутствие32 выбранных записей (всего79 меньше).
-  Полный CI/установка ожидаются; остаются5 Critical/132 High основных образов.
+  CI40187348787: все4jobs PASS,200 Python/54 Chromium. Установлен dac119f после
+  backup/restore со сверкой29таблиц/10sequences; исходная БД сохранена. Проверены
+  HTTPS/HTTP2, существующий My Space/Live/privacy/export, права процессов и
+  совпадение image IDs с audit. Все4services healthy. Независимый review без
+  конкретных обходов/регрессий; остаются5 Critical/132 High основных образов.
 - Счётчик 19/24, G05 planned. Android/облако/полный L2 не возобновлены.
 
 ## 2026-10-25 — Дополнительная презентация текущего статуса

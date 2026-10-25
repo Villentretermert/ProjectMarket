@@ -62,14 +62,46 @@ SHA-256 сжатых и исходных файлов сохранены в comp
 - `pytest tests/test_dependency_audit.py -q`: 9 PASS; Ruff check/format PASS;
   mypy: 92 файла PASS. Первые sandbox-запуски не могли создать tempdir;
   повтор с выделенным каталогом и разрешением исполнения прошёл.
-- Полный CI, HTTPS/HTTP2, интеграционные и браузерные сценарии,
-  backup/restore: ожидаются после публикации candidate commit.
-- Работающий локальный пилот пока остаётся на 9afe3ec. Установка candidate
-  выполняется только после совместимости CI и проверенного backup/restore.
+- [CI40187348787](https://github.com/Villentretermert/ProjectMarket/actions/runs/40187348787)
+  на `dac119f`: все 4 jobs PASS; 90 unit + 110 integration = 200 Python tests,
+  54 Chromium scenarios. HTTPS/Secure cookie, реальный HTTP/2, свежий запуск и
+  перезапуск БД, два бота, сбои/восстановление, backup/restore PASS.
+  [Точные результаты](assets/PM-023/dependencies-20261025/ci-results.json).
+  Один прежний warning Pydantic сохранён, он не является failure.
+- Независимый read-only review не обнаружил конкретных обходов/регрессий;
+  отдельно рассмотрены startup, права, PGDATA, direct callers и no-build flows.
+- Установлен `dac119f`: четыре сервиса healthy, immutable IDs совпали с audit.
+  API image переиспользован после проверки неизменности всех входов его сборки
+  относительно 9afe3ec. Проверка локального HTTPS/Secure cookie/login/delete
+  и HTTP/2 PASS; процесс PostgreSQL UID999, proxy UID10001.
 
 Проверка безопасности здесь — замена известных уязвимых версий и повторный
 scan. Exploit/DoS против рабочего сервера не выполнялся. Настройки доступа,
 loopback, proxy UID10001, read-only, cap_drop и no-new-privileges сохранены.
+
+## Локальная установка
+
+Перед переключением остановлена запись и создан новый backup. Он восстановлен
+в отдельном `marketob-pm023-deps25-restore`: все 29 таблиц и 10 sequences совпали.
+После смены образа и запуска мигратора данные повторно сверены до возобновления
+записи. Исходная `marketob_pm022` сохранена; engine остаётся PostgreSQL18.6.
+Проверочный restore project остановлен, его volume сохранён.
+
+[Поставка и image IDs](assets/PM-023/dependencies-20261025/local-delivery.json).
+Приватные backup/прежний env находятся в `.local/pm023/dependency-delivery-03/`;
+предыдущие images и копии сохранены. После новых записей нельзя откатывать старый
+backup поверх текущей БД: [runbook](../setup/LOCAL_DELIVERY.md).
+
+Edge на существующем demo-аккаунте: login → заполненный My Space → Live →
+Data & privacy → личный JSON → logout PASS, page_errors=[]. Экспорт остаётся
+приватным; проверены ограничение удаления владельца и отсутствие credentials
+в выгрузке. [Результат](assets/PM-023/dependencies-20261025/deployed-browser.json)
+и [фактический экран с demo-данными](assets/PM-023/dependencies-20261025/deployed-privacy.png).
+
+Итог этой части: **fixed для 32 выбранных совпадений версий**. Подтверждены
+замена компонентов, отсутствие этих записей в повторном audit и совместимость
+легитимных сценариев. Это не закрытие всех findings и не доказательство
+эксплуатируемости каждого исходного advisory.
 
 ## Что остаётся
 

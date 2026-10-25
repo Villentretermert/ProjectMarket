@@ -10,12 +10,12 @@
 [MarkeTOB](http://127.0.0.1:19000/app/) и создайте свой аккаунт через Create account.
 Приложение использует восстановленную `marketob_pm022`; прежние БД `marketob_recovered` и `marketob` сохранены.
 На стенде есть синтетические проверки/demo, это не публичный сервис.
-Приватная конфигурация — `.local/pm021/docker.env`, текущие API/proxy images —9afe3ec,
-PostgreSQL18.6 по digest. [Dependency update](../task-results/PM-023-dependencies.md):
-CI200 Python/54 Chromium PASS, backup18.4→restore18.6 —29таблиц/10sequences
-совпали. Backup/прежний env — `.local/pm023/dependency-delivery-02/`. Отдельный
-проект `marketob-pm023-deps-restore` остановлен, его проверочная копия сохранена.
-Все4services healthy, HTTPS и demo Web PASS. Обновление уменьшило findings,
+Приватная конфигурация — `.local/pm021/docker.env`, текущие API/proxy/DB images —dac119f,
+PostgreSQL18.6 с пересобранным gosu. [Dependency update](../task-results/PM-023-dependencies-20261025.md):
+CI200 Python/54 Chromium PASS, backup/restore18.6 —29таблиц/10sequences
+совпали. Backup/прежний env — `.local/pm023/dependency-delivery-03/`. Отдельный
+проект `marketob-pm023-deps25-restore` остановлен, его проверочная копия сохранена.
+Все4services healthy, HTTPS/HTTP2 и demo Web PASS. Обновление уменьшило findings,
 но не является разрешением внешнего релиза.
 
 Прежний PM-023 a7deaab был установлен после CI:191 Python tests/54 browser scenarios
@@ -149,7 +149,7 @@ Web, login и Secure cookie. Для обычной диагностики исп
 ## Обновление и откат
 
 1. Запишите Git commit и текущий `MARKETOB_RELEASE`; перед обновлением задавайте
-   уникальный tag (например, hash commit), сохраняйте старые API/proxy образы.
+   уникальный tag (например, hash commit), сохраняйте старые API/proxy/DB образы.
    Не используйте пересобранный `local` как единственное средство отката.
 2. Соберите candidate images до окна остановки. Остановите внешних/пилотных ботов,
    proxy, API и maintenance. Дождитесь завершения запросов; не допускайте записи
