@@ -29,6 +29,10 @@ Trivy0.76.1 проверил lock/build pins и фактические images, P
 metadata. Для locks57Python/3Node advisory не найдено; в системных/vendored
 компонентах images они есть, включая Critical/High. Глобальный runtime pip удалён.
 Доступны SBOM и точное сравнение; это не full security/legal clearance.
+[Продолжение27октября](../task-results/PM-023-dependencies-20261027.md): установлен d53232e,
+Debian libssl3/openssl3.0.22-1~deb12u2. Отдельная OpenSSL3.5.8 в wheel psycopg
+не заменяется apt; её применимость/поставка остаётся в следующем разборе.
+
 [Повторение проверки](DEPENDENCY_AUDIT.md). [Продолжение25октября](../task-results/PM-023-dependencies-20261025.md):
 установлен dac119f, CI PASS;32 выбранные High/Critical записи устранены.
 Новый audit включает Dockerfile.db и фактические итоговые образы. Базовый inventory

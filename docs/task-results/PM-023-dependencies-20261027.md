@@ -79,10 +79,46 @@ DTLS через текущий HTTP/TCP путь не доказан.
 
 - Сборки API/DB/bot и двух Python build stages PASS; Debian версии u2 проверены.
 - 33 targeted tests PASS,4 Docker-only skips; Ruff/format/mypy92files PASS.
+- TLS из новых API/bot images: trusted local CA → readiness PASS;
+  default trust без этой CA → SSLCertVerificationError, как ожидается.
+- Независимый read-only review не обнаружил конкретных обходов/регрессий;
+  рассмотрены build/final stages, optional bots, CI quoting и прямые callers.
 - Первое сравнение manifests оказалось некорректным из-за WSL интерпретации
   шаблона dpkg-query. Повтор со стандартным выводом установил точные2 изменения;
   исходный неуспех не используется как доказательство.
-- Полный CI и локальная установка ещё ожидаются; рабочий пилот пока dac119f.
+- [CI40532313119](https://github.com/Villentretermert/ProjectMarket/actions/runs/40532313119)
+  на d53232e: все4 jobs PASS,90 unit +110 integration =200 Python tests,
+  54 Chromium scenarios. Docker startup/restart, два бота, package revision,
+  HTTPS/HTTP2, backup/restore PASS. [Точные результаты](assets/PM-023/dependencies-20261027/ci-results.json).
+  Один прежний Pydantic warning не является failure.
+
+## Установка и итог
+
+**Установлен d53232e**. До переключения запись остановлена, backup восстановлен
+в отдельном `marketob-pm023-deps27-restore`:29таблиц/10sequences совпали.
+После замены образов и мигратора данные повторно сверены до возобновления записи.
+Исходная marketob_pm022 сохранена; проверочный restore project остановлен,
+volume оставлен. Приватные backup/старый env: `.local/pm023/dependency-delivery-04/`.
+Предыдущие образы сохранены. [Правила отката](../setup/LOCAL_DELIVERY.md) запрещают
+перезаписывать новую запись старым backup после возобновления работы.
+
+Проверены совпадение работающих image IDs с audit, Debian revision u2 в API/DB,
+PostgreSQL UID999/proxy UID10001, HTTPS/Secure cookie и HTTP/2. Все4services healthy.
+Существующий demo-аккаунт в Edge: My Space с данными, Live, privacy owner guard,
+личный JSON export и logout PASS; page_errors=[]. Экспорт остаётся приватным.
+Пилотные боты проверены отдельными Docker-сценариями CI; постоянно работающий
+профиль demo-bots при установке не включался.
+
+[Локальная поставка](assets/PM-023/dependencies-20261027/local-delivery.json),
+[браузерный результат](assets/PM-023/dependencies-20261027/deployed-browser.json),
+[фактический demo-экран](assets/PM-023/dependencies-20261027/deployed-privacy.png).
+
+Итог: **fixed для выбранных Debian libssl3/openssl package/advisory matches**
+в API/DB/bot. Доказательство — точная Debian revision, отсутствие6 выбранных
+записей в повторном audit и совместимость легитимных сценариев. Это не
+подтверждение исходной DTLS-эксплуатации и не исправление bundled SSL psycopg.
+Следующий P0: curl/libcurl proxy и отдельная SSL-копия wheel, затем оставшиеся
+проверки consumers; notices/лицензия и визуальные доработки остаются в плане.
 
 [Сравнение и image IDs](assets/PM-023/dependencies-20261027/comparison.json),
 [package changes и SSL linkage](assets/PM-023/dependencies-20261027/package-comparison.json),

@@ -67,4 +67,4 @@ P1–P3 согласованы (D46). Остаются реальный Android/
 background push и актуальные правила магазинов при возобновлении этапов.
 [Решения](OPEN_DECISIONS.md) и [результаты](../task-results/PM-023-account-privacy.md).
 Логи не содержат private payloads или credentials. Рабочая Docker-поставка
-обновлена до dac119f после CI и проверенного backup/restore; правила D46 действуют локально.
+обновлена до d53232e после CI и проверенного backup/restore; правила D46 действуют локально.

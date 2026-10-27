@@ -8,7 +8,10 @@
 - Debian OpenSSL3.0.22-1~deb12u2 закреплён в API/DB/bot и Python build stages;
   manifests подтвердили только2 package changes, бинарник PostgreSQL сохранён.
   Сборки/33 tests/Ruff/mypy PASS,4 skips. Повторный audit убрал по2 выбранные
-  записи и12 строк всех severity на образ. Полный CI/установка ожидаются.
+  записи и12 строк всех severity на образ. CI40532313119 все4jobs PASS,
+  200 Python/54 Chromium. Установлен d53232e после проверенного restore:
+  29таблиц/10sequences совпали, исходная БД сохранена. HTTPS/HTTP2, TLS issuer
+  validation, existing My Space/Live/privacy/export PASS;4services healthy.
 - Новый scanner DB добавил2 High curl/libcurl в неизменённом proxy. Найдена
   отдельная OpenSSL3.5.8 в wheel psycopg; она не обновляется apt. Это явно
   сохранённые следующие пункты, не объявленные исправленными.

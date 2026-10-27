@@ -19,7 +19,7 @@
 Пример для подготовленных локальных образов (тег candidate не означает установленный релиз):
 
 ```powershell
-.venv-dev/Scripts/python.exe -m scripts.audit_dependencies --trivy .local/tools/trivy-0.76.1/trivy --wsl Ubuntu --output .local/audit-unique-name --image marketob-api:pm023-deps25 --image marketob-proxy:pm023-deps25 --image marketob-bot:pm023-deps25 --image marketob-db:pm023-deps25
+.venv-dev/Scripts/python.exe -m scripts.audit_dependencies --trivy .local/tools/trivy-0.76.1/trivy --wsl Ubuntu --output .local/audit-unique-name --image marketob-api:d53232e --image marketob-proxy:d53232e --image marketob-bot:d53232e --image marketob-db:d53232e
 ```
 
 `--image` повторяется для каждого **существующего локального образа**; выберите

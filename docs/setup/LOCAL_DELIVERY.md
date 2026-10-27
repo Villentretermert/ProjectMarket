@@ -10,11 +10,11 @@
 [MarkeTOB](http://127.0.0.1:19000/app/) и создайте свой аккаунт через Create account.
 Приложение использует восстановленную `marketob_pm022`; прежние БД `marketob_recovered` и `marketob` сохранены.
 На стенде есть синтетические проверки/demo, это не публичный сервис.
-Приватная конфигурация — `.local/pm021/docker.env`, текущие API/proxy/DB images —dac119f,
-PostgreSQL18.6 с пересобранным gosu. [Dependency update](../task-results/PM-023-dependencies-20261025.md):
+Приватная конфигурация — `.local/pm021/docker.env`, текущие API/proxy/DB images —d53232e,
+PostgreSQL18.6 с пересобранным gosu и Debian OpenSSL3.0.22-1~deb12u2. [Dependency update](../task-results/PM-023-dependencies-20261027.md):
 CI200 Python/54 Chromium PASS, backup/restore18.6 —29таблиц/10sequences
-совпали. Backup/прежний env — `.local/pm023/dependency-delivery-03/`. Отдельный
-проект `marketob-pm023-deps25-restore` остановлен, его проверочная копия сохранена.
+совпали. Backup/прежний env — `.local/pm023/dependency-delivery-04/`. Отдельный
+проект `marketob-pm023-deps27-restore` остановлен, его проверочная копия сохранена.
 Все4services healthy, HTTPS/HTTP2 и demo Web PASS. Обновление уменьшило findings,
 но не является разрешением внешнего релиза.
 

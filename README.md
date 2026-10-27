@@ -13,8 +13,8 @@
 [Открыть работающий локальный пилот](http://127.0.0.1:19000/app/) (проект marketob-pm021). Создайте свой аккаунт через Create account. [Инструкция Web и проверка браузером](docs/setup/WEB.md).
 
 [Единая инструкция владельцу](docs/setup/PILOT_HANDOFF.md): пользователь, Studio,
-разработчик бота, оператор и проверка двумя аккаунтами. Рабочий Docker обновлён до `dac119f` после проверенного backup/restore со сверкой29таблиц/10sequences.
-[Зависимости, SBOM и оставшиеся ограничения](docs/task-results/PM-023-dependencies-20261025.md).
+разработчик бота, оператор и проверка двумя аккаунтами. Рабочий Docker обновлён до `d53232e` после проверенного backup/restore со сверкой29таблиц/10sequences.
+[Зависимости, SBOM и оставшиеся ограничения](docs/task-results/PM-023-dependencies-20261027.md).
 Верхняя панель → **Data & privacy**; передача workspace — **Studio → Team**.
 [Результаты и ограничения](docs/task-results/PM-023-account-privacy.md).
 

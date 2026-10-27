@@ -3,20 +3,22 @@
 **Дата:** 27 октября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
 **Продолжение:** [остаточные зависимости/OpenSSL](task-results/PM-023-dependencies-20261027.md).
 137 статических решений:7 not_actionable,130 needs_review; raw scanner сохранён.
-Candidate Debian OpenSSL3.0.22-1~deb12u2: сборки/33 tests/Ruff/mypy PASS,4 skips;
-полный CI/установка ожидаются. Новая база scanner показывает5 Critical/130 High
-в candidate core; proxy curl/libcurl и bundled SSL psycopg требуют следующего разбора.
+**Установлен d53232e**, Debian OpenSSL3.0.22-1~deb12u2. CI40532313119 все4jobs PASS,
+200 Python/54 Chromium. Backup/restore29таблиц/10sequences совпали, исходная БД
+сохранена; HTTPS/HTTP2 и existing My Space/Live/privacy/export PASS,4services healthy.
+Новая база scanner показывает5 Critical/130 High в основных образах;
+proxy curl/libcurl и bundled SSL psycopg требуют следующего разбора.
 Ниже — ранее установленный результат25октября, не новая проверка27октября.
 По запросу владельца подготовлен [обзор статуса](reviews/STATUS-2026-10-25/README.md)
 в PPTX/PDF с пояснениями и 12 отдельными вопросами. G05 остаётся planned,
 после G04 3/4. Все [ответы S01–S12](reviews/STATUS-2026-10-25/answers.md) получены:
 разрешено продолжение зависимостей PM-023, [доработки](follow-ups/STATUS-2026-10-25.md)
 запланированы отдельно. Локальная поставка обновлена и проверена 25 октября.
-**Текущая независимая работа:** [PM-023 Go dependencies](task-results/PM-023-dependencies-20261025.md).
+**Предыдущая поставка25октября:** [PM-023 Go dependencies](task-results/PM-023-dependencies-20261025.md).
 Кандидаты proxy/gosu собраны Go1.26.10; x/net0.60.0 и brotli1.2.1.
 Повторный audit: все32 выбранные High/Critical отсутствуют; основные образы
 169→137 High/Critical (5 Critical/132 High).
-**Установлен dac119f:** CI40187348787 все4jobs PASS,200 Python/54 Chromium.
+**Ранее установлен dac119f:** CI40187348787 все4jobs PASS,200 Python/54 Chromium.
 Backup/restore18.6:29таблиц/10sequences совпали; оригинальная БД сохранена.
 HTTPS/HTTP2, existing demo login/My Space/Live/privacy/export PASS;4services healthy.
 В locks57Python/3Node advisory не найдено; в images остаются Critical/High,
