@@ -58,6 +58,11 @@ jobs:
       - run: docker compose up --build --detach --wait --wait-timeout 120
       - name: Verify rebuilt database startup helper
         run: docker compose exec -T db gosu --version | grep '^1.19 (go1.26.10 on linux/amd64; gc)$'
+      - name: Verify Debian OpenSSL security revision
+        run: |
+          for service in api db; do
+            test "$(docker compose exec -T "$service" dpkg-query -W -f='${Version}\n' libssl3 openssl)" = $'3.0.22-1~deb12u2\n3.0.22-1~deb12u2'
+          done
       - run: python scripts/smoke_api.py --database ok
       - run: python scripts/smoke_identity.py --bots
       - run: python -m scripts.smoke_channels

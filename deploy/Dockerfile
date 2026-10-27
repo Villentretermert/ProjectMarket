@@ -1,4 +1,11 @@
-FROM python:3.14.9-slim-bookworm@sha256:945c2676dc2b18e0c1f16879244122c57c0ffede60006bf3df159c507a31bcae AS build
+FROM python:3.14.9-slim-bookworm@sha256:945c2676dc2b18e0c1f16879244122c57c0ffede60006bf3df159c507a31bcae AS python-base
+# Use Debian's security backport in both build and runtime stages.
+RUN apt-get update \
+    && apt-get install -y --only-upgrade --no-install-recommends \
+       libssl3=3.0.22-1~deb12u2 openssl=3.0.22-1~deb12u2 \
+    && rm -rf /var/lib/apt/lists/*
+
+FROM python-base AS build
 WORKDIR /app
 ENV UV_PYTHON_DOWNLOADS=never UV_LINK_MODE=copy
 RUN pip install --no-cache-dir uv==0.13.5
@@ -11,7 +18,7 @@ COPY packages/contracts/pyproject.toml packages/contracts/pyproject.toml
 COPY packages/contracts/src/contracts/__init__.py packages/contracts/src/contracts/schemas.json packages/contracts/src/contracts/
 RUN uv sync --locked --package marketob-api --no-dev --no-editable
 
-FROM python:3.14.9-slim-bookworm@sha256:945c2676dc2b18e0c1f16879244122c57c0ffede60006bf3df159c507a31bcae
+FROM python-base
 WORKDIR /app
 # Dependencies are installed in build; the runtime needs no global package installer.
 RUN python -m pip uninstall --yes pip

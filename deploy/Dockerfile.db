@@ -9,6 +9,11 @@ RUN tar -xzf gosu.tar.gz --strip-components=1 \
     && /out/gosu --version
 
 FROM postgres:18.6-bookworm@sha256:bbf83594798e144bff365a9c191c5d779f181fb3135902064ab8ff11918020fc
+# Update Debian OpenSSL without changing the PostgreSQL engine or data layout.
+RUN apt-get update \
+    && apt-get install -y --only-upgrade --no-install-recommends \
+       libssl3=3.0.22-1~deb12u2 openssl=3.0.22-1~deb12u2 \
+    && rm -rf /var/lib/apt/lists/*
 # Keep the PostgreSQL engine, entrypoint, PGDATA and extensions unchanged.
 COPY --from=builder /out/gosu /usr/local/bin/gosu
 COPY --from=builder /src/LICENSE /usr/local/share/licenses/gosu/LICENSE

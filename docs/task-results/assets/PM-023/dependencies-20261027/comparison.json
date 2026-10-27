@@ -1,0 +1,253 @@
+{
+  "base_commit": "bce8bedfed081a8f2ab4be80fe855e15736c528a",
+  "scanner": {
+    "Version": "0.76.1",
+    "VulnerabilityDB": {
+      "Version": 2,
+      "NextUpdate": "2026-10-28T13:12:49.474279763Z",
+      "UpdatedAt": "2026-10-27T13:12:49.474279883Z",
+      "DownloadedAt": "2026-10-27T15:30:48.451452589Z"
+    }
+  },
+  "completed_at": "2026-10-27T15:31:29.051509+00:00",
+  "missing": [],
+  "audit_exit_status": 1,
+  "targets": [
+    {
+      "name": "locked-dependencies",
+      "image_id": null,
+      "findings": 0,
+      "severity": {}
+    },
+    {
+      "name": "marketob-api:dac119f",
+      "image_id": "sha256:3ce7e9ceb1d94ca5820cded235de11beb9da93a564bd7040e17a1416dd5ffbae",
+      "findings": 255,
+      "severity": {
+        "LOW": 91,
+        "HIGH": 61,
+        "MEDIUM": 99,
+        "CRITICAL": 2,
+        "UNKNOWN": 2
+      }
+    },
+    {
+      "name": "marketob-db:dac119f",
+      "image_id": "sha256:94790ae07cc0cf89a28cd9910adc658ae9ef7de047fabcc3ebc160a9c9faa751",
+      "findings": 415,
+      "severity": {
+        "LOW": 170,
+        "HIGH": 71,
+        "MEDIUM": 165,
+        "UNKNOWN": 6,
+        "CRITICAL": 3
+      }
+    },
+    {
+      "name": "marketob-bot:pm023-deps",
+      "image_id": "sha256:6086c9186da0fef1c0c51921595cbd76e8f6fa5eaec1aa8c68b5d02287fe605a",
+      "findings": 255,
+      "severity": {
+        "LOW": 91,
+        "HIGH": 61,
+        "MEDIUM": 99,
+        "CRITICAL": 2,
+        "UNKNOWN": 2
+      }
+    },
+    {
+      "name": "marketob-api:pm023-deps27",
+      "image_id": "sha256:5e58469db83509ac0a920bd6e42debb7e436eef455182ea654e7546cf9a35903",
+      "findings": 243,
+      "severity": {
+        "LOW": 89,
+        "HIGH": 59,
+        "MEDIUM": 91,
+        "CRITICAL": 2,
+        "UNKNOWN": 2
+      }
+    },
+    {
+      "name": "marketob-db:pm023-deps27",
+      "image_id": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+      "findings": 403,
+      "severity": {
+        "LOW": 168,
+        "HIGH": 69,
+        "MEDIUM": 157,
+        "UNKNOWN": 6,
+        "CRITICAL": 3
+      }
+    },
+    {
+      "name": "marketob-bot:pm023-deps27",
+      "image_id": "sha256:18eaf77c5ce756ee83d6053a943ea1420667a2f8f374051ac7a5366959083e68",
+      "findings": 243,
+      "severity": {
+        "LOW": 89,
+        "HIGH": 59,
+        "MEDIUM": 91,
+        "CRITICAL": 2,
+        "UNKNOWN": 2
+      }
+    },
+    {
+      "name": "marketob-proxy:dac119f",
+      "image_id": "sha256:1e7443886b3912c4ec387dc6908ea16b1314632c5ef4141a643905825d7056e1",
+      "findings": 50,
+      "severity": {
+        "HIGH": 2,
+        "MEDIUM": 3,
+        "LOW": 44,
+        "UNKNOWN": 1
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "before": "sha256:3ce7e9ceb1d94ca5820cded235de11beb9da93a564bd7040e17a1416dd5ffbae",
+      "after": "sha256:5e58469db83509ac0a920bd6e42debb7e436eef455182ea654e7546cf9a35903",
+      "selected_removed": [
+        {
+          "target": "sha256:3ce7e9ceb1d94ca5820cded235de11beb9da93a564bd7040e17a1416dd5ffbae (debian 12.15)",
+          "type": "debian",
+          "VulnerabilityID": "CVE-2026-84782",
+          "PkgName": "libssl3",
+          "InstalledVersion": "3.0.22-1~deb12u1",
+          "FixedVersion": "3.0.22-1~deb12u2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-84782",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "sha256:3ce7e9ceb1d94ca5820cded235de11beb9da93a564bd7040e17a1416dd5ffbae (debian 12.15)",
+          "type": "debian",
+          "VulnerabilityID": "CVE-2026-84782",
+          "PkgName": "openssl",
+          "InstalledVersion": "3.0.22-1~deb12u1",
+          "FixedVersion": "3.0.22-1~deb12u2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-84782",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "SeveritySource": null
+        }
+      ],
+      "all_rows_removed": 12
+    },
+    {
+      "before": "sha256:94790ae07cc0cf89a28cd9910adc658ae9ef7de047fabcc3ebc160a9c9faa751",
+      "after": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+      "selected_removed": [
+        {
+          "target": "sha256:94790ae07cc0cf89a28cd9910adc658ae9ef7de047fabcc3ebc160a9c9faa751 (debian 12.15)",
+          "type": "debian",
+          "VulnerabilityID": "CVE-2026-84782",
+          "PkgName": "libssl3",
+          "InstalledVersion": "3.0.22-1~deb12u1",
+          "FixedVersion": "3.0.22-1~deb12u2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-84782",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "sha256:94790ae07cc0cf89a28cd9910adc658ae9ef7de047fabcc3ebc160a9c9faa751 (debian 12.15)",
+          "type": "debian",
+          "VulnerabilityID": "CVE-2026-84782",
+          "PkgName": "openssl",
+          "InstalledVersion": "3.0.22-1~deb12u1",
+          "FixedVersion": "3.0.22-1~deb12u2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-84782",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "SeveritySource": null
+        }
+      ],
+      "all_rows_removed": 12
+    },
+    {
+      "before": "sha256:6086c9186da0fef1c0c51921595cbd76e8f6fa5eaec1aa8c68b5d02287fe605a",
+      "after": "sha256:18eaf77c5ce756ee83d6053a943ea1420667a2f8f374051ac7a5366959083e68",
+      "selected_removed": [
+        {
+          "target": "sha256:6086c9186da0fef1c0c51921595cbd76e8f6fa5eaec1aa8c68b5d02287fe605a (debian 12.15)",
+          "type": "debian",
+          "VulnerabilityID": "CVE-2026-84782",
+          "PkgName": "libssl3",
+          "InstalledVersion": "3.0.22-1~deb12u1",
+          "FixedVersion": "3.0.22-1~deb12u2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-84782",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "SeveritySource": null
+        },
+        {
+          "target": "sha256:6086c9186da0fef1c0c51921595cbd76e8f6fa5eaec1aa8c68b5d02287fe605a (debian 12.15)",
+          "type": "debian",
+          "VulnerabilityID": "CVE-2026-84782",
+          "PkgName": "openssl",
+          "InstalledVersion": "3.0.22-1~deb12u1",
+          "FixedVersion": "3.0.22-1~deb12u2",
+          "Severity": "HIGH",
+          "Status": "fixed",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-84782",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "SeveritySource": null
+        }
+      ],
+      "all_rows_removed": 12
+    }
+  ],
+  "artifacts": {
+    "audit.json.gz": {
+      "sha256": "97db4da472d2f14d09d0415227f70eef1e43d3722794074478e7bd692e282739",
+      "uncompressed_sha256": "d3229aa87c184643b26c2bb216191500e30b305c826b3e2d9ffcd4a77eaa9816"
+    },
+    "api.cdx.json.gz": {
+      "sha256": "271fe8ab6a985056b03aa7c4f02524137d234ed837f4057fe4275c2e405a8206",
+      "uncompressed_sha256": "744548fdc5ee6d1fa6dd491dc0664abf3be115bb589f52e5d060304ff9fb3226"
+    },
+    "db.cdx.json.gz": {
+      "sha256": "c165632f96090bec07f3036e1adf1171cfc069aa8254c0e9931f017ac7ad376c",
+      "uncompressed_sha256": "218a04002d5623329845f27efd21c66816b4c90b9c6babbee073968e7657c376"
+    },
+    "bot.cdx.json.gz": {
+      "sha256": "0e8175bbf306d95df4275a14962ae6e601596340fe1d42e502fa30d91e3564f1",
+      "uncompressed_sha256": "7251390340a746246150a5af0cc580ffd2bcb1ec5e24e54e2b5f1d220869f4b9"
+    },
+    "proxy.cdx.json.gz": {
+      "sha256": "d8d943e560a60f323db1692acafcc07d04e81a903db73bd7d92f07260eedf1e8",
+      "uncompressed_sha256": "3217d045925ac7e3842eea5ee01904c7ec08d3be54241c7d26511620acd6f95b"
+    }
+  }
+}

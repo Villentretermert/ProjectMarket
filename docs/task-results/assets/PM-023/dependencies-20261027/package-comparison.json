@@ -1,0 +1,40 @@
+{
+  "api": {
+    "package_changes": {
+      "libssl3:amd64": [
+        "3.0.22-1~deb12u1",
+        "3.0.22-1~deb12u2"
+      ],
+      "openssl": [
+        "3.0.22-1~deb12u1",
+        "3.0.22-1~deb12u2"
+      ]
+    },
+    "ssl_linkage": "OpenSSL 3.0.22 25 Aug 2026\n['libcrypto-2d1629ee.so.3', 'libk5crypto-b1f99d5c.so.3.1']\nOpenSSL 3.5.8 25 Aug 2026\n"
+  },
+  "db": {
+    "package_changes": {
+      "libssl3:amd64": [
+        "3.0.22-1~deb12u1",
+        "3.0.22-1~deb12u2"
+      ],
+      "openssl": [
+        "3.0.22-1~deb12u1",
+        "3.0.22-1~deb12u2"
+      ]
+    },
+    "postgres_binary_sha256": "3072560a8e4bd70947decc6e4f31cd4712931f639c20812096ae8c77e122ae42"
+  },
+  "bot": {
+    "package_changes": {
+      "libssl3:amd64": [
+        "3.0.22-1~deb12u1",
+        "3.0.22-1~deb12u2"
+      ],
+      "openssl": [
+        "3.0.22-1~deb12u1",
+        "3.0.22-1~deb12u2"
+      ]
+    }
+  }
+}

@@ -32,7 +32,9 @@ def smoke(origin: str, mode: str, report: Path) -> None:
         if mode == "docker":
             subprocess.run(COMPOSE + ["build", "catalog-bot", "news-bot"], env=env, check=True)
             check = (
-                "import os, importlib.util; assert os.getuid() == 10001; "
+                "import os, importlib.util, subprocess; assert os.getuid() == 10001; "
+                "assert subprocess.check_output(['dpkg-query','-W','-f=${Version}\\n',"
+                "'libssl3','openssl'], text=True).splitlines() == ['3.0.22-1~deb12u2'] * 2; "
                 "assert not os.environ.get('MARKETOB_DATABASE_URL'); "
                 "assert not os.environ.get('POSTGRES_PASSWORD'); "
                 "assert importlib.util.find_spec('marketob_api') is None; "
