@@ -8,7 +8,10 @@
   сохранение exit status клиента в обеих HTTP/2 проверках по review.
 - Изолированный proxy/CA/HTTP2 PASS; 9 tests/Ruff/mypy PASS. Одна база Trivy
   показывает 56→8 записей, оба выбранных High устранены. Остаются 2 High,
-  3 Medium и 3 Unknown в Go-компонентах. Полный CI/установка ожидаются.
+  3 Medium и 3 Unknown в Go-компонентах. CI40998612689 — все4jobs PASS,
+  200 Python/54 Chromium; установлен proxy750e506. Restore29таблиц/10sequences
+  совпал, исходная БД/другие контейнеры/CA сохранены; HTTPS/HTTP2 PASS,
+  4services healthy. Миграции не выполнялись.
 - Уточнён psycopg: libpq18.6 и отдельная OpenSSL3.5.8; драйвер не менялся.
   [Результаты](docs/task-results/PM-023-dependencies-20261030.md).
 - PM-023 открыта; 19/24. Android/облако/L2 остаются отложенными.

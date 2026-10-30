@@ -65,7 +65,41 @@ Shell substitute подтвердил: старая проверка прини�
 системный temporary directory, повтор с отдельным workspace basetemp прошёл.
 Эти сбои не используются как подтверждение успешных проверок.
 
-Полный CI и установка кандидата пока ожидаются. Рабочий proxy остаётся d53232e.
+[CI40998612689](https://github.com/Villentretermert/ProjectMarket/actions/runs/40998612689)
+на **750e506** завершён успешно во всех четырёх jobs: 90 unit + 110 integration
+= **200 Python tests**, **54 Chromium scenarios**, Docker startup/recovery,
+оба demo-бота, HTTPS/HTTP2 и backup/restore. Два Pydantic warning об alias
+`cursor`/`limit` сохранены; ошибок тестов нет. Код API этой итерацией не менялся.
+[Точные результаты](assets/PM-023/dependencies-20261030/ci-results.json).
+
+## Локальная установка
+
+**Установлен proxy750e506**, его image ID совпал с проверенным кандидатом.
+Перед обновлением запись остановлена; backup восстановлен в отдельном
+`marketob-pm023-deps30-restore`/`marketob_pm023_curl_verified`:
+**29 таблиц и 10 sequences совпали**, PostgreSQL18.6 →18.6.
+Исходная `marketob_pm022` сохранена; её состояние повторно сверено до запуска
+писателей. Проверочный restore project остановлен, его volume сохранён.
+
+Только proxy получил новый образ. API/DB/maintenance сохранили контейнеры
+и image IDs; мигратор не запускался. Для воспроизводимого Compose новая
+конфигурация использует MARKETOB_RELEASE=750e506; неизменённые API/DB/bot
+images помечены этим же release tag без пересборки. Caddy CA сохранился.
+Backup, предыдущий env и отдельная копия proxy data/config остаются приватными
+в `.local/pm023/dependency-delivery-05/`.
+
+После установки HTTPS/Web/регистрация/сессия/Secure cookie/удаление
+синтетического аккаунта, реальный HTTP/2 новым curl и UID10001 PASS;
+все четыре сервиса healthy. [Проверенный итог](assets/PM-023/dependencies-20261030/local-delivery.json).
+При неуспехе helper возвращал бы только прежний proxy, без восстановления
+устаревшего backup поверх новых данных. Этот rollback не потребовался.
+Первый вызов install helper системным Python завершился на import до изменений;
+выполненный запуск использовал проектный `.venv-dev`.
+
+Outcome **fixed** относится к двум выбранным curl/libcurl package/advisory
+matches и потере exit status в CI. Отсутствие исходных совпадений установлено
+повторным scanner и точной версией пакетов, а совместимость — runtime-проверкой
+и полным CI. Воспроизведение исходного UAF/RCE не заявлено.
 
 ## Отдельная SSL-копия psycopg
 
@@ -96,7 +130,6 @@ Linux/Windows и поведения подключения. Драйвер эт�
 Публичные файлы содержат технические версии/хеши и результаты проверок;
 выгрузок аккаунтов, конфигурации с секретами, backup и новых скриншотов нет.
 
-Далее: полный CI → установка только proxy → проверка рабочего HTTPS.
-Затем разбор оставшихся Go-зависимостей и поставки bundled SSL; notices,
+Следующий шаг — разбор оставшихся Go-зависимостей и поставки bundled SSL; notices,
 согласованные визуальные доработки и видео сохраняются в плане.
 Android, облако и полный L2 остаются отложенными.

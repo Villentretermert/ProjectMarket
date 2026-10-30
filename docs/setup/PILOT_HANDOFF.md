@@ -113,6 +113,6 @@ Data & privacy → Download JSON. Для Owner сначала Studio → Team �
 Каналы и боты сохраняются у нового владельца. Проверьте выгрузку, Cancel, ошибочный
 пароль и вход второго аккаунта до намеренного удаления тестового пользователя.
 Точное содержимое/retention: [Privacy API](../api/PRIVACY.md). Эти возможности
-вошли в a7deaab и сохранены в установленном d53232e. [Dependency update и SBOM](../task-results/PM-023-dependencies-20261027.md):
+вошли в a7deaab и сохранены в API d53232e. Proxy обновлён до750e506 с сохранением CA. [Dependency update и SBOM](../task-results/PM-023-dependencies-20261030.md):
 CI200 Python/54 Chromium PASS; backup/restore29таблиц/10sequences и HTTPS/HTTP2 проверены.
 Оставшиеся Critical/High в базовых компонентах требуют отдельного разбора. Полная приёмка RC ещё не объявлена.

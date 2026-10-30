@@ -2,9 +2,13 @@
 
 **Дата:** 30 октября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
 **Текущая работа:** [curl/libcurl proxy](task-results/PM-023-dependencies-20261030.md).
-Кандидат 8.23.0-r0: сборка, isolated HTTPS/HTTP2/CA, 9 tests/Ruff/mypy PASS.
+**Установлен proxy750e506**, curl/libcurl8.23.0-r0. CI40998612689 все4jobs PASS:
+200 Python/54 Chromium. Restore29таблиц/10sequences совпал; API/DB/maintenance
+сохранили контейнеры и image IDs, исходная БД/CA сохранены;4services healthy.
+HTTPS/Web/Secure session/HTTP2 проверены; миграции не выполнялись.
 Одной базой Trivy proxy 56→8 записей, выбранные два High отсутствуют;
-остаются 2 High/3 Medium/3 Unknown в Go-компонентах. Полный CI/установка ожидаются.
+остаются 2 High/3 Medium/3 Unknown в Go-компонентах. Это счётчик только proxy,
+API/DB/bot/locks новым запуском не пересканировались.
 Поставка psycopg с отдельной OpenSSL3.5.8 остаётся предметом следующего разбора.
 Предыдущий отчёт a88ef6a опубликован по явному согласию владельца.
 
