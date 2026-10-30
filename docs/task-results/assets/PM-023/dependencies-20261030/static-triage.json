@@ -1,0 +1,172 @@
+{
+  "schema_version": "marketob-public-triage/v1",
+  "repository": {
+    "url": "https://github.com/Villentretermert/ProjectMarket",
+    "revision": "a88ef6a"
+  },
+  "findings": [
+    {
+      "triage_item_id": "triage-001",
+      "input_id": "PM-023/20261027/target-7/curl/CVE-2026-92392",
+      "source_type": "cve",
+      "title": "CVE-2026-92392 in proxy curl 8.22.0-r0",
+      "normalized_input": {
+        "vulnerable_component": "curl",
+        "claimed_source": "HTTP/2 server controls RST_STREAM during an upload",
+        "claimed_sink": "curl upload retry handling frees Curl_easy while still referenced",
+        "claimed_control": "Affected curl versions lack corrected stream/retry lifetime handling",
+        "affected_version_or_path": "marketob-proxy:d53232e; Alpine 3.23.7; 8.22.0-r0",
+        "preconditions": [
+          "curl/libcurl 8.12.0–8.22.0",
+          "HTTP/2 upload; peer sends HTTP_1_1_REQUIRED or REFUSED_STREAM",
+          "RCE additionally requires allocator/version/timing-specific conditions"
+        ],
+        "impact": "Use after free; potential remote code execution under additional upstream conditions",
+        "references": [
+          "https://curl.se/docs/CVE-2026-92392.html",
+          "docs/task-results/assets/PM-023/dependencies-20261027/audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "runtime package origin",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "13-24",
+          "detail": "Pinned Caddy Alpine base carries curl/libcurl. Existing package override only updates brotli."
+        },
+        {
+          "label": "proxy implementation",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "CGO_ENABLED=0 Caddy built in Go; no libcurl linkage expected."
+        },
+        {
+          "label": "shipped route",
+          "path": "deploy/Caddyfile",
+          "lines": "7-10",
+          "detail": "TLS internal; reverse_proxy to fixed api:8000. Healthcheck uses wget, not curl."
+        }
+      ],
+      "reachable_path": [
+        "Affected curl/libcurl package is present in the recorded immutable image.",
+        "Repository runtime entrypoint and healthcheck do not invoke curl uploads.",
+        "No supported attacker-controlled HTTP/2 upload path through this copy is established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy. Dockerfile.proxy, Caddyfile and compose.local.yaml establish shipped paths; not a generic arbitrary-upload client."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 1,
+        "rationale": "Affected binary package is present; product upload consumer and attacker control remain unproven. curl CLI ranked before library-only consumer.",
+        "drivers": [
+          "package present",
+          "no established application caller",
+          "requires malicious upload peer"
+        ]
+      },
+      "evidence": [
+        "Trivy snapshot 27 October retains two distinct Alpine package records, fixed version 8.23.0-r0.",
+        "Official curl advisory describes upload/HTTP2 reset conditions."
+      ],
+      "counterevidence": [
+        "Static Go Caddy uses its own HTTP stack.",
+        "Shipped healthcheck uses wget GET/spider to a fixed localhost readiness endpoint.",
+        "CI curl executes on the host runner, outside the proxy image."
+      ],
+      "proof_gaps": [
+        "No positive evidence connects a supported untrusted input to curl/libcurl upload within this image.",
+        "A package-version patch can be verified independently; it does not establish original exploitability."
+      ],
+      "recommended_next_step": "Apply available minimal Alpine package update as dependency maintenance, compare package manifests, rebuild and verify proxy HTTPS/HTTP2, health and exact advisory absence.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-002",
+      "input_id": "PM-023/20261027/target-7/libcurl/CVE-2026-92392",
+      "source_type": "cve",
+      "title": "CVE-2026-92392 in proxy libcurl 8.22.0-r0",
+      "normalized_input": {
+        "vulnerable_component": "libcurl",
+        "claimed_source": "HTTP/2 server controls RST_STREAM during an upload",
+        "claimed_sink": "curl upload retry handling frees Curl_easy while still referenced",
+        "claimed_control": "Affected curl versions lack corrected stream/retry lifetime handling",
+        "affected_version_or_path": "marketob-proxy:d53232e; Alpine 3.23.7; 8.22.0-r0",
+        "preconditions": [
+          "curl/libcurl 8.12.0–8.22.0",
+          "HTTP/2 upload; peer sends HTTP_1_1_REQUIRED or REFUSED_STREAM",
+          "RCE additionally requires allocator/version/timing-specific conditions"
+        ],
+        "impact": "Use after free; potential remote code execution under additional upstream conditions",
+        "references": [
+          "https://curl.se/docs/CVE-2026-92392.html",
+          "docs/task-results/assets/PM-023/dependencies-20261027/audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "runtime package origin",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "13-24",
+          "detail": "Pinned Caddy Alpine base carries curl/libcurl. Existing package override only updates brotli."
+        },
+        {
+          "label": "proxy implementation",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "CGO_ENABLED=0 Caddy built in Go; no libcurl linkage expected."
+        },
+        {
+          "label": "shipped route",
+          "path": "deploy/Caddyfile",
+          "lines": "7-10",
+          "detail": "TLS internal; reverse_proxy to fixed api:8000. Healthcheck uses wget, not curl."
+        }
+      ],
+      "reachable_path": [
+        "Affected curl/libcurl package is present in the recorded immutable image.",
+        "Repository runtime entrypoint and healthcheck do not invoke curl uploads.",
+        "No supported attacker-controlled HTTP/2 upload path through this copy is established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy. Dockerfile.proxy, Caddyfile and compose.local.yaml establish shipped paths; not a generic arbitrary-upload client."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 2,
+        "rationale": "Affected binary package is present; product upload consumer and attacker control remain unproven. curl CLI ranked before library-only consumer.",
+        "drivers": [
+          "package present",
+          "no established application caller",
+          "requires malicious upload peer"
+        ]
+      },
+      "evidence": [
+        "Trivy snapshot 27 October retains two distinct Alpine package records, fixed version 8.23.0-r0.",
+        "Official curl advisory describes upload/HTTP2 reset conditions."
+      ],
+      "counterevidence": [
+        "Static Go Caddy uses its own HTTP stack.",
+        "Shipped healthcheck uses wget GET/spider to a fixed localhost readiness endpoint.",
+        "CI curl executes on the host runner, outside the proxy image."
+      ],
+      "proof_gaps": [
+        "No positive evidence connects a supported untrusted input to curl/libcurl upload within this image.",
+        "A package-version patch can be verified independently; it does not establish original exploitability."
+      ],
+      "recommended_next_step": "Apply available minimal Alpine package update as dependency maintenance, compare package manifests, rebuild and verify proxy HTTPS/HTTP2, health and exact advisory absence.",
+      "fix_finding_handoff": null
+    }
+  ],
+  "source_schema": "triage-finding/v0"
+}

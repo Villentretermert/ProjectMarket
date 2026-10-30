@@ -1,0 +1,24 @@
+{
+  "psycopg": "3.3.6",
+  "implementation": "binary",
+  "libpq": 180006,
+  "python_ssl": "OpenSSL 3.0.22 25 Aug 2026",
+  "bundled_ssl": "OpenSSL 3.5.8 25 Aug 2026",
+  "loaded_bundled_libraries": [
+    "libcom_err-2abe824b.so.2.1",
+    "libcrypt-bc2db45e.so.1",
+    "libcrypto-2d1629ee.so.3",
+    "libgssapi_krb5-497db0c6.so.2.2",
+    "libk5crypto-b1f99d5c.so.3.1",
+    "libkeyutils-dfe70bd6.so.1.5",
+    "libkrb5-fcafa220.so.3.3",
+    "libkrb5support-d0bcff84.so.0.1",
+    "liblber-a44a5afb.so.2.0.200",
+    "libldap-7c3a4b12.so.2.0.200",
+    "libpcre-9513aab5.so.1.2.0",
+    "libpq-e9b5c9ac.so.5.18",
+    "libsasl2-84219a89.so.3.0.0",
+    "libselinux-0922c95c.so.1",
+    "libssl-8bd944e8.so.3"
+  ]
+}

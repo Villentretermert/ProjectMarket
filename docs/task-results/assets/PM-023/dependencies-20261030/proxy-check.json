@@ -1,0 +1,22 @@
+{
+  "candidate_image_id": "sha256:e637064c4a8a2abc85afdbef4382f784c275d03e3bd3e1e8f408826c6449123e",
+  "packages_removed": [
+    "curl-8.22.0-r0",
+    "libcurl-8.22.0-r0"
+  ],
+  "packages_added": [
+    "curl-8.23.0-r0",
+    "libcurl-8.23.0-r0"
+  ],
+  "caddy_binary_sha256": "0a5fd44c1a27433332b78a5829a5c7ff9207000332e2f206ed88ef4ec3138597",
+  "container_curl_http2": "2",
+  "readiness_database": "ok",
+  "web": true,
+  "untrusted_ca_exit": 60,
+  "uid": 10001,
+  "wget_target": "/bin/busybox",
+  "health": "healthy",
+  "caddy_metadata_preserved": true,
+  "completed_at": "2026-10-30T03:34:01.065230+00:00",
+  "old_image_id": "sha256:1e7443886b3912c4ec387dc6908ea16b1314632c5ef4141a643905825d7056e1"
+}

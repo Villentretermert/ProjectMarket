@@ -96,8 +96,14 @@ jobs:
           docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy id -u | grep '^10001$'
           docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy caddy build-info | grep -F 'go1.26.10'
           docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy caddy build-info | grep -E 'golang.org/x/net[[:space:]]+v0.60.0'
+          docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy apk info -v | grep -x 'curl-8.23.0-r0'
+          docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy apk info -v | grep -x 'libcurl-8.23.0-r0'
+          # Exercise the updated container client, including CA validation and HTTP/2.
+          container_http_version="$(docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy curl --http2 --fail --silent --show-error --cacert /data/caddy/pki/authorities/local/root.crt --output /dev/null --write-out '%{http_version}' https://localhost:8443/health/ready)"
+          test "$container_http_version" = '2'
           # The urllib smoke covers HTTP/1.1; require actual HTTP/2 negotiation as well.
-          test "$(curl --http2 --fail --silent --show-error --cacert .local/delivery/root.crt --output /dev/null --write-out '%{http_version}' https://localhost:8443/health/ready)" = '2'
+          host_http_version="$(curl --http2 --fail --silent --show-error --cacert .local/delivery/root.crt --output /dev/null --write-out '%{http_version}' https://localhost:8443/health/ready)"
+          test "$host_http_version" = '2'
       - name: Consistent backup and isolated restore
         run: |
           uv run --locked python -m scripts.backup --compose create .local/delivery/backup
