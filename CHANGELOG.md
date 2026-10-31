@@ -11,7 +11,8 @@
   14 focused tests, Ruff/mypy94files PASS; оба локальных inventory complete.
   Psycopg3.3.7 ещё unreleased; драйвер и рабочая поставка не заменялись.
 - [Результат и границы](docs/task-results/PM-023-psycopg-20261031.md).
-  Полный CI ожидается. PM-023 остаётся открытой;19/24, отсрочки сохранены.
+  CI41239002094 на665a00e все4jobs PASS,205 Python/54 Chromium; inventory PASS
+  на Windows/Linux/API image. PM-023 открыта;19/24, отсрочки сохранены.
 
 ## 2026-10-31 — PM-023: Go-зависимости Caddy
 

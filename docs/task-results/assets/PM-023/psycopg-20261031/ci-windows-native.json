@@ -1,0 +1,37 @@
+{
+  "schema_version": "marketob-psycopg-linkage/v1",
+  "scope": "Inspection process imports ssl then psycopg; no database or network access",
+  "coverage": "Loaded libpq/libssl/libcrypto owned by the psycopg-binary wheel",
+  "security_assessment": "not_performed",
+  "python": "3.14.9",
+  "platform": "Windows",
+  "machine": "AMD64",
+  "python_ssl": "OpenSSL 3.5.9 29 Sep 2026",
+  "status": "complete",
+  "libraries": [
+    {
+      "name": "libcrypto-3-x64-ea7976933920057f9f21699ac9d19a81.dll",
+      "kind": "libcrypto",
+      "owner": "psycopg-binary",
+      "sha256": "ea7976933920057f9f21699ac9d19a819c56eed773abb82e3d1dfbac8068a1bd",
+      "openssl_version": "OpenSSL 3.6.4 25 Aug 2026"
+    },
+    {
+      "name": "libpq-6ec4534e177d3ba07a418d64cb93a2ca.dll",
+      "kind": "libpq",
+      "owner": "psycopg-binary",
+      "sha256": "fac98005d4ee1af426a93fd7aa906f3f67cb4e515d3546113485e25e2c170491"
+    },
+    {
+      "name": "libssl-3-x64-4bb9625beaf8f46929909974166d6f5a.dll",
+      "kind": "libssl",
+      "owner": "psycopg-binary",
+      "sha256": "2af697531ddda8c18ac571d07effbcf37dd794cd13cb4e9dd461446365461064"
+    }
+  ],
+  "gaps": [],
+  "psycopg": "3.3.6",
+  "implementation": "binary",
+  "libpq_runtime": 180004,
+  "libpq_build": 180004
+}

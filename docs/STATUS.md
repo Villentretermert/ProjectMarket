@@ -3,7 +3,8 @@
 **Дата:** 31 октября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
 **Текущая работа:** [native SSL psycopg](task-results/PM-023-psycopg-20261031.md).
 Добавлен повторяемый Python inventory и проверки CI. Локальные Windows/Linux
-проверки complete;14 tests/Ruff/mypy94files PASS, полный CI ожидается.
+проверки complete;14 tests/Ruff/mypy94files PASS. CI41239002094 на665a00e —
+все4jobs PASS,205 Python/54 Chromium; новый inventory PASS во всех3средах CI.
 Linux wheel использует libpq18.6/SSL3.5.8, Windows wheel18.4/SSL3.6.4.
 Драйвер не обновлялся:3.3.7 ещё unreleased. Следующий подэтап — отдельный
 Linux-кандидат psycopg[c] с контролем libpq/SSL и совместимости; CVE не закрыта.

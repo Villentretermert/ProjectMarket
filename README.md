@@ -15,6 +15,8 @@
 [Единая инструкция владельцу](docs/setup/PILOT_HANDOFF.md): пользователь, Studio,
 разработчик бота, оператор и проверка двумя аккаунтами. Рабочий proxy обновлён до `b202024` после проверенного backup/restore:29таблиц/10sequences совпали. API/БД сохранили прежние образы, сертификат сохранён.
 [Зависимости, SBOM и оставшиеся ограничения](docs/task-results/PM-023-dependencies-20261031.md).
+Добавлена [проверка native-библиотек psycopg](docs/task-results/PM-023-psycopg-20261031.md):
+CI205 Python/54 Chromium PASS; OpenSSL драйвера учитывается отдельно по платформам.
 Верхняя панель → **Data & privacy**; передача workspace — **Studio → Team**.
 [Результаты и ограничения](docs/task-results/PM-023-account-privacy.md).
 
