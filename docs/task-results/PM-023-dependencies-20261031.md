@@ -92,8 +92,44 @@ Reachability JOSE через действующий маршрут не дока
 Публичные материалы содержат технические версии/хеши и результаты;
 секреты, пользовательские данные, CA keys и backup не публикуются.
 
-Кандидат ожидает полного CI и установки с проверенным backup/restore.
-Outcome **fixed** пока не заявлен до завершения этих проверок.
+## CI и локальная установка
+
+[CI41215407434](https://github.com/Villentretermert/ProjectMarket/actions/runs/41215407434)
+на **b202024** завершился успешно во всех четырёх jobs:90 unit +110 integration
+= **200 Python tests**, **54 Chromium scenarios**, Docker recovery, Python/Docker
+demo-боты, HTTPS/HTTP2 и backup/restore. Сохранён один Pydantic warning об alias
+`cursor`; ошибок тестов нет. [Результаты](assets/PM-023/dependencies-20261031/ci-results.json).
+
+Установлен **proxy b202024**, image ID совпал с проверенным кандидатом.
+До обновления запись остановлена; backup восстановлен в отдельном
+`marketob-pm023-deps31-restore`/`marketob_pm023_go_verified`:
+**29 таблиц и 10 sequences совпали**, PostgreSQL18.6 →18.6. Исходная
+`marketob_pm022` сохранена и повторно сверена до возобновления записи.
+Restore project остановлен, его volume сохранён. Приватные backup, прежний env
+и копия proxy data/config — `.local/pm023/dependency-delivery-06/`.
+
+API/DB/maintenance сохранили контейнеры и image IDs; только proxy заменён.
+Неизменённые API/DB/bot images помечены b202024 для следующего Compose up.
+Корневой сертификат совпал. После установки HTTPS/Web/регистрация/сессия/
+Secure cookie/удаление синтетического аккаунта, HTTP2 и UID10001 PASS;
+все четыре сервиса healthy. [Проверенный итог](assets/PM-023/dependencies-20261031/local-delivery.json).
+
+Уточнение наблюдения: `docker compose start api maintenance` также запустил
+зависимый migrate service. Он завершился с exit0, **already current**;
+реестр schema_migrations совпал с backup, новые миграции не применялись.
+Временный helper для будущего proxy-only обновления теперь использует
+`docker start` с сохранёнными container IDs, не возобновляя зависимости.
+Повторная установка ради этой правки helper не выполнялась. Аналогичная строка
+журнала от30октября уточняет прежнее утверждение «мигратор не запускался»:
+он запускался, но новых миграций не применял. Исторический JSON сохранён;
+новый отчёт явно разделяет запуск runner и применение миграций.
+
+Outcome **fixed** относится к четырём выбранным package/advisory matches.
+Отсутствие исходных совпадений доказано точными версиями бинарника и повторным
+scanner; легитимная работа текущего маршрута — изолированными runtime-проверками,
+CI и локальной установкой. Исходный DoS/bypass на приложении не воспроизводился;
+полное закрытие JOSE v3 и всех зависимостей не заявляется.
+
 Следующий независимый разбор: bundled OpenSSL в psycopg и base findings;
 затем notices и согласованные визуальные доработки/видео.
 Android, облако и полный L2 остаются отложенными.

@@ -11,7 +11,11 @@
 - Три go-jose/v3 finding остаются; OpenPGP отсутствует в точном import graph,
   но исходная запись сканера сохранена. Эксплуатация приложения не заявлена.
   [Проверки и ограничения](docs/task-results/PM-023-dependencies-20261031.md).
-- Полный CI и установка кандидата ещё впереди. PM-023 открыта;19/24.
+- CI41215407434 все4jobs PASS,200 Python/54 Chromium; установлен proxy b202024.
+  Backup/restore29таблиц/10sequences совпал; БД, остальные контейнеры и CA сохранены,
+  HTTPS/HTTP2 PASS,4services healthy. Compose повторно запустил migrate: already
+  current, новых миграций нет. Helper/runbook уточнены; исправлено прежнее
+  утверждение30октября об отсутствии запуска мигратора. PM-023 открыта;19/24.
 
 ## 2026-10-30 — PM-023: curl/libcurl proxy
 
@@ -24,7 +28,7 @@
   3 Medium и 3 Unknown в Go-компонентах. CI40998612689 — все4jobs PASS,
   200 Python/54 Chromium; установлен proxy750e506. Restore29таблиц/10sequences
   совпал, исходная БД/другие контейнеры/CA сохранены; HTTPS/HTTP2 PASS,
-  4services healthy. Миграции не выполнялись.
+  4services healthy. Новые миграции не применялись.
 - Уточнён psycopg: libpq18.6 и отдельная OpenSSL3.5.8; драйвер не менялся.
   [Результаты](docs/task-results/PM-023-dependencies-20261030.md).
 - PM-023 открыта; 19/24. Android/облако/L2 остаются отложенными.

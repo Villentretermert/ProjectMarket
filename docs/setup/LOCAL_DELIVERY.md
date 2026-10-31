@@ -10,17 +10,24 @@
 [MarkeTOB](http://127.0.0.1:19000/app/) и создайте свой аккаунт через Create account.
 Приложение использует восстановленную `marketob_pm022`; прежние БД `marketob_recovered` и `marketob` сохранены.
 На стенде есть синтетические проверки/demo, это не публичный сервис.
-Приватная конфигурация — `.local/pm021/docker.env`, MARKETOB_RELEASE=750e506.
-30 октября заменён только proxy (curl/libcurl8.23.0-r0); API/DB/maintenance
+Приватная конфигурация — `.local/pm021/docker.env`, MARKETOB_RELEASE=b202024.
+31 октября заменён только proxy (chi5.4.0/go-jose4.1.7/x/net0.62.0); API/DB/maintenance
 сохранили контейнеры и image IDs от d53232e. Неизменённые API/DB/bot images
-также помечены750e506 для следующего запуска Compose. PostgreSQL18.6 и Debian
-OpenSSL3.0.22-1~deb12u2 сохранены. [Dependency update](../task-results/PM-023-dependencies-20261030.md):
+также помечены b202024 для следующего запуска Compose. PostgreSQL18.6 и Debian
+OpenSSL3.0.22-1~deb12u2 сохранены. [Dependency update](../task-results/PM-023-dependencies-20261031.md):
 CI200 Python/54 Chromium PASS, backup/restore18.6 —29таблиц/10sequences совпали.
-Backup/прежний env и приватная копия CA — `.local/pm023/dependency-delivery-05/`.
-Отдельный проект `marketob-pm023-deps30-restore` остановлен, проверочная копия сохранена.
-Миграции не выполнялись; Caddy CA сохранён.
+Backup/прежний env и приватная копия CA — `.local/pm023/dependency-delivery-06/`.
+Отдельный проект `marketob-pm023-deps31-restore` остановлен, проверочная копия сохранена.
+Мигратор повторно вызван Compose, already current; новых миграций нет,
+реестр schema_migrations совпал; Caddy CA сохранён.
 Все4services healthy, HTTPS/HTTP2 и demo Web PASS. Обновление уменьшило findings,
 но не является разрешением внешнего релиза.
+
+При следующем обновлении только proxy: после backup/restore возобновляйте
+сохранённые API/maintenance containers командой `docker start` с их точными IDs.
+`docker compose start api maintenance` может также запустить зависимый migrate
+service. Новый proxy запускайте `compose up --no-deps --no-build --wait proxy`.
+Это уточнение не относится к обычному полному запуску ниже и не заменяет backup.
 
 Прежний PM-023 a7deaab был установлен после CI:191 Python tests/54 browser scenarios
 и backup/restore со сверкой 29 таблиц / 10 sequences. Private backup и прежняя конфигурация:

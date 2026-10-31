@@ -14,7 +14,7 @@
 | БД | psycopg 3.3.6, psycopg-pool 3.3.3; Docker PostgreSQL 18.6 с digest |
 | Пароли / контракты | argon2-cffi 25.1.0, jsonschema-rs 0.57.1, локальный marketob-contracts |
 | Браузерные тесты | Playwright 1.62.1; Node не нужен для работы Web |
-| HTTPS | Caddy 2.11.7 base digest; пересборка Go1.26.10, x/net0.60.0, brotli1.2.1-r0, curl/libcurl8.23.0-r0 |
+| HTTPS | Caddy 2.11.7 base digest; Go1.26.10, x/net0.62.0, chi5.4.0, go-jose/v4 4.1.7, brotli1.2.1-r0, curl/libcurl8.23.0-r0 |
 | Startup helper БД | gosu1.19, архив с checksum, пересборка Go1.26.10 |
 | Собственные пакеты | marketob-api, marketob-contracts, marketob-bot-sdk, marketob-demo-bots |
 
@@ -29,7 +29,12 @@ Trivy0.76.1 проверил lock/build pins и фактические images, P
 metadata. Для locks57Python/3Node advisory не найдено; в системных/vendored
 компонентах images они есть, включая Critical/High. Глобальный runtime pip удалён.
 Доступны SBOM и точное сравнение; это не full security/legal clearance.
-[Продолжение30октября](../task-results/PM-023-dependencies-20261030.md): установлен proxy750e506,
+[Продолжение31октября](../task-results/PM-023-dependencies-20261031.md): установлен proxy b202024,
+CI200 Python/54 Chromium PASS. Proxy8→4 записи: четыре выбранных matches
+устранены, go-jose/v3 остаётся; OpenPGP subtree отсутствует в точном import graph.
+Полный module graph показывает девять изменений версий; APK packages сохранены.
+
+[Продолжение30октября](../task-results/PM-023-dependencies-20261030.md): ранее установлен proxy750e506,
 curl/libcurl8.23.0-r0. Одной новой базой scanner proxy56→8 записей;
 два выбранных High устранены, но остаются Go findings. API/DB images сохранены.
 

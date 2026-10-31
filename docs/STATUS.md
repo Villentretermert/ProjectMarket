@@ -2,16 +2,20 @@
 
 **Дата:** 31 октября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
 **Текущая работа:** [Go-зависимости proxy](task-results/PM-023-dependencies-20261031.md).
-Кандидат chi5.4.0/go-jose4.1.7/x/net0.62.0 собран: HTTPS/HTTP2, новый и
-существующий CA PASS;9 tests/Ruff/mypy PASS. Независимый review без замечаний.
+**Установлен proxy b202024**: chi5.4.0/go-jose/v4 4.1.7/x/net0.62.0.
+CI41215407434 все4jobs PASS,200 Python/54 Chromium;9 focused tests/Ruff/mypy PASS.
+Restore29таблиц/10sequences совпал; исходная БД, API/DB/maintenance и CA сохранены.
+HTTPS/Web/Secure session/HTTP2 PASS,4services healthy. Мигратор повторно запущен
+Compose, already current; новых миграций нет, schema_migrations совпал.
 Trivy proxy8→4: три go-jose/v3 остаются, OpenPGP отсутствует в import graph.
-Полный CI и установка ещё не выполнены. Ниже — действующая поставка30октября.
+Bundled SSL psycopg/base findings, notices и визуальные доработки остаются в плане.
+Ниже — историческая поставка30октября.
 
-**Текущая работа:** [curl/libcurl proxy](task-results/PM-023-dependencies-20261030.md).
+**Предыдущая работа:** [curl/libcurl proxy](task-results/PM-023-dependencies-20261030.md).
 **Установлен proxy750e506**, curl/libcurl8.23.0-r0. CI40998612689 все4jobs PASS:
 200 Python/54 Chromium. Restore29таблиц/10sequences совпал; API/DB/maintenance
 сохранили контейнеры и image IDs, исходная БД/CA сохранены;4services healthy.
-HTTPS/Web/Secure session/HTTP2 проверены; миграции не выполнялись.
+HTTPS/Web/Secure session/HTTP2 проверены; новые миграции не применялись.
 Одной базой Trivy proxy 56→8 записей, выбранные два High отсутствуют;
 остаются 2 High/3 Medium/3 Unknown в Go-компонентах. Это счётчик только proxy,
 API/DB/bot/locks новым запуском не пересканировались.

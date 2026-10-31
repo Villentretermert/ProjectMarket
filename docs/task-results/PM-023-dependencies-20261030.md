@@ -82,7 +82,10 @@ Shell substitute подтвердил: старая проверка прини�
 писателей. Проверочный restore project остановлен, его volume сохранён.
 
 Только proxy получил новый образ. API/DB/maintenance сохранили контейнеры
-и image IDs; мигратор не запускался. Для воспроизводимого Compose новая
+и image IDs. Уточнение31октября по timestamped log: Compose повторно запустил
+мигратор, результат already current, новых миграций нет. Историческое поле
+`migration_executed:false` в JSON не означает отсутствие запуска runner.
+Для воспроизводимого Compose новая
 конфигурация использует MARKETOB_RELEASE=750e506; неизменённые API/DB/bot
 images помечены этим же release tag без пересборки. Caddy CA сохранился.
 Backup, предыдущий env и отдельная копия proxy data/config остаются приватными
