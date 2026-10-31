@@ -1,0 +1,71 @@
+{
+  "changed_modules": [
+    {
+      "module": "github.com/go-chi/chi/v5",
+      "old": "v5.3.2",
+      "new": "v5.4.0"
+    },
+    {
+      "module": "github.com/go-jose/go-jose/v4",
+      "old": "v4.1.5",
+      "new": "v4.1.7"
+    },
+    {
+      "module": "golang.org/x/crypto",
+      "old": "v0.57.0",
+      "new": "v0.58.0"
+    },
+    {
+      "module": "golang.org/x/net",
+      "old": "v0.60.0",
+      "new": "v0.62.0"
+    },
+    {
+      "module": "golang.org/x/sync",
+      "old": "v0.23.0",
+      "new": "v0.24.0"
+    },
+    {
+      "module": "golang.org/x/sys",
+      "old": "v0.48.0",
+      "new": "v0.49.0"
+    },
+    {
+      "module": "golang.org/x/term",
+      "old": "v0.46.0",
+      "new": "v0.47.0"
+    },
+    {
+      "module": "golang.org/x/text",
+      "old": "v0.42.0",
+      "new": "v0.43.0"
+    },
+    {
+      "module": "golang.org/x/tools",
+      "old": "v0.50.0",
+      "new": "v0.51.0"
+    }
+  ],
+  "import_graphs": {
+    "baseline": {
+      "packages": 1017,
+      "openpgp_packages": [],
+      "jose_v3_importers": [
+        "github.com/go-jose/go-jose/v3/cryptosigner",
+        "github.com/go-jose/go-jose/v3/jwt",
+        "go.step.sm/crypto/jose"
+      ]
+    },
+    "candidate": {
+      "packages": 1017,
+      "openpgp_packages": [],
+      "jose_v3_importers": [
+        "github.com/go-jose/go-jose/v3/cryptosigner",
+        "github.com/go-jose/go-jose/v3/jwt",
+        "go.step.sm/crypto/jose"
+      ]
+    }
+  },
+  "caddy_modules_equal": true,
+  "scope": "linux/amd64 CGO_ENABLED=0 exact Docker builder output, not all possible Caddy configurations"
+}

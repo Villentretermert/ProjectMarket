@@ -95,7 +95,9 @@ jobs:
           uv run --locked python -m scripts.smoke_delivery --ca .local/delivery/root.crt
           docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy id -u | grep '^10001$'
           docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy caddy build-info | grep -F 'go1.26.10'
-          docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy caddy build-info | grep -E 'golang.org/x/net[[:space:]]+v0.60.0'
+          docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy caddy build-info | grep -E 'golang.org/x/net[[:space:]]+v0.62.0'
+          docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy caddy build-info | grep -E 'github.com/go-chi/chi/v5[[:space:]]+v5.4.0'
+          docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy caddy build-info | grep -E 'github.com/go-jose/go-jose/v4[[:space:]]+v4.1.7'
           docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy apk info -v | grep -x 'curl-8.23.0-r0'
           docker compose -f compose.yaml -f deploy/compose.local.yaml exec -T proxy apk info -v | grep -x 'libcurl-8.23.0-r0'
           # Exercise the updated container client, including CA validation and HTTP/2.

@@ -1,0 +1,16 @@
+{
+  "baseline_image_id": "sha256:e637064c4a8a2abc85afdbef4382f784c275d03e3bd3e1e8f408826c6449123e",
+  "candidate_image_id": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b",
+  "packages_removed": [],
+  "packages_added": [],
+  "caddy_binary_sha256": "838befb8dc94a98b18cf54e881c69f78806b20ce7bbc0494647b4897c9cfaad6",
+  "container_curl_http2": "2",
+  "readiness_database": "ok",
+  "web": true,
+  "untrusted_ca_exit": 60,
+  "uid": 10001,
+  "wget_target": "/bin/busybox",
+  "health": "healthy",
+  "caddy_module_list_preserved": true,
+  "completed_at": "2026-10-31T15:26:17.603303+00:00"
+}

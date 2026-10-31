@@ -1,0 +1,7 @@
+# github.com/go-jose/go-jose/v3
+marketob.local/caddy
+github.com/caddyserver/caddy/v2/modules/standard
+github.com/caddyserver/caddy/v2/modules/caddypki
+github.com/smallstep/certificates/authority
+go.step.sm/crypto/jose
+github.com/go-jose/go-jose/v3

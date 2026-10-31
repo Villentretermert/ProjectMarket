@@ -1,6 +1,12 @@
 # Текущее состояние
 
-**Дата:** 30 октября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
+**Дата:** 31 октября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
+**Текущая работа:** [Go-зависимости proxy](task-results/PM-023-dependencies-20261031.md).
+Кандидат chi5.4.0/go-jose4.1.7/x/net0.62.0 собран: HTTPS/HTTP2, новый и
+существующий CA PASS;9 tests/Ruff/mypy PASS. Независимый review без замечаний.
+Trivy proxy8→4: три go-jose/v3 остаются, OpenPGP отсутствует в import graph.
+Полный CI и установка ещё не выполнены. Ниже — действующая поставка30октября.
+
 **Текущая работа:** [curl/libcurl proxy](task-results/PM-023-dependencies-20261030.md).
 **Установлен proxy750e506**, curl/libcurl8.23.0-r0. CI40998612689 все4jobs PASS:
 200 Python/54 Chromium. Restore29таблиц/10sequences совпал; API/DB/maintenance

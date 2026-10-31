@@ -1,0 +1,6 @@
+{
+  "existing_ca_copy": true,
+  "root_certificate_equal": true,
+  "https_http2": "2",
+  "original_proxy_unchanged": true
+}

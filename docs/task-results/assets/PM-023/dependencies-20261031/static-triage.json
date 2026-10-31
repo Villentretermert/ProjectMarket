@@ -1,0 +1,642 @@
+{
+  "schema_version": "marketob-public-triage/v1",
+  "repository": {
+    "path": "https://github.com/Villentretermert/ProjectMarket",
+    "revision": "487ab6c"
+  },
+  "findings": [
+    {
+      "triage_item_id": "triage-001",
+      "input_id": "20261030/proxy/0/CVE-2026-114437/github.com/go-chi/chi/v5",
+      "source_type": "cve",
+      "title": "CVE-2026-114437 in github.com/go-chi/chi/v5 v5.3.2",
+      "normalized_input": {
+        "vulnerable_component": "github.com/go-chi/chi/v5",
+        "claimed_source": "Attacker supplies X-Forwarded-For to an untrusted direct peer",
+        "claimed_sink": "chi middleware.ClientIPFromXFF accepts a forwarding chain without validating the direct peer",
+        "claimed_control": "Affected component control described by upstream advisory",
+        "affected_version_or_path": "usr/bin/caddy; v5.3.2",
+        "preconditions": [
+          "Application uses ClientIPFromXFF for security decisions and accepts direct untrusted connections"
+        ],
+        "impact": "Spoofed client IP may affect access or rate decisions",
+        "references": [
+          "https://github.com/go-chi/chi/security/advisories/GHSA-j6qf-3m9c-vwj3",
+          "docs/task-results/assets/PM-023/dependencies-20261030/proxy-audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "build",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "Versioned Caddy Go binary with transitive modules; module identity does not establish each vulnerable symbol is present."
+        },
+        {
+          "label": "route/config",
+          "path": "deploy/Caddyfile",
+          "lines": "1-10",
+          "detail": "Admin disabled; local internal TLS; only reverse_proxy to api:8000, no templates/ACME service configured."
+        },
+        {
+          "label": "runtime",
+          "path": "deploy/compose.local.yaml",
+          "lines": "17-40",
+          "detail": "Loopback publication, fixed Caddyfile, non-root/read-only runtime."
+        }
+      ],
+      "reachable_path": [
+        "Imported scanner snapshot establishes module/version identity.",
+        "Shipped HTTP path forwards data to Python API; it is not itself a generic JOSE/OpenPGP/HTML parsing endpoint.",
+        "Internal issuer uses smallstep authority for certificate signing; complete transitive symbol/caller coverage is not yet established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy; Dockerfile.proxy, Caddyfile and local Compose define current pilot surface."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 3,
+        "rationale": "Rank reflects plausible certificate/parser consumers and unknown linkage; severity alone is not exploit proof.",
+        "drivers": [
+          "containing module shipped",
+          "affected symbol/caller not fully traced",
+          "fixed local TLS and proxy config"
+        ]
+      },
+      "evidence": [
+        "Old immutable proxy image e637064c… has github.com/go-chi/chi/v5 v5.3.2.",
+        "Application uses ClientIPFromXFF for security decisions and accepts direct untrusted connections",
+        "Upstream Caddy v2.11.7 go.mod declares these dependency families."
+      ],
+      "counterevidence": [
+        "No application-configured JOSE/OpenPGP/HTML-processing route or chi ClientIPFromXFF guard is shown by the pilot Caddyfile.",
+        "Admin API and remote configuration are disabled; configuration is not supplied by bot layouts."
+      ],
+      "proof_gaps": [
+        "Need complete import/symbol graph and relevant optional consumer paths before excluding a module-level alert.",
+        "Application exploitation is not established by package presence."
+      ],
+      "recommended_next_step": "Apply supported pinned module update; verify resolved graph, actual binary and HTTPS/internal CA compatibility, then rescan old/new together.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-002",
+      "input_id": "20261030/proxy/1/CVE-2026-116587/github.com/go-jose/go-jose/v3",
+      "source_type": "cve",
+      "title": "CVE-2026-116587 in github.com/go-jose/go-jose/v3 v3.0.5",
+      "normalized_input": {
+        "vulnerable_component": "github.com/go-jose/go-jose/v3",
+        "claimed_source": "Untrusted JWK contains oversized RSA private-key parameters",
+        "claimed_sink": "go-jose parsing calls RSA validation without size bounds",
+        "claimed_control": "Affected component control described by upstream advisory",
+        "affected_version_or_path": "usr/bin/caddy; v3.0.5",
+        "preconditions": [
+          "Untrusted JWK parsing reaches the affected RSA validation path"
+        ],
+        "impact": "Excessive CPU consumption",
+        "references": [
+          "https://github.com/go-jose/go-jose/security/advisories/GHSA-mgcc-cww5-fp2q",
+          "docs/task-results/assets/PM-023/dependencies-20261030/proxy-audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "build",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "Versioned Caddy Go binary with transitive modules; module identity does not establish each vulnerable symbol is present."
+        },
+        {
+          "label": "route/config",
+          "path": "deploy/Caddyfile",
+          "lines": "1-10",
+          "detail": "Admin disabled; local internal TLS; only reverse_proxy to api:8000, no templates/ACME service configured."
+        },
+        {
+          "label": "runtime",
+          "path": "deploy/compose.local.yaml",
+          "lines": "17-40",
+          "detail": "Loopback publication, fixed Caddyfile, non-root/read-only runtime."
+        }
+      ],
+      "reachable_path": [
+        "Imported scanner snapshot establishes module/version identity.",
+        "Shipped HTTP path forwards data to Python API; it is not itself a generic JOSE/OpenPGP/HTML parsing endpoint.",
+        "Internal issuer uses smallstep authority for certificate signing; complete transitive symbol/caller coverage is not yet established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy; Dockerfile.proxy, Caddyfile and local Compose define current pilot surface."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 1,
+        "rationale": "Rank reflects plausible certificate/parser consumers and unknown linkage; severity alone is not exploit proof.",
+        "drivers": [
+          "containing module shipped",
+          "affected symbol/caller not fully traced",
+          "fixed local TLS and proxy config"
+        ]
+      },
+      "evidence": [
+        "Old immutable proxy image e637064c… has github.com/go-jose/go-jose/v3 v3.0.5.",
+        "Untrusted JWK parsing reaches the affected RSA validation path",
+        "Upstream Caddy v2.11.7 go.mod declares these dependency families."
+      ],
+      "counterevidence": [
+        "No application-configured JOSE/OpenPGP/HTML-processing route or chi ClientIPFromXFF guard is shown by the pilot Caddyfile.",
+        "Admin API and remote configuration are disabled; configuration is not supplied by bot layouts."
+      ],
+      "proof_gaps": [
+        "Need complete import/symbol graph and relevant optional consumer paths before excluding a module-level alert.",
+        "Application exploitation is not established by package presence."
+      ],
+      "recommended_next_step": "Inspect importing package and supported upstream remediation; retain raw findings without suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-003",
+      "input_id": "20261030/proxy/2/CVE-2026-116585/github.com/go-jose/go-jose/v3",
+      "source_type": "cve",
+      "title": "CVE-2026-116585 in github.com/go-jose/go-jose/v3 v3.0.5",
+      "normalized_input": {
+        "vulnerable_component": "github.com/go-jose/go-jose/v3",
+        "claimed_source": "Untrusted deeply nested JOSE JSON",
+        "claimed_sink": "go-jose internal JSON parser exceeds Go stack",
+        "claimed_control": "Affected component control described by upstream advisory",
+        "affected_version_or_path": "usr/bin/caddy; v3.0.5",
+        "preconditions": [
+          "Untrusted JSON reaches affected go-jose v3 parsing"
+        ],
+        "impact": "Process crash / denial of service",
+        "references": [
+          "https://github.com/go-jose/go-jose/security/advisories/GHSA-vvm8-gf78-28g4",
+          "docs/task-results/assets/PM-023/dependencies-20261030/proxy-audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "build",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "Versioned Caddy Go binary with transitive modules; module identity does not establish each vulnerable symbol is present."
+        },
+        {
+          "label": "route/config",
+          "path": "deploy/Caddyfile",
+          "lines": "1-10",
+          "detail": "Admin disabled; local internal TLS; only reverse_proxy to api:8000, no templates/ACME service configured."
+        },
+        {
+          "label": "runtime",
+          "path": "deploy/compose.local.yaml",
+          "lines": "17-40",
+          "detail": "Loopback publication, fixed Caddyfile, non-root/read-only runtime."
+        }
+      ],
+      "reachable_path": [
+        "Imported scanner snapshot establishes module/version identity.",
+        "Shipped HTTP path forwards data to Python API; it is not itself a generic JOSE/OpenPGP/HTML parsing endpoint.",
+        "Internal issuer uses smallstep authority for certificate signing; complete transitive symbol/caller coverage is not yet established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy; Dockerfile.proxy, Caddyfile and local Compose define current pilot surface."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 6,
+        "rationale": "Rank reflects plausible certificate/parser consumers and unknown linkage; severity alone is not exploit proof.",
+        "drivers": [
+          "containing module shipped",
+          "affected symbol/caller not fully traced",
+          "fixed local TLS and proxy config"
+        ]
+      },
+      "evidence": [
+        "Old immutable proxy image e637064c… has github.com/go-jose/go-jose/v3 v3.0.5.",
+        "Untrusted JSON reaches affected go-jose v3 parsing",
+        "Upstream Caddy v2.11.7 go.mod declares these dependency families."
+      ],
+      "counterevidence": [
+        "No application-configured JOSE/OpenPGP/HTML-processing route or chi ClientIPFromXFF guard is shown by the pilot Caddyfile.",
+        "Admin API and remote configuration are disabled; configuration is not supplied by bot layouts."
+      ],
+      "proof_gaps": [
+        "Need complete import/symbol graph and relevant optional consumer paths before excluding a module-level alert.",
+        "Application exploitation is not established by package presence."
+      ],
+      "recommended_next_step": "Inspect importing package and supported upstream remediation; retain raw findings without suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-004",
+      "input_id": "20261030/proxy/3/CVE-2026-116586/github.com/go-jose/go-jose/v3",
+      "source_type": "cve",
+      "title": "CVE-2026-116586 in github.com/go-jose/go-jose/v3 v3.0.5",
+      "normalized_input": {
+        "vulnerable_component": "github.com/go-jose/go-jose/v3",
+        "claimed_source": "Untrusted CBC-HMAC JWE ciphertext",
+        "claimed_sink": "go-jose decryption indexes an empty buffer",
+        "claimed_control": "Affected component control described by upstream advisory",
+        "affected_version_or_path": "usr/bin/caddy; v3.0.5",
+        "preconditions": [
+          "Affected CBC-HMAC modes and malformed ciphertext reach decryption"
+        ],
+        "impact": "Panic / denial of service",
+        "references": [
+          "https://github.com/go-jose/go-jose/security/advisories/GHSA-4w3g-jfj2-cw2q",
+          "docs/task-results/assets/PM-023/dependencies-20261030/proxy-audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "build",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "Versioned Caddy Go binary with transitive modules; module identity does not establish each vulnerable symbol is present."
+        },
+        {
+          "label": "route/config",
+          "path": "deploy/Caddyfile",
+          "lines": "1-10",
+          "detail": "Admin disabled; local internal TLS; only reverse_proxy to api:8000, no templates/ACME service configured."
+        },
+        {
+          "label": "runtime",
+          "path": "deploy/compose.local.yaml",
+          "lines": "17-40",
+          "detail": "Loopback publication, fixed Caddyfile, non-root/read-only runtime."
+        }
+      ],
+      "reachable_path": [
+        "Imported scanner snapshot establishes module/version identity.",
+        "Shipped HTTP path forwards data to Python API; it is not itself a generic JOSE/OpenPGP/HTML parsing endpoint.",
+        "Internal issuer uses smallstep authority for certificate signing; complete transitive symbol/caller coverage is not yet established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy; Dockerfile.proxy, Caddyfile and local Compose define current pilot surface."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 7,
+        "rationale": "Rank reflects plausible certificate/parser consumers and unknown linkage; severity alone is not exploit proof.",
+        "drivers": [
+          "containing module shipped",
+          "affected symbol/caller not fully traced",
+          "fixed local TLS and proxy config"
+        ]
+      },
+      "evidence": [
+        "Old immutable proxy image e637064c… has github.com/go-jose/go-jose/v3 v3.0.5.",
+        "Affected CBC-HMAC modes and malformed ciphertext reach decryption",
+        "Upstream Caddy v2.11.7 go.mod declares these dependency families."
+      ],
+      "counterevidence": [
+        "No application-configured JOSE/OpenPGP/HTML-processing route or chi ClientIPFromXFF guard is shown by the pilot Caddyfile.",
+        "Admin API and remote configuration are disabled; configuration is not supplied by bot layouts."
+      ],
+      "proof_gaps": [
+        "Need complete import/symbol graph and relevant optional consumer paths before excluding a module-level alert.",
+        "Application exploitation is not established by package presence."
+      ],
+      "recommended_next_step": "Inspect importing package and supported upstream remediation; retain raw findings without suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-005",
+      "input_id": "20261030/proxy/4/CVE-2026-116587/github.com/go-jose/go-jose/v4",
+      "source_type": "cve",
+      "title": "CVE-2026-116587 in github.com/go-jose/go-jose/v4 v4.1.5",
+      "normalized_input": {
+        "vulnerable_component": "github.com/go-jose/go-jose/v4",
+        "claimed_source": "Untrusted JWK contains oversized RSA private-key parameters",
+        "claimed_sink": "go-jose parsing calls RSA validation without size bounds",
+        "claimed_control": "Affected component control described by upstream advisory",
+        "affected_version_or_path": "usr/bin/caddy; v4.1.5",
+        "preconditions": [
+          "Untrusted JWK parsing reaches the affected RSA validation path"
+        ],
+        "impact": "Excessive CPU consumption",
+        "references": [
+          "https://github.com/go-jose/go-jose/security/advisories/GHSA-mgcc-cww5-fp2q",
+          "docs/task-results/assets/PM-023/dependencies-20261030/proxy-audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "build",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "Versioned Caddy Go binary with transitive modules; module identity does not establish each vulnerable symbol is present."
+        },
+        {
+          "label": "route/config",
+          "path": "deploy/Caddyfile",
+          "lines": "1-10",
+          "detail": "Admin disabled; local internal TLS; only reverse_proxy to api:8000, no templates/ACME service configured."
+        },
+        {
+          "label": "runtime",
+          "path": "deploy/compose.local.yaml",
+          "lines": "17-40",
+          "detail": "Loopback publication, fixed Caddyfile, non-root/read-only runtime."
+        }
+      ],
+      "reachable_path": [
+        "Imported scanner snapshot establishes module/version identity.",
+        "Shipped HTTP path forwards data to Python API; it is not itself a generic JOSE/OpenPGP/HTML parsing endpoint.",
+        "Internal issuer uses smallstep authority for certificate signing; complete transitive symbol/caller coverage is not yet established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy; Dockerfile.proxy, Caddyfile and local Compose define current pilot surface."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 2,
+        "rationale": "Rank reflects plausible certificate/parser consumers and unknown linkage; severity alone is not exploit proof.",
+        "drivers": [
+          "containing module shipped",
+          "affected symbol/caller not fully traced",
+          "fixed local TLS and proxy config"
+        ]
+      },
+      "evidence": [
+        "Old immutable proxy image e637064c… has github.com/go-jose/go-jose/v4 v4.1.5.",
+        "Untrusted JWK parsing reaches the affected RSA validation path",
+        "Upstream Caddy v2.11.7 go.mod declares these dependency families."
+      ],
+      "counterevidence": [
+        "No application-configured JOSE/OpenPGP/HTML-processing route or chi ClientIPFromXFF guard is shown by the pilot Caddyfile.",
+        "Admin API and remote configuration are disabled; configuration is not supplied by bot layouts."
+      ],
+      "proof_gaps": [
+        "Need complete import/symbol graph and relevant optional consumer paths before excluding a module-level alert.",
+        "Application exploitation is not established by package presence."
+      ],
+      "recommended_next_step": "Apply supported pinned module update; verify resolved graph, actual binary and HTTPS/internal CA compatibility, then rescan old/new together.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-006",
+      "input_id": "20261030/proxy/5/GO-2026-5932/golang.org/x/crypto",
+      "source_type": "advisory",
+      "title": "GO-2026-5932 in golang.org/x/crypto v0.57.0",
+      "normalized_input": {
+        "vulnerable_component": "golang.org/x/crypto",
+        "claimed_source": "Untrusted OpenPGP data",
+        "claimed_sink": "Unmaintained golang.org/x/crypto/openpgp package",
+        "claimed_control": "Affected component control described by upstream advisory",
+        "affected_version_or_path": "usr/bin/caddy; v0.57.0",
+        "preconditions": [
+          "The OpenPGP subpackage, not merely the containing module, is imported and used"
+        ],
+        "impact": "Known design and implementation security issues; exact consequence not specified by aggregate advisory",
+        "references": [
+          "https://vuln.go.dev/ID/GO-2026-5932.json",
+          "docs/task-results/assets/PM-023/dependencies-20261030/proxy-audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "build",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "Versioned Caddy Go binary with transitive modules; module identity does not establish each vulnerable symbol is present."
+        },
+        {
+          "label": "route/config",
+          "path": "deploy/Caddyfile",
+          "lines": "1-10",
+          "detail": "Admin disabled; local internal TLS; only reverse_proxy to api:8000, no templates/ACME service configured."
+        },
+        {
+          "label": "runtime",
+          "path": "deploy/compose.local.yaml",
+          "lines": "17-40",
+          "detail": "Loopback publication, fixed Caddyfile, non-root/read-only runtime."
+        }
+      ],
+      "reachable_path": [
+        "Imported scanner snapshot establishes module/version identity.",
+        "Shipped HTTP path forwards data to Python API; it is not itself a generic JOSE/OpenPGP/HTML parsing endpoint.",
+        "Internal issuer uses smallstep authority for certificate signing; complete transitive symbol/caller coverage is not yet established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy; Dockerfile.proxy, Caddyfile and local Compose define current pilot surface."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 8,
+        "rationale": "Rank reflects plausible certificate/parser consumers and unknown linkage; severity alone is not exploit proof.",
+        "drivers": [
+          "containing module shipped",
+          "affected symbol/caller not fully traced",
+          "fixed local TLS and proxy config"
+        ]
+      },
+      "evidence": [
+        "Old immutable proxy image e637064c… has golang.org/x/crypto v0.57.0.",
+        "The OpenPGP subpackage, not merely the containing module, is imported and used",
+        "Upstream Caddy v2.11.7 go.mod declares these dependency families."
+      ],
+      "counterevidence": [
+        "No application-configured JOSE/OpenPGP/HTML-processing route or chi ClientIPFromXFF guard is shown by the pilot Caddyfile.",
+        "Admin API and remote configuration are disabled; configuration is not supplied by bot layouts."
+      ],
+      "proof_gaps": [
+        "Need complete import/symbol graph and relevant optional consumer paths before excluding a module-level alert.",
+        "Application exploitation is not established by package presence."
+      ],
+      "recommended_next_step": "Inspect importing package and supported upstream remediation; retain raw findings without suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-007",
+      "input_id": "20261030/proxy/6/CVE-2026-78661/golang.org/x/net",
+      "source_type": "cve",
+      "title": "CVE-2026-78661 in golang.org/x/net v0.60.0",
+      "normalized_input": {
+        "vulnerable_component": "golang.org/x/net",
+        "claimed_source": "HTML containing many short text tokens and ignored end tags",
+        "claimed_sink": "x/net/html Parse variants perform quadratic coalescing",
+        "claimed_control": "Affected component control described by upstream advisory",
+        "affected_version_or_path": "usr/bin/caddy; v0.60.0",
+        "preconditions": [
+          "Untrusted HTML reaches Go x/net/html parser"
+        ],
+        "impact": "Excessive allocation / CPU",
+        "references": [
+          "https://vuln.go.dev/ID/GO-2026-6860.json",
+          "docs/task-results/assets/PM-023/dependencies-20261030/proxy-audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "build",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "Versioned Caddy Go binary with transitive modules; module identity does not establish each vulnerable symbol is present."
+        },
+        {
+          "label": "route/config",
+          "path": "deploy/Caddyfile",
+          "lines": "1-10",
+          "detail": "Admin disabled; local internal TLS; only reverse_proxy to api:8000, no templates/ACME service configured."
+        },
+        {
+          "label": "runtime",
+          "path": "deploy/compose.local.yaml",
+          "lines": "17-40",
+          "detail": "Loopback publication, fixed Caddyfile, non-root/read-only runtime."
+        }
+      ],
+      "reachable_path": [
+        "Imported scanner snapshot establishes module/version identity.",
+        "Shipped HTTP path forwards data to Python API; it is not itself a generic JOSE/OpenPGP/HTML parsing endpoint.",
+        "Internal issuer uses smallstep authority for certificate signing; complete transitive symbol/caller coverage is not yet established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy; Dockerfile.proxy, Caddyfile and local Compose define current pilot surface."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 4,
+        "rationale": "Rank reflects plausible certificate/parser consumers and unknown linkage; severity alone is not exploit proof.",
+        "drivers": [
+          "containing module shipped",
+          "affected symbol/caller not fully traced",
+          "fixed local TLS and proxy config"
+        ]
+      },
+      "evidence": [
+        "Old immutable proxy image e637064c… has golang.org/x/net v0.60.0.",
+        "Untrusted HTML reaches Go x/net/html parser",
+        "Upstream Caddy v2.11.7 go.mod declares these dependency families."
+      ],
+      "counterevidence": [
+        "No application-configured JOSE/OpenPGP/HTML-processing route or chi ClientIPFromXFF guard is shown by the pilot Caddyfile.",
+        "Admin API and remote configuration are disabled; configuration is not supplied by bot layouts."
+      ],
+      "proof_gaps": [
+        "Need complete import/symbol graph and relevant optional consumer paths before excluding a module-level alert.",
+        "Application exploitation is not established by package presence."
+      ],
+      "recommended_next_step": "Apply supported pinned module update; verify resolved graph, actual binary and HTTPS/internal CA compatibility, then rescan old/new together.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-008",
+      "input_id": "20261030/proxy/7/CVE-2026-97045/golang.org/x/net",
+      "source_type": "cve",
+      "title": "CVE-2026-97045 in golang.org/x/net v0.60.0",
+      "normalized_input": {
+        "vulnerable_component": "golang.org/x/net",
+        "claimed_source": "HTML foreign namespace / integration-point tree",
+        "claimed_sink": "x/net/html Render changes interpretation on reparse",
+        "claimed_control": "Affected component control described by upstream advisory",
+        "affected_version_or_path": "usr/bin/caddy; v0.60.0",
+        "preconditions": [
+          "Affected Render output is reparsed by a security-sensitive HTML consumer"
+        ],
+        "impact": "Unsafe rendering interpretation under affected consumer conditions",
+        "references": [
+          "https://vuln.go.dev/ID/GO-2026-6866.json",
+          "docs/task-results/assets/PM-023/dependencies-20261030/proxy-audit.json.gz"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "build",
+          "path": "deploy/Dockerfile.proxy",
+          "lines": "1-11",
+          "detail": "Versioned Caddy Go binary with transitive modules; module identity does not establish each vulnerable symbol is present."
+        },
+        {
+          "label": "route/config",
+          "path": "deploy/Caddyfile",
+          "lines": "1-10",
+          "detail": "Admin disabled; local internal TLS; only reverse_proxy to api:8000, no templates/ACME service configured."
+        },
+        {
+          "label": "runtime",
+          "path": "deploy/compose.local.yaml",
+          "lines": "17-40",
+          "detail": "Loopback publication, fixed Caddyfile, non-root/read-only runtime."
+        }
+      ],
+      "reachable_path": [
+        "Imported scanner snapshot establishes module/version identity.",
+        "Shipped HTTP path forwards data to Python API; it is not itself a generic JOSE/OpenPGP/HTML parsing endpoint.",
+        "Internal issuer uses smallstep authority for certificate signing; complete transitive symbol/caller coverage is not yet established."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No SECURITY.md resolved for deploy; Dockerfile.proxy, Caddyfile and local Compose define current pilot surface."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 5,
+        "rationale": "Rank reflects plausible certificate/parser consumers and unknown linkage; severity alone is not exploit proof.",
+        "drivers": [
+          "containing module shipped",
+          "affected symbol/caller not fully traced",
+          "fixed local TLS and proxy config"
+        ]
+      },
+      "evidence": [
+        "Old immutable proxy image e637064c… has golang.org/x/net v0.60.0.",
+        "Affected Render output is reparsed by a security-sensitive HTML consumer",
+        "Upstream Caddy v2.11.7 go.mod declares these dependency families."
+      ],
+      "counterevidence": [
+        "No application-configured JOSE/OpenPGP/HTML-processing route or chi ClientIPFromXFF guard is shown by the pilot Caddyfile.",
+        "Admin API and remote configuration are disabled; configuration is not supplied by bot layouts."
+      ],
+      "proof_gaps": [
+        "Need complete import/symbol graph and relevant optional consumer paths before excluding a module-level alert.",
+        "Application exploitation is not established by package presence."
+      ],
+      "recommended_next_step": "Apply supported pinned module update; verify resolved graph, actual binary and HTTPS/internal CA compatibility, then rescan old/new together.",
+      "fix_finding_handoff": null
+    }
+  ],
+  "source_schema": "triage-finding/v0"
+}
