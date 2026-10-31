@@ -24,6 +24,13 @@ Native PostgreSQL 18.6 совпадает по minor с установленны
 приёмка обеих сред указывается отдельно. Frontend входит в Python API как
 статические HTML/CSS/JS, внешние CDN в runtime не нужны.
 
+Дополнение31октября: **одинаковая версия psycopg не означает одинаковые native
+библиотеки на разных платформах**. В текущем Linux API wheel libpq18.6 и
+OpenSSL3.5.8; в проверенном Windows wheel libpq18.4 и OpenSSL3.6.4.
+Отдельный [inspector и CI](../task-results/PM-023-psycopg-20261031.md) показывают
+загруженные копии; системное обновление OpenSSL их не заменяет.
+Это inventory, bundled SSL ещё не обновлена и полной security-приёмки нет.
+
 Следующий шаг PM-023 выполнен отдельно: [dependency review и обновление pins](../task-results/PM-023-dependencies.md).
 Trivy0.76.1 проверил lock/build pins и фактические images, PyPI — declared license
 metadata. Для locks57Python/3Node advisory не найдено; в системных/vendored

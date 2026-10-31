@@ -39,7 +39,7 @@ markers = ["integration: requires an explicitly configured PostgreSQL test datab
 [tool.ruff]
 target-version = "py314"
 line-length = 100
-include = ["apps/api/**/*.py", "tests/**/*.py", "scripts/audit_dependencies.py", "scripts/operations.py", "scripts/live_load.py", "scripts/load_integrity.py", "scripts/host_samples.py", "scripts/docker_lab.py", "scripts/backup.py", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_*.py", "scripts/pilot_bots.py", "scripts/backend_lab.py", "scripts/load_backend.py", "scripts/fault_bot.py", "bots/examples/*.py", "packages/bot-sdk/**/*.py", "bots/pilot/**/*.py"]
+include = ["apps/api/**/*.py", "tests/**/*.py", "scripts/audit_dependencies.py", "scripts/inspect_psycopg.py", "scripts/operations.py", "scripts/live_load.py", "scripts/load_integrity.py", "scripts/host_samples.py", "scripts/docker_lab.py", "scripts/backup.py", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_*.py", "scripts/pilot_bots.py", "scripts/backend_lab.py", "scripts/load_backend.py", "scripts/fault_bot.py", "bots/examples/*.py", "packages/bot-sdk/**/*.py", "bots/pilot/**/*.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
@@ -48,4 +48,4 @@ select = ["E", "F", "I", "UP", "B"]
 python_version = "3.14"
 plugins = ["pydantic.mypy"]
 strict = true
-files = ["apps/api/src", "tests", "scripts/audit_dependencies.py", "scripts/operations.py", "scripts/live_load.py", "scripts/load_integrity.py", "scripts/host_samples.py", "scripts/docker_lab.py", "scripts/backup.py", "scripts/smoke_delivery.py", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "scripts/smoke_identity.py", "scripts/smoke_ingestion.py", "scripts/smoke_channels.py", "scripts/smoke_actions.py", "scripts/smoke_bots.py", "scripts/pilot_bots.py", "scripts/backend_lab.py", "scripts/load_backend.py", "scripts/fault_bot.py", "scripts/smoke_backend.py", "scripts/smoke_web.py", "bots/examples", "packages/bot-sdk/src", "bots/pilot/src"]
+files = ["apps/api/src", "tests", "scripts/audit_dependencies.py", "scripts/inspect_psycopg.py", "scripts/operations.py", "scripts/live_load.py", "scripts/load_integrity.py", "scripts/host_samples.py", "scripts/docker_lab.py", "scripts/backup.py", "scripts/smoke_delivery.py", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "scripts/smoke_identity.py", "scripts/smoke_ingestion.py", "scripts/smoke_channels.py", "scripts/smoke_actions.py", "scripts/smoke_bots.py", "scripts/pilot_bots.py", "scripts/backend_lab.py", "scripts/load_backend.py", "scripts/fault_bot.py", "scripts/smoke_backend.py", "scripts/smoke_web.py", "bots/examples", "packages/bot-sdk/src", "bots/pilot/src"]

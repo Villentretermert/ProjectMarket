@@ -1,5 +1,18 @@
 # Журнал изменений
 
+## 2026-10-31 — PM-023: отдельные SSL-библиотеки psycopg
+
+- Добавлен Python-инспектор загруженных libpq/libssl/libcrypto с проверкой
+  принадлежности wheel, версиями и SHA-256. Системная SSL и SSL драйвера
+  показаны отдельно; абсолютные пути/DSN/env не попадают в JSON.
+- CI проверяет полноту inventory на Windows/Linux и внутри API image.
+  Неполные данные возвращают exit2; complete не означает отсутствие CVE.
+- Фактически: Linux API — libpq18.6/SSL3.5.8, Windows native —18.4/SSL3.6.4.
+  14 focused tests, Ruff/mypy94files PASS; оба локальных inventory complete.
+  Psycopg3.3.7 ещё unreleased; драйвер и рабочая поставка не заменялись.
+- [Результат и границы](docs/task-results/PM-023-psycopg-20261031.md).
+  Полный CI ожидается. PM-023 остаётся открытой;19/24, отсрочки сохранены.
+
 ## 2026-10-31 — PM-023: Go-зависимости Caddy
 
 - Обновлены chi5.4.0, go-jose/v4 4.1.7, x/net0.62.0 и их транзитивные

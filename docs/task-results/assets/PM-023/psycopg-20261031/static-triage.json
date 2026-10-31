@@ -1,0 +1,93 @@
+{
+  "schema_version": "marketob-public-triage/v1",
+  "repository": {
+    "path": "https://github.com/Villentretermert/ProjectMarket",
+    "revision": "d7a63d5"
+  },
+  "findings": [
+    {
+      "triage_item_id": "triage-001",
+      "input_id": "PM-023/bundled-OpenSSL-3.5.8/CVE-2026-84782",
+      "source_type": "cve",
+      "title": "CVE-2026-84782 in psycopg-binary bundled OpenSSL 3.5.8",
+      "normalized_input": {
+        "vulnerable_component": "OpenSSL bundled in psycopg-binary 3.3.6",
+        "claimed_source": "Peer-controlled traffic during a suspended DTLS handshake write",
+        "claimed_sink": "DTLS retransmission reads stale message buffer offset",
+        "claimed_control": "Retransmission state is not reset or deferred during suspended writes",
+        "affected_version_or_path": "OpenSSL 3.5.8; installed API wheel per retained linkage evidence",
+        "preconditions": [
+          "DTLS context and retransmission timer",
+          "Suspended handshake write and overlapping retransmission"
+        ],
+        "impact": "Heap disclosure or denial of service",
+        "references": [
+          "docs/task-results/PM-023-dependencies-20261030.md",
+          "docs/task-results/assets/PM-023/dependencies-20261030/psycopg-linkage.json",
+          "https://openssl-library.org/news/secadv/20260929.txt"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency",
+          "path": "apps/api/pyproject.toml",
+          "lines": "11",
+          "detail": "Pins psycopg[binary] 3.3.6 including its native libraries"
+        },
+        {
+          "label": "caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "22-47,68-77",
+          "detail": "Passes operator-configured PostgreSQL URL to ConnectionPool or psycopg.connect"
+        },
+        {
+          "label": "configuration",
+          "path": "apps/api/src/marketob_api/config.py",
+          "lines": "25,82-94",
+          "detail": "PostgreSQL DSN comes from environment/config, not a user API input"
+        }
+      ],
+      "reachable_path": [
+        "Operator DSN -> psycopg ConnectionPool/connect -> libpq 18.6 -> OpenSSL TLS stream path",
+        "No path from this caller to DTLS retransmission established"
+      ],
+      "boundary_assessment": {
+        "product_surface": "Local API and maintenance worker; native development runtime",
+        "source_trust": "trusted_operator",
+        "boundary_crossed": null,
+        "policy_basis": "No applicable SECURITY.md; Settings environment handling, database caller, Compose deployment and retained linkage evidence"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 1,
+        "rationale": "Only selected input; affected version exists but required DTLS consumer is unproven.",
+        "drivers": [
+          "version presence",
+          "DTLS-specific preconditions",
+          "operator-defined database destination",
+          "incomplete native consumer coverage"
+        ]
+      },
+      "evidence": [
+        "apps/api/pyproject.toml pins binary package",
+        "Retained 30 October linkage evidence reports bundled OpenSSL 3.5.8 and libpq 180006",
+        "Upstream 29 September advisory fixes 3.5 branch in 3.5.9"
+      ],
+      "counterevidence": [
+        "libpq REL_18_6 fe-secure-openssl.c initialize_SSL uses SSLv23_method/TLS stream context",
+        "libpq REL_18_6 fe-connect.c uses SOCK_STREAM",
+        "MarkeTOB has no DTLS API or user-selected OpenSSL protocol context"
+      ],
+      "proof_gaps": [
+        "All transitive bundled native consumers and platform-specific linkage have not been fully established",
+        "Version metadata alone is not an exploitation path",
+        "No dynamic validation in this static phase"
+      ],
+      "recommended_next_step": "Record native linkage on Linux and Windows; retain scoped TLS counterevidence. No stable psycopg release upgrade currently available. A different packaging strategy requires separate compatibility validation.",
+      "fix_finding_handoff": null
+    }
+  ],
+  "source_schema": "triage-finding/v0"
+}

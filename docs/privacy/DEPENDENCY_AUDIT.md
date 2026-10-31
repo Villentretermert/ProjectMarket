@@ -30,7 +30,31 @@
 Сканируется ID, полученный `docker image inspect`; совпадение ID проверяется в JSON.
 Не выполняйте команды runbook с новым Compose на рабочем volume до backup/restore.
 
-## Результат
+## Отдельная проверка native-библиотек psycopg
+
+Версия Python package не описывает все вложенные DLL/SO. Из подготовленного
+окружения Python3.14 выполните:
+
+```powershell
+.venv-dev/Scripts/python.exe -m scripts.inspect_psycopg
+```
+
+Для фактического Linux API image CI передаёт тот же script через stdin:
+
+```bash
+docker compose exec -T api python - < scripts/inspect_psycopg.py
+```
+
+JSON содержит версии Python/psycopg/libpq, отдельные Python ssl и bundled SSL,
+имена и SHA-256 загруженных wheel-owned libpq/libssl/libcrypto. Абсолютные пути,
+DSN, env и пользовательские данные не выводятся. БД/сеть не используются.
+Нужен текущий binary backend; другие реализации требуют отдельной адаптации.
+`complete`/exit0 означает только полноту указанного inventory; gaps/exit2 —
+неполную проверку. Это **не** exit0 vulnerability scanner. Другие native
+библиотеки/варианты конфигурации данным CLI не покрыты.
+[Проверенные платформы и ограничения](../task-results/PM-023-psycopg-20261031.md).
+
+## Результат scanner
 
 - `report.json`: UTC, Git HEAD, hashes входных файлов, версия/дата БД сканера,
   имена/версии всех найденных компонентов, advisory, declared licenses и пропуски.
