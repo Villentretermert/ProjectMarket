@@ -1,0 +1,244 @@
+{
+  "scope": "Only API images; all severities; same Trivy database. Package matches are not exploitability.",
+  "targets": [
+    {
+      "tag": "marketob-api:b202024",
+      "image_id": "sha256:5e58469db83509ac0a920bd6e42debb7e436eef455182ea654e7546cf9a35903",
+      "packages": 128,
+      "total": 246,
+      "severity": {
+        "LOW": 89,
+        "HIGH": 59,
+        "MEDIUM": 93,
+        "CRITICAL": 2,
+        "UNKNOWN": 3
+      }
+    },
+    {
+      "tag": "marketob-api:psycopg-c01",
+      "image_id": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b",
+      "packages": 137,
+      "total": 276,
+      "severity": {
+        "LOW": 110,
+        "HIGH": 60,
+        "MEDIUM": 101,
+        "CRITICAL": 2,
+        "UNKNOWN": 3
+      }
+    }
+  ],
+  "new_matches": [
+    {
+      "PkgName": "libgssapi-krb5-2",
+      "VulnerabilityID": "CVE-2026-107708",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "MEDIUM"
+    },
+    {
+      "PkgName": "libgssapi-krb5-2",
+      "VulnerabilityID": "CVE-2026-107778",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "MEDIUM"
+    },
+    {
+      "PkgName": "libgssapi-krb5-2",
+      "VulnerabilityID": "CVE-2018-5709",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libgssapi-krb5-2",
+      "VulnerabilityID": "CVE-2024-26458",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libgssapi-krb5-2",
+      "VulnerabilityID": "CVE-2024-26461",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libgssapi-krb5-2",
+      "VulnerabilityID": "CVE-2026-11850",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libk5crypto3",
+      "VulnerabilityID": "CVE-2026-107708",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "MEDIUM"
+    },
+    {
+      "PkgName": "libk5crypto3",
+      "VulnerabilityID": "CVE-2026-107778",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "MEDIUM"
+    },
+    {
+      "PkgName": "libk5crypto3",
+      "VulnerabilityID": "CVE-2018-5709",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libk5crypto3",
+      "VulnerabilityID": "CVE-2024-26458",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libk5crypto3",
+      "VulnerabilityID": "CVE-2024-26461",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libk5crypto3",
+      "VulnerabilityID": "CVE-2026-11850",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libkrb5-3",
+      "VulnerabilityID": "CVE-2026-107708",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "MEDIUM"
+    },
+    {
+      "PkgName": "libkrb5-3",
+      "VulnerabilityID": "CVE-2026-107778",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "MEDIUM"
+    },
+    {
+      "PkgName": "libkrb5-3",
+      "VulnerabilityID": "CVE-2018-5709",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libkrb5-3",
+      "VulnerabilityID": "CVE-2024-26458",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libkrb5-3",
+      "VulnerabilityID": "CVE-2024-26461",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libkrb5-3",
+      "VulnerabilityID": "CVE-2026-11850",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libkrb5support0",
+      "VulnerabilityID": "CVE-2026-107708",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "MEDIUM"
+    },
+    {
+      "PkgName": "libkrb5support0",
+      "VulnerabilityID": "CVE-2026-107778",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "MEDIUM"
+    },
+    {
+      "PkgName": "libkrb5support0",
+      "VulnerabilityID": "CVE-2018-5709",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libkrb5support0",
+      "VulnerabilityID": "CVE-2024-26458",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libkrb5support0",
+      "VulnerabilityID": "CVE-2024-26461",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libkrb5support0",
+      "VulnerabilityID": "CVE-2026-11850",
+      "InstalledVersion": "1.20.1-2+deb12u5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libldap-2.5-0",
+      "VulnerabilityID": "CVE-2023-2953",
+      "InstalledVersion": "2.5.13+dfsg-5",
+      "FixedVersion": null,
+      "Severity": "HIGH"
+    },
+    {
+      "PkgName": "libldap-2.5-0",
+      "VulnerabilityID": "CVE-2015-3276",
+      "InstalledVersion": "2.5.13+dfsg-5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libldap-2.5-0",
+      "VulnerabilityID": "CVE-2017-14159",
+      "InstalledVersion": "2.5.13+dfsg-5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libldap-2.5-0",
+      "VulnerabilityID": "CVE-2017-17740",
+      "InstalledVersion": "2.5.13+dfsg-5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libldap-2.5-0",
+      "VulnerabilityID": "CVE-2020-15719",
+      "InstalledVersion": "2.5.13+dfsg-5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    },
+    {
+      "PkgName": "libldap-2.5-0",
+      "VulnerabilityID": "CVE-2026-22185",
+      "InstalledVersion": "2.5.13+dfsg-5",
+      "FixedVersion": null,
+      "Severity": "LOW"
+    }
+  ],
+  "bundle_detection_gap": "Trivy did not report CVE-2026-84782 in the old binary bundle. Loaded-library inventory is evidence for its removal; scanner delta cannot prove it."
+}

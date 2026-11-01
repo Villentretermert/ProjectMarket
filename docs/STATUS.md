@@ -1,14 +1,19 @@
 # Текущее состояние
 
 **Дата:** 1 ноября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
-**Текущий кандидат:** [Linux psycopg C](task-results/PM-023-psycopg-c-20261101.md).
+**Последняя поставка:** [Linux psycopg C](task-results/PM-023-psycopg-c-20261101.md).
 Docker API использует system libpq18.6/OpenSSL3.0.22 с Debian security revision;
 native Windows остаётся binary. Inventory и изолированные TLS/pools/cancel PASS.
-Локально95 unit PASS/2 Linux-only skips, Ruff/mypy95files PASS. Полный CI и
-поставка ещё проверяются; рабочий b202024 пока сохранён. PM-023 открыта.
+Локально95 unit PASS/2 Linux-only skips, Ruff/mypy95files PASS.
+CI41309440467 на68958f1: все4jobs PASS,207 Python/54 Chromium.
+**Установлен API/maintenance68958f1**: restore29таблиц/10sequences совпал;
+исходная БД, DB/proxy image/container IDs и CA сохранены. HTTPS/HTTP2 PASS,
+4services healthy; мигратор не запускался, новых миграций нет.
+API scanner246→276:30 дополнительных Kerberos/LDAP matches, без подавлений;
+удаление SSL bundle доказано inventory, а не счётчиком CVE. PM-023 открыта.
 
 **Предыдущая работа:**
-**Текущая работа:** [native SSL psycopg](task-results/PM-023-psycopg-20261031.md).
+**Предыдущая проверка:** [native SSL psycopg](task-results/PM-023-psycopg-20261031.md).
 Добавлен повторяемый Python inventory и проверки CI. Локальные Windows/Linux
 проверки complete;14 tests/Ruff/mypy94files PASS. CI41239002094 на665a00e —
 все4jobs PASS,205 Python/54 Chromium; новый inventory PASS во всех3средах CI.
@@ -16,7 +21,7 @@ Linux wheel использует libpq18.6/SSL3.5.8, Windows wheel18.4/SSL3.6.4.
 Драйвер не обновлялся:3.3.7 ещё unreleased. Следующий подэтап — отдельный
 Linux-кандидат psycopg[c] с контролем libpq/SSL и совместимости; CVE не закрыта.
 
-**Последняя поставка:** [Go-зависимости proxy](task-results/PM-023-dependencies-20261031.md).
+**Предыдущая поставка:** [Go-зависимости proxy](task-results/PM-023-dependencies-20261031.md).
 **Установлен proxy b202024**: chi5.4.0/go-jose/v4 4.1.7/x/net0.62.0.
 CI41215407434 все4jobs PASS,200 Python/54 Chromium;9 focused tests/Ruff/mypy PASS.
 Restore29таблиц/10sequences совпал; исходная БД, API/DB/maintenance и CA сохранены.

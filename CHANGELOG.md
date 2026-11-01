@@ -11,6 +11,10 @@
   положительные/отрицательные CA/hostname, JSONB, commit/rollback, оба пула,
   timeout, recovery и cancel_safe. Кандидат прошёл focused smoke.
 - [Результат и оставшиеся границы](docs/task-results/PM-023-psycopg-c-20261101.md).
+  CI41309440467 все4jobs PASS,207 Python/54 Chromium. Установлен68958f1:
+  restore29таблиц/10sequences совпал, исходная БД/DB/proxy/CA сохранены,
+  HTTPS/HTTP2 PASS,4services healthy; новых миграций нет, runner не запускался.
+  API scanner246→276 за счёт30 Kerberos/LDAP package matches, без подавлений.
   Полная PM-023 открыта; Windows binary и недоказанный DTLS-path не закрыты.
 
 ## 2026-10-31 — PM-023: отдельные SSL-библиотеки psycopg
