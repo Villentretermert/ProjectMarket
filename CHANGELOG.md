@@ -1,5 +1,17 @@
 # Журнал изменений
 
+## 2026-11-01 — PM-023: статический разбор Kerberos/OpenLDAP
+
+- Разобраны30 новых package/advisory matches (12 CVE) после C-драйвера:
+  28 not_actionable в границе закреплённого API image,2 needs_review,
+  0 confirmed. Отсутствующие серверные компоненты, client/acceptor и варианты
+  сборки проверены по source/package evidence и первичным advisories.
+- Сохранены все исходные записи и повторы по пакетам; scanner276 и его
+  настройки не изменены. Два LDAP proof gaps получили отдельные ranks/следующие шаги.
+- [Отчёт](docs/task-results/PM-023-native-triage-20261101.md), JSON и GitHub issue
+  обновлены. Это статическая оценка, не исправление28 CVE и не новый runtime test.
+  Рабочая поставка68958f1 сохранена; PM-023 открыта,19/24, отсрочки неизменны.
+
 ## 2026-11-01 — PM-023: Linux psycopg с системными библиотеками
 
 - API получает явные extras binary/c; native разработка сохраняет binary.

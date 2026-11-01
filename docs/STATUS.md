@@ -1,6 +1,12 @@
 # Текущее состояние
 
 **Дата:** 1 ноября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
+**Текущий результат:** [Kerberos/OpenLDAP triage](task-results/PM-023-native-triage-20261101.md).
+30 новых package/advisory записей (12 CVE):28 not_actionable в закреплённом
+Linux API image,2 needs_review,0 confirmed. Статическая оценка; scanner276
+не подавлен, runtime не менялся. Открыты LDAP allocation-failure и TLS identity
+proof gaps; затем остальные base findings и notices. PM-023 остаётся открытой.
+
 **Последняя поставка:** [Linux psycopg C](task-results/PM-023-psycopg-c-20261101.md).
 Docker API использует system libpq18.6/OpenSSL3.0.22 с Debian security revision;
 native Windows остаётся binary. Inventory и изолированные TLS/pools/cancel PASS.

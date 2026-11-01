@@ -1,0 +1,2396 @@
+{
+  "schema_version": "triage-finding/v0",
+  "repository": {
+    "path": ".",
+    "revision": "e92861a0857daefd07b89c2a1f0e3ef8aa396230"
+  },
+  "findings": [
+    {
+      "triage_item_id": "triage-001",
+      "input_id": "CVE-2026-107708",
+      "source_type": "scanner_ticket",
+      "title": "libgssapi-krb5-2: Kerberos KDC PAC principal NULL dereference",
+      "normalized_input": {
+        "vulnerable_component": "libgssapi-krb5-2",
+        "claimed_source": "Compromised trusted cross-realm KDC",
+        "claimed_sink": "get_pac_princ_with_realm / krb5kdc",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "KDC handles malformed S4U2Proxy PAC"
+        ],
+        "impact": "KDC denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-107708",
+          "https://github.com/krb5/krb5/commit/f6e2c397ceda6467ebbaab8ed66d4895c9f1d6a7"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Affected KDC executable is absent from the API image; the shipped process is a PostgreSQL client, not a KDC."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Affected KDC executable is absent from the API image; the shipped process is a PostgreSQL client, not a KDC."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-002",
+      "input_id": "CVE-2026-107778",
+      "source_type": "scanner_ticket",
+      "title": "libgssapi-krb5-2: Kerberos forwarded-credential array mismatch",
+      "normalized_input": {
+        "vulnerable_component": "libgssapi-krb5-2",
+        "claimed_source": "Authenticated Kerberos client",
+        "claimed_sink": "gss_accept_sec_context -> krb5_rd_cred -> make_cred_list",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "GSS acceptor processes forwarded credentials"
+        ],
+        "impact": "Acceptor denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-107778",
+          "https://github.com/krb5/krb5/commit/48afa9abb89ab2176bb20624d87d010b9984fc08",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-auth.c#L103",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-secure-gssapi.c#L616"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Both libpq GSS authentication and encryption use gss_init_sec_context (initiator). API code supplies no GSS acceptor or rd_cred entrypoint."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Both libpq GSS authentication and encryption use gss_init_sec_context (initiator). API code supplies no GSS acceptor or rd_cred entrypoint."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-003",
+      "input_id": "CVE-2018-5709",
+      "source_type": "scanner_ticket",
+      "title": "libgssapi-krb5-2: Kerberos administrative dump integer narrowing",
+      "normalized_input": {
+        "vulnerable_component": "libgssapi-krb5-2",
+        "claimed_source": "Kerberos administrative database dump",
+        "claimed_sink": "kadmin/dbutil/dump.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Administrative Kerberos dump loader"
+        ],
+        "impact": "Malformed administrative data handling",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2018-5709"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "API image has no krb5-kdc/admin-server or database dump tool. PostgreSQL backup is a separate format and uses PostgreSQL tools."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "API image has no krb5-kdc/admin-server or database dump tool. PostgreSQL backup is a separate format and uses PostgreSQL tools."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-004",
+      "input_id": "CVE-2024-26458",
+      "source_type": "scanner_ticket",
+      "title": "libgssapi-krb5-2: Kerberos RPC pmap_rmtcall memory leak",
+      "normalized_input": {
+        "vulnerable_component": "libgssapi-krb5-2",
+        "claimed_source": "Caller of legacy RPC pmap_rmtcall",
+        "claimed_sink": "src/lib/rpc/pmap_rmt.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Use affected RPC function"
+        ],
+        "impact": "Memory leak",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2024-26458",
+          "https://mailman.mit.edu/pipermail/kerberos/2024-March/023095.html"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "libgssrpc4 is absent from API image; libpq GSS client path and application entrypoints do not expose this RPC helper."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "libgssrpc4 is absent from API image; libpq GSS client path and application entrypoints do not expose this RPC helper."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-005",
+      "input_id": "CVE-2024-26461",
+      "source_type": "scanner_ticket",
+      "title": "libgssapi-krb5-2: Kerberos GSS encoding bounds-error leak",
+      "normalized_input": {
+        "vulnerable_component": "libgssapi-krb5-2",
+        "claimed_source": "GSS encoding input",
+        "claimed_sink": "src/lib/gssapi/krb5/k5sealv3.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Encoding error path requiring invalid bounds"
+        ],
+        "impact": "Memory leak",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2024-26461",
+          "https://mailman.mit.edu/pipermail/kerberos/2024-March/023095.html",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-secure-gssapi.c#L50"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Debian excludes the triggering path for valid API inputs; upstream describes the same limitation. libpq supplies its own bounded valid buffers, not user-controlled pointer/length pairs."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Debian excludes the triggering path for valid API inputs; upstream describes the same limitation. libpq supplies its own bounded valid buffers, not user-controlled pointer/length pairs."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-006",
+      "input_id": "CVE-2026-11850",
+      "source_type": "scanner_ticket",
+      "title": "libgssapi-krb5-2: Kerberos LDAP KDB attribute underflow",
+      "normalized_input": {
+        "vulnerable_component": "libgssapi-krb5-2",
+        "claimed_source": "LDAP KDB backend",
+        "claimed_sink": "plugins/kdb/ldap/libkdb_ldap/ldap_principal2.c berval2tl_data",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "KDC/kadmind with LDAP database plugin"
+        ],
+        "impact": "Out-of-bounds read",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-11850",
+          "https://github.com/krb5/krb5/commit/2a5fd83d4436583f2ddc0e193269a4d800ee45c4"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "API image has neither KDC/kadmind nor krb5-kdc-ldap. A PostgreSQL client using LDAP service lookup does not become a Kerberos KDB consumer."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "API image has neither KDC/kadmind nor krb5-kdc-ldap. A PostgreSQL client using LDAP service lookup does not become a Kerberos KDB consumer."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-007",
+      "input_id": "CVE-2026-107708",
+      "source_type": "scanner_ticket",
+      "title": "libk5crypto3: Kerberos KDC PAC principal NULL dereference",
+      "normalized_input": {
+        "vulnerable_component": "libk5crypto3",
+        "claimed_source": "Compromised trusted cross-realm KDC",
+        "claimed_sink": "get_pac_princ_with_realm / krb5kdc",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "KDC handles malformed S4U2Proxy PAC"
+        ],
+        "impact": "KDC denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-107708",
+          "https://github.com/krb5/krb5/commit/f6e2c397ceda6467ebbaab8ed66d4895c9f1d6a7"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Affected KDC executable is absent from the API image; the shipped process is a PostgreSQL client, not a KDC."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Affected KDC executable is absent from the API image; the shipped process is a PostgreSQL client, not a KDC."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-008",
+      "input_id": "CVE-2026-107778",
+      "source_type": "scanner_ticket",
+      "title": "libk5crypto3: Kerberos forwarded-credential array mismatch",
+      "normalized_input": {
+        "vulnerable_component": "libk5crypto3",
+        "claimed_source": "Authenticated Kerberos client",
+        "claimed_sink": "gss_accept_sec_context -> krb5_rd_cred -> make_cred_list",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "GSS acceptor processes forwarded credentials"
+        ],
+        "impact": "Acceptor denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-107778",
+          "https://github.com/krb5/krb5/commit/48afa9abb89ab2176bb20624d87d010b9984fc08",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-auth.c#L103",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-secure-gssapi.c#L616"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Both libpq GSS authentication and encryption use gss_init_sec_context (initiator). API code supplies no GSS acceptor or rd_cred entrypoint."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Both libpq GSS authentication and encryption use gss_init_sec_context (initiator). API code supplies no GSS acceptor or rd_cred entrypoint."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-009",
+      "input_id": "CVE-2018-5709",
+      "source_type": "scanner_ticket",
+      "title": "libk5crypto3: Kerberos administrative dump integer narrowing",
+      "normalized_input": {
+        "vulnerable_component": "libk5crypto3",
+        "claimed_source": "Kerberos administrative database dump",
+        "claimed_sink": "kadmin/dbutil/dump.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Administrative Kerberos dump loader"
+        ],
+        "impact": "Malformed administrative data handling",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2018-5709"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "API image has no krb5-kdc/admin-server or database dump tool. PostgreSQL backup is a separate format and uses PostgreSQL tools."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "API image has no krb5-kdc/admin-server or database dump tool. PostgreSQL backup is a separate format and uses PostgreSQL tools."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-010",
+      "input_id": "CVE-2024-26458",
+      "source_type": "scanner_ticket",
+      "title": "libk5crypto3: Kerberos RPC pmap_rmtcall memory leak",
+      "normalized_input": {
+        "vulnerable_component": "libk5crypto3",
+        "claimed_source": "Caller of legacy RPC pmap_rmtcall",
+        "claimed_sink": "src/lib/rpc/pmap_rmt.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Use affected RPC function"
+        ],
+        "impact": "Memory leak",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2024-26458",
+          "https://mailman.mit.edu/pipermail/kerberos/2024-March/023095.html"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "libgssrpc4 is absent from API image; libpq GSS client path and application entrypoints do not expose this RPC helper."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "libgssrpc4 is absent from API image; libpq GSS client path and application entrypoints do not expose this RPC helper."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-011",
+      "input_id": "CVE-2024-26461",
+      "source_type": "scanner_ticket",
+      "title": "libk5crypto3: Kerberos GSS encoding bounds-error leak",
+      "normalized_input": {
+        "vulnerable_component": "libk5crypto3",
+        "claimed_source": "GSS encoding input",
+        "claimed_sink": "src/lib/gssapi/krb5/k5sealv3.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Encoding error path requiring invalid bounds"
+        ],
+        "impact": "Memory leak",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2024-26461",
+          "https://mailman.mit.edu/pipermail/kerberos/2024-March/023095.html",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-secure-gssapi.c#L50"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Debian excludes the triggering path for valid API inputs; upstream describes the same limitation. libpq supplies its own bounded valid buffers, not user-controlled pointer/length pairs."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Debian excludes the triggering path for valid API inputs; upstream describes the same limitation. libpq supplies its own bounded valid buffers, not user-controlled pointer/length pairs."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-012",
+      "input_id": "CVE-2026-11850",
+      "source_type": "scanner_ticket",
+      "title": "libk5crypto3: Kerberos LDAP KDB attribute underflow",
+      "normalized_input": {
+        "vulnerable_component": "libk5crypto3",
+        "claimed_source": "LDAP KDB backend",
+        "claimed_sink": "plugins/kdb/ldap/libkdb_ldap/ldap_principal2.c berval2tl_data",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "KDC/kadmind with LDAP database plugin"
+        ],
+        "impact": "Out-of-bounds read",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-11850",
+          "https://github.com/krb5/krb5/commit/2a5fd83d4436583f2ddc0e193269a4d800ee45c4"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "API image has neither KDC/kadmind nor krb5-kdc-ldap. A PostgreSQL client using LDAP service lookup does not become a Kerberos KDB consumer."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "API image has neither KDC/kadmind nor krb5-kdc-ldap. A PostgreSQL client using LDAP service lookup does not become a Kerberos KDB consumer."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-013",
+      "input_id": "CVE-2026-107708",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5-3: Kerberos KDC PAC principal NULL dereference",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5-3",
+        "claimed_source": "Compromised trusted cross-realm KDC",
+        "claimed_sink": "get_pac_princ_with_realm / krb5kdc",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "KDC handles malformed S4U2Proxy PAC"
+        ],
+        "impact": "KDC denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-107708",
+          "https://github.com/krb5/krb5/commit/f6e2c397ceda6467ebbaab8ed66d4895c9f1d6a7"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Affected KDC executable is absent from the API image; the shipped process is a PostgreSQL client, not a KDC."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Affected KDC executable is absent from the API image; the shipped process is a PostgreSQL client, not a KDC."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-014",
+      "input_id": "CVE-2026-107778",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5-3: Kerberos forwarded-credential array mismatch",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5-3",
+        "claimed_source": "Authenticated Kerberos client",
+        "claimed_sink": "gss_accept_sec_context -> krb5_rd_cred -> make_cred_list",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "GSS acceptor processes forwarded credentials"
+        ],
+        "impact": "Acceptor denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-107778",
+          "https://github.com/krb5/krb5/commit/48afa9abb89ab2176bb20624d87d010b9984fc08",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-auth.c#L103",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-secure-gssapi.c#L616"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Both libpq GSS authentication and encryption use gss_init_sec_context (initiator). API code supplies no GSS acceptor or rd_cred entrypoint."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Both libpq GSS authentication and encryption use gss_init_sec_context (initiator). API code supplies no GSS acceptor or rd_cred entrypoint."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-015",
+      "input_id": "CVE-2018-5709",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5-3: Kerberos administrative dump integer narrowing",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5-3",
+        "claimed_source": "Kerberos administrative database dump",
+        "claimed_sink": "kadmin/dbutil/dump.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Administrative Kerberos dump loader"
+        ],
+        "impact": "Malformed administrative data handling",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2018-5709"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "API image has no krb5-kdc/admin-server or database dump tool. PostgreSQL backup is a separate format and uses PostgreSQL tools."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "API image has no krb5-kdc/admin-server or database dump tool. PostgreSQL backup is a separate format and uses PostgreSQL tools."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-016",
+      "input_id": "CVE-2024-26458",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5-3: Kerberos RPC pmap_rmtcall memory leak",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5-3",
+        "claimed_source": "Caller of legacy RPC pmap_rmtcall",
+        "claimed_sink": "src/lib/rpc/pmap_rmt.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Use affected RPC function"
+        ],
+        "impact": "Memory leak",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2024-26458",
+          "https://mailman.mit.edu/pipermail/kerberos/2024-March/023095.html"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "libgssrpc4 is absent from API image; libpq GSS client path and application entrypoints do not expose this RPC helper."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "libgssrpc4 is absent from API image; libpq GSS client path and application entrypoints do not expose this RPC helper."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-017",
+      "input_id": "CVE-2024-26461",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5-3: Kerberos GSS encoding bounds-error leak",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5-3",
+        "claimed_source": "GSS encoding input",
+        "claimed_sink": "src/lib/gssapi/krb5/k5sealv3.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Encoding error path requiring invalid bounds"
+        ],
+        "impact": "Memory leak",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2024-26461",
+          "https://mailman.mit.edu/pipermail/kerberos/2024-March/023095.html",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-secure-gssapi.c#L50"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Debian excludes the triggering path for valid API inputs; upstream describes the same limitation. libpq supplies its own bounded valid buffers, not user-controlled pointer/length pairs."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Debian excludes the triggering path for valid API inputs; upstream describes the same limitation. libpq supplies its own bounded valid buffers, not user-controlled pointer/length pairs."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-018",
+      "input_id": "CVE-2026-11850",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5-3: Kerberos LDAP KDB attribute underflow",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5-3",
+        "claimed_source": "LDAP KDB backend",
+        "claimed_sink": "plugins/kdb/ldap/libkdb_ldap/ldap_principal2.c berval2tl_data",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "KDC/kadmind with LDAP database plugin"
+        ],
+        "impact": "Out-of-bounds read",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-11850",
+          "https://github.com/krb5/krb5/commit/2a5fd83d4436583f2ddc0e193269a4d800ee45c4"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "API image has neither KDC/kadmind nor krb5-kdc-ldap. A PostgreSQL client using LDAP service lookup does not become a Kerberos KDB consumer."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "API image has neither KDC/kadmind nor krb5-kdc-ldap. A PostgreSQL client using LDAP service lookup does not become a Kerberos KDB consumer."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-019",
+      "input_id": "CVE-2026-107708",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5support0: Kerberos KDC PAC principal NULL dereference",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5support0",
+        "claimed_source": "Compromised trusted cross-realm KDC",
+        "claimed_sink": "get_pac_princ_with_realm / krb5kdc",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "KDC handles malformed S4U2Proxy PAC"
+        ],
+        "impact": "KDC denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-107708",
+          "https://github.com/krb5/krb5/commit/f6e2c397ceda6467ebbaab8ed66d4895c9f1d6a7"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Affected KDC executable is absent from the API image; the shipped process is a PostgreSQL client, not a KDC."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Affected KDC executable is absent from the API image; the shipped process is a PostgreSQL client, not a KDC."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-020",
+      "input_id": "CVE-2026-107778",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5support0: Kerberos forwarded-credential array mismatch",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5support0",
+        "claimed_source": "Authenticated Kerberos client",
+        "claimed_sink": "gss_accept_sec_context -> krb5_rd_cred -> make_cred_list",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "GSS acceptor processes forwarded credentials"
+        ],
+        "impact": "Acceptor denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-107778",
+          "https://github.com/krb5/krb5/commit/48afa9abb89ab2176bb20624d87d010b9984fc08",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-auth.c#L103",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-secure-gssapi.c#L616"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Both libpq GSS authentication and encryption use gss_init_sec_context (initiator). API code supplies no GSS acceptor or rd_cred entrypoint."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Both libpq GSS authentication and encryption use gss_init_sec_context (initiator). API code supplies no GSS acceptor or rd_cred entrypoint."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-021",
+      "input_id": "CVE-2018-5709",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5support0: Kerberos administrative dump integer narrowing",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5support0",
+        "claimed_source": "Kerberos administrative database dump",
+        "claimed_sink": "kadmin/dbutil/dump.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Administrative Kerberos dump loader"
+        ],
+        "impact": "Malformed administrative data handling",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2018-5709"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "API image has no krb5-kdc/admin-server or database dump tool. PostgreSQL backup is a separate format and uses PostgreSQL tools."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "API image has no krb5-kdc/admin-server or database dump tool. PostgreSQL backup is a separate format and uses PostgreSQL tools."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-022",
+      "input_id": "CVE-2024-26458",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5support0: Kerberos RPC pmap_rmtcall memory leak",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5support0",
+        "claimed_source": "Caller of legacy RPC pmap_rmtcall",
+        "claimed_sink": "src/lib/rpc/pmap_rmt.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Use affected RPC function"
+        ],
+        "impact": "Memory leak",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2024-26458",
+          "https://mailman.mit.edu/pipermail/kerberos/2024-March/023095.html"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "libgssrpc4 is absent from API image; libpq GSS client path and application entrypoints do not expose this RPC helper."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "libgssrpc4 is absent from API image; libpq GSS client path and application entrypoints do not expose this RPC helper."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-023",
+      "input_id": "CVE-2024-26461",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5support0: Kerberos GSS encoding bounds-error leak",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5support0",
+        "claimed_source": "GSS encoding input",
+        "claimed_sink": "src/lib/gssapi/krb5/k5sealv3.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "Encoding error path requiring invalid bounds"
+        ],
+        "impact": "Memory leak",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2024-26461",
+          "https://mailman.mit.edu/pipermail/kerberos/2024-March/023095.html",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-secure-gssapi.c#L50"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Debian excludes the triggering path for valid API inputs; upstream describes the same limitation. libpq supplies its own bounded valid buffers, not user-controlled pointer/length pairs."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Debian excludes the triggering path for valid API inputs; upstream describes the same limitation. libpq supplies its own bounded valid buffers, not user-controlled pointer/length pairs."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-024",
+      "input_id": "CVE-2026-11850",
+      "source_type": "scanner_ticket",
+      "title": "libkrb5support0: Kerberos LDAP KDB attribute underflow",
+      "normalized_input": {
+        "vulnerable_component": "libkrb5support0",
+        "claimed_source": "LDAP KDB backend",
+        "claimed_sink": "plugins/kdb/ldap/libkdb_ldap/ldap_principal2.c berval2tl_data",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "1.20.1-2+deb12u5",
+        "preconditions": [
+          "KDC/kadmind with LDAP database plugin"
+        ],
+        "impact": "Out-of-bounds read",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-11850",
+          "https://github.com/krb5/krb5/commit/2a5fd83d4436583f2ddc0e193269a4d800ee45c4"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "API image has neither KDC/kadmind nor krb5-kdc-ldap. A PostgreSQL client using LDAP service lookup does not become a Kerberos KDB consumer."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "API image has neither KDC/kadmind nor krb5-kdc-ldap. A PostgreSQL client using LDAP service lookup does not become a Kerberos KDB consumer."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-025",
+      "input_id": "CVE-2023-2953",
+      "source_type": "scanner_ticket",
+      "title": "libldap-2.5-0: OpenLDAP allocation-failure NULL dereference",
+      "normalized_input": {
+        "vulnerable_component": "libldap-2.5-0",
+        "claimed_source": "LDAP URL/input with allocation failure; lower-trust influence unresolved",
+        "claimed_sink": "liblber allocation / libldap URL processing",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "2.5.13+dfsg-5",
+        "preconditions": [
+          "LDAP consumer reaches affected allocation failure path"
+        ],
+        "impact": "Process denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2023-2953",
+          "https://github.com/openldap/openldap/commit/752d320cf96e46f24c0900f1a8f6af0a3fc3c4ce",
+          "https://github.com/openldap/openldap/commit/6563fab9e2feccb0a684d0398e78571d09fb808b",
+          "https://github.com/postgres/postgres/blob/REL_18_6/src/interfaces/libpq/fe-connect.c#L5714"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "Operator configuration -> PostgreSQL DSN/service selection",
+        "libpq optional LDAP lookup -> libldap",
+        "Exact claimed lower-trust path and preconditions unresolved"
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 1,
+        "rationale": "Affected client package and optional lookup path exist; precise NULL-dereference trigger remains unresolved.",
+        "drivers": [
+          "optional LDAP configuration",
+          "peer/input influence unresolved",
+          "package presence established"
+        ]
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Compose supplies a direct PostgreSQL DSN. LDIF import is not an application feature. Alternate operator-selected service lookup can still enter libldap."
+      ],
+      "proof_gaps": [
+        "Establish the exact affected allocator caller for libpq18.6 service lookup, reachable allocation failure, and lower-trust input; default Compose alone cannot exclude alternate configuration.",
+        "No runtime/PoC validation in this static phase."
+      ],
+      "recommended_next_step": "Resolve the named consumer/configuration proof gap before selecting a fix.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-026",
+      "input_id": "CVE-2015-3276",
+      "source_type": "scanner_ticket",
+      "title": "libldap-2.5-0: OpenLDAP NSS cipher-list parsing",
+      "normalized_input": {
+        "vulnerable_component": "libldap-2.5-0",
+        "claimed_source": "Operator cipher-list configuration and TLS peer",
+        "claimed_sink": "libraries/libldap/tls_m.c nss_parse_ciphers",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "2.5.13+dfsg-5",
+        "preconditions": [
+          "OpenLDAP built with NSS"
+        ],
+        "impact": "Weaker than selected cipher policy",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2015-3276"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Debian OpenLDAP uses GnuTLS, not NSS. Retained API package inventory contains libgnutls30 and no libnss3; this is not the NSS build."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Debian OpenLDAP uses GnuTLS, not NSS. Retained API package inventory contains libgnutls30 and no libnss3; this is not the NSS build."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-027",
+      "input_id": "CVE-2017-14159",
+      "source_type": "scanner_ticket",
+      "title": "libldap-2.5-0: OpenLDAP slapd PID-file privilege interaction",
+      "normalized_input": {
+        "vulnerable_component": "libldap-2.5-0",
+        "claimed_source": "Local slapd account editing PID file",
+        "claimed_sink": "Privileged slapd service-stop script",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "2.5.13+dfsg-5",
+        "preconditions": [
+          "slapd daemon and privileged PID-consuming script"
+        ],
+        "impact": "Signal arbitrary process",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2017-14159"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "API image has no slapd; no slapd init script participates in API/maintenance/migration. Non-root application entrypoints do not use its PID file."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "API image has no slapd; no slapd init script participates in API/maintenance/migration. Non-root application entrypoints do not use its PID file."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-028",
+      "input_id": "CVE-2017-17740",
+      "source_type": "scanner_ticket",
+      "title": "libldap-2.5-0: OpenLDAP nops overlay invalid free",
+      "normalized_input": {
+        "vulnerable_component": "libldap-2.5-0",
+        "claimed_source": "LDAP MODDN client operation",
+        "claimed_sink": "contrib/slapd-modules/nops/nops.c",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "2.5.13+dfsg-5",
+        "preconditions": [
+          "slapd with nops and memberof modules"
+        ],
+        "impact": "LDAP server denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2017-17740"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Debian does not build the nops module; API image also excludes slapd/slapd-contrib. libldap client is not this server overlay."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Debian does not build the nops module; API image also excludes slapd/slapd-contrib. libldap client is not this server overlay."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-029",
+      "input_id": "CVE-2020-15719",
+      "source_type": "scanner_ticket",
+      "title": "libldap-2.5-0: OpenLDAP SAN/CN identity policy mismatch",
+      "normalized_input": {
+        "vulnerable_component": "libldap-2.5-0",
+        "claimed_source": "TLS peer with mismatching SAN and matching CN",
+        "claimed_sink": "LDAP server identity validation",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "2.5.13+dfsg-5",
+        "preconditions": [
+          "TLS LDAP use plus a promised stricter RFC6125 identity policy"
+        ],
+        "impact": "Server identity accepted contrary to expected policy",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2020-15719"
+        ]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "Operator configuration -> PostgreSQL DSN/service selection",
+        "libpq optional LDAP lookup -> libldap",
+        "Exact claimed lower-trust path and preconditions unresolved"
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 2,
+        "rationale": "Requires alternate LDAP TLS consumer and an unresolved identity-policy promise.",
+        "drivers": [
+          "optional LDAP configuration",
+          "peer/input influence unresolved",
+          "package presence established"
+        ]
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "The Debian/upstream RFC4513 versus RFC6125 policy dispute prevents treating every package match as a confirmed bypass. PostgreSQL TLS smoke is not LDAP TLS validation."
+      ],
+      "proof_gaps": [
+        "Determine whether any supported LDAP consumer uses TLS and promises SAN precedence, then inspect the exact GnuTLS validation and peer-control path.",
+        "No runtime/PoC validation in this static phase."
+      ],
+      "recommended_next_step": "Resolve the named consumer/configuration proof gap before selecting a fix.",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-030",
+      "input_id": "CVE-2026-22185",
+      "source_type": "scanner_ticket",
+      "title": "libldap-2.5-0: LMDB mdb_load malformed input underflow",
+      "normalized_input": {
+        "vulnerable_component": "libldap-2.5-0",
+        "claimed_source": "Malformed LMDB import data",
+        "claimed_sink": "mdb_load.c readline",
+        "claimed_control": "The reported upstream condition is absent or not handled; package match alone does not prove a product bypass.",
+        "affected_version_or_path": "2.5.13+dfsg-5",
+        "preconditions": [
+          "Execute affected LMDB load utility"
+        ],
+        "impact": "Loader denial of service",
+        "references": [
+          "https://github.com/Villentretermert/ProjectMarket/blob/e92861a0857daefd07b89c2a1f0e3ef8aa396230/docs/task-results/assets/PM-023/psycopg-c-20261101/audit-summary.json",
+          "https://security-tracker.debian.org/tracker/CVE-2026-22185"
+        ]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "runtime packaging",
+          "path": "deploy/Dockerfile",
+          "lines": "2-10,27-40",
+          "detail": "Digest-pinned Python base installs PGDG libpq and Debian transitive client libraries; donor PostgreSQL server is not copied."
+        },
+        {
+          "label": "application database caller",
+          "path": "apps/api/src/marketob_api/database.py",
+          "lines": "21-46,58-78",
+          "detail": "Operator Settings supplies a PostgreSQL DSN to pools and fallback connections."
+        },
+        {
+          "label": "readiness caller",
+          "path": "apps/api/src/marketob_api/health.py",
+          "lines": "25-43",
+          "detail": "Readiness uses the same operator DSN and psycopg client."
+        },
+        {
+          "label": "deployed configuration",
+          "path": "compose.yaml",
+          "lines": "37,63,82",
+          "detail": "API, migrate and maintenance use a direct host/database DSN."
+        }
+      ],
+      "reachable_path": [
+        "API / maintenance / migration -> Settings -> psycopg -> libpq client",
+        "Debian OpenLDAP does not build the affected mdb_load.c; retained API inventory contains no lmdb-utils. PostgreSQL restore does not call LMDB loader."
+      ],
+      "boundary_assessment": {
+        "product_surface": "hosted service",
+        "source_trust": "untrusted",
+        "boundary_crossed": false,
+        "policy_basis": "No applicable SECURITY.md resolved for apps/api or deploy. Scope is the shipped Linux API image only, using compose.yaml, Dockerfile and PostgreSQL client source; excludes PostgreSQL server image, Windows, host packages and arbitrary image extensions."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Not actionable in the scoped API image and shipped client entrypoints.",
+        "drivers": []
+      },
+      "evidence": [
+        "Retained scanner inventory pins API image sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b.",
+        "Upstream/Debian advisory identifies the stated component and preconditions.",
+        "Product source has client connections only; no direct LDAP/GSS native API exposed."
+      ],
+      "counterevidence": [
+        "Debian OpenLDAP does not build the affected mdb_load.c; retained API inventory contains no lmdb-utils. PostgreSQL restore does not call LMDB loader."
+      ],
+      "proof_gaps": [
+        "Verdict is scoped to the retained Linux API image and source revision; other images, Windows or additional custom consumers require reassessment."
+      ],
+      "recommended_next_step": "Retain scanner record and reassess on package, image or consumer changes; do not add suppression.",
+      "fix_finding_handoff": null
+    }
+  ]
+}

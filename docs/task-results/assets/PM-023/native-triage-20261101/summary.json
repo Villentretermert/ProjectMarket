@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "scope": "30 newly visible Kerberos/OpenLDAP package-advisory matches from the API image, not the entire application",
+  "source_revision": "e92861a0857daefd07b89c2a1f0e3ef8aa396230",
+  "image_id": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b",
+  "input_count": 30,
+  "unique_advisories": 12,
+  "verdicts": {
+    "not_actionable": 28,
+    "needs_review": 2,
+    "confirmed": 0
+  },
+  "confidence": {
+    "high": 24,
+    "medium": 6
+  },
+  "analysis": "static only; no application/runtime/PoC checks performed",
+  "scanner_suppression_added": false,
+  "scanner_total_unchanged": 276,
+  "absent_packages": [
+    "krb5-kdc",
+    "krb5-admin-server",
+    "krb5-kdc-ldap",
+    "libgssrpc4",
+    "slapd",
+    "slapd-contrib",
+    "lmdb-utils",
+    "libnss3"
+  ],
+  "source_inventory": "artifacts/psycopg-c-20261101/image-1.json",
+  "contract_checks": {
+    "one_result_per_input": true,
+    "input_order_preserved": true,
+    "duplicate_package_matches_preserved": true,
+    "contiguous_unique_needs_review_ranks": true
+  }
+}
