@@ -6,7 +6,7 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-  "marketob-api",
+  "marketob-api[binary]",
   "marketob-contracts",
   "marketob-bot-sdk",
   "marketob-demo-bots",
@@ -20,6 +20,12 @@ dev = [
 [tool.uv]
 package = false
 required-version = "==0.13.5"
+# The psycopg-c sdist includes generated C; Cython is not needed.
+build-constraint-dependencies = [
+  { requirement = "setuptools==83.0.0", hashes = ["sha256:29b23c360f22f414dc7336bb39178cc7bcbf6021ed2733cde173f09dba19abb3"] },
+  { requirement = "wheel==0.48.0", hashes = ["sha256:3217dcc807155e45db462d7ef2431f5ddda0d7273b700d05a67b271ceb1287ab"] },
+  { requirement = "packaging==26.2", hashes = ["sha256:5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e"] },
+]
 
 [tool.uv.workspace]
 members = ["apps/api", "packages/contracts", "packages/bot-sdk", "bots/pilot"]
@@ -48,4 +54,4 @@ select = ["E", "F", "I", "UP", "B"]
 python_version = "3.14"
 plugins = ["pydantic.mypy"]
 strict = true
-files = ["apps/api/src", "tests", "scripts/audit_dependencies.py", "scripts/inspect_psycopg.py", "scripts/operations.py", "scripts/live_load.py", "scripts/load_integrity.py", "scripts/host_samples.py", "scripts/docker_lab.py", "scripts/backup.py", "scripts/smoke_delivery.py", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "scripts/smoke_identity.py", "scripts/smoke_ingestion.py", "scripts/smoke_channels.py", "scripts/smoke_actions.py", "scripts/smoke_bots.py", "scripts/pilot_bots.py", "scripts/backend_lab.py", "scripts/load_backend.py", "scripts/fault_bot.py", "scripts/smoke_backend.py", "scripts/smoke_web.py", "bots/examples", "packages/bot-sdk/src", "bots/pilot/src"]
+files = ["apps/api/src", "tests", "scripts/audit_dependencies.py", "scripts/inspect_psycopg.py", "scripts/operations.py", "scripts/live_load.py", "scripts/load_integrity.py", "scripts/host_samples.py", "scripts/docker_lab.py", "scripts/backup.py", "scripts/smoke_delivery.py", "scripts/smoke_psycopg.py", "scripts/dev_env.py", "scripts/test_postgres.py", "scripts/smoke_api.py", "scripts/smoke_local.py", "scripts/smoke_identity.py", "scripts/smoke_ingestion.py", "scripts/smoke_channels.py", "scripts/smoke_actions.py", "scripts/smoke_bots.py", "scripts/pilot_bots.py", "scripts/backend_lab.py", "scripts/load_backend.py", "scripts/fault_bot.py", "scripts/smoke_backend.py", "scripts/smoke_web.py", "bots/examples", "packages/bot-sdk/src", "bots/pilot/src"]

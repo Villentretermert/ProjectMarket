@@ -1,4 +1,4 @@
-"""Inventory the binary driver's loaded libraries without connecting to a database.
+"""Inventory the driver's loaded libraries without connecting to a database.
 
 Exit 0 means complete inventory, not absence of vulnerabilities; exit 2 means a gap.
 Output excludes environment values, connection strings and absolute library paths.
@@ -11,7 +11,9 @@ import importlib.metadata
 import json
 import os
 import platform
+import re
 import ssl
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -35,7 +37,9 @@ def openssl_version(path: Path) -> str:
     return value.decode("ascii")
 
 
-def collect_loaded(loaded: list[str], owned: set[Path]) -> dict[str, Any]:
+def collect_loaded(
+    loaded: list[str], owned: set[Path], owner: str = "psycopg-binary"
+) -> dict[str, Any]:
     """Use loader evidence plus wheel ownership; an on-disk copy is not proof of use."""
     libraries: list[dict[str, Any]] = []
     gaps: list[str] = []
@@ -52,7 +56,7 @@ def collect_loaded(loaded: list[str], owned: set[Path]) -> dict[str, Any]:
         if path not in owned or path in seen:
             continue
         seen.add(path)
-        item: dict[str, Any] = {"name": path.name, "kind": kind, "owner": "psycopg-binary"}
+        item: dict[str, Any] = {"name": path.name, "kind": kind, "owner": owner}
         try:
             with path.open("rb") as stream:
                 item["sha256"] = hashlib.file_digest(stream, "sha256").hexdigest()
@@ -69,9 +73,45 @@ def collect_loaded(loaded: list[str], owned: set[Path]) -> dict[str, Any]:
     return {"libraries": sorted(libraries, key=lambda item: item["name"]), "gaps": gaps}
 
 
+def command_output(*args: str) -> str:
+    return subprocess.run(args, check=True, capture_output=True, text=True, timeout=10).stdout
+
+
+def collect_system(loaded: list[str], extensions: list[Path]) -> dict[str, Any]:
+    """Require package ownership AND resolved dependencies of the installed C extensions."""
+    owned: set[Path] = set()
+    owners: dict[Path, str] = {}
+    packages: dict[str, str] = {}
+    for package in ("libpq5", "libssl3"):
+        packages[package] = command_output("dpkg-query", "-W", "-f=${Version}", package).strip()
+        for name in command_output("dpkg-query", "-L", package).splitlines():
+            path = Path(name)
+            if path.is_absolute() and library_kind(path.name):
+                owned.add(path.resolve())
+                owners[path.resolve()] = package
+    dependencies: set[Path] = set()
+    for extension in extensions:
+        # Only trusted, installed wheel files are passed to the system loader inspector.
+        output = command_output("ldd", str(extension))
+        for name in re.findall(r"=> (/\S+) \(", output):
+            path = Path(name).resolve()
+            if library_kind(path.name):
+                dependencies.add(path)
+    result = collect_loaded(loaded, owned & dependencies, "system")
+    for item in result["libraries"]:
+        matching = [path for path in owned & dependencies if path.name == item["name"]]
+        package = owners[matching[0]]
+        item.update(owner=package, package_version=packages[package])
+    # Unexpected copies must not be silently excluded in a system-only runtime.
+    if any(library_kind(Path(name).name) and Path(name).resolve() not in owned for name in loaded):
+        result["gaps"].append("unexpected_loaded_native_library")
+    result["dependency_evidence"] = "ldd of installed psycopg-c extensions; dpkg file ownership"
+    return result
+
+
 def inspect_runtime() -> dict[str, Any]:
     report: dict[str, Any] = {
-        "schema_version": "marketob-psycopg-linkage/v1",
+        "schema_version": "marketob-psycopg-linkage/v2",
         "scope": "Inspection process imports ssl then psycopg; no database or network access",
         "coverage": "Loaded libpq/libssl/libcrypto owned by the psycopg-binary wheel",
         "security_assessment": "not_performed",
@@ -92,17 +132,34 @@ def inspect_runtime() -> dict[str, Any]:
             libpq_runtime=psycopg.pq.version(),
             libpq_build=psycopg.pq.__build_version__,
         )
-        if psycopg.pq.__impl__ != "binary":
+        if psycopg.pq.__impl__ == "c" and platform.system() == "Linux":
+            report["coverage"] = "Loaded system libpq/libssl/libcrypto and C extension dependencies"
+            distribution = importlib.metadata.distribution("psycopg-c")
+            extensions = [
+                Path(str(distribution.locate_file(file))).resolve()
+                for file in distribution.files or []
+                if str(file).endswith(".so")
+            ]
+            report.update(collect_system(ctypes.util.dllist(), extensions))
+            try:
+                importlib.metadata.distribution("psycopg-binary")
+            except importlib.metadata.PackageNotFoundError:
+                report["binary_distribution_present"] = False
+            else:
+                report["binary_distribution_present"] = True
+                report["gaps"].append("binary_distribution_present")
+        elif psycopg.pq.__impl__ == "binary":
+            distribution = importlib.metadata.distribution("psycopg-binary")
+            files = distribution.files
+            if not files:
+                report["gaps"] = ["wheel_file_inventory_unavailable"]
+                return report
+            owned = {Path(str(distribution.locate_file(file))).resolve() for file in files}
+            report.update(collect_loaded(ctypes.util.dllist(), owned))
+        else:
             report["gaps"] = ["unsupported_driver_implementation"]
             return report
-        distribution = importlib.metadata.distribution("psycopg-binary")
-        files = distribution.files
-        if not files:
-            report["gaps"] = ["wheel_file_inventory_unavailable"]
-            return report
-        owned = {Path(str(distribution.locate_file(file))).resolve() for file in files}
-        report.update(collect_loaded(ctypes.util.dllist(), owned))
-    except ImportError, OSError, ValueError, AttributeError:
+    except ImportError, OSError, ValueError, AttributeError, subprocess.SubprocessError:
         report["gaps"] = ["runtime_inventory_unavailable"]
         return report
     if not report["gaps"]:

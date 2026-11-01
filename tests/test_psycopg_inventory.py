@@ -63,3 +63,36 @@ def test_cli_preserves_incomplete_inventory_exit_code(
     monkeypatch.setattr(inspect_psycopg, "inspect_runtime", lambda: {"status": status})
     assert inspect_psycopg.main() == code
     assert status in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("linked", [True, False])
+def test_system_inventory_requires_extension_dependency_evidence(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, linked: bool
+) -> None:
+    paths = [tmp_path / name for name in ("libpq.so.5.18", "libssl.so.3", "libcrypto.so.3")]
+    for path in paths:
+        path.write_bytes(b"system library fixture")
+
+    def output(*args: str) -> str:
+        if args[0] == "ldd":
+            return "\n".join(f"{path.name} => {path} (0x0)" for path in paths) if linked else ""
+        if args[1] == "-W":
+            return "18.6-1.pgdg12+2" if args[-1] == "libpq5" else "3.0.22-1~deb12u2"
+        return "\n".join(str(path) for path in (paths[:1] if args[-1] == "libpq5" else paths[1:]))
+
+    monkeypatch.setattr(inspect_psycopg, "command_output", output)
+    monkeypatch.setattr(inspect_psycopg, "openssl_version", lambda path: "OpenSSL 3.0.22")
+    # Linux ldd absolute-path syntax is intentionally platform specific.
+    if not str(tmp_path).startswith("/"):
+        pytest.skip("Linux loader syntax")
+    result = inspect_psycopg.collect_system([str(path) for path in paths], [tmp_path / "pq.so"])
+    if linked:
+        assert result["gaps"] == []
+        assert {item["owner"] for item in result["libraries"]} == {"libpq5", "libssl3"}
+        unknown = str(tmp_path / "libcrypto-unowned.so")
+        result = inspect_psycopg.collect_system(
+            [*(str(path) for path in paths), unknown], [tmp_path / "pq.so"]
+        )
+        assert "unexpected_loaded_native_library" in result["gaps"]
+    else:
+        assert result["gaps"] and result["libraries"] == []

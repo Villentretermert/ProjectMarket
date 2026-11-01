@@ -1,6 +1,13 @@
 # Текущее состояние
 
-**Дата:** 31 октября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
+**Дата:** 1 ноября 2026. **Завершено:** 19/24 задач пилота, 0/4 развития.
+**Текущий кандидат:** [Linux psycopg C](task-results/PM-023-psycopg-c-20261101.md).
+Docker API использует system libpq18.6/OpenSSL3.0.22 с Debian security revision;
+native Windows остаётся binary. Inventory и изолированные TLS/pools/cancel PASS.
+Локально95 unit PASS/2 Linux-only skips, Ruff/mypy95files PASS. Полный CI и
+поставка ещё проверяются; рабочий b202024 пока сохранён. PM-023 открыта.
+
+**Предыдущая работа:**
 **Текущая работа:** [native SSL psycopg](task-results/PM-023-psycopg-20261031.md).
 Добавлен повторяемый Python inventory и проверки CI. Локальные Windows/Linux
 проверки complete;14 tests/Ruff/mypy94files PASS. CI41239002094 на665a00e —

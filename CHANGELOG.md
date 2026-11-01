@@ -1,5 +1,18 @@
 # Журнал изменений
 
+## 2026-11-01 — PM-023: Linux psycopg с системными библиотеками
+
+- API получает явные extras binary/c; native разработка сохраняет binary.
+  Docker API/мигратор/maintenance выбирают C3.3.6, PGDG libpq18.6 и системный
+  Debian OpenSSL3.0.22-1~deb12u2; build dependencies закреплены версиями/хешами.
+- Inventory v2 проверяет dpkg ownership, loaded libraries и ldd зависимостей
+  C extensions. Отдельная копия binary в C runtime считается пробелом.
+- Добавлена изолированная TLS PostgreSQL проверка реального API image:
+  положительные/отрицательные CA/hostname, JSONB, commit/rollback, оба пула,
+  timeout, recovery и cancel_safe. Кандидат прошёл focused smoke.
+- [Результат и оставшиеся границы](docs/task-results/PM-023-psycopg-c-20261101.md).
+  Полная PM-023 открыта; Windows binary и недоказанный DTLS-path не закрыты.
+
 ## 2026-10-31 — PM-023: отдельные SSL-библиотеки psycopg
 
 - Добавлен Python-инспектор загруженных libpq/libssl/libcrypto с проверкой

@@ -8,11 +8,15 @@ dependencies = [
   "argon2-cffi==25.1.0",
   "fastapi==0.159.1",
   "pydantic-settings==2.16.1",
-  "psycopg[binary]==3.3.6",
+  "psycopg==3.3.6",
   "psycopg-pool==3.3.3",
   "jsonschema-rs==0.57.1",
   "uvicorn==0.54.0",
 ]
+
+[project.optional-dependencies]
+binary = ["psycopg[binary]==3.3.6"]
+c = ["psycopg[c]==3.3.6"]
 
 [tool.uv.sources]
 marketob-contracts = { workspace = true }

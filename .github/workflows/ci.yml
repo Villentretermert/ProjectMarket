@@ -75,6 +75,8 @@ jobs:
         run: docker compose exec -T api /usr/local/bin/python -c "import importlib.util; assert importlib.util.find_spec('pip') is None"
       - name: Inventory actual API image native libraries
         run: docker compose exec -T api python - < scripts/inspect_psycopg.py
+      - name: Verify C driver TLS, transactions, pools and cancellation
+        run: python -m scripts.smoke_psycopg
       - run: python scripts/smoke_ingestion.py --phase before
       - run: python -m scripts.smoke_actions --phase before
       - name: Database outage and recovery

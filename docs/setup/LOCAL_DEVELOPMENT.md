@@ -22,6 +22,22 @@ $env:UV_PROJECT_ENVIRONMENT = '.venv-dev'
 зависимости и хеши; `--locked` запрещает незаметно изменить разрешённый набор.
 Не нужен `Activate.ps1` или изменение PowerShell execution policy.
 
+С 1 ноября Docker API/мигратор/maintenance используют `psycopg[c]` 3.3.6,
+собранный с системным libpq18.6 и Debian OpenSSL. Обычный `uv sync --locked`
+по-прежнему устанавливает binary для native разработки, включая Windows;
+компилятор не требуется. При отдельной установке пакета API выбирайте extra
+`binary` либо `c`; для `c` нужны C toolchain и libpq headers. Docker закрепляет
+эти зависимости в build stage, в runtime компилятор и headers не копируются.
+
+Проверка состава: `python -m scripts.inspect_psycopg`; exit0 означает полноту
+inventory, а не отсутствие CVE. Проверка настоящего Docker C runtime:
+`python -m scripts.smoke_psycopg --api-image marketob-api:local --db-image marketob-db:local`.
+На Windows добавьте `--wsl Ubuntu`. Скрипт создаёт собственные временные TLS
+сертификаты, сеть и БД без публикации портов и удаляет только созданные им ресурсы.
+Он проверяет CA/hostname, пулы, транзакции, восстановление и cancel_safe.
+Он не меняет настройки GSSAPI/TLS рабочей базы: `gssencmode=disable` ограничен
+TLS fixture. Корпоративные Kerberos/LDAP сценарии отдельно не проверены.
+
 Откройте [проверку API](http://127.0.0.1:8000/health/live):
 `{"status":"ok","service":"marketob-api","version":"0.1.0"}`.
 Остановка — `Ctrl+C` в терминале сервера. Можно открыть второй терминал:

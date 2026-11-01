@@ -10,6 +10,11 @@ members = [
     "marketob-demo-bots",
     "marketob-workspace",
 ]
+build-constraints = [
+    { name = "packaging", specifier = "==26.2", hashes = ["sha256:5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e"] },
+    { name = "setuptools", specifier = "==83.0.0", hashes = ["sha256:29b23c360f22f414dc7336bb39178cc7bcbf6021ed2733cde173f09dba19abb3"] },
+    { name = "wheel", specifier = "==0.48.0", hashes = ["sha256:3217dcc807155e45db462d7ef2431f5ddda0d7273b700d05a67b271ceb1287ab"] },
+]
 
 [[package]]
 name = "annotated-doc"
@@ -444,10 +449,18 @@ dependencies = [
     { name = "fastapi" },
     { name = "jsonschema-rs" },
     { name = "marketob-contracts" },
-    { name = "psycopg", extra = ["binary"] },
+    { name = "psycopg" },
     { name = "psycopg-pool" },
     { name = "pydantic-settings" },
     { name = "uvicorn" },
+]
+
+[package.optional-dependencies]
+binary = [
+    { name = "psycopg", extra = ["binary"] },
+]
+c = [
+    { name = "psycopg", extra = ["c"] },
 ]
 
 [package.metadata]
@@ -456,11 +469,14 @@ requires-dist = [
     { name = "fastapi", specifier = "==0.159.1" },
     { name = "jsonschema-rs", specifier = "==0.57.1" },
     { name = "marketob-contracts", editable = "packages/contracts" },
-    { name = "psycopg", extras = ["binary"], specifier = "==3.3.6" },
+    { name = "psycopg", specifier = "==3.3.6" },
+    { name = "psycopg", extras = ["binary"], marker = "extra == 'binary'", specifier = "==3.3.6" },
+    { name = "psycopg", extras = ["c"], marker = "extra == 'c'", specifier = "==3.3.6" },
     { name = "psycopg-pool", specifier = "==3.3.3" },
     { name = "pydantic-settings", specifier = "==2.16.1" },
     { name = "uvicorn", specifier = "==0.54.0" },
 ]
+provides-extras = ["binary", "c"]
 
 [[package]]
 name = "marketob-bot-sdk"
@@ -507,7 +523,7 @@ source = { virtual = "." }
 [package.dev-dependencies]
 dev = [
     { name = "httpx2" },
-    { name = "marketob-api" },
+    { name = "marketob-api", extra = ["binary"] },
     { name = "marketob-bot-sdk" },
     { name = "marketob-contracts" },
     { name = "marketob-demo-bots" },
@@ -522,7 +538,7 @@ dev = [
 [package.metadata.requires-dev]
 dev = [
     { name = "httpx2", specifier = "==2.16.0" },
-    { name = "marketob-api", editable = "apps/api" },
+    { name = "marketob-api", extras = ["binary"], editable = "apps/api" },
     { name = "marketob-bot-sdk", editable = "packages/bot-sdk" },
     { name = "marketob-contracts", editable = "packages/contracts" },
     { name = "marketob-demo-bots", editable = "bots/pilot" },
@@ -668,6 +684,9 @@ wheels = [
 binary = [
     { name = "psycopg-binary", marker = "implementation_name != 'pypy'" },
 ]
+c = [
+    { name = "psycopg-c", marker = "implementation_name != 'pypy'" },
+]
 
 [[package]]
 name = "psycopg-binary"
@@ -686,6 +705,12 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ef/28/0cc654afc6c2cda982767f5679d3646b30b1ec86545bdaa9402202d6776c/psycopg_binary-3.3.6-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:05a83ac9fd52b9bca7cb5ab04b3691163170bd16f53defa27216ea3aa07ee781", size = 4332607, upload-time = "2026-09-18T13:21:27.63Z" },
     { url = "https://files.pythonhosted.org/packages/f1/3e/0a753a74fbd7aef120f286c016e09d3cc3f1daf7688f4a145d27281260b2/psycopg_binary-3.3.6-cp314-cp314-win_amd64.whl", hash = "sha256:1fbd30e537dab22cafdf080608f10148fe2a5f3a61294ddb5113caac8a623840", size = 3755671, upload-time = "2026-09-18T13:21:33.855Z" },
 ]
+
+[[package]]
+name = "psycopg-c"
+version = "3.3.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/53/bf15aa48cd6f0ad0039b9f48681d2e76e8564d413af47b13fab50dd03555/psycopg_c-3.3.6.tar.gz", hash = "sha256:29c568426ad61c1b702c7d73505c43ca2c9fc5d97a8431d8d9049e731e319ff8", size = 698245, upload-time = "2026-09-18T13:22:57.752Z" }
 
 [[package]]
 name = "psycopg-pool"
