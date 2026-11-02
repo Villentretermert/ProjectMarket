@@ -1,0 +1,330 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-02",
+  "source_revision": "8f782025b8e96c653945c7b016c1b0460b9a5828",
+  "image_id": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b",
+  "scope": "Installed Linux API image. Fresh non-root processes, loopback, synthetic PKI, no production credentials or data.",
+  "method": "marketob_api.health.database_status invokes libpq. A minimal LDAP directory supplies an application_name sentinel. The PostgreSQL wire peer records startup and closes before authentication. The expected readiness value is unavailable. Only memory probes and named trace controls use LD_PRELOAD.",
+  "operator_profile": "service in PGSERVICEFILE; v3 cases set LDAPVERSION=3 and LDAPREFERRALS=on; TLS cases require trusted CA and LDAPTLS_REQCERT=demand. Strict cases additionally set LDAPTLS_REQSAN=demand.",
+  "assessments": [
+    {
+      "id": "triage-025",
+      "cve": "CVE-2023-2953",
+      "direct_pilot": "LDAP not entered",
+      "optional_profile": "SIGABRT after targeted NULL in ldap_url_parsehosts scheme copy",
+      "library_controls": "SIGSEGV in each of the IPv6 host-copy and file URI LDIF fault cases",
+      "validation_disposition": "deferred",
+      "remaining": "No demonstrated remote trigger for the allocation failure in MarkeTOB."
+    },
+    {
+      "id": "triage-029",
+      "cve": "CVE-2020-15719",
+      "direct_pilot": "LDAP not entered",
+      "optional_profile": "LDAPS referral accepts matching CN despite mismatched SAN in default libldap mode, directory marker reaches PostgreSQL startup",
+      "tested_control": "LDAPTLS_REQSAN=demand rejects that endpoint, accepts matching SAN",
+      "validation_disposition": "deferred",
+      "remaining": "Deployment-specific LDAP TLS identity promise and use of this optional directory profile."
+    }
+  ],
+  "result": "PASS",
+  "cases": 22,
+  "dpkg": {
+    "libgnutls30:amd64": "3.7.9-2+deb12u7",
+    "libldap-2.5-0:amd64": "2.5.13+dfsg-5",
+    "libpq5:amd64": "18.6-1.pgdg12+2"
+  },
+  "uid": 10001,
+  "rows": {
+    "ldaps-good-default": {
+      "exit": 0,
+      "trace": [],
+      "value": "0",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "TLS",
+        "bind-v3",
+        "closed"
+      ]
+    },
+    "ldaps-cn-default": {
+      "exit": 0,
+      "trace": [],
+      "value": "0",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "TLS",
+        "bind-v3",
+        "closed"
+      ]
+    },
+    "ldaps-wrong-default": {
+      "exit": 0,
+      "trace": [],
+      "value": "-1",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "TLS",
+        "closed"
+      ]
+    },
+    "ldaps-good-demand": {
+      "exit": 0,
+      "trace": [],
+      "value": "0",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "TLS",
+        "bind-v3",
+        "closed"
+      ]
+    },
+    "ldaps-cn-demand": {
+      "exit": 0,
+      "trace": [],
+      "value": "-1",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "TLS",
+        "closed"
+      ]
+    },
+    "library-ipv6-none": {
+      "exit": 0,
+      "trace": [
+        "fixture-host-parser",
+        "ipv6-copy",
+        "scheme-copy"
+      ],
+      "value": "0",
+      "assertion_abort": false
+    },
+    "library-ipv6-ipv6": {
+      "exit": -11,
+      "trace": [
+        "fixture-host-parser",
+        "ipv6-copy",
+        "ipv6-NULL"
+      ],
+      "value": "",
+      "assertion_abort": false
+    },
+    "library-ldif-none": {
+      "exit": 0,
+      "trace": [
+        "ldif-copy"
+      ],
+      "value": "opened",
+      "assertion_abort": false
+    },
+    "library-ldif-ldif": {
+      "exit": -11,
+      "trace": [
+        "ldif-copy",
+        "ldif-NULL"
+      ],
+      "value": "",
+      "assertion_abort": false
+    },
+    "direct": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [],
+      "pg_wire": [
+        "connection",
+        "pg-startup"
+      ]
+    },
+    "service": {
+      "exit": 0,
+      "trace": [
+        "fixture-host-parser",
+        "scheme-copy"
+      ],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "bind-v2",
+        "search"
+      ],
+      "pg_wire": [
+        "connection",
+        "pg-startup",
+        "directory-marker"
+      ]
+    },
+    "scheme-failure": {
+      "exit": -6,
+      "trace": [
+        "fixture-host-parser",
+        "scheme-copy",
+        "scheme-NULL"
+      ],
+      "value": "",
+      "assertion_abort": true,
+      "wire": [],
+      "pg_wire": []
+    },
+    "service-ipv6": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [],
+      "pg_wire": []
+    },
+    "ldaps-url": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [],
+      "pg_wire": []
+    },
+    "referral-default": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "bind-v2",
+        "search"
+      ],
+      "referral_wire": [],
+      "pg_wire": []
+    },
+    "referral-strict": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "bind-v2",
+        "search"
+      ],
+      "referral_wire": [],
+      "pg_wire": []
+    },
+    "referral-good": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "bind-v2",
+        "search"
+      ],
+      "referral_wire": [],
+      "pg_wire": []
+    },
+    "referral-v3-cn": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "bind-v3",
+        "search"
+      ],
+      "referral_wire": [
+        "connection",
+        "TLS",
+        "bind-v3",
+        "search"
+      ],
+      "pg_wire": [
+        "connection",
+        "pg-startup",
+        "directory-marker"
+      ]
+    },
+    "referral-v3-strict": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "bind-v3",
+        "search"
+      ],
+      "referral_wire": [
+        "connection",
+        "TLS",
+        "closed"
+      ],
+      "pg_wire": []
+    },
+    "referral-v3-good": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "bind-v3",
+        "search"
+      ],
+      "referral_wire": [
+        "connection",
+        "TLS",
+        "bind-v3",
+        "search"
+      ],
+      "pg_wire": [
+        "connection",
+        "pg-startup",
+        "directory-marker"
+      ]
+    },
+    "referral-v3-strict-good": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "bind-v3",
+        "search"
+      ],
+      "referral_wire": [
+        "connection",
+        "TLS",
+        "bind-v3",
+        "search"
+      ],
+      "pg_wire": [
+        "connection",
+        "pg-startup",
+        "directory-marker"
+      ]
+    },
+    "service-uninstrumented": {
+      "exit": 0,
+      "trace": [],
+      "value": "unavailable",
+      "assertion_abort": false,
+      "wire": [
+        "connection",
+        "bind-v2",
+        "search"
+      ],
+      "pg_wire": [
+        "connection",
+        "pg-startup",
+        "directory-marker"
+      ]
+    }
+  }
+}
