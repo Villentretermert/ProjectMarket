@@ -2,13 +2,16 @@
 
 ## 2026-11-03 — PM-023 · Alpine source notices
 
-- Добавлены уведомления28/32 Alpine packages из проверенных версий исходников.
+- Добавлены уведомления для 28/32 Alpine packages из проверенных версий исходников.
   20 origins, 167 Git blobs, 152 SHA-512 inputs; 298 уникальных notice-текстов.
 - Новый Python-сборщик проверяет привязку к image/package version, checksum inputs
   и byte ranges. APKBUILD и загруженный код не исполняются. CI проверяет associations.
-- 20 targeted tests, Ruff/mypy99files и187 членов локального source-input archive PASS.
+- 20 targeted tests, Ruff/mypy по 99 файлам и 187 членов локального source-input archive PASS.
   Четыре upstream attribution gaps и полная source delivery остаются открытыми.
   [Отчёт](docs/task-results/PM-023-alpine-licenses-20261103.md).
+- [CI 41687143893](https://github.com/Villentretermert/ProjectMarket/actions/runs/41687143893)
+  на bf767d1: все 4 задания PASS, 227 различных Python-тестов и 54 Chromium-сценария.
+  Docker/HTTPS/backup/restore и проверка notice associations на обеих ОС прошли.
 
 ## 2026-11-03 — PM-023 · Apache 2.0 и реестр сторонних уведомлений
 

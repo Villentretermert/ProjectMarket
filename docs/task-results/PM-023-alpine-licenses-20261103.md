@@ -61,8 +61,15 @@ flowchart LR
 - Первый сбор остановился на пустом `zstd/build/LICENSE`. Каталог помечен
   INCOMPLETE и перенесён в локальные материалы. Пустой файл исключён явно,
   root LICENSE/COPYING сохранены. Неполный результат не опубликован.
-- Проверка источников и notice associations добавлена в CI для Windows и Linux.
-  Итог CI будет записан после выполнения.
+- [CI 41687143893](https://github.com/Villentretermert/ProjectMarket/actions/runs/41687143893)
+  на коммите `bf767d1c5da3c999598a0544b6952c1add51fafc` прошёл все четыре задания.
+  Linux: 117 unit tests; Windows: 115 и 2 Linux-only skips; интеграционные: 110.
+  Всего 227 различных Python-тестов и 54 Chromium-сценария. Проверки source notice
+  associations и архивных хешей прошли на обеих ОС.
+- Docker build, реальный C-драйвер, отдельные боты, HTTPS/HTTP2 и изолированные
+  backup/restore прошли в CI. Минутный API baseline принял 1000 сообщений;
+  это не отложенный полный L2. Сохранено одно прежнее предупреждение Pydantic
+  об alias `channel_id`. [Машиночитаемые результаты](assets/PM-023/alpine-licenses-20261103/ci-results.json).
 
 Рабочие образы, БД и UI не изменялись. Следующая независимая часть — атрибуция
 встроенных Rust/C-компонентов Python-библиотек. Четыре Alpine gaps, Debian sources
