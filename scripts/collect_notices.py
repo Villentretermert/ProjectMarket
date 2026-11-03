@@ -335,7 +335,7 @@ def write_bundle(output: Path, report: dict[str, Any], texts: dict[str, bytes]) 
     report["texts_archive_sha256"] = digest((output / "texts.tar.gz").read_bytes())
     report["unique_notice_texts"] = len(texts)
     (output / "inventory.json").write_text(
-        json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
     )
 
 

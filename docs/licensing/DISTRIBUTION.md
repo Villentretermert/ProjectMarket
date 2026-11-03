@@ -8,9 +8,9 @@
 
 ## Готовый результат
 
-[Реестр](../../third_party/68958f1/inventory.json) привязан к immutable image IDs
-API, бота, PostgreSQL и proxy. [Архив](../../third_party/68958f1/texts.tar.gz)
-содержит 259 уникальных текстов. Сохранены их байты, исходные пути и SHA-256.
+[Реестр](../../third_party/68958f1-alpine/inventory.json) привязан к immutable image IDs
+API, бота, PostgreSQL и proxy. [Архив](../../third_party/68958f1-alpine/texts.tar.gz)
+содержит 298 уникальных текстов. Сохранены их байты, исходные пути и SHA-256.
 Debian binary packages сопоставлены с source package/version. Для Alpine
 сохранены origin, версия, commit aports и заявленная лицензия.
 
@@ -28,14 +28,17 @@ MIT-текста извлечены из sdist 0.57.1 с SHA-256 из `uv.lock`.
 | Пункт | Состояние | Проверяемый результат |
 | --- | --- | --- |
 | Собственная лицензия | Готово | Apache-2.0 и полные LICENSE/NOTICE в четырёх wheel |
-| Извлечение доступных текстов | Готово | 259 текстов, проверенные хеши и ссылки |
-| Alpine | Открыто | Тексты из точных исходных версий 32 binary packages, проверка aports patches |
+| Извлечение доступных текстов | Готово | 298 текстов, проверенные хеши и ссылки |
+| Alpine | Частично | 28/32 packages с source notices, 20 origins и все checksum inputs проверены. Четыре attribution gaps открыты |
 | Встроенный код | Открыто | Rust crates в jsonschema_rs/pydantic-core/rpds-py и C-код в cffi/argon2 проверены по source/build inputs |
 | Соответствующие исходники | Открыто | Архивы и patches точных GPL/LGPL/MPL-компонентов, build/relink materials и способ передачи получателю |
 | Проверка новых образов | Открыто | Notice/source sidecar связан с новым immutable release и включён в поставку |
 | Windows/Android и инструменты разработки | Отдельный охват | Уведомления фактических распространяемых бинарников этих платформ |
 
-Полные исходники системных пакетов в текущий notice archive не входят.
+Для Alpine подготовлен отдельный локальный архив проверенных source inputs,
+[результат](../task-results/PM-023-alpine-licenses-20261103.md). Четыре attribution gaps
+и проверка воспроизводимости сборок открыты. Полные исходники системных пакетов
+в текущий notice archive не входят.
 Ссылки на upstream и source versions дают основу для их подготовки, но сами
 по себе не заменяют выбранный способ выполнения условий передачи исходников.
 Собственная Apache-2.0 также не отменяет проверку условий замены или повторного

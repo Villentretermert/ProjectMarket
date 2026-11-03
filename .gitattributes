@@ -4,3 +4,7 @@
 *.png binary
 *.jpg binary
 *.webp binary
+
+# Source evidence hashes bind exact JSON bytes across Windows/Linux checkouts.
+third_party/**/inventory.json text eol=lf
+third_party/**/sources.json text eol=lf

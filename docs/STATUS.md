@@ -1,5 +1,15 @@
 # Текущее состояние
 
+3 ноября, продолжение. [Alpine source notices](task-results/PM-023-alpine-licenses-20261103.md)
+добавлены для 28/32 пакетов. Проверены 20 origins, 167 Git blobs и все152
+checksum inputs. В notice bundle 298 уникальных текстов. Локальный source-input
+archive содержит187 проверенных файлов. Четыре attribution gaps открыты.
+20 targeted tests, Ruff/mypy99files и archive verification PASS. Следующая
+независимая работа — встроенные Rust/C-компоненты Python-библиотек.
+Рабочая поставка68958f1 и счётчик19/24 сохранены. Полная PM-023 открыта.
+
+**Предыдущий результат — первый сбор уведомлений**
+
 **Дата 3 ноября 2026. Завершено 19/24 задач пилота, после G04 3/4.**
 Выбрана Apache-2.0. Четыре Python wheel содержат LICENSE/NOTICE и SPDX metadata.
 Собран [реестр лицензий](task-results/PM-023-licenses-20261103.md) поставки 68958f1,
