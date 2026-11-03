@@ -1,5 +1,15 @@
 # Журнал изменений
 
+## 2026-11-03 — PM-023 · Rust/C source notices Python-зависимостей
+
+- Проверены 6 sdists, 450 crate archives, 5 wheel и 6 upstream notice files.
+  Нативные файлы пяти wheel совпали с API image; 522 уникальных текста в sidecar.
+- Добавлен повторяемый Python-сборщик и offline CI для полноты Cargo inputs,
+  source associations, archive hashes и сохранения прежних пробелов.
+- 35 targeted tests, Ruff/mypy по 101 файлу прошли. 10 source notice gaps,
+  5 отсутствующих workspace manifests, exact build graph/toolchain и libffi
+  provenance остаются открытыми. [Отчёт](docs/task-results/PM-023-embedded-licenses-20261103.md).
+
 ## 2026-11-03 — PM-023 · Alpine source notices
 
 - Добавлены уведомления для 28/32 Alpine packages из проверенных версий исходников.
