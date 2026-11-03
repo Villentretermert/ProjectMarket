@@ -87,7 +87,18 @@ corresponding-source delivery не заявлена.
 35 targeted tests трёх сборщиков прошли, включая 15 новых проверок полноты,
 подмены происхождения, сохранения gaps, native-file mismatch и archive links.
 Ruff/format и mypy по 101 файлу прошли. Источники, Cargo locks и notices проверены.
-Результаты полного CI будут записаны после выполнения.
+[CI 41690800155](https://github.com/Villentretermert/ProjectMarket/actions/runs/41690800155)
+на `b8a32032cb046fe93c8a7b7d23b0951b73f87e08` прошёл все четыре задания.
+Linux: 132 unit tests; Windows: 130 и 2 Linux-only skips; интеграционные: 110.
+Всего 242 различных Python-теста и 54 Chromium-сценария. Новая проверка source
+associations и хешей прошла на обеих ОС. Docker build, C-драйвер, отдельные боты,
+HTTPS/HTTP2 и изолированные backup/restore также прошли. Минутный API baseline
+принял 1000 сообщений; полный L2 этим не заменён. Сохранилось одно прежнее
+предупреждение Pydantic об alias `limit`.
+
+[Результаты сбора](assets/PM-023/embedded-licenses-20261103/collection-results.json)
+и [CI](assets/PM-023/embedded-licenses-20261103/ci-results.json) сохранены без
+сырых логов, локальных env и пользовательских данных.
 
 Следующий подэтап — установить точный Rust build graph/toolchain и происхождение
 libffi в Linux wheel, затем разобрать оставшиеся пробелы и подготовку Debian

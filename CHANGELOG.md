@@ -9,6 +9,8 @@
 - 35 targeted tests, Ruff/mypy по 101 файлу прошли. 10 source notice gaps,
   5 отсутствующих workspace manifests, exact build graph/toolchain и libffi
   provenance остаются открытыми. [Отчёт](docs/task-results/PM-023-embedded-licenses-20261103.md).
+- [CI 41690800155](https://github.com/Villentretermert/ProjectMarket/actions/runs/41690800155) на b8a3203 прошёл все 4 задания:
+  242 Python/54 Chromium, Docker/HTTPS/backup/restore и проверка notices на двух ОС.
 
 ## 2026-11-03 — PM-023 · Alpine source notices
 

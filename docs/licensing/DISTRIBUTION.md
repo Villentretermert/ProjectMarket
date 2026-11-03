@@ -10,7 +10,7 @@
 
 [Реестр](../../third_party/68958f1-embedded/inventory.json) привязан к immutable image IDs
 API, бота, PostgreSQL и proxy. [Архив](../../third_party/68958f1-embedded/texts.tar.gz)
-содержит 522 уникальных текстов. Сохранены их байты, исходные пути и SHA-256.
+содержит 522 уникальных текста. Сохранены их байты, исходные пути и SHA-256.
 Debian binary packages сопоставлены с source package/version. Для Alpine
 сохранены origin, версия, commit aports и заявленная лицензия.
 
@@ -19,7 +19,7 @@ Debian binary packages сопоставлены с source package/version. Дл�
 Это список модулей бинарника с полными найденными файлами их лицензий,
 включая дополнительные notices для исходных поддеревьев модулей.
 
-У `jsonschema_rs` wheel не содержит найденного файла лицензии. Два совпадающих
+Wheel `jsonschema_rs` не содержит найденного файла лицензии. Два совпадающих
 MIT-текста извлечены из sdist 0.57.1 с SHA-256 из `uv.lock`. Они относятся к
 исходному пакету. Добавлены уведомления source-lock inputs; точный linked Rust graph ещё не установлен.
 

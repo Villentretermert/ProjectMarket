@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-03",
+  "commit": "b8a32032cb046fe93c8a7b7d23b0951b73f87e08",
+  "run_id": 41690800155,
+  "url": "https://github.com/Villentretermert/ProjectMarket/actions/runs/41690800155",
+  "jobs": [
+    {
+      "id": 126108538535,
+      "name": "Python / windows-latest",
+      "conclusion": "success"
+    },
+    {
+      "id": 126108538617,
+      "name": "Docker / PostgreSQL",
+      "conclusion": "success"
+    },
+    {
+      "id": 126108538624,
+      "name": "PostgreSQL / identity, bots, ingestion and channels",
+      "conclusion": "success"
+    },
+    {
+      "id": 126108538677,
+      "name": "Python / ubuntu-latest",
+      "conclusion": "success"
+    }
+  ],
+  "tests": {
+    "python_unique": 242,
+    "ubuntu_unit_passed": 132,
+    "windows_unit_passed": 130,
+    "windows_linux_only_skips": 2,
+    "integration_passed": 110,
+    "browser_scenarios_passed": 54,
+    "focused_collectors_passed_locally": 35,
+    "new_source_collector_tests": 15
+  },
+  "source_notice_verification": {
+    "platforms": [
+      "Windows",
+      "Ubuntu"
+    ],
+    "result": "Embedded source associations, retained gaps and notice hashes verified",
+    "base_snapshot": "third_party/68958f1-alpine",
+    "supplement": "third_party/68958f1-embedded"
+  },
+  "runtime_checks": [
+    "Docker build",
+    "C driver TLS/pools/cancel",
+    "separate Python and Docker bots",
+    "HTTPS and HTTP/2",
+    "isolated consistent backup/restore",
+    "backend fault boundaries",
+    "60-second API baseline: 1000 messages; not full L2"
+  ],
+  "limitations": [
+    "CI services are disposable; the local pilot was not upgraded",
+    "One existing Pydantic alias/limit warning",
+    "Source and notice collection is not proof of the exact linked Rust graph or complete source delivery",
+    "Four prior Alpine gaps, ten source-lock notice gaps and five absent workspace manifests remain open"
+  ],
+  "browser_scenarios": [
+    "Private channel does not leak anonymously",
+    "Keyboard login opens My Space",
+    "Catalog renders actual bot data and confirmed request",
+    "Demo supplier decline is shown",
+    "Reload recovers existing request by GET",
+    "Lost POST response recovers the same request after reload",
+    "Expanded RSS and accessible chart from second bot",
+    "360px viewport has no horizontal overflow",
+    "Offline clears private content and recovery revalidates access",
+    "Plain text and unsafe links never execute",
+    "Server outage clears stale data and offers retry",
+    "Revoked source clears content instead of showing stale blocks",
+    "Loading and empty response states are explicit",
+    "Sign out clears request references and private UI",
+    "Studio: new owner creates workspace and registers bot in Web",
+    "Studio: rotate key once; old credential rejected",
+    "Studio: real HTTP data becomes saved blocks and published page",
+    "Studio: version conflict preserves local edits",
+    "Studio: Owner adds Editor; Editor publishes but cannot manage keys",
+    "Studio: Admin sees key controls but cannot manage team; demotion refreshes permissions",
+    "Studio: removing a member immediately denies workspace reload",
+    "Studio: independent read grant and revocation via username",
+    "Studio: saved page survives login; audience changes publish separately",
+    "Studio: both key expiry reminders from actual server metadata",
+    "Favorites: public preview and sign-up return to original channel",
+    "Favorites: manual order, search and second account session synchronization",
+    "Favorites: new marker is cleared only after reading the published revision",
+    "Favorites: real revocation removes titles and content from both clients",
+    "Favorites: removal does not delete publisher channel",
+    "My Space: build three live blocks from two favorite channels",
+    "My Space: compatible views, appearance, order and Undo autosave independently",
+    "My Space: another session restores the saved layout and updated source revision",
+    "My Space: Request purchase reaches the original bot and returns its status",
+    "My Space: stale client keeps its edit; Reload saved resolves conflict explicitly",
+    "My Space: lost autosave response replays the same version without another change",
+    "My Space: real revocation and deletion hide only affected sources and picker titles",
+    "Sharing: lost create response replays one immutable link",
+    "Sharing: import link survives registration and previews unavailable source",
+    "Sharing: lost import response creates one independent owned page",
+    "Sharing: new source grant reveals data without changing copied appearance",
+    "Sharing: revoke stops new previews while copied page remains",
+    "Live: automatic source updates preserve a focused title and layout",
+    "Access: real permission marker resync preserves the saved My Space layout",
+    "Live: opt-in events work when OS notifications are denied",
+    "Live: repeated delivery does not repeat the selected toast",
+    "Live: lost connection and expired cursor resync without refresh",
+    "Live: real revocation, restoration and second revocation clear private content",
+    "Privacy: revocation closes an open purchase confirmation without sending it",
+    "Live: own purchase status arrives automatically from the real bot",
+    "Privacy: owner sees transfer guard; JSON contains only personal projections",
+    "Privacy: interrupted export shows failure and never downloads a partial file",
+    "Privacy: Studio transfers ownership after password confirmation",
+    "Privacy: password and DELETE guard deletion; cancel preserves account",
+    "Privacy: confirmed deletion clears local state; successor keeps workspace"
+  ]
+}

@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-03",
+  "image_release": "68958f1",
+  "python_packages": [
+    {
+      "name": "argon2-cffi-bindings",
+      "version": "26.1.0",
+      "images": {
+        "api": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b"
+      },
+      "binary_evidence": "Downloaded wheel native files match installed API image",
+      "installed_native_files": [
+        {
+          "path": "_argon2_cffi_bindings/_ffi.abi3.so",
+          "sha256": "c16944f0fe69f501255092d4f6e8f92f89b62ede92e60904ab30b5486601e784",
+          "bytes": 56216
+        }
+      ]
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "images": {
+        "api": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b"
+      },
+      "binary_evidence": "Downloaded wheel native files match installed API image",
+      "installed_native_files": [
+        {
+          "path": "_cffi_backend.cpython-314-x86_64-linux-gnu.so",
+          "sha256": "7d1eff7fbb874ee72228fd426103da2b9eef528979156077bdec736d5b4f61a2",
+          "bytes": 344680
+        }
+      ]
+    },
+    {
+      "name": "jsonschema-rs",
+      "version": "0.57.1",
+      "images": {
+        "api": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b"
+      },
+      "binary_evidence": "Downloaded wheel native files match installed API image",
+      "installed_native_files": [
+        {
+          "path": "jsonschema_rs/jsonschema_rs.abi3.so",
+          "sha256": "fab639290cf0d44f439d45fb480bb2b630a12eb57a0218c5e9e22f42a0bae65a",
+          "bytes": 13284776
+        }
+      ]
+    },
+    {
+      "name": "psycopg-c",
+      "version": "3.3.6",
+      "images": {
+        "api": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b"
+      },
+      "binary_evidence": "Local source build; not reproduced by this collection",
+      "installed_native_files": [
+        {
+          "path": "psycopg_c/_psycopg.cpython-314-x86_64-linux-gnu.so",
+          "sha256": "d73e5b9e1179175267b802762bd60f650939f207310e9f29776fca4c4549dafc",
+          "bytes": 4765800
+        },
+        {
+          "path": "psycopg_c/pq.cpython-314-x86_64-linux-gnu.so",
+          "sha256": "7bc921bebc6ace176bb0e3e4b5117771c39d55bd203c9180034e47bad6375b19",
+          "bytes": 2099904
+        }
+      ]
+    },
+    {
+      "name": "pydantic-core",
+      "version": "2.50.1",
+      "images": {
+        "api": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b"
+      },
+      "binary_evidence": "Downloaded wheel native files match installed API image",
+      "installed_native_files": [
+        {
+          "path": "pydantic_core/_pydantic_core.cpython-314-x86_64-linux-gnu.so",
+          "sha256": "f1c6034d9d708521893241e1f597532aab8c334fddc10b8773f6a73e0503577b",
+          "bytes": 4856000
+        }
+      ]
+    },
+    {
+      "name": "rpds-py",
+      "version": "2026.9.1",
+      "images": {
+        "api": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b",
+        "bot": "sha256:18eaf77c5ce756ee83d6053a943ea1420667a2f8f374051ac7a5366959083e68"
+      },
+      "binary_evidence": "Downloaded wheel native files match installed API image",
+      "installed_native_files": [
+        {
+          "path": "rpds/rpds.cpython-314-x86_64-linux-gnu.so",
+          "sha256": "6ccfc934fe55ba4e5fe23334a0ee537d2197b60931198746ba83ae07b94d735e",
+          "bytes": 1044952
+        }
+      ]
+    }
+  ],
+  "source_inputs_verified": 467,
+  "registry_unique": 450,
+  "registry_occurrences": 490,
+  "local_workspace_present": 17,
+  "local_workspace_absent": 5,
+  "notices_before": 298,
+  "notices_after": 522,
+  "notice_selections": 794,
+  "notice_archive_sha256": "62aadfa0c28fea53b8cd6e163638b5f6ea8c93430b9dc5c42d3f7ce969e93ce0",
+  "source_archive": {
+    "files": 462,
+    "size_bytes": 78704698,
+    "sha256": "d2a0b53738e4cc472229a3fdb3cbf97b4a737e0213d3d8586123e31ca1e8f297",
+    "member_hashes_rechecked": 462,
+    "uploaded": false,
+    "complete_corresponding_source": false
+  },
+  "local_tests_passed": 35,
+  "new_tests": 15,
+  "lint_typecheck_files": 101,
+  "deterministic_repeat": "inventory.json and texts.tar.gz byte-identical",
+  "dynamic_links": [
+    {
+      "package": "cffi",
+      "native_file": "_cffi_backend.cpython-314-x86_64-linux-gnu.so",
+      "sha256": "7d1eff7fbb874ee72228fd426103da2b9eef528979156077bdec736d5b4f61a2",
+      "dynamic_dependencies": [
+        "linux-vdso.so.1",
+        "libpthread.so.0",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2"
+      ]
+    },
+    {
+      "package": "argon2-cffi-bindings",
+      "native_file": "_argon2_cffi_bindings/_ffi.abi3.so",
+      "sha256": "c16944f0fe69f501255092d4f6e8f92f89b62ede92e60904ab30b5486601e784",
+      "dynamic_dependencies": [
+        "linux-vdso.so.1",
+        "libpthread.so.0",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2"
+      ]
+    }
+  ],
+  "source_notice_gaps": [
+    {
+      "name": "anes",
+      "version": "0.1.6",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    },
+    {
+      "name": "difflib",
+      "version": "0.4.0",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    },
+    {
+      "name": "r-efi",
+      "version": "5.2.0",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    },
+    {
+      "name": "r-efi",
+      "version": "5.3.0",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    },
+    {
+      "name": "r-efi",
+      "version": "6.0.0",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    },
+    {
+      "name": "rustls-platform-verifier-android",
+      "version": "0.1.1",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    },
+    {
+      "name": "wasip2",
+      "version": "1.0.1+wasi-0.2.4",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    },
+    {
+      "name": "winapi-i686-pc-windows-gnu",
+      "version": "0.4.0",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    },
+    {
+      "name": "winapi-x86_64-pc-windows-gnu",
+      "version": "0.4.0",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    },
+    {
+      "name": "wit-bindgen-rt",
+      "version": "0.39.0",
+      "reason": "notice_not_found_in_crate",
+      "scope": "lock input; Linux linkage not established"
+    }
+  ],
+  "workspace_gaps": [
+    {
+      "parent": "jsonschema-rs",
+      "name": "benchmark-suite",
+      "version": "0.1.0",
+      "reason": "workspace_manifest_absent_from_sdist"
+    },
+    {
+      "parent": "jsonschema-rs",
+      "name": "jsonschema-cli",
+      "version": "0.57.0",
+      "reason": "workspace_manifest_absent_from_sdist"
+    },
+    {
+      "parent": "jsonschema-rs",
+      "name": "jsonschema-macros-standalone",
+      "version": "0.0.0",
+      "reason": "workspace_manifest_absent_from_sdist"
+    },
+    {
+      "parent": "jsonschema-rs",
+      "name": "jsonschema-rb",
+      "version": "0.57.0",
+      "reason": "workspace_manifest_absent_from_sdist"
+    },
+    {
+      "parent": "jsonschema-rs",
+      "name": "jsonschema-wasm",
+      "version": "0.57.0",
+      "reason": "workspace_manifest_absent_from_sdist"
+    }
+  ],
+  "limitations": [
+    "Cargo locks include development/build and other-platform dependencies; exact linked graph of upstream Rust wheels not established.",
+    "Rust compiler/runtime attribution and exact toolchain sources are not established by these Cargo locks.",
+    "cffi Linux wheel: exact libffi build/source provenance still needs confirmation; Windows vendored libffi headers are not substituted for Linux evidence.",
+    "Argon2 sdist includes vendored source and full license; exact wheel build environment and source-to-binary reproduction are not established.",
+    "psycopg-c is locally built with system libraries; previous native inventory applies, but complete LGPL source/relink delivery remains open.",
+    "Filename-based collection does not replace a full license/header review of nested vendor code.",
+    "Existing Alpine gaps, Debian corresponding sources and deferred Windows/Android coverage remain open.",
+    "Five jsonschema workspace manifests named in Cargo.lock are absent from the Python sdist; their Linux/Python relevance is not inferred."
+  ]
+}
