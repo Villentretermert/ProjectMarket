@@ -1,5 +1,16 @@
 # Журнал изменений
 
+## 2026-11-04 — PM-023 · SBOM, Rust и libffi
+
+- Проверены 315 registry occurrences из трёх wheel SBOM; сохранён all-target scope.
+- Добавлены ELF compiler/static-symbol evidence, version-matched Rust library
+  notices и libffi LICENSE из pinned release recipe. Набор расширен до 539 текстов.
+- Добавлены повторяемый Python-сборщик, негативные проверки и offline CI.
+  65 targeted tests, Ruff/format/mypy по 103 файлам и хеши PASS.
+  Прежние gaps и installed inventory сохранены; working release не менялся.
+- [Отчёт](docs/task-results/PM-023-native-provenance-20261104.md) отделяет
+  сохранённые свидетельства от недоказанного точного link map / byte rebuild.
+
 ## 2026-11-03 — PM-023 · Rust/C source notices Python-зависимостей
 
 - Проверены 6 sdists, 450 crate archives, 5 wheel и 6 upstream notice files.

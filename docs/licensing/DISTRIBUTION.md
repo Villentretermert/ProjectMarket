@@ -8,9 +8,9 @@
 
 ## Готовый результат
 
-[Реестр](../../third_party/68958f1-embedded/inventory.json) привязан к immutable image IDs
-API, бота, PostgreSQL и proxy. [Архив](../../third_party/68958f1-embedded/texts.tar.gz)
-содержит 522 уникальных текста. Сохранены их байты, исходные пути и SHA-256.
+[Реестр](../../third_party/68958f1-native/inventory.json) привязан к immutable image IDs
+API, бота, PostgreSQL и proxy. [Архив](../../third_party/68958f1-native/texts.tar.gz)
+содержит 539 уникальных текста. Сохранены их байты, исходные пути и SHA-256.
 Debian binary packages сопоставлены с source package/version. Для Alpine
 сохранены origin, версия, commit aports и заявленная лицензия.
 
@@ -26,14 +26,18 @@ MIT-текста извлечены из sdist 0.57.1 с SHA-256 из `uv.lock`.
 [Результат Rust/C source collection](../task-results/PM-023-embedded-licenses-20261103.md)
 сохраняет различие между исходными зависимостями и фактически связанным кодом.
 
+[Дополнение 4 ноября](../task-results/PM-023-native-provenance-20261104.md):
+добавлены version-matched Rust notices и libffi LICENSE; saved SBOM/ELF evidence
+проверяется отдельно от точного binary linkage и воспроизводимости сборки.
+
 ## Следующие действия перед передачей образов
 
 | Пункт | Состояние | Проверяемый результат |
 | --- | --- | --- |
 | Собственная лицензия | Готово | Apache-2.0 и полные LICENSE/NOTICE в четырёх wheel |
-| Извлечение доступных текстов | Готово | 522 текста, проверенные хеши и ссылки |
+| Извлечение доступных текстов | Готово | 539 текстов, проверенные хеши и ссылки |
 | Alpine | Частично | 28/32 packages с source notices, 20 origins и все checksum inputs проверены. Четыре attribution gaps открыты |
-| Встроенный код | Частично | 450 registry inputs и 6 sdists проверены; exact Rust graph/toolchain, 10 notice gaps, 5 отсутствующих workspace manifests и libffi provenance открыты |
+| Встроенный код | Частично | 450 registry inputs и 6 sdists проверены; 315 SBOM entries сопоставлены; Rust compiler evidence и libffi recipe сохранены. Точный link map/rebuild, 10 notice gaps и 5 отсутствующих manifests открыты |
 | Соответствующие исходники | Открыто | Архивы и patches точных GPL/LGPL/MPL-компонентов, build/relink materials и способ передачи получателю |
 | Проверка новых образов | Открыто | Notice/source sidecar связан с новым immutable release и включён в поставку |
 | Windows/Android и инструменты разработки | Отдельный охват | Уведомления фактических распространяемых бинарников этих платформ |

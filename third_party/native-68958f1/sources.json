@@ -1,0 +1,398 @@
+{
+  "schema_version": 1,
+  "base_inventory_sha256": "fda7d1cd6428c86063c038ffabedb3d44b397aa30f54e87211e88abf11e94686",
+  "embedded_manifest_sha256": "80dd3bbb0d7321b3b37c6050780211de70a0aecf4bea201f085853d873d37991",
+  "scope": "Producer all-target SBOM and recorded ELF markers, with version-matched library notices; no exact link-map or reproducible-build claim",
+  "evidence": [
+    {
+      "path": "sboms/jsonschema-rs.cyclonedx.json",
+      "sha256": "39cb999895a88d63e11028da8178146816b59502718b44fd150da72afab442e0",
+      "wheel": "wheels/jsonschema_rs-0.57.1-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "member": "jsonschema_rs-0.57.1.dist-info/sboms/jsonschema-py.cyclonedx.json"
+    },
+    {
+      "path": "sboms/pydantic-core.cyclonedx.json",
+      "sha256": "0f4cf513efa194d1fed0f1c1116db94f22a661f5953ccee29b85c26a44ff99bb",
+      "wheel": "wheels/pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "member": "pydantic_core-2.50.1.dist-info/sboms/pydantic-core.cyclonedx.json"
+    },
+    {
+      "path": "sboms/rpds-py.cyclonedx.json",
+      "sha256": "0c8885a9d45f3c9280aeb1e06701077036748b22bd6e3a4201fe09e6b73f99b5",
+      "wheel": "wheels/rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "member": "rpds_py-2026.9.1.dist-info/sboms/rpds-py.cyclonedx.json"
+    },
+    {
+      "path": "channels/rust-1.98.1.toml",
+      "sha256": "a7c8774a5fd8441c997d94c029776cbc5eb111e9d72ab5d256fa69866644347e",
+      "url": "https://static.rust-lang.org/dist/channel-rust-1.98.1.toml"
+    },
+    {
+      "path": "channels/rust-1.99.0.toml",
+      "sha256": "ce6dddc886364f8d786514771212cebe9b731ba82d6b859951c6b0ccc516b6a2",
+      "url": "https://static.rust-lang.org/dist/channel-rust-1.99.0.toml"
+    },
+    {
+      "path": "upstream/cffi-ci.yaml",
+      "sha256": "b1910ddbfc69d2fbe41f1493cb564658d0970522bfeb5e6fe93d3288c802736c",
+      "git_blob": "78944d4f71fc10c237f7626826be889e1460b97b",
+      "url": "https://raw.githubusercontent.com/python-cffi/cffi/fd33e7700f0ebafe6f30bd5053f13327221b77a2/.github/workflows/ci.yaml"
+    },
+    {
+      "path": "upstream/libffi-LICENSE",
+      "sha256": "67894089811f93fca47a76f85e017da6f8582d4ba0905963c6e0f1ad6df7a195",
+      "git_blob": "7282e798c20b91abedfabd749fbb653ef6cc4f4f",
+      "url": "https://raw.githubusercontent.com/libffi/libffi/3d0ce1e6fcf19f853894862abcbac0ae78a7be60/LICENSE"
+    }
+  ],
+  "wheels": [
+    {
+      "name": "argon2-cffi-bindings",
+      "native": [
+        {
+          "file": {
+            "path": "_argon2_cffi_bindings/_ffi.abi3.so",
+            "sha256": "c16944f0fe69f501255092d4f6e8f92f89b62ede92e60904ab30b5486601e784",
+            "bytes": 56216
+          },
+          "elf": {
+            "comments": [
+              "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-11)"
+            ],
+            "rustc_commits": [],
+            "defined_markers": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "cffi",
+      "native": [
+        {
+          "file": {
+            "path": "_cffi_backend.cpython-314-x86_64-linux-gnu.so",
+            "sha256": "7d1eff7fbb874ee72228fd426103da2b9eef528979156077bdec736d5b4f61a2",
+            "bytes": 344680
+          },
+          "elf": {
+            "comments": [
+              "GCC: (GNU) 10.2.1 20210130 (Red Hat 10.2.1-11)"
+            ],
+            "rustc_commits": [],
+            "defined_markers": [
+              "cffistatic_ffi_call"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "jsonschema-rs",
+      "native": [
+        {
+          "file": {
+            "path": "jsonschema_rs/jsonschema_rs.abi3.so",
+            "sha256": "fab639290cf0d44f439d45fb480bb2b630a12eb57a0218c5e9e22f42a0bae65a",
+            "bytes": 13284776
+          },
+          "elf": {
+            "comments": [
+              "GCC: (GNU) 10.2.1 20210130 (Red Hat 10.2.1-11)",
+              "Linker: LLD 22.1.8 (/checkout/src/llvm-project/llvm 52ed14fcd56afc30f9cccd8ca8ce237c2eef7e04)",
+              "rustc version 1.98.1 (48a229cea 2026-09-01)",
+              "GCC: (GNU) 4.8.5 20150623 (Red Hat 4.8.5-44)"
+            ],
+            "rustc_commits": [
+              "48a229ceaefd4985c50990b14116b6d856af0985"
+            ],
+            "defined_markers": []
+          }
+        }
+      ],
+      "sbom": {
+        "path": "sboms/jsonschema-rs.cyclonedx.json",
+        "member": "jsonschema_rs-0.57.1.dist-info/sboms/jsonschema-py.cyclonedx.json"
+      }
+    },
+    {
+      "name": "pydantic-core",
+      "native": [
+        {
+          "file": {
+            "path": "pydantic_core/_pydantic_core.cpython-314-x86_64-linux-gnu.so",
+            "sha256": "f1c6034d9d708521893241e1f597532aab8c334fddc10b8773f6a73e0503577b",
+            "bytes": 4856000
+          },
+          "elf": {
+            "comments": [
+              "GCC: (GNU) 10.2.1 20210130 (Red Hat 10.2.1-11)",
+              "GCC: (GNU) 4.8.5 20150623 (Red Hat 4.8.5-44)",
+              "rustc version 1.99.0 (b940084d7 2026-09-28)",
+              "Linker: LLD 23.1.1 (/checkout/src/llvm-project/llvm 1b9c0d5ff9bbe7634aead059efe6b11a7eeba145)"
+            ],
+            "rustc_commits": [
+              "b940084d7eb6a299eb4bfeb8e34901bc051e7ac4"
+            ],
+            "defined_markers": []
+          }
+        }
+      ],
+      "sbom": {
+        "path": "sboms/pydantic-core.cyclonedx.json",
+        "member": "pydantic_core-2.50.1.dist-info/sboms/pydantic-core.cyclonedx.json"
+      }
+    },
+    {
+      "name": "rpds-py",
+      "native": [
+        {
+          "file": {
+            "path": "rpds/rpds.cpython-314-x86_64-linux-gnu.so",
+            "sha256": "6ccfc934fe55ba4e5fe23334a0ee537d2197b60931198746ba83ae07b94d735e",
+            "bytes": 1044952
+          },
+          "elf": {
+            "comments": [
+              "GCC: (GNU) 10.2.1 20210130 (Red Hat 10.2.1-11)",
+              "GCC: (GNU) 4.8.5 20150623 (Red Hat 4.8.5-44)",
+              "rustc version 1.99.0 (b940084d7 2026-09-28)",
+              "Linker: LLD 23.1.1 (/checkout/src/llvm-project/llvm 1b9c0d5ff9bbe7634aead059efe6b11a7eeba145)"
+            ],
+            "rustc_commits": [
+              "b940084d7eb6a299eb4bfeb8e34901bc051e7ac4"
+            ],
+            "defined_markers": []
+          }
+        }
+      ],
+      "sbom": {
+        "path": "sboms/rpds-py.cyclonedx.json",
+        "member": "rpds_py-2026.9.1.dist-info/sboms/rpds-py.cyclonedx.json"
+      }
+    }
+  ],
+  "toolchains": [
+    {
+      "compiler": "1.98.1 (48a229cea 2026-09-01)",
+      "commit": "48a229ceaefd4985c50990b14116b6d856af0985",
+      "parents": [
+        "jsonschema-rs"
+      ],
+      "channel": "channels/rust-1.98.1.toml",
+      "distribution": {
+        "path": "rustc-1.98.1-x86_64-unknown-linux-gnu.tar.xz",
+        "url": "https://static.rust-lang.org/dist/2026-09-03/rustc-1.98.1-x86_64-unknown-linux-gnu.tar.xz",
+        "sha256": "e974f036b28565f37c0f3bd92ddefa809bee16c04f9dcf07b9ed96e05aaaf7c4",
+        "notices": [
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/LICENSE-APACHE",
+            "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/COPYRIGHT",
+            "sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/LICENSE-MIT",
+            "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/COPYRIGHT-library.html",
+            "sha256": "68129500b616d5838629e68f55ff3aed5e096dacf60ce9eb41bbe599a563afa6",
+            "kind": "rust_library_attribution"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/Apache-2.0.txt",
+            "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/Unicode-3.0.txt",
+            "sha256": "f5062c9a188d81dfe66b56db4182dcf9e4b17c0d9b0d311a8e20b3a1b075c443",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/CC-BY-SA-4.0.txt",
+            "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/OFL-1.1.txt",
+            "sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/GCC-exception-3.1.txt",
+            "sha256": "a3966c9410ef94a1efbfa9ec04e9c1994026a70623fbf0885ce36737bfba3b54",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/NCSA.txt",
+            "sha256": "39cb0234065c92b9e6cee3830cbb52b1aa289aa8fe9ba2e66730fec5cf05c630",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/ISC.txt",
+            "sha256": "0ff61769b238634e042ab759dddfd104a8e69d091e3600ae3410e401a6164381",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/MIT.txt",
+            "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/BSD-2-Clause.txt",
+            "sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/LLVM-exception.txt",
+            "sha256": "e34c58338bd89d43e709e226610d8f32b3e3c47f4ad9a99a8dc1d4ac7842488e",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/GPL-3.0-or-later.txt",
+            "sha256": "05315fce6c35f79b8a35454828995fa26336f235895ac64557abc028f4ffcea2",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.98.1-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/GPL-2.0-only.txt",
+            "sha256": "54b212ba1f97f6948fa5486239ab505dd820b02e50cbfd296b4062c8609a70af",
+            "kind": "upstream_license_text"
+          }
+        ]
+      },
+      "scope": "Version-matched official Linux compiler distribution for library attribution; not the exact producer build environment"
+    },
+    {
+      "compiler": "1.99.0 (b940084d7 2026-09-28)",
+      "commit": "b940084d7eb6a299eb4bfeb8e34901bc051e7ac4",
+      "parents": [
+        "pydantic-core",
+        "rpds-py"
+      ],
+      "channel": "channels/rust-1.99.0.toml",
+      "distribution": {
+        "path": "rustc-1.99.0-x86_64-unknown-linux-gnu.tar.xz",
+        "url": "https://static.rust-lang.org/dist/2026-10-01/rustc-1.99.0-x86_64-unknown-linux-gnu.tar.xz",
+        "sha256": "77171ba2a0345fdf2abc4fedda55d6de078dae7a68527c28be8c77dcc9604bd5",
+        "notices": [
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/LICENSE-APACHE",
+            "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/COPYRIGHT",
+            "sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/LICENSE-MIT",
+            "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/COPYRIGHT-library.html",
+            "sha256": "5647be074c8edf7339fd863055923a8fc80bc5610a8d4661ec3b767b9d392c27",
+            "kind": "rust_library_attribution"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/Apache-2.0.txt",
+            "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/Unicode-3.0.txt",
+            "sha256": "f5062c9a188d81dfe66b56db4182dcf9e4b17c0d9b0d311a8e20b3a1b075c443",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/CC-BY-SA-4.0.txt",
+            "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/OFL-1.1.txt",
+            "sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/GCC-exception-3.1.txt",
+            "sha256": "a3966c9410ef94a1efbfa9ec04e9c1994026a70623fbf0885ce36737bfba3b54",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/NCSA.txt",
+            "sha256": "39cb0234065c92b9e6cee3830cbb52b1aa289aa8fe9ba2e66730fec5cf05c630",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/ISC.txt",
+            "sha256": "0ff61769b238634e042ab759dddfd104a8e69d091e3600ae3410e401a6164381",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/MIT.txt",
+            "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/BSD-2-Clause.txt",
+            "sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/LLVM-exception.txt",
+            "sha256": "e34c58338bd89d43e709e226610d8f32b3e3c47f4ad9a99a8dc1d4ac7842488e",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/GPL-3.0-or-later.txt",
+            "sha256": "05315fce6c35f79b8a35454828995fa26336f235895ac64557abc028f4ffcea2",
+            "kind": "upstream_license_text"
+          },
+          {
+            "member": "rustc-1.99.0-x86_64-unknown-linux-gnu/rustc/share/doc/rust/licenses/GPL-2.0-only.txt",
+            "sha256": "54b212ba1f97f6948fa5486239ab505dd820b02e50cbfd296b4062c8609a70af",
+            "kind": "upstream_license_text"
+          }
+        ]
+      },
+      "scope": "Version-matched official Linux compiler distribution for library attribution; not the exact producer build environment"
+    }
+  ],
+  "libffi": {
+    "parent": "cffi",
+    "version": "3.4.6",
+    "recipe": "upstream/cffi-ci.yaml",
+    "recipe_commit": "fd33e7700f0ebafe6f30bd5053f13327221b77a2",
+    "source_commit": "3d0ce1e6fcf19f853894862abcbac0ae78a7be60",
+    "license": {
+      "path": "upstream/libffi-LICENSE",
+      "sha256": "67894089811f93fca47a76f85e017da6f8582d4ba0905963c6e0f1ad6df7a195",
+      "git_blob": "7282e798c20b91abedfabd749fbb653ef6cc4f4f",
+      "url": "https://raw.githubusercontent.com/libffi/libffi/3d0ce1e6fcf19f853894862abcbac0ae78a7be60/LICENSE",
+      "notices": [
+        {
+          "sha256": "67894089811f93fca47a76f85e017da6f8582d4ba0905963c6e0f1ad6df7a195",
+          "kind": "libffi_license"
+        }
+      ]
+    },
+    "scope": "Upstream release recipe corroborated by a defined renamed static symbol; source-to-binary reproduction not verified"
+  },
+  "open_items": [
+    "Exact producer Linux build features, link map and source-to-binary reproduction",
+    "10 source-lock notice gaps and 5 missing workspace manifests retained",
+    "4 previous Alpine attribution gaps retained",
+    "Nested vendor headers, Debian corresponding sources and complete source delivery",
+    "Compiler distribution notices are conservative evidence, not proof all listed components are linked",
+    "PyPI attestation signatures not independently verified"
+  ],
+  "evidence_archive_sha256": "80bde56b584cb019f29bdde974289e8a33124d19a4ec6f082695627460388504"
+}
