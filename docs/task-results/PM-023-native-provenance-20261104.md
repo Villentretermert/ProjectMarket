@@ -91,7 +91,15 @@ flowchart LR
 по 103 файлам, offline native verification и requirements validator. Полный
 повторный сбор проверил пять wheel и два compiler archives; архивы читаются
 одним проходом. Сохранённый набор повторно прошёл проверку всех ссылок и хешей.
-Общая CI-проверка будет записана после завершения. Следующая независимая работа —
+[CI 41737007937](https://github.com/Villentretermert/ProjectMarket/actions/runs/41737007937) на 60d440d: все 4 задания PASS, 272 различных Python-теста
+и 54 Chromium-сценария; Docker/HTTPS/HTTP2/backup/restore прошли.
+
+В Ubuntu: 162 unit tests; Windows: 160 и 2 Linux-only skips; PostgreSQL: 110.
+Новый offline verifier и wheel LICENSE checks прошли на обеих ОС. Сохранилось
+одно существующее Pydantic-предупреждение о field alias limit. Backend smoke,
+TLS CA, восстановление БД и browser acceptance завершились успешно.
+
+Следующая независимая работа —
 оставшиеся source/header attribution gaps и материалы соответствующих исходников.
 Четыре Alpine gaps, десять source-lock notice gaps и пять отсутствующих manifests
 сохранены; полный релиз, Android, облако и L2 остаются открытыми.

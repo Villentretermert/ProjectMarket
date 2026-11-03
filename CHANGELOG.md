@@ -7,6 +7,8 @@
   notices и libffi LICENSE из pinned release recipe. Набор расширен до 539 текстов.
 - Добавлены повторяемый Python-сборщик, негативные проверки и offline CI.
   65 targeted tests, Ruff/format/mypy по 103 файлам и хеши PASS.
+- [CI 41737007937](https://github.com/Villentretermert/ProjectMarket/actions/runs/41737007937) на 60d440d: все 4 задания PASS,
+  272 Python / 54 Chromium, Docker/HTTPS/HTTP2/backup/restore.
   Прежние gaps и installed inventory сохранены; working release не менялся.
 - [Отчёт](docs/task-results/PM-023-native-provenance-20261104.md) отделяет
   сохранённые свидетельства от недоказанного точного link map / byte rebuild.

@@ -5,6 +5,8 @@
 libffi 3.4.6. Новый набор содержит 539 уникальных текстов, все прежние gaps сохранены.
 Добавлена offline CI-проверка и повторный сбор с проверкой wheel/архивов.
 65 targeted tests, Ruff/format/mypy по 103 файлам и проверка хешей прошли.
+[CI 41737007937](https://github.com/Villentretermert/ProjectMarket/actions/runs/41737007937) на 60d440d: все 4 задания PASS, 272 различных Python-теста
+и 54 Chromium-сценария; Docker/HTTPS/HTTP2/backup/restore прошли.
 Точный Linux link map и воспроизводимость сборок не заявлены. Поставка 68958f1,
 19/24 и отсрочки сохранены; полная PM-023 открыта.
 
