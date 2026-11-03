@@ -62,3 +62,10 @@ CI205 Python/54 Chromium PASS; OpenSSL драйвера учитывается �
 · [L1: методика и измерения](docs/task-results/PM-018-LOAD.md).
 
 [Эксплуатация, ограничения, метрики и alerts](docs/setup/OPERATIONS.md).
+
+## Лицензия
+
+Собственный код и документация MarkeTOB распространяются по [Apache License 2.0](LICENSE).
+[NOTICE](NOTICE) и [уведомления сторонних компонентов](THIRD_PARTY_NOTICES.md)
+сохраняют их авторство и условия. [Подготовка полной поставки](docs/licensing/DISTRIBUTION.md)
+ещё включает сбор исходников и недостающих уведомлений.

@@ -1,4 +1,6 @@
 [project]
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 name = "marketob-contracts"
 version = "1.0.3"
 description = "MarkeTOB specification and executable reference model, not a server"

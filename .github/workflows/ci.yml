@@ -36,6 +36,27 @@ jobs:
       - run: uv run --locked python -m scripts.smoke_local
       - run: uv pip check
       - run: python scripts/validate_requirements.py
+      - name: Verify third-party notice archive
+        run: python -m scripts.collect_notices --verify --output third_party/68958f1
+      - name: Verify licenses in distributable Python wheels
+        shell: python
+        run: |
+          import subprocess
+          from email.parser import BytesParser
+          from pathlib import Path
+          from zipfile import ZipFile
+          output = Path('.local/license-wheels')
+          subprocess.run(['uv', 'build', '--all-packages', '--wheel', '--out-dir', str(output)], check=True)
+          wheels = list(output.glob('*.whl'))
+          assert len(wheels) == 4, 'Expected all four workspace packages'
+          for wheel in wheels:
+              with ZipFile(wheel) as archive:
+                  metadata = BytesParser().parsebytes(archive.read(next(n for n in archive.namelist() if n.endswith('.dist-info/METADATA'))))
+                  assert metadata['License-Expression'] == 'Apache-2.0'
+                  assert set(metadata.get_all('License-File')) == {'LICENSE', 'NOTICE'}
+                  for name in ('LICENSE', 'NOTICE'):
+                      packaged = next(n for n in archive.namelist() if n.endswith('.dist-info/licenses/' + name))
+                      assert archive.read(packaged) == Path(name).read_bytes(), wheel.name
 
   compose:
     name: Docker / PostgreSQL

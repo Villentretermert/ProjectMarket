@@ -17,11 +17,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache-dir uv==0.13.5
 COPY pyproject.toml uv.lock ./
-COPY apps/api/pyproject.toml apps/api/pyproject.toml
-COPY packages/bot-sdk/pyproject.toml packages/bot-sdk/pyproject.toml
-COPY bots/pilot/pyproject.toml bots/pilot/pyproject.toml
+COPY apps/api/pyproject.toml apps/api/LICENSE apps/api/NOTICE apps/api/
+COPY packages/bot-sdk/pyproject.toml packages/bot-sdk/LICENSE packages/bot-sdk/NOTICE packages/bot-sdk/
+COPY bots/pilot/pyproject.toml bots/pilot/LICENSE bots/pilot/NOTICE bots/pilot/
 COPY apps/api/src/ apps/api/src/
-COPY packages/contracts/pyproject.toml packages/contracts/pyproject.toml
+COPY packages/contracts/pyproject.toml packages/contracts/LICENSE packages/contracts/NOTICE packages/contracts/
 COPY packages/contracts/src/contracts/__init__.py packages/contracts/src/contracts/schemas.json packages/contracts/src/contracts/
 RUN uv sync --locked --package marketob-api --extra c --no-dev --no-editable
 

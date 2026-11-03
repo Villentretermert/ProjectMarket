@@ -1,4 +1,6 @@
 [project]
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 name = "marketob-demo-bots"
 version = "0.1.0"
 description = "Separate local catalog and RSS examples using the public Bot API"

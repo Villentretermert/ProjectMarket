@@ -116,3 +116,10 @@ Data & privacy → Download JSON. Для Owner сначала Studio → Team �
 вошли в a7deaab и сохранены в API d53232e. Proxy обновлён до b202024 с сохранением CA. [Dependency update и SBOM](../task-results/PM-023-dependencies-20261031.md):
 CI200 Python/54 Chromium PASS; backup/restore29таблиц/10sequences и HTTPS/HTTP2 проверены.
 Оставшиеся Critical/High в базовых компонентах требуют отдельного разбора. Полная приёмка RC ещё не объявлена.
+
+## Лицензии поставки
+
+Собственный код — [Apache-2.0](../../LICENSE). Перед передачей Docker-образов
+получателю включить [third-party материалы](../../THIRD_PARTY_NOTICES.md) и
+завершить [открытые действия по notices и исходникам](../licensing/DISTRIBUTION.md).
+Текущий snapshot относится к image IDs поставки 68958f1.
