@@ -10,6 +10,8 @@
 - 11 тестов сборщика, Ruff/mypy97files, offline lock/wheel build, проверка архивных
   хешей и требований прошли. CI проверяет notice archive и четыре wheel.
   [Отчёт](docs/task-results/PM-023-licenses-20261103.md).
+  [CI41680762892](https://github.com/Villentretermert/ProjectMarket/actions/runs/41680762892) на e813e77 прошёл все4jobs,
+  218 Python/54 Chromium и Docker/HTTPS/backup/restore. Рабочая поставка68958f1 сохранена.
 
 ## 2026-11-02 — PM-023 · Проверка отказа памяти и сертификатов OpenLDAP
 

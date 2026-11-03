@@ -5,6 +5,8 @@
 Собран [реестр лицензий](task-results/PM-023-licenses-20261103.md) поставки 68958f1,
 377 уникальных компонентов и 259 текстов. 32 Alpine notices и материалы исходников
 ещё открыты. 11 focused tests, Ruff/mypy97files, offline wheel/lock и hashes PASS.
+[CI41680762892](https://github.com/Villentretermert/ProjectMarket/actions/runs/41680762892) на e813e77 прошёл все4jobs,
+218 Python/54 Chromium, Docker/HTTPS/backup/restore и wheel notices на двух ОС.
 Следующий шаг PM-023 — Alpine notices, встроенные зависимости и соответствующие
 исходники. Рабочая поставка не обновлялась. Полная PM-023 и G05 остаются открытыми.
 
