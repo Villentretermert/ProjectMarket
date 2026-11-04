@@ -49,6 +49,8 @@ jobs:
       - name: Replay crate provenance from pinned sources
         if: runner.os == 'Linux'
         run: python -m scripts.crate_notices --cache .local/crate-notice-inputs --fetch
+      - name: Verify installed Debian source versions against signed indexes
+        run: python -m scripts.debian_sources --fetch --indexes-only
       - name: Verify licenses in distributable Python wheels
         shell: python
         run: |

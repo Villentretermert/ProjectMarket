@@ -11,3 +11,7 @@ third_party/**/sources.json text eol=lf
 
 # Preserve Cargo source evidence bytes exactly.
 third_party/embedded-68958f1/locks/* -text
+
+# Keep upstream signatures, keys and compressed source indexes byte exact.
+third_party/debian-68958f1/metadata/* -text
+third_party/debian-68958f1/manifest.json text eol=lf
