@@ -44,6 +44,11 @@ jobs:
         run: python -m scripts.embedded_notices --verify --output third_party/68958f1-embedded
       - name: Verify native SBOM and compiler notice evidence
         run: python -m scripts.native_notices --verify --output third_party/68958f1-native
+      - name: Verify crate notice supplement
+        run: python -m scripts.crate_notices
+      - name: Replay crate provenance from pinned sources
+        if: runner.os == 'Linux'
+        run: python -m scripts.crate_notices --cache .local/crate-notice-inputs --fetch
       - name: Verify licenses in distributable Python wheels
         shell: python
         run: |

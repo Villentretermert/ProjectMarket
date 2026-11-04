@@ -1,0 +1,268 @@
+{
+  "release": "68958f1",
+  "scope": "Source-lock package notices for prior crate gaps",
+  "base_inventory_sha256": "a3a783d35c117823bca052ee3eb577d8c2d3464d8d3cf518d0fc2175d903e90c",
+  "crates": [
+    {
+      "name": "anes",
+      "version": "0.1.6",
+      "crate_sha256": "4b46cbb362ab8752921c97e041f5e366ee6297bd428a31275b9fcf1e380f7299",
+      "notices": [
+        {
+          "member": "anes-0.1.6/README.md",
+          "source_path": "crates/anes-0.1.6.crate!/anes-0.1.6/README.md",
+          "start": 2146,
+          "end": 2405,
+          "sha256": "3469ed1ef1257dc15e2091c086d22303859eef178849108c085d338e12205889",
+          "file": "texts/3469ed1ef1257dc15e2091c086d22303859eef178849108c085d338e12205889.txt"
+        },
+        {
+          "path": "LICENSE-APACHE",
+          "git_blob": "16fe87b06e802f094b3fbb0894b137bca2b16ef1",
+          "source_path": "https://raw.githubusercontent.com/zrzka/anes-rs/378ac7461ecac29fde9e10df7b08359d1315a9ad/LICENSE-APACHE",
+          "file": "texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "git_blob": "31aa79387f27e730e33d871925e152e35e428031",
+          "source_path": "https://raw.githubusercontent.com/zrzka/anes-rs/378ac7461ecac29fde9e10df7b08359d1315a9ad/LICENSE-MIT",
+          "file": "texts/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3.txt",
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "commit": "378ac7461ecac29fde9e10df7b08359d1315a9ad"
+    },
+    {
+      "name": "difflib",
+      "version": "0.4.0",
+      "crate_sha256": "6184e33543162437515c2e2b48714794e37845ec9851711914eec9d308f6ebe8",
+      "notices": [
+        {
+          "path": "LICENSE",
+          "git_blob": "5acedf0412212a99997b78bd36da90c8a91111a7",
+          "source_path": "https://raw.githubusercontent.com/DimaKudosh/difflib/f035fb8e656f27119e23eca9d5b996df14f3885e/LICENSE",
+          "file": "texts/6725d1437fc6c77301f2ff0e7d52914cf4f9509213e1078dc77d9356dbe6eac5.txt",
+          "sha256": "6725d1437fc6c77301f2ff0e7d52914cf4f9509213e1078dc77d9356dbe6eac5"
+        }
+      ],
+      "commit": "f035fb8e656f27119e23eca9d5b996df14f3885e",
+      "source_matches": [
+        {
+          "member": "difflib-0.4.0/Cargo.toml.orig",
+          "path": "Cargo.toml",
+          "git_blob": "2edf6df6a6fc159647a10691c025786ca594cdf8"
+        },
+        {
+          "member": "difflib-0.4.0/examples/example.rs",
+          "path": "examples/example.rs",
+          "git_blob": "3f06d0adb76887e74329c8ab48e7e568c5ea417a"
+        },
+        {
+          "member": "difflib-0.4.0/src/differ.rs",
+          "path": "src/differ.rs",
+          "git_blob": "5caef9a7a8d34c7a2c2f8cdb737ded2ed7a9f1d6"
+        },
+        {
+          "member": "difflib-0.4.0/src/lib.rs",
+          "path": "src/lib.rs",
+          "git_blob": "ca6b1cc38b974d95769240c63f47a043083c9d02"
+        },
+        {
+          "member": "difflib-0.4.0/src/sequencematcher.rs",
+          "path": "src/sequencematcher.rs",
+          "git_blob": "4157808631acc62605fd6b446d17523ae8a86152"
+        },
+        {
+          "member": "difflib-0.4.0/src/utils.rs",
+          "path": "src/utils.rs",
+          "git_blob": "b711bf82ba0e14439d80806afb70722e60195e03"
+        },
+        {
+          "member": "difflib-0.4.0/tests/tests.rs",
+          "path": "tests/tests.rs",
+          "git_blob": "8f49de9eba313a09863de5110eca83e022a2156d"
+        }
+      ]
+    },
+    {
+      "name": "r-efi",
+      "version": "5.2.0",
+      "crate_sha256": "74765f6d916ee2faa39bc8e68e4f3ed8949b48cccdac59983d287a7cb71ce9c5",
+      "notices": [
+        {
+          "member": "r-efi-5.2.0/AUTHORS",
+          "source_path": "crates/r-efi-5.2.0.crate!/r-efi-5.2.0/AUTHORS",
+          "sha256": "c42285aa32440c3b5358fd4805b817cd8d6e1795111d2e4c547530be41896b2d",
+          "file": "texts/c42285aa32440c3b5358fd4805b817cd8d6e1795111d2e4c547530be41896b2d.txt"
+        }
+      ]
+    },
+    {
+      "name": "r-efi",
+      "version": "5.3.0",
+      "crate_sha256": "69cdb34c158ceb288df11e18b4bd39de994f6657d83847bdffdbd7f346754b0f",
+      "notices": [
+        {
+          "member": "r-efi-5.3.0/AUTHORS",
+          "source_path": "crates/r-efi-5.3.0.crate!/r-efi-5.3.0/AUTHORS",
+          "sha256": "ff92bed461f50338dd703a9ba9aee496a425957873df1d91192776e4bdf5dda7",
+          "file": "texts/ff92bed461f50338dd703a9ba9aee496a425957873df1d91192776e4bdf5dda7.txt"
+        }
+      ]
+    },
+    {
+      "name": "r-efi",
+      "version": "6.0.0",
+      "crate_sha256": "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf",
+      "notices": [
+        {
+          "member": "r-efi-6.0.0/AUTHORS",
+          "source_path": "crates/r-efi-6.0.0.crate!/r-efi-6.0.0/AUTHORS",
+          "sha256": "d027e91dbc9cdbb2f1190068e498bd6b61cff022b6a032b191021ba658d96111",
+          "file": "texts/d027e91dbc9cdbb2f1190068e498bd6b61cff022b6a032b191021ba658d96111.txt"
+        }
+      ]
+    },
+    {
+      "name": "rustls-platform-verifier-android",
+      "version": "0.1.1",
+      "crate_sha256": "f87165f0995f63a9fbeea62b64d10b4d9d8e78ec6d7d51fb2125fda7bb36788f",
+      "notices": [
+        {
+          "path": "LICENSE-APACHE",
+          "git_blob": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+          "source_path": "https://raw.githubusercontent.com/rustls/rustls-platform-verifier/da3d9c36f48fb9f8f97e94f132fdab67ab0fc75b/LICENSE-APACHE",
+          "file": "texts/c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4.txt",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "git_blob": "9964122648c6348a3c8e61d6d46a87d5942d036c",
+          "source_path": "https://raw.githubusercontent.com/rustls/rustls-platform-verifier/da3d9c36f48fb9f8f97e94f132fdab67ab0fc75b/LICENSE-MIT",
+          "file": "texts/1c7cf76689c837a68ed8d704994e52a0f2940c087958f860d17f3186afbdcc0c.txt",
+          "sha256": "1c7cf76689c837a68ed8d704994e52a0f2940c087958f860d17f3186afbdcc0c"
+        }
+      ],
+      "commit": "da3d9c36f48fb9f8f97e94f132fdab67ab0fc75b",
+      "source_matches": [
+        {
+          "member": "rustls-platform-verifier-android-0.1.1/Cargo.toml.orig",
+          "path": "android-release-support/Cargo.toml",
+          "git_blob": "4d2bdceb7244e182257f0f52f2e07acda75c3c67"
+        },
+        {
+          "member": "rustls-platform-verifier-android-0.1.1/src/lib.rs",
+          "path": "android-release-support/src/lib.rs",
+          "git_blob": "97fb79ada326479f4311fb0b7663bb1a258c3977"
+        }
+      ]
+    },
+    {
+      "name": "wasip2",
+      "version": "1.0.1+wasi-0.2.4",
+      "crate_sha256": "0562428422c63773dad2c345a1882263bbf4d65cf3f42e90921f787ef5ad58e7",
+      "notices": [
+        {
+          "path": "LICENSE-APACHE",
+          "git_blob": "16fe87b06e802f094b3fbb0894b137bca2b16ef1",
+          "source_path": "https://raw.githubusercontent.com/bytecodealliance/wasi-rs/3da562c06214feafc14d37bf290671636caa6718/LICENSE-APACHE",
+          "file": "texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "LICENSE-Apache-2.0_WITH_LLVM-exception",
+          "git_blob": "f9d81955f4bcb8f96a025e2ecc46f39ec536d465",
+          "source_path": "https://raw.githubusercontent.com/bytecodealliance/wasi-rs/3da562c06214feafc14d37bf290671636caa6718/LICENSE-Apache-2.0_WITH_LLVM-exception",
+          "file": "texts/268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5.txt",
+          "sha256": "268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "git_blob": "31aa79387f27e730e33d871925e152e35e428031",
+          "source_path": "https://raw.githubusercontent.com/bytecodealliance/wasi-rs/3da562c06214feafc14d37bf290671636caa6718/LICENSE-MIT",
+          "file": "texts/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3.txt",
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "commit": "3da562c06214feafc14d37bf290671636caa6718"
+    },
+    {
+      "name": "winapi-i686-pc-windows-gnu",
+      "version": "0.4.0",
+      "crate_sha256": "ac3b87c63620426dd9b991e5ce0329eff545bccbbb34f3be09ff6fb6ab51b7b6",
+      "notices": [
+        {
+          "member": "winapi-i686-pc-windows-gnu-0.4.0/src/lib.rs",
+          "source_path": "crates/winapi-i686-pc-windows-gnu-0.4.0.crate!/winapi-i686-pc-windows-gnu-0.4.0/src/lib.rs",
+          "start": 0,
+          "end": 378,
+          "sha256": "9b0a59b4c5af60f46f79d2adbe433e07189d076972b8d33e9abca077dc10ccf7",
+          "file": "texts/9b0a59b4c5af60f46f79d2adbe433e07189d076972b8d33e9abca077dc10ccf7.txt"
+        },
+        {
+          "member": "winapi-i686-pc-windows-gnu-0.4.0/build.rs",
+          "source_path": "crates/winapi-i686-pc-windows-gnu-0.4.0.crate!/winapi-i686-pc-windows-gnu-0.4.0/build.rs",
+          "start": 0,
+          "end": 383,
+          "sha256": "72f9dd4f441e55dbd746f776e04290d076584f469e9d0c964b152bf909029ad3",
+          "file": "texts/72f9dd4f441e55dbd746f776e04290d076584f469e9d0c964b152bf909029ad3.txt"
+        }
+      ]
+    },
+    {
+      "name": "winapi-x86_64-pc-windows-gnu",
+      "version": "0.4.0",
+      "crate_sha256": "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f",
+      "notices": [
+        {
+          "member": "winapi-x86_64-pc-windows-gnu-0.4.0/src/lib.rs",
+          "source_path": "crates/winapi-x86_64-pc-windows-gnu-0.4.0.crate!/winapi-x86_64-pc-windows-gnu-0.4.0/src/lib.rs",
+          "start": 0,
+          "end": 378,
+          "sha256": "9b0a59b4c5af60f46f79d2adbe433e07189d076972b8d33e9abca077dc10ccf7",
+          "file": "texts/9b0a59b4c5af60f46f79d2adbe433e07189d076972b8d33e9abca077dc10ccf7.txt"
+        },
+        {
+          "member": "winapi-x86_64-pc-windows-gnu-0.4.0/build.rs",
+          "source_path": "crates/winapi-x86_64-pc-windows-gnu-0.4.0.crate!/winapi-x86_64-pc-windows-gnu-0.4.0/build.rs",
+          "start": 0,
+          "end": 383,
+          "sha256": "72f9dd4f441e55dbd746f776e04290d076584f469e9d0c964b152bf909029ad3",
+          "file": "texts/72f9dd4f441e55dbd746f776e04290d076584f469e9d0c964b152bf909029ad3.txt"
+        }
+      ]
+    },
+    {
+      "name": "wit-bindgen-rt",
+      "version": "0.39.0",
+      "crate_sha256": "6f42320e61fe2cfd34354ecb597f86f413484a798ba44a8ca1165c58d42da6c1",
+      "notices": [
+        {
+          "path": "LICENSE-APACHE",
+          "git_blob": "16fe87b06e802f094b3fbb0894b137bca2b16ef1",
+          "source_path": "https://raw.githubusercontent.com/bytecodealliance/wit-bindgen/f2393e6e98fa5f9236cac580db8a3fc9de6a4b70/LICENSE-APACHE",
+          "file": "texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "LICENSE-Apache-2.0_WITH_LLVM-exception",
+          "git_blob": "f9d81955f4bcb8f96a025e2ecc46f39ec536d465",
+          "source_path": "https://raw.githubusercontent.com/bytecodealliance/wit-bindgen/f2393e6e98fa5f9236cac580db8a3fc9de6a4b70/LICENSE-Apache-2.0_WITH_LLVM-exception",
+          "file": "texts/268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5.txt",
+          "sha256": "268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "git_blob": "31aa79387f27e730e33d871925e152e35e428031",
+          "source_path": "https://raw.githubusercontent.com/bytecodealliance/wit-bindgen/f2393e6e98fa5f9236cac580db8a3fc9de6a4b70/LICENSE-MIT",
+          "file": "texts/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3.txt",
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "commit": "f2393e6e98fa5f9236cac580db8a3fc9de6a4b70"
+    }
+  ],
+  "texts_archive_sha256": "174e6b1918aa7b3050241749917ac548100ce04708c3a0e7136fb2bbf8a5ef4c",
+  "unique_notice_texts": 12
+}
