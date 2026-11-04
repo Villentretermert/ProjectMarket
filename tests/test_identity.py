@@ -278,7 +278,9 @@ def test_grant_cursor_is_signed_and_bound_to_session(settings: Settings) -> None
         second = alice.get(endpoint, params={"limit": 1, "cursor": cursor})
         assert second.status_code == 200 and second.json()["next_cursor"] is None
         assert second.json()["items"] != first["items"]
-        assert alice.get(endpoint, params={"cursor": "x" + cursor[1:]}).status_code == 400
+        replacement = "y" if cursor[0] == "x" else "x"
+        tampered = replacement + cursor[1:]
+        assert alice.get(endpoint, params={"cursor": tampered}).status_code == 400
         login = alice.post("/v1/auth/login", json={"username": "alice", "password": PASSWORD})
         assert login.status_code == 200
         assert alice.get(endpoint, params={"cursor": cursor}).status_code == 400
