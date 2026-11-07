@@ -1,0 +1,52 @@
+{
+  "release_commit": "68958f1bba16df49159d13fd9e99b47f7d924956",
+  "images": {
+    "api": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b",
+    "bot": "sha256:18eaf77c5ce756ee83d6053a943ea1420667a2f8f374051ac7a5366959083e68",
+    "db": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+    "proxy": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b"
+  },
+  "bound_files": {
+    "third_party/68958f1-native/inventory.json": "a3a783d35c117823bca052ee3eb577d8c2d3464d8d3cf518d0fc2175d903e90c",
+    "third_party/68958f1-native/texts.tar.gz": "21ee42cdfe173ce399a83a29dd1589719389edc9b94b2ae1b531bb9966a5e07c",
+    "third_party/68958f1-crate-notices/inventory.json": "e060f8ca17dacfa90b182c64a99c1f8c0b3c44c64b5394f4654d6a5832fc94ad",
+    "third_party/68958f1-crate-notices/texts.tar.gz": "174e6b1918aa7b3050241749917ac548100ce04708c3a0e7136fb2bbf8a5ef4c",
+    "third_party/debian-68958f1/manifest.json": "506488bdca23c5493f518fcc69dfd95d92e33762846359d3b4bb8ba8956b7bdd",
+    "third_party/alpine-68958f1/sources.json": "66a77b5b5e33aa5acc5d0d88db14e6bce451c9ad3db28c94fd001a4d4aae7d82"
+  },
+  "sources": [
+    {
+      "name": "debian.tar",
+      "size": 549560320,
+      "sha256": "d3393b02aa53dd684280ef87ea9a91b10da2f991aa4ec75eab1ce4d427f96ae7",
+      "scope": "95 source package/version pairs, 304 pool files, 11 metadata files"
+    },
+    {
+      "name": "alpine.tar.gz",
+      "size": 80916989,
+      "sha256": "b6afc1f597c2f0e173e08ecfd34387da6ce46048289c399e8faff45161ecc21b",
+      "scope": "187 verified recipe/source inputs for 20 origins; four attribution gaps remain"
+    },
+    {
+      "name": "python-rust.tar.gz",
+      "size": 78719279,
+      "sha256": "983b9cf9026864e4bc5cd17e6a76ce1327f1d1f4aac7c81e1ae7343c53aa71d4",
+      "scope": "482 inputs: 6 Python sdists, 450 crates, 26 upstream files"
+    },
+    {
+      "name": "modified-psycopg.tar.gz",
+      "size": 699587,
+      "sha256": "8ead8d8ebe3e053b01d9722e95aecdeb6aaeb1eb1cae628c87cf188d9df350af",
+      "scope": "Source tree from the 7 November recipient replacement demonstration"
+    }
+  ],
+  "open_items": [
+    "alpine-attribution",
+    "native-build-graph",
+    "nested-vendor-attribution",
+    "remaining-source-inputs",
+    "full-rebuild",
+    "other-platforms",
+    "external-release-acceptance"
+  ]
+}

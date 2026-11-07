@@ -51,6 +51,8 @@ jobs:
         run: python -m scripts.crate_notices --cache .local/crate-notice-inputs --fetch
       - name: Verify installed Debian source versions against signed indexes
         run: python -m scripts.debian_sources --fetch --indexes-only
+      - name: Verify source handover release bindings
+        run: python -m scripts.delivery_bundle --check-recipe
       - name: Verify licenses in distributable Python wheels
         shell: python
         run: |
