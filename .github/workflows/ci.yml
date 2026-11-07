@@ -74,7 +74,7 @@ jobs:
   compose:
     name: Docker / PostgreSQL
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       # Multiple disposable identity scenarios share one loopback address in this job.
       MARKETOB_AUTH_RATE_LIMIT: 100
@@ -111,6 +111,22 @@ jobs:
         run: docker compose exec -T api python - < scripts/inspect_psycopg.py
       - name: Verify C driver TLS, transactions, pools and cancellation
         run: python -m scripts.smoke_psycopg
+      - name: Rebuild and verify recipient-modified C driver
+        run: python -m scripts.replace_psycopg --fetch
+      - name: Record recipient replacement evidence
+        if: always()
+        shell: python
+        run: |
+          from pathlib import Path
+          output = Path('.local/psycopg-replacement')
+          result = output / 'result.json'
+          if result.is_file():
+              print(result.read_text())
+          else:
+              for name in ('build.log', 'smoke.log'):
+                  path = output / name
+                  if path.is_file():
+                      print(path.read_text(errors='replace')[-12000:])
       - run: python scripts/smoke_ingestion.py --phase before
       - run: python -m scripts.smoke_actions --phase before
       - name: Database outage and recovery

@@ -1,0 +1,131 @@
+{
+  "schema_version": "marketob-library-replacement/v1",
+  "result": "PASS",
+  "baseline_image": "sha256:7a25ca664062d8f81018757e1cb542653536143971a6f5d73bcca9b10c17728b",
+  "candidate_image": "sha256:eb7719d6b2111c41dfcaec5962388e1778c65837a6d029b16e8c2ba03b224649",
+  "candidate_tag": "marketob-replacement:d3d383f2b9d03d5e",
+  "database_image": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+  "source_modification": {
+    "source_sha256": "29c568426ad61c1b702c7d73505c43ca2c9fc5d97a8431d8d9049e731e319ff8",
+    "marker": "marketob-recipient-build-20261107",
+    "license_sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+    "changes": [
+      {
+        "path": "psycopg_c/_psycopg.c",
+        "before": "32ac1ccef8633a3af9015db597e217c37ae84fb29316844b2042d186c1f5544a",
+        "after": "01fbc809f309989257fb186ed4f2a270b7a3e2099d9f9b11fa1b0e908ad4a0c4"
+      },
+      {
+        "path": "psycopg_c/pq.c",
+        "before": "bdebdaf82cb9e9087fba189996edacd62454df7ef29510c27c3bf001262df0a4",
+        "after": "61fdcca74d12c4a0f748bbb27b6790bcd326f26714f45ea1134db1f4aa9fdadf"
+      }
+    ]
+  },
+  "before": {
+    "implementation": "c",
+    "driver_version": "3.3.6",
+    "extension_version": "3.3.6",
+    "libpq": 180006,
+    "libpq_build": 180006,
+    "uid": 10001,
+    "other_site_packages_sha256": "e58d8d3cf1039f76dc399e96dcd82b8f74877aa638bae45dcf016e66c4998e2a",
+    "system_packages_sha256": "3581e3f50febf353cecc28993e8b6a1b2fcf1c56fcccd9e63abe9f3dab2ffd9f",
+    "extensions": [
+      {
+        "name": "_psycopg.cpython-314-x86_64-linux-gnu.so",
+        "sha256": "d73e5b9e1179175267b802762bd60f650939f207310e9f29776fca4c4549dafc",
+        "marker": null
+      },
+      {
+        "name": "pq.cpython-314-x86_64-linux-gnu.so",
+        "sha256": "7bc921bebc6ace176bb0e3e4b5117771c39d55bd203c9180034e47bad6375b19",
+        "marker": null
+      }
+    ]
+  },
+  "after": {
+    "implementation": "c",
+    "driver_version": "3.3.6",
+    "extension_version": "3.3.6",
+    "libpq": 180006,
+    "libpq_build": 180006,
+    "uid": 10001,
+    "other_site_packages_sha256": "e58d8d3cf1039f76dc399e96dcd82b8f74877aa638bae45dcf016e66c4998e2a",
+    "system_packages_sha256": "3581e3f50febf353cecc28993e8b6a1b2fcf1c56fcccd9e63abe9f3dab2ffd9f",
+    "extensions": [
+      {
+        "name": "_psycopg.cpython-314-x86_64-linux-gnu.so",
+        "sha256": "adf44263f17b31d5c471579fa606fd3213740548b1b95129cd4775fb63348d10",
+        "marker": "marketob-recipient-build-20261107"
+      },
+      {
+        "name": "pq.cpython-314-x86_64-linux-gnu.so",
+        "sha256": "6b8ed1e995a7f697713f0bf50c36c020c53c0f865e2b98fb2fe9195a0c5ecfe3",
+        "marker": "marketob-recipient-build-20261107"
+      }
+    ]
+  },
+  "linkage": {
+    "schema_version": "marketob-psycopg-linkage/v2",
+    "scope": "Inspection process imports ssl then psycopg; no database or network access",
+    "coverage": "Loaded system libpq/libssl/libcrypto and C extension dependencies",
+    "security_assessment": "not_performed",
+    "python": "3.14.9",
+    "platform": "Linux",
+    "machine": "x86_64",
+    "python_ssl": "OpenSSL 3.0.22 25 Aug 2026",
+    "status": "complete",
+    "libraries": [
+      {
+        "name": "libcrypto.so.3",
+        "kind": "libcrypto",
+        "owner": "libssl3",
+        "sha256": "aa01e614af634bc7c8b678c9250b5c4f613c61989bacf0a5d6aed6570e7dcabd",
+        "openssl_version": "OpenSSL 3.0.22 25 Aug 2026",
+        "package_version": "3.0.22-1~deb12u2"
+      },
+      {
+        "name": "libpq.so.5.18",
+        "kind": "libpq",
+        "owner": "libpq5",
+        "sha256": "9d4cc38691c249a7a32017a03bfafeee93b3a67759df8a7e55c09470085302b1",
+        "package_version": "18.6-1.pgdg12+2"
+      },
+      {
+        "name": "libssl.so.3",
+        "kind": "libssl",
+        "owner": "libssl3",
+        "sha256": "cab3f5b0a1febd4a80db5319f3bca4a9378c797dc6e5dc8bce36a575eaa77e78",
+        "package_version": "3.0.22-1~deb12u2"
+      }
+    ],
+    "gaps": [],
+    "psycopg": "3.3.6",
+    "implementation": "c",
+    "libpq_runtime": 180006,
+    "libpq_build": 180006,
+    "dependency_evidence": "ldd of installed psycopg-c extensions; dpkg file ownership",
+    "binary_distribution_present": false
+  },
+  "driver_smoke": {
+    "result": "PASS",
+    "implementation": "c",
+    "libpq": 180006,
+    "checks": [
+      "TLS verify-full",
+      "wrong CA rejected",
+      "missing CA rejected",
+      "wrong hostname rejected",
+      "system CA",
+      "default connection",
+      "JSONB parameters",
+      "primary/auxiliary pools",
+      "commit/rollback",
+      "statement timeout",
+      "terminated connections recovered",
+      "non-pool transaction",
+      "cancel_safe"
+    ]
+  }
+}
