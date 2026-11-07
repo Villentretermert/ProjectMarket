@@ -93,4 +93,3 @@ python -m scripts.smoke_psycopg --api-image marketob-recipient:custom --db-image
 описывает сборку C-расширения с системным libpq. [Лицензия psycopg 3.3.6](https://github.com/psycopg/psycopg/blob/3.3.6/LICENSE.txt)
 сохраняется вместе с исходниками и wheel. Проверенный здесь механизм замены
 является одним инженерным результатом подготовки поставки.
-
