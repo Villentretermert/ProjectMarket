@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "network": "none",
+  "external_checkout": false,
+  "files": 11,
+  "sha256": "e80b6e63c1ac168f1062267dff42bc31912da49c777e768475a27b23524f37c7",
+  "checks": [
+    "standalone integrity",
+    "native notices",
+    "crate supplement",
+    "signed Debian sources"
+  ],
+  "windows_standalone": "PASS, Python isolated mode, no external checkout"
+}
