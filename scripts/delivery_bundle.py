@@ -207,8 +207,9 @@ def build(output: Path, inputs: dict[str, Path]) -> dict[str, Any]:
     if git("status", "--porcelain", "--untracked-files=no").strip():
         raise ValueError("Commit tracked changes before assembling a versioned handover")
     tooling = git("rev-parse", "HEAD").decode().strip()
-    if git("show", "HEAD:" + RECIPE) != (ROOT / RECIPE).read_bytes():
-        raise ValueError("Recipe bytes must match the tooling commit")
+    # Git normalizes JSON line endings on Windows; bind the parsed recipe values.
+    if json_object(git("show", "HEAD:" + RECIPE)) != recipe:
+        raise ValueError("Recipe values must match the tooling commit")
     output.mkdir(parents=True)
     stage = output / "staging"
     stage.mkdir()
