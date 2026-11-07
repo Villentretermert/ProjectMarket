@@ -187,6 +187,50 @@ def check_recipe(root: Path = ROOT) -> dict[str, Any]:
     return recipe
 
 
+def git_snapshot(root: Path, revision: str, target: Path) -> int:
+    # Suppress Windows checkout conversion: source archives retain the Git blob bytes.
+    subprocess.run(
+        [
+            "git",
+            "-c",
+            "core.autocrlf=false",
+            "-c",
+            "core.eol=lf",
+            "archive",
+            "--format=tar",
+            "--output",
+            str(target),
+            revision,
+        ],
+        cwd=root,
+        check=True,
+    )
+    tree = subprocess.check_output(["git", "ls-tree", "-r", "-z", revision], cwd=root)
+    expected = {}
+    for entry in tree.split(b"\0"):
+        if entry:
+            info, name = entry.split(b"\t", 1)
+            expected[name.decode("utf-8")] = info.split()[2].decode("ascii")
+    seen = set()
+    with tarfile.open(target) as archive:
+        for member in archive:
+            if member.isdir():
+                continue
+            if not member.isfile() or member.name in seen or member.name not in expected:
+                raise ValueError("Unexpected Git snapshot member")
+            source = archive.extractfile(member)
+            assert source is not None
+            blob = hashlib.sha1(b"blob " + str(member.size).encode() + b"\0")
+            while block := source.read(BLOCK):
+                blob.update(block)
+            if blob.hexdigest() != expected[member.name]:
+                raise ValueError("Archived bytes differ from Git object: " + member.name)
+            seen.add(member.name)
+    if seen != set(expected):
+        raise ValueError("Incomplete Git snapshot")
+    return len(seen)
+
+
 def build(output: Path, inputs: dict[str, Path]) -> dict[str, Any]:
     if output.exists() or not output.resolve().is_relative_to(ROOT / ".local"):
         raise ValueError("Use a new output directory below the repository's .local")
@@ -214,14 +258,11 @@ def build(output: Path, inputs: dict[str, Path]) -> dict[str, Any]:
     stage = output / "staging"
     stage.mkdir()
     files = {"sources/" + name: path for name, path in inputs.items()}
+    snapshot_files = {}
     # Git objects exclude .env, backups, credentials and other untracked local data.
     for label, revision in (("project", recipe["release_commit"]), ("tooling", tooling)):
         target = stage / f"{label}.tar"
-        subprocess.run(
-            ["git", "archive", "--format=tar", "--output", str(target), revision],
-            cwd=ROOT,
-            check=True,
-        )
+        snapshot_files[label] = git_snapshot(ROOT, revision, target)
         files["sources/" + label + ".tar"] = target
     for name, tracked in {
         "README.md": "docs/licensing/SOURCE_HANDOVER.md",
@@ -243,6 +284,7 @@ def build(output: Path, inputs: dict[str, Path]) -> dict[str, Any]:
             "coverage_state": "partial",
             "open_items": recipe["open_items"],
             "source_scope": recipe["sources"],
+            "git_snapshot_files": snapshot_files,
         },
     )
     result["archive"] = "marketob-sources-68958f1.tar"

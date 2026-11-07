@@ -11,7 +11,7 @@ from typing import Any
 
 import pytest
 
-from scripts.delivery_bundle import ROOT, check_recipe, file_hash, pack, verify
+from scripts.delivery_bundle import ROOT, check_recipe, file_hash, git_snapshot, pack, verify
 
 
 def identity() -> dict[str, Any]:
@@ -135,3 +135,37 @@ def test_release_recipe_binds_current_evidence() -> None:
     recipe = check_recipe()
     assert recipe["release_commit"] == "68958f1bba16df49159d13fd9e99b47f7d924956"
     assert len(recipe["sources"]) == 4
+
+
+def test_git_snapshot_ignores_windows_checkout_conversion(tmp_path: Path) -> None:
+    repository = tmp_path / "repo"
+    repository.mkdir()
+    args = [
+        "git",
+        "-c",
+        "user.name=Fixture",
+        "-c",
+        "user.email=fixture@example.invalid",
+        "-c",
+        "commit.gpgsign=false",
+        "-c",
+        "core.hooksPath=disabled-hooks",
+    ]
+
+    def git(*parts: str) -> bytes:
+        return subprocess.check_output(
+            args + list(parts), cwd=repository, stderr=subprocess.DEVNULL
+        )
+
+    git("init")
+    git("config", "core.autocrlf", "true")
+    (repository / "source.txt").write_bytes(b"line one\nline two\n")
+    git("add", "source.txt")
+    git("commit", "-m", "fixture")
+    (repository / ".env").write_bytes(b"local-only")
+    target = tmp_path / "snapshot.tar"
+    assert git_snapshot(repository, git("rev-parse", "HEAD").decode().strip(), target) == 1
+    with tarfile.open(target) as archive:
+        assert archive.getnames() == ["source.txt"]
+        source = archive.extractfile("source.txt")
+        assert source is not None and source.read() == b"line one\nline two\n"
