@@ -35,6 +35,7 @@ def router() -> APIRouter:
             "studio-editor.js",
             "favorites.js",
             "space.js",
+            "block-catalog.js",
             "sharing.js",
             "live.js",
             "privacy.js",

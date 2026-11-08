@@ -30,7 +30,9 @@
 1. Войдите в свой локальный аккаунт. Откройте ссылку на каждый канал через
    **＋ Open a channel**, нажмите **Add to favorites**.
 2. Перейдите в **My Space → Create My Space**. Введите название и нажмите **Create page**.
-3. В **Source channel** выберите каталог, в **Block to add** — Hand soap, нажмите **Add block**.
+3. В **Source channel** выберите каталог. В новой версии Block catalog найдите
+   карточку Hand soap и нажмите **Add to My Space**. Ролик записан до этой доработки
+   и показывает прежние Block to add / Add block.
 4. Так же добавьте новость из Public feed. Можно изменить вид товара на **Card**,
    передвинуть блоки **Move up / Move down** и отменить последнее изменение через **Undo**.
 5. Нажмите **Preview → Request purchase**. Проверьте товар и количество 1,

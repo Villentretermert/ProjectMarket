@@ -13,7 +13,7 @@ export async function spaceAcceptance(browser,config,check){
   const saved=async(p=page)=>{await p.locator('.space [role="status"]').filter({hasText:/^Saved · v/}).waitFor();await p.getByRole('button',{name:'Preview',exact:true}).waitFor({state:'visible'});};
   const shot=async name=>{await page.locator('#sidebar').getByRole('link',{name:'＋ Open a channel',exact:true}).waitFor();await page.screenshot({path:path.join(config.output,name+'.png'),fullPage:true});};
   const loginUI=async(p)=>{await go(p,'login');await p.getByLabel('Username',{exact:true}).fill(username);await p.getByLabel('Password',{exact:true}).fill(config.credentials.password);await p.getByRole('button',{name:'Sign in',exact:true}).click();await p.getByRole('heading',{name:'My Space',exact:true}).waitFor();};
-  const add=async(slug,block)=>{await page.getByLabel('Source channel',{exact:true}).selectOption(slug);await page.getByLabel('Block to add',{exact:true}).selectOption(block);await page.getByRole('button',{name:'Add block',exact:true}).click();await saved();};
+  const add=async(slug,block)=>{await page.getByLabel('Source channel',{exact:true}).selectOption(slug);await page.locator('[data-catalog-block="'+block+'"]').getByRole('button',{name:'Add to My Space',exact:true}).click();await saved();};
   try{
     await check('My Space: build three live blocks from two favorite channels',async()=>{
       await go(page,'register');await page.getByLabel('Display name',{exact:true}).fill('Sam · My Space');await page.getByLabel('Username',{exact:true}).fill(username);await page.getByLabel('Password',{exact:true}).fill(config.credentials.password);await page.getByRole('button',{name:'Create account',exact:true}).click();await page.getByRole('heading',{name:'My Space',exact:true}).waitFor();
@@ -29,7 +29,7 @@ export async function spaceAcceptance(browser,config,check){
       await add(channels.catalog.slug,'soap');await add(channels.news.slug,'news_1');await add(channels.news.slug,'feed_activity');
       assert.equal(await page.locator('[data-space-block]').count(),3);
       assert.equal(await page.locator('[data-space-block]').nth(1).locator('.body-text').isVisible(),true);
-      await page.getByRole('img').waitFor();await shot('space-desktop');
+      await page.locator('.space>.blocks').getByRole('img').waitFor();await shot('space-desktop');
     });
     await check('My Space: compatible views, appearance, order and Undo autosave independently',async()=>{
       await page.getByLabel('View for Hand soap',{exact:true}).selectOption('card');await saved();
@@ -76,7 +76,7 @@ export async function spaceAcceptance(browser,config,check){
       await page.route(sourcePattern,async route=>{started();await gate;await route.continue();});
       await page.getByRole('button',{name:'Refresh',exact:true}).click();await waiting;
       await page.getByLabel('Space title',{exact:true}).fill('My daily space');release();
-      await page.getByLabel('Block to add',{exact:true}).getByRole('option').first().waitFor({state:'attached'});
+      await page.locator('[data-catalog-block]').first().waitFor();
       assert.equal(await page.getByLabel('Space title',{exact:true}).inputValue(),'My daily space');await page.unroute(sourcePattern);
       await page.getByLabel('Space title',{exact:true}).press('Enter');await page.getByText('Save not confirmed',{exact:true}).waitFor();
       await page.getByRole('button',{name:'Retry save',exact:true}).click();await saved();assert.equal(posts,2);assert.equal(firstVersion,replayVersion);await page.unroute(pattern);
@@ -86,8 +86,8 @@ export async function spaceAcceptance(browser,config,check){
       await manage('DELETE','/owner/channels/'+channels.news.channel_id+'/grants/'+userID);
       await page.getByRole('button',{name:'Refresh',exact:true}).click();await page.getByRole('heading',{name:'Source unavailable',exact:true}).first().waitFor();await saved();
       // A permission marker briefly hides every source; wait for authorized resync.
-      await page.getByRole('heading',{name:'Hand soap',exact:true}).waitFor();
-      assert.equal(await page.getByRole('heading',{name:'Hand soap',exact:true}).count(),1);assert.equal(await page.getByText('Updated pilot headline',{exact:true}).count(),0);
+      await page.locator('.space>.blocks').getByRole('heading',{name:'Hand soap',exact:true}).waitFor();
+      assert.equal(await page.locator('.space>.blocks').getByRole('heading',{name:'Hand soap',exact:true}).count(),1);assert.equal(await page.getByText('Updated pilot headline',{exact:true}).count(),0);
       assert.equal(await page.getByLabel('Source channel',{exact:true}).getByRole('option',{name:newsTitle,exact:true}).count(),0);
       await shot('space-revoked');
       await page.locator('[data-space-block]').nth(1).getByRole('button',{name:'Move down',exact:true}).click();await saved();
@@ -98,7 +98,7 @@ export async function spaceAcceptance(browser,config,check){
       await page.getByRole('button',{name:'Refresh',exact:true}).click();await saved();
       // A late permission resync can temporarily hide all three blocks together.
       await page.waitForFunction(()=>[...document.querySelectorAll('h3')].filter(n=>n.textContent==='Source unavailable').length===1&&[...document.querySelectorAll('h2')].some(n=>n.textContent==='Hand soap'));
-      assert.equal(await page.getByRole('heading',{name:'Hand soap',exact:true}).count(),1);assert.equal(await page.getByRole('img').count(),1);
+      assert.equal(await page.locator('.space>.blocks').getByRole('heading',{name:'Hand soap',exact:true}).count(),1);assert.equal(await page.locator('.space>.blocks').getByRole('img').count(),1);
       const stored=await page.evaluate(()=>JSON.stringify({local:{...localStorage},session:{...sessionStorage}}));assert.ok(!stored.includes('Updated pilot headline')&&!stored.includes(newsKey));
     });
     assert.deepEqual(errors,[]);

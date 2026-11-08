@@ -1,4 +1,4 @@
-import {el, message, plainText} from './dom.js';
+import {el, button, message, plainText} from './dom.js';
 import {purchaseControls} from './actions.js';
 
 export const views = {news:['article','compact'], product:['list','card'], chart:['line','bars','table']};
@@ -67,9 +67,18 @@ function chart(data, view) {
     el('div', {class:'legend'}, data.series.map((s,i)=>el('span', {class:'series-'+i}, `${i+1}. ${s.name}`))),
     el('details', {}, el('summary', {}, 'View chart data'), chartTable(data)));
 }
-export function renderBlock(block, record, channel, {onAccessLost = () => {}, onView, extra} = {}) {
+export function renderBlockPreview(block,record) {
+  const data=record.content,root=el('div',{class:'catalog-preview'},el('span',{class:'badge'},block.content_type.toUpperCase()),el('h3',{},data.title));
+  const excerpt=text=>String(text||'').length>160?String(text).slice(0,157)+'…':String(text||'');
+  if(block.content_type==='product')root.append(message(excerpt(data.description)),el('strong',{class:'product-price'},money(data.price)),
+    message({in_stock:'In stock',out_of_stock:'Out of stock',unavailable:'Unavailable'}[data.availability]));
+  else if(block.content_type==='news')root.append(message(excerpt(data.body)));
+  else if(block.content_type==='chart')root.append(chart(data,'line'));
+  return root;
+}
+export function renderBlock(block, record, channel, {onAccessLost = () => {}, onRetry, onView, extra} = {}) {
   const root = el('article', {class:'block', 'data-block':block.block_id});
-  if (!record) { root.append(el('h3', {}, 'Source unavailable'), message('This item was removed or you no longer have access.')); return root; }
+  if (!record) { root.append(el('h3', {}, 'Source unavailable'), message('This item was removed or you no longer have access.'),onRetry?button('Check again',onRetry,{'data-source-retry':true}):null); return root; }
   if (!views[block.content_type]?.includes(block.view)) { root.append(message('Unsupported block format.')); return root; }
   let view = block.view;
   const select = el('select', {'aria-label':'View for ' + record.content.title}, views[block.content_type].map(v=>el('option', {value:v}, viewNames[v])));

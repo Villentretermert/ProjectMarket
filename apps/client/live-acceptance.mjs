@@ -20,7 +20,7 @@ export async function liveAcceptance(browser,config,check){
     assert.equal(r.status,200);return Date.now();
   };
   const go=async route=>page.goto(config.origin+'/app/#/'+route);
-  const shown=title=>page.getByRole('heading',{name:title,exact:true}).waitFor({timeout:10000});
+  const shown=title=>page.getByRole('heading',{name:title,exact:true}).and(page.locator('h1, .block h2, .block h3')).waitFor({timeout:10000});
   try{
     await publish('First live headline');
     const current=await manage('GET','/owner/channels/'+source.channel_id),version=current.layout.template_version;

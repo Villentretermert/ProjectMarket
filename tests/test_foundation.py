@@ -47,6 +47,7 @@ def test_web_assets_are_packaged_no_store_and_constrained() -> None:
             "studio-editor.js",
             "favorites.js",
             "space.js",
+            "block-catalog.js",
             "sharing.js",
             "live.js",
         ):

@@ -24,8 +24,7 @@ const click=async locator=>{
 const saved=async()=>page.locator('.space [role="status"]').filter({hasText:/^Saved · v/}).waitFor();
 const add=async(slug,block)=>{
   await page.getByLabel('Source channel',{exact:true}).selectOption(slug);
-  await page.getByLabel('Block to add',{exact:true}).selectOption(block);
-  await pause(1);await click(page.getByRole('button',{name:'Add block',exact:true}));await saved();
+  await pause(1);await click(page.locator('[data-catalog-block="'+block+'"]').getByRole('button',{name:'Add to My Space',exact:true}));await saved();
 };
 try{
   const login=await context.request.post(config.origin+'/v1/auth/login',{headers:{Origin:config.origin},data:config.credentials});
