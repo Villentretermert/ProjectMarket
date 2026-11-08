@@ -73,7 +73,8 @@ export async function catalogAcceptance(browser,config,check){
       let release,started;const gate=new Promise(r=>release=r),waiting=new Promise(r=>started=r),pattern='**/v1/channels/'+news.slug;
       await page.route(pattern,async route=>{const response=await route.fetch();started();await gate;await route.fulfill({response});});
       await source.selectOption(news.slug);await waiting;await source.selectOption(catalog.slug);
-      await grid.getByRole('heading',{name:'Hand soap',exact:true}).waitFor();release();await page.unroute(pattern,{behavior:'wait'});
+      await grid.getByRole('heading',{name:'Hand soap',exact:true}).waitFor();release();await page.unrouteAll({behavior:'wait'});
+      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
       assert.equal(await source.inputValue(),catalog.slug);assert.equal(await grid.locator('[data-catalog-block="news_2"]').count(),0);
     });
     await check('Block catalog: network retry rechecks data without losing layout',async()=>{

@@ -1,0 +1,13 @@
+{
+  "runtime_package_versions_unchanged": true,
+  "package_count": 31,
+  "web_files_match_checkout": true,
+  "files_checked": 16,
+  "changed_files": [
+    "web_routes.py",
+    "web/block-catalog.js",
+    "web/render.js",
+    "web/space.js",
+    "web/styles.css"
+  ]
+}

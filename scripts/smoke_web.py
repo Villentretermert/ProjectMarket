@@ -21,6 +21,7 @@ def main() -> None:
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--live-only", action="store_true", help="Focused PM-018 browser checks.")
     group.add_argument("--privacy-only", action="store_true", help="Focused PM-023 browser checks.")
+    group.add_argument("--catalog-only", action="store_true", help="Focused block catalog checks.")
     args = parser.parse_args()
     lab = Lab(args.connection_file)
     args.output.mkdir(parents=True, exist_ok=True)
@@ -66,7 +67,9 @@ def main() -> None:
         result = subprocess.run(
             [
                 "node",
-                "apps/client/acceptance-privacy.mjs"
+                "apps/client/acceptance-catalog.mjs"
+                if args.catalog_only
+                else "apps/client/acceptance-privacy.mjs"
                 if args.privacy_only
                 else "apps/client/acceptance-live.mjs"
                 if args.live_only
@@ -88,9 +91,9 @@ def main() -> None:
         if result.returncode:
             raise SystemExit(result.returncode)
         counts = lab.query("SELECT count(*) AS n FROM action_requests")
-        assert counts[0]["n"] == (0 if args.privacy_only else 1 if args.live_only else 5), (
-            "No duplicate purchase requests"
-        )
+        assert counts[0]["n"] == (
+            0 if args.privacy_only or args.catalog_only else 1 if args.live_only else 5
+        ), "No duplicate purchase requests"
         print("PASS: real Web/API/bot browser acceptance; disposable state removed.")
     finally:
         lab.close()
