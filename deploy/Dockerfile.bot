@@ -15,6 +15,7 @@ COPY packages/contracts/pyproject.toml packages/contracts/LICENSE packages/contr
 COPY packages/bot-sdk/pyproject.toml packages/bot-sdk/LICENSE packages/bot-sdk/NOTICE packages/bot-sdk/
 COPY bots/pilot/pyproject.toml bots/pilot/LICENSE bots/pilot/NOTICE bots/pilot/
 COPY packages/contracts/src/contracts/__init__.py packages/contracts/src/contracts/schemas.json packages/contracts/src/contracts/
+COPY packages/contracts/src/contracts/product_image.py packages/contracts/src/contracts/py.typed packages/contracts/src/contracts/
 COPY packages/bot-sdk/src/ packages/bot-sdk/src/
 COPY bots/pilot/src/ bots/pilot/src/
 RUN uv sync --locked --package marketob-demo-bots --no-dev --no-editable

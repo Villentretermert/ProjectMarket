@@ -87,12 +87,13 @@ export async function catalogAcceptance(browser,config,check){
     await check('Block catalog: real revoke clears preview and Check again restores only authorized data',async()=>{
       const before=await (await reader.request.get(config.origin+'/v1/personal-pages/'+pageID)).json();
       await manage('DELETE','/owner/channels/'+news.channel_id+'/grants/'+userID);
-      await page.locator('.space>.blocks').getByRole('heading',{name:'Source unavailable',exact:true}).waitFor({timeout:15000});
+      await page.locator('.space>.blocks [data-space-block]').nth(1).getByRole('heading',{name:'Source unavailable',exact:true}).waitFor({timeout:15000});
+      await page.locator('.space>.blocks').getByRole('heading',{name:'Hand soap',exact:true}).waitFor();
       assert.equal(await grid.locator('[data-catalog-block="news_2"]').count(),0);
       assert.equal(await source.getByRole('option',{name:news.title,exact:true}).count(),0);
       await shot('catalog-source-unavailable');
       await manage('PUT','/owner/channels/'+news.channel_id+'/grants/'+userID,{});
-      await page.locator('.space>.blocks').getByRole('button',{name:'Check again',exact:true}).click();
+      await page.locator('.space>.blocks [data-space-block]').nth(1).getByRole('button',{name:'Check again',exact:true}).click();
       await page.locator('.space>.blocks [data-space-block]').nth(1).getByRole('heading',{level:2}).waitFor();
       assert.deepEqual(await (await reader.request.get(config.origin+'/v1/personal-pages/'+pageID)).json(),before);
     });

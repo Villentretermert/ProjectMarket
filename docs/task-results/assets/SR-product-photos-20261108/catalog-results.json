@@ -1,0 +1,21 @@
+{
+  "checks": [
+    "Block catalog: real previews, search and types never expose purchase controls",
+    "Block catalog: keyboard addition, autosave and Undo preserve source references",
+    "Block catalog: a source with no personal block still loses access live",
+    "Block catalog: 360px, empty filters and text-only previews",
+    "Block catalog: a late source response cannot replace the selected channel",
+    "Block catalog: network retry rechecks data without losing layout",
+    "Block catalog: real revoke clears preview and Check again restores only authorized data",
+    "Block catalog: offline hides previews and reconnect reads authorized data",
+    "Block catalog: empty publication and the 50-block limit are explicit"
+  ],
+  "browser": "157.0.4341.42",
+  "viewport": [
+    1440,
+    1080,
+    360,
+    800
+  ],
+  "page_errors": []
+}

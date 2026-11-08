@@ -15,3 +15,7 @@ uv run --locked pytest packages/contracts/tests -q
 This development dependency is not installed in the API runtime image.
 The runtime `/openapi.json` describes only implemented endpoints; this package
 describes the intended v1 protocol, including features not implemented yet.
+
+S05 adds [bounded product PNG photos](../../docs/api/PRODUCT_IMAGES.md), optional
+source data in protocol revision 1.1.1. `product_image.py` is included in the minimal
+API/bot runtime; `reference_model.py` remains development-only.

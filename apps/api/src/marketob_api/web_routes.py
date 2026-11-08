@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 ASSETS = Path(__file__).with_name("web")
 CSP = (
     "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; "
-    "img-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; "
+    "img-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; "
     "form-action 'self'"
 )
 

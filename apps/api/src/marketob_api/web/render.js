@@ -67,10 +67,21 @@ function chart(data, view) {
     el('div', {class:'legend'}, data.series.map((s,i)=>el('span', {class:'series-'+i}, `${i+1}. ${s.name}`))),
     el('details', {}, el('summary', {}, 'View chart data'), chartTable(data)));
 }
+function productPhoto(photo) {
+  if (!photo) return null;
+  const box=el('div',{class:'product-photo'}),failed=()=>box.replaceChildren(message('Photo unavailable'));
+  // Only inline PNG bytes from the authorized record; never turn bot text into a URL.
+  if(photo.media_type!=='image/png'||typeof photo.data_base64!=='string'||photo.data_base64.length>131072||
+    photo.data_base64.length%4!==0||!photo.data_base64.startsWith('iVBORw0KGgo')||
+    !/^[A-Za-z0-9+/]*={0,2}$/.test(photo.data_base64)) {failed();return box;}
+  const img=el('img',{alt:typeof photo.alt==='string'?photo.alt.slice(0,200):'Product photo',decoding:'async',
+    referrerpolicy:'no-referrer',onerror:failed,onload:()=>{if(img.naturalWidth>512||img.naturalHeight>512)failed();}});
+  img.src='data:image/png;base64,'+photo.data_base64;box.append(img);return box;
+}
 export function renderBlockPreview(block,record) {
   const data=record.content,root=el('div',{class:'catalog-preview'},el('span',{class:'badge'},block.content_type.toUpperCase()),el('h3',{},data.title));
   const excerpt=text=>String(text||'').length>160?String(text).slice(0,157)+'…':String(text||'');
-  if(block.content_type==='product')root.append(message(excerpt(data.description)),el('strong',{class:'product-price'},money(data.price)),
+  if(block.content_type==='product')root.append(...[productPhoto(data.image)].filter(Boolean),message(excerpt(data.description)),el('strong',{class:'product-price'},money(data.price)),
     message({in_stock:'In stock',out_of_stock:'Out of stock',unavailable:'Unavailable'}[data.availability]));
   else if(block.content_type==='news')root.append(message(excerpt(data.body)));
   else if(block.content_type==='chart')root.append(chart(data,'line'));
@@ -92,8 +103,8 @@ export function renderBlock(block, record, channel, {onAccessLost = () => {}, on
     const data = record.content;
     if (block.content_type === 'news') body.append(el('h2', {}, data.title), plainText(data.body));
     else if (block.content_type === 'product') {
-      body.append(el('div', {class:'product-main'}, el('div', {}, el('h2', {}, data.title), plainText(data.description)),
-        el('div', {class:'product-price'}, money(data.price))),
+      body.append(el('div',{class:'product-summary'},productPhoto(data.image),el('div', {class:'product-main'}, el('div', {}, el('h2', {}, data.title), plainText(data.description)),
+        el('div', {class:'product-price'}, money(data.price)))),
       el('div', {class:'product-footer'}, el('span', {class:'badge'}, {in_stock:'In stock', out_of_stock:'Out of stock', unavailable:'Unavailable'}[data.availability]),
         purchaseControls(channel, block, record, onAccessLost)));
     } else body.append(el('h2', {}, data.title), chart(data, view));

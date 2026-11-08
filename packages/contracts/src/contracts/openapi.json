@@ -2,7 +2,7 @@
   "openapi": "3.1.1",
   "info": {
     "title": "MarkeTOB local pilot API",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "PM-004 design contract. No running server is delivered by this specification. See docs/api/PROTOCOL.md for normative state, authorization, limits and retry rules."
   },
   "servers": [
@@ -13078,9 +13078,41 @@
         ],
         "additionalProperties": false
       },
+      "ProductImage": {
+        "type": "object",
+        "description": "Optional source data governed by product access; never embed in shared layouts.",
+        "properties": {
+          "media_type": {
+            "type": "string",
+            "enum": [
+              "image/png"
+            ],
+            "description": "Only the bounded static PNG profile is supported."
+          },
+          "data_base64": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 131072,
+            "description": "Canonical base64 of PNG bytes, at most 96 KiB decoded; 8-bit gray/RGB/RGBA, sides 1–512, non-interlaced, only IHDR/IDAT/IEND. Server validates CRC, deflate size and row filters. No URLs, metadata, SVG, palette or animation.",
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+          },
+          "alt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Plain-text description of the pictured product for assistive technology."
+          }
+        },
+        "required": [
+          "media_type",
+          "data_base64",
+          "alt"
+        ],
+        "additionalProperties": false
+      },
       "Product": {
         "type": "object",
-        "description": "Catalog item; media uploads/external image fetching are deferred in schema 1.0.",
+        "description": "Catalog item with optional bounded PNG photo; omitting image on replacement removes the previous photo.",
         "properties": {
           "title": {
             "type": "string",
@@ -13105,6 +13137,9 @@
               "unavailable"
             ],
             "description": "Current resource availability; actions recheck this value."
+          },
+          "image": {
+            "$ref": "#/components/schemas/ProductImage"
           }
         },
         "required": [

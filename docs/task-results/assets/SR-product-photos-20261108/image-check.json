@@ -1,0 +1,12 @@
+{
+  "runtime_package_versions_unchanged": true,
+  "api_package_count": 31,
+  "bot_package_count": 9,
+  "web_and_contract_files_match_checkout": true,
+  "api_files_checked": 17,
+  "contract_files_checked": 3,
+  "images": {
+    "api": "sha256:31de79f25ca67a95d11ebe900b4d70cb231e4696e0c049faf0013307ec581176",
+    "bot": "sha256:826ad9a2a1daa73bff097daaff06603a5242b69f332c08a03df91fbf663775e1"
+  }
+}

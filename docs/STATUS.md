@@ -1,5 +1,12 @@
 # Текущее состояние
 
+8 ноября, S05. Реализованы [фотографии товаров](task-results/SR-product-photos-20261108.md):
+необязательный PNG, Python-проверка/SDK helper, list/card/My Space/catalog.
+235 Windows unit PASS (2 skip), 107 PostgreSQL PASS (4 skip), шесть focused
+браузерных сценариев PASS. Общая Web-регрессия и проверка поставки завершаются.
+Docker API/bot собраны; зависимости и схема БД не менялись. Пока установлен
+`catalog-20261108`. Счётчик 19/24, Android/облако/L2 отложены.
+
 8 ноября, S03/S04. Реализован [визуальный каталог блоков My Space](task-results/SR-block-catalog-20261108.md)
 с поиском, фильтром типов, превью и Check again для недоступного источника.
 63 браузерных сценария, 15 foundation-тестов и Ruff/format/mypy112 прошли.

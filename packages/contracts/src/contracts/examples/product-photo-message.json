@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "message_id": "photo_example",
+  "channel_id": "ch_shop",
+  "resource_id": "soap",
+  "source_revision": 1,
+  "occurred_at": "2026-10-21T09:42:00Z",
+  "kind": "data",
+  "content_type": "product",
+  "payload": {
+    "title": "Hand soap",
+    "description": "Demo daily essential. Requests are simulated.",
+    "price": {
+      "amount_minor": 250,
+      "currency": "EUR"
+    },
+    "availability": "in_stock",
+    "image": {
+      "media_type": "image/png",
+      "data_base64": "iVBORw0KGgoAAAANSUhEUgAAAKAAAACgCAIAAAAErfB6AAAB2klEQVR4nO3cu00DUBBEUZdBRh0UQE2IP5h/n2SkSEZEhN4G0BuPj3QLGO3Jd/P1vVNxm+UL9K8BLg9weYDLA1we4PIAlwe4PMDlAS4PcHmAywNcHuDyAJcHuDzA5QEuD3B5Rwd8cna+JMCAAQMGDPiwgVfxAAYMGDBgwICPlwowYMCAw1uuCxhwVoABJ7VcFzDgrAADTmq5LmDAWQEGnNRyXcCAswoCPr282Hc1uh7djG5Hd6P70cPocbQdPY2eRy+j19Hb6H30sW/5MQEDBgwYMGDAgAEDBgwYMGDAgAEDBgwYMGDAgAEDBgwYMGDAgAEDBgwYMGDAgAEDBgwYMGDAgAMCDBgwYMCAAQMGDBgwYMCAAS8H/v35PLgAAwYMGHBsgAEDBgw4NsCAAQMGHBtgwIABA44NMGDAgAHHBhgwYMCAYwMMGDBgwLEBBgwYMODYAAMGDBhwbIABAwYMODbAgAEDBhwbYMCAAQOODTBgwICPBNifLMCAAQMGDBgwYMCAAQMGDBgwYMCAAQMGDBgw4IgAAwYMGDBgwIABAwYMGDBgwIABAwasgACXB7g8wOUBLg9weYDLA1we4PIAlwe4PMDlAS4PcHmAywNcHuDyAJcHuDzAu+7+AF5QKECsY9WqAAAAAElFTkSuQmCC",
+      "alt": "Demo illustration: a teal hand soap bottle"
+    }
+  }
+}

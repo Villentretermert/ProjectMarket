@@ -8,6 +8,7 @@ import {favoritesAcceptance} from './favorites-acceptance.mjs';
 import {spaceAcceptance} from './space-acceptance.mjs';
 import {liveAcceptance} from './live-acceptance.mjs';
 import {catalogAcceptance} from './catalog-acceptance.mjs';
+import {photoAcceptance} from './photo-acceptance.mjs';
 let input=''; for await (const part of process.stdin) input+=part;
 const config=JSON.parse(input), checks=[];
 const browser=await chromium.launch({channel:process.env.MARKETOB_BROWSER_CHANNEL || undefined, headless:true});
@@ -134,5 +135,6 @@ try {
   const {privacyAcceptance}=await import('./privacy-acceptance.mjs');
   await privacyAcceptance(browser,config,check);
   await catalogAcceptance(browser,config,check);
+  await photoAcceptance(browser,config,check);
   await writeFile(path.join(config.output,'browser-results.json'),JSON.stringify({checks,browser:browser.version(),viewport:[1440,1000,360,800],page_errors:errors,live_metrics:config.liveMetrics},null,2)+'\n');
 } catch(error) {await save('failure');throw error;} finally {await browser.close();}

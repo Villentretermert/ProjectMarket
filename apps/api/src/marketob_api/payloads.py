@@ -4,6 +4,7 @@ import json
 from importlib.resources import files
 from typing import Any
 
+from contracts.product_image import validate_product_image
 from jsonschema import Draft202012Validator, FormatChecker  # type: ignore[import-untyped]
 from jsonschema_rs import Draft202012Validator as CompiledValidator
 
@@ -57,6 +58,13 @@ def validate_payload(name: str, body: dict[str, Any]) -> None:
     if name == "Message" and body.get("content_type") == "product":
         if body["payload"]["price"]["currency"] not in {"EUR", "USD", "RUB"}:
             raise ApiError(422, "unsupported_currency", "The currency is not supported.")
+        if "image" in body["payload"]:
+            try:
+                validate_product_image(body["payload"]["image"]["data_base64"])
+            except ValueError:
+                raise ApiError(
+                    422, "invalid_image", "Use the supported bounded PNG profile."
+                ) from None
     if name == "Message" and body.get("content_type") == "chart":
         series = body["payload"]["series"]
         if len({item["name"] for item in series}) != len(series):

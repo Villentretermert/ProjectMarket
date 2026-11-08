@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "Photos: real bot PNG and old products coexist without external requests",
+    "Photos: Card retains the full image at desktop and 360px",
+    "Photos: My Space and the block catalog render authorized source bytes",
+    "Photos: shared layout contains no photo bytes or source access",
+    "Photos: malformed, URL and SVG fixtures fail closed with readable product details",
+    "Photos: revoking source access clears both personal and catalog images"
+  ],
+  "browser": "157.0.4341.42",
+  "viewport": [
+    1440,
+    1000,
+    360,
+    800
+  ],
+  "page_errors": []
+}

@@ -6,6 +6,7 @@ tests must replay these scenarios against PostgreSQL before making runtime claim
 from copy import deepcopy
 import json
 from .build_contract import SCHEMAS
+from .product_image import validate_product_image
 from jsonschema import Draft202012Validator, FormatChecker
 
 
@@ -24,6 +25,9 @@ def validate(name, value):
     if name == 'Message' and value.get('content_type') == 'product':
         if value['payload']['price']['currency'] not in {'EUR','USD','RUB'}:
             raise Rejected('unsupported_currency')
+        if 'image' in value['payload']:
+            try: validate_product_image(value['payload']['image']['data_base64'])
+            except ValueError: raise Rejected('invalid_image') from None
     if name == 'Message' and value.get('content_type') == 'chart':
         series = value['payload']['series']
         if len({s['name'] for s in series}) != len(series):

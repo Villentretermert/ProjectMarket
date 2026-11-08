@@ -29,7 +29,7 @@ export async function spaceAcceptance(browser,config,check){
       await add(channels.catalog.slug,'soap');await add(channels.news.slug,'news_1');await add(channels.news.slug,'feed_activity');
       assert.equal(await page.locator('[data-space-block]').count(),3);
       assert.equal(await page.locator('[data-space-block]').nth(1).locator('.body-text').isVisible(),true);
-      await page.locator('.space>.blocks').getByRole('img').waitFor();await shot('space-desktop');
+      await page.locator('.space>.blocks svg[role="img"]:visible').waitFor();await shot('space-desktop');
     });
     await check('My Space: compatible views, appearance, order and Undo autosave independently',async()=>{
       await page.getByLabel('View for Hand soap',{exact:true}).selectOption('card');await saved();
@@ -98,7 +98,7 @@ export async function spaceAcceptance(browser,config,check){
       await page.getByRole('button',{name:'Refresh',exact:true}).click();await saved();
       // A late permission resync can temporarily hide all three blocks together.
       await page.waitForFunction(()=>[...document.querySelectorAll('h3')].filter(n=>n.textContent==='Source unavailable').length===1&&[...document.querySelectorAll('h2')].some(n=>n.textContent==='Hand soap'));
-      assert.equal(await page.locator('.space>.blocks').getByRole('heading',{name:'Hand soap',exact:true}).count(),1);assert.equal(await page.locator('.space>.blocks').getByRole('img').count(),1);
+      assert.equal(await page.locator('.space>.blocks').getByRole('heading',{name:'Hand soap',exact:true}).count(),1);assert.equal(await page.locator('.space>.blocks svg[role="img"]:visible').count(),1);
       const stored=await page.evaluate(()=>JSON.stringify({local:{...localStorage},session:{...sessionStorage}}));assert.ok(!stored.includes('Updated pilot headline')&&!stored.includes(newsKey));
     });
     assert.deepEqual(errors,[]);

@@ -23,6 +23,7 @@ COPY bots/pilot/pyproject.toml bots/pilot/LICENSE bots/pilot/NOTICE bots/pilot/
 COPY apps/api/src/ apps/api/src/
 COPY packages/contracts/pyproject.toml packages/contracts/LICENSE packages/contracts/NOTICE packages/contracts/
 COPY packages/contracts/src/contracts/__init__.py packages/contracts/src/contracts/schemas.json packages/contracts/src/contracts/
+COPY packages/contracts/src/contracts/product_image.py packages/contracts/src/contracts/py.typed packages/contracts/src/contracts/
 RUN uv sync --locked --package marketob-api --extra c --no-dev --no-editable
 
 FROM python-base

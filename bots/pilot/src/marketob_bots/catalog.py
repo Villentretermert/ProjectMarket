@@ -5,6 +5,7 @@ from typing import Any
 from marketob_sdk import APIError, BotClient, BotEvent, ProtocolError
 
 from marketob_bots.common import Configuration, run
+from marketob_bots.demo_photo import soap_image
 from marketob_bots.state import Journal
 
 PRODUCTS: dict[str, dict[str, Any]] = {
@@ -13,6 +14,7 @@ PRODUCTS: dict[str, dict[str, Any]] = {
         "description": "Demo daily essential. Requests are simulated.",
         "price": {"amount_minor": 250, "currency": "EUR"},
         "availability": "in_stock",
+        "image": soap_image(),
     },
     "rice": {
         "title": "Rice, 1 kg",

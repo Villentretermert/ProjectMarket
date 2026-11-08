@@ -35,6 +35,8 @@ def test_web_assets_are_packaged_no_store_and_constrained() -> None:
         assert page.status_code == 200
         assert 'lang="en"' in page.text
         assert "frame-ancestors 'none'" in page.headers["content-security-policy"]
+        assert "img-src 'self' data:;" in page.headers["content-security-policy"]
+        assert "connect-src 'self';" in page.headers["content-security-policy"]
         assert page.headers["cache-control"] == "no-store"
         for asset in (
             "app.js",
