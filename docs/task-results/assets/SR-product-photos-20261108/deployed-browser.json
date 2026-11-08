@@ -1,0 +1,12 @@
+{
+  "release": "photos-20261108",
+  "existing_demo_login": true,
+  "personal_layouts_unchanged": true,
+  "source_image_decoded": true,
+  "catalog_image_decoded": true,
+  "live": true,
+  "logout_clears_image": true,
+  "external_requests": [],
+  "page_errors": [],
+  "browser": "157.0.4341.42"
+}

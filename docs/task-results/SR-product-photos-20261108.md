@@ -1,7 +1,7 @@
 # S05 — Фотографии товаров
 
 8 ноября 2026 · follow-up PM-004/013/016, [issue #36](https://github.com/Villentretermert/ProjectMarket/issues/36).
-Состояние: реализовано, завершается проверка поставки; глобальный счётчик 19/24.
+Состояние: **S05 выполнена и установлена локально**; глобальный счётчик 19/24.
 
 ## Результат и компоненты
 
@@ -31,7 +31,8 @@
 
 - 77 targeted unit/contract/foundation PASS; полный Windows Python: **235 PASS,
   2 Linux-only skip**, mypy 115 и Ruff/format PASS.
-- PostgreSQL: **107 PASS, 4 Linux-only skip**. Новый сценарий проверяет ingest,
+- PostgreSQL: **107 PASS, 4 skip** (native backup/restore требуют отсутствующий
+  в Windows PATH `pg_dump`; эти проверки прошли в Linux CI). Новый сценарий проверяет ingest,
   replay, изменённый body, private/public read boundary, grant/revoke, обновление
   alt и удаление фото. Предупреждение Pydantic об alias `limit` сохранено; в этой
   задаче не исправлялось и не скрывалось.
@@ -72,3 +73,35 @@ source content; share содержит ссылку на источник. Но�
 До 6.25 MiB base64 на 50-блочный snapshot — верхняя граница первого транспорта,
 а не измеренная пропускная способность. Полный L2, Android, облако и полная
 PM-023/024 остаются отложенными/открытыми. Следующий продуктовый пункт — Meduza RSS.
+
+
+## Итог CI и локальная установка
+
+На [b751c29](https://github.com/Villentretermert/ProjectMarket/commit/b751c2917d51eac310603c576e1b6c45692d9640)
+прошли все четыре задания [CI 42529571116](https://github.com/Villentretermert/ProjectMarket/actions/runs/42529571116).
+**348 различных Python-тестов**: Ubuntu 237 unit + 111 PostgreSQL; Windows
+235 unit + 2 skip. Полный Chromium-прогон — **69 сценариев PASS**, включая
+уточнённые проверки каталога и шесть фото-сценариев. Docker, HTTPS/HTTP2,
+backup/restore и проверка пересобранного драйвера прошли.
+[Квитанция CI](assets/SR-product-photos-20261108/ci-results.json).
+
+Установлен `photos-20261108`: заменены только API/maintenance. Перед заменой
+создан backup и восстановлена отдельная проверочная БД: **29 таблиц и 10 sequences
+совпали**, исходная БД сохранена. Контейнеры/образы DB/proxy и CA не изменены;
+миграций нет. Четыре сервиса healthy. Приватная копия и прежний env находятся
+в `.local/photos-delivery-20261108/` и в Git не публикуются.
+[Квитанция установки](assets/SR-product-photos-20261108/local-delivery.json).
+
+Существующий demo-каталог обновлён одним циклом Python-бота. Прежний аккаунт,
+изображение в My Space/каталоге, Live и logout проверены. Все сохранённые layouts
+до/после браузерной проверки совпали; внешних запросов и page errors — 0.
+Отдельно прошли HTTPS с сохранённым CA, Secure session, удаление проверочного
+аккаунта и настоящее HTTP/2. В установочном smoke исправлено ожидание формы
+Username после logout: заголовок экрана не называется Sign in.
+[Браузерная квитанция](assets/SR-product-photos-20261108/deployed-browser.json).
+
+![Установленный каталог — оригинальная demo-иллюстрация](assets/SR-product-photos-20261108/installed-photo.png)
+
+[My Space после установки](assets/SR-product-photos-20261108/installed-space.png).
+S05 отмечена выполненной в запросе изменений; issue #36 остаётся открытой для
+Meduza RSS и личной приёмки владельца. Отсрочки и глобальный счётчик сохраняются.

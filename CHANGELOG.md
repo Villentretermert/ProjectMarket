@@ -11,7 +11,10 @@
   содержат новый модуль без изменения зависимостей и миграций.
 - [Отчёт](docs/task-results/SR-product-photos-20261108.md),
   [контракт](docs/api/PRODUCT_IMAGES.md), [макет](docs/design/PRODUCT_PHOTOS.md).
-  Проверка поставки завершается; счётчик 19/24 и отсрочки сохраняются.
+  Все четыре задания CI b751c29 PASS: 348 Python/69 Chromium. Установлен
+  `photos-20261108`; backup/restore 29 таблиц/10 sequences совпал, DB/proxy/CA
+  сохранены. Прежняя My Space, фото, Live/logout, HTTPS/HTTP2 PASS.
+  S05 завершена; счётчик 19/24 и отсрочки сохраняются.
 
 ## 2026-11-08 — S03/S04 · установка локального каталога
 

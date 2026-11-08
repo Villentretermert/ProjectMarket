@@ -1,0 +1,40 @@
+{
+  "release": "photos-20261108",
+  "source_commit": "b751c2917d51eac310603c576e1b6c45692d9640",
+  "backup_restore": {
+    "tables": 29,
+    "sequences": 10,
+    "all_equal": true
+  },
+  "original_database_preserved": true,
+  "migrations_run": false,
+  "database_and_proxy_unchanged": true,
+  "ca_unchanged": true,
+  "api_image_id": "sha256:31de79f25ca67a95d11ebe900b4d70cb231e4696e0c049faf0013307ec581176",
+  "services": [
+    {
+      "service": "api",
+      "state": "running",
+      "health": "healthy"
+    },
+    {
+      "service": "db",
+      "state": "running",
+      "health": "healthy"
+    },
+    {
+      "service": "maintenance",
+      "state": "running",
+      "health": "healthy"
+    },
+    {
+      "service": "proxy",
+      "state": "running",
+      "health": "healthy"
+    }
+  ],
+  "https_smoke_pass": true,
+  "http2_negotiated": "2",
+  "demo_catalog_updated": true,
+  "personal_layouts_unchanged": true
+}
