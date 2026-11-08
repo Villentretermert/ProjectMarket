@@ -4,6 +4,9 @@
 работающего пилота и последующей приёмки candidate, **не принятый release candidate**.
 Завершено 19/24 задач; [текущий статус](../STATUS.md) имеет приоритет.
 
+8 ноября: доступно [короткое видео My Space](../demos/my-space-20261108/README.md)
+с товаром, новостью и ответом Python-бота. Ниже — команды для личного повторения.
+
 ## Пользователь
 
 Откройте [MarkeTOB](http://127.0.0.1:19000/app/), выберите Create account и создайте
@@ -37,6 +40,8 @@ Owner управляет командой; Admin управляет ботами
 [Studio](STUDIO.md), [Python SDK](../../packages/bot-sdk/README.md),
 [протокол и схемы API](../api/PROTOCOL.md), [два пилотных бота](PILOT_BOTS.md).
 
+## Первый опыт: товары и новости
+
 Для отдельного синтетического опыта на текущем сервере можно подготовить новую
 пару ботов из корня репозитория (выберите ещё не занятый username и новый каталог):
 
@@ -44,6 +49,21 @@ Owner управляет командой; Admin управляет ботами
 .venv-dev/Scripts/python.exe -m scripts.pilot_bots --url http://127.0.0.1:19000 --username demo_owner --create-account --directory .local/handoff-demo --offline
 .venv-dev/Scripts/python.exe -m marketob_bots.catalog --env-file .local/handoff-demo/catalog.env
 ```
+
+Для первого опыта войдите в Web под тем же `demo_owner` и выбранным паролем.
+Чтобы получить Web-ссылки, в другом терминале выполните:
+
+```powershell
+$demoChannels = Get-Content .local/handoff-demo/channels.json -Raw | ConvertFrom-Json
+'http://127.0.0.1:19000/app/#/channel/' + $demoChannels.catalog.slug
+'http://127.0.0.1:19000/app/#/channel/' + $demoChannels.news.slug
+```
+
+Откройте обе ссылки, нажмите Add to favorites и повторите
+[шесть шагов из видео](../demos/my-space-20261108/README.md#повторить-самостоятельно).
+Другому зарегистрированному читателю сначала выдайте доступ по username в Studio.
+Для новой пары выберите новые username/каталог. Для существующей пары используйте
+`--resume` без `--create-account`; сохранённые ключи не заменяйте.
 
 Пароль вводится скрыто по запросу. Пока каталог работает в первом терминале,
 во втором запустите новости:
