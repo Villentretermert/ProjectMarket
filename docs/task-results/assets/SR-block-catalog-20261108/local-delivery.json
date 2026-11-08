@@ -1,0 +1,40 @@
+{
+  "release": "catalog-20261108",
+  "source_commit": "fe66d3d1d85b731bfa952064b5597e5b57e53302",
+  "backup_restore": {
+    "tables": 29,
+    "sequences": 10,
+    "all_equal": true
+  },
+  "original_database_preserved": true,
+  "migrations_run": false,
+  "database_and_proxy_unchanged": true,
+  "ca_unchanged": true,
+  "api_image_id": "sha256:088eddf68ef8d6ab096941590db283261c9ee4f28755790f17aa18d6b4287694",
+  "services": [
+    {
+      "service": "api",
+      "state": "running",
+      "health": "healthy"
+    },
+    {
+      "service": "db",
+      "state": "running",
+      "health": "healthy"
+    },
+    {
+      "service": "maintenance",
+      "state": "running",
+      "health": "healthy"
+    },
+    {
+      "service": "proxy",
+      "state": "running",
+      "health": "healthy"
+    }
+  ],
+  "https_smoke_pass": true,
+  "http2_negotiated": "2",
+  "first_attempt_rolled_back": true,
+  "proxy_health_wait_seconds": 90
+}
