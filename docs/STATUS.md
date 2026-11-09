@@ -4,8 +4,8 @@
 R2 — исправленный source archive 1a3dd882… с Windows/Linux offline verification;
 R3 — [чистый Docker/Web запуск](task-results/PM-024-clean-delivery-20261109.md):
 5 browser checks, 0 JS errors, ровно 1 confirmed-заявка от Docker Python-бота.
-34 focused tests и все четыре задания CI 42662230365 PASS; smoke_release отдельно
-проверен на текущих образах. [Инструкция получателю](setup/CURRENT_DELIVERY.md).
+34 focused tests и все четыре задания итогового CI 42663866512 на ca772a3 PASS;
+smoke_release отдельно проверен на текущих образах. [Инструкция получателю](setup/CURRENT_DELIVERY.md).
 Рабочий пилот не менялся. PM-023/024 открыты, 19/24; отсрочки сохраняются.
 
 Уточнение R2: текущий архив — 1a3dd882… в handover-schema-20261109-02,

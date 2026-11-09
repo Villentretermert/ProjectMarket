@@ -42,6 +42,12 @@ Ruff/format/mypy120 PASS. На исходном комплекте с испра
 Docker/HTTPS/backup/restore. Новый smoke_release проверен отдельно реальным
 чистым запуском выше; это уточнение отличает его от состава того CI commit.
 
+Итоговый код `ca772a3`, включая smoke_release, также прошёл все четыре задания
+[CI 42663866512](https://github.com/Villentretermert/ProjectMarket/actions/runs/42663866512).
+[Квитанция CI](assets/PM-024/delivery-schema-20261109/ci.json) сохранена.
+После удаления тестовой копии рабочие API/maintenance/DB/proxy остаются healthy,
+`/health/ready` возвращает `ready`, `database=ok`.
+
 Первые попытки выявили ошибки проверочной среды: GET session без Origin получил
 ожидаемый 403; после исправления скрипта отсутствовал скачанный Playwright Chromium.
 Повтор выполнен на установленном Edge. Каждая неуспешная попытка также удалила

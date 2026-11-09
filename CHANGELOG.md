@@ -11,6 +11,8 @@
 - Обновлены инструкция владельцу, текущий release в LOCAL_DELIVERY и
   [команды повторения](docs/setup/CURRENT_DELIVERY.md). Ruff/format/mypy120 PASS.
   [Результат и иллюстрации](docs/task-results/PM-024-clean-delivery-20261109.md).
+- Все четыре задания итогового CI 42663866512 на ca772a3 PASS. После очистки
+  тестового стека рабочие четыре сервиса healthy, API ready/database=ok.
 
 ## 2026-11-09 — PM-023-R1/R2 · LF в историческом recipe
 
