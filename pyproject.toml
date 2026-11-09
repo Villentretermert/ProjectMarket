@@ -41,6 +41,7 @@ marketob-demo-bots = { workspace = true }
 testpaths = ["tests", "packages/contracts/tests"]
 pythonpath = ["."]
 addopts = "--strict-markers"
+filterwarnings = ["error::pydantic.warnings.UnsupportedFieldAttributeWarning"]
 markers = ["integration: requires an explicitly configured PostgreSQL test database"]
 
 [tool.ruff]

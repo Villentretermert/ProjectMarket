@@ -2,6 +2,7 @@
 
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from threading import Lock
 
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -26,8 +27,19 @@ from marketob_api.transport import ProtocolMiddleware
 from marketob_api.updates import router as updates_router
 from marketob_api.web_routes import router as web_router
 
+_schema_startup_lock = Lock()
+
 
 def create_app(settings: Settings | None = None) -> FastAPI:
+    # FastAPI's schema adapters temporarily modify process-wide warning filters.
+    # Complete lazy route/schema construction before concurrent requests can start.
+    with _schema_startup_lock:
+        application = _create_app(settings)
+        application.openapi()
+        return application
+
+
+def _create_app(settings: Settings | None) -> FastAPI:
     configuration = (settings if settings is not None else Settings()).model_copy()
 
     @asynccontextmanager

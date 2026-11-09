@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "image": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+  "dependencies_unchanged": 31,
+  "openapi_unchanged": true,
+  "openapi_sha256": "801dacfd9aa868b760cf4ad0cac78b7cd2c0041244e37c2c2df5936ea93ad99c",
+  "paths": 54,
+  "parallel": {
+    "factories": 8,
+    "workers": 4,
+    "filters_preserved": true,
+    "schemas_equal": true
+  }
+}
