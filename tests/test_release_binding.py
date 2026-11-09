@@ -1,13 +1,22 @@
 """Release evidence cannot silently follow a tag or hide changed installed bytes."""
 
+import hashlib
 import json
+import subprocess
 from pathlib import Path
 from typing import Any
 
 import pytest
 
 from scripts.delivery_bundle import ROOT
-from scripts.release_binding import BASE, check_probes, compare, verify
+from scripts.release_binding import (
+    BASE,
+    MATERIALS,
+    check_probes,
+    compare,
+    tracked_material_hash,
+    verify,
+)
 
 BINDING = ROOT / "third_party/schema-20261109/binding.json"
 
@@ -20,6 +29,23 @@ def test_collected_release_binding() -> None:
     value = verify(BINDING)
     assert value["component_occurrences"] == 584
     assert value["coverage_state"] == "partial"
+
+
+def test_material_hashes_match_git_not_checkout_conversion() -> None:
+    binding = read(BINDING)
+    for name in MATERIALS:
+        raw = subprocess.check_output(["git", "show", "HEAD:" + name], cwd=ROOT)
+        assert binding["bound_files"][name] == hashlib.sha256(raw).hexdigest()
+
+
+def test_collection_rejects_stale_crlf_checkout(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "recipe.json"
+    path.write_bytes(b"{}\r\n")
+    monkeypatch.setattr(subprocess, "check_output", lambda *args, **kwargs: b"{}\n")
+    with pytest.raises(ValueError, match="checkout differs"):
+        tracked_material_hash("recipe.json", tmp_path)
 
 
 @pytest.mark.parametrize("change", ["component", "notice", "gap", "role"])

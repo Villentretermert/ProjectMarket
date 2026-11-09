@@ -81,6 +81,15 @@ def compare(before: dict[str, Any], after: dict[str, Any]) -> int:
     return sum(len(row["components"]) for row in new.values())
 
 
+def tracked_material_hash(name: str, root: Path = ROOT) -> str:
+    """Fail before binding a stale checkout representation of historical evidence."""
+    raw = subprocess.check_output(["git", "show", "HEAD:" + name], cwd=root)
+    checksum = hashlib.sha256(raw).hexdigest()
+    if file_hash(root / name) != checksum:
+        raise ValueError("Material checkout differs from Git bytes; check LF attributes: " + name)
+    return checksum
+
+
 def check_probes(binding: dict[str, Any], root: Path = ROOT) -> None:
     manifest = json_object((root / NATIVE).read_bytes())
     expected_native = {
@@ -183,7 +192,10 @@ def collect(inventory: Path, commit: str, wsl: str | None) -> Path:
         "images": {role: row["id"] for role, row in identities.items()},
         "inventory": relative,
         "component_occurrences": occurrences,
-        "bound_files": {name: file_hash(ROOT / name) for name in paths},
+        "bound_files": {
+            name: tracked_material_hash(name) if name in MATERIALS else file_hash(ROOT / name)
+            for name in paths
+        },
         "probes": probes,
         "coverage_state": "partial",
         "open_items": json_object((ROOT / MATERIALS[-1]).read_bytes())["open_items"],
