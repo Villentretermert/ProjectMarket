@@ -1,0 +1,25 @@
+{
+  "images": {
+    "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
+    "db": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+    "proxy": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b"
+  },
+  "release_commit": "896449bde9cdec4cea9f7ce29eba6910285da30e",
+  "running_images": {
+    "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "maintenance": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "db": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+    "proxy": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b",
+    "catalog-bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582"
+  },
+  "tls_ca_verified": true,
+  "secure_session": true,
+  "synthetic_data": true,
+  "database_requests": 1,
+  "database_status": "confirmed",
+  "products": 4,
+  "news_records": 6,
+  "private_channel_check": true,
+  "disposable_stack_removed": true
+}

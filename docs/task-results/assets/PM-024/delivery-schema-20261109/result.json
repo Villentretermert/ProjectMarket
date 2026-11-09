@@ -1,0 +1,71 @@
+{
+  "checks": [
+    "B2C reader opens a granted catalog and saves it to favorites",
+    "Second Python bot supplies news; reader saves the news channel",
+    "My Space combines a product and a news block from different channels",
+    "Card visualization, autosave, reorder and Undo work",
+    "Request purchase displays confirmation and receives a real Python bot confirmation"
+  ],
+  "page_errors": [],
+  "browser": "157.0.4341.42",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "chapters": [
+    {
+      "seconds": 0,
+      "text": "Один интерфейс для разных ботов. Соберём товары и новости в My Space."
+    },
+    {
+      "seconds": 6,
+      "text": "1. Открываем ссылку на каталог. Доступ к закрытому каналу выдал его владелец."
+    },
+    {
+      "seconds": 11,
+      "text": "2. Добавляем канал в избранное — он появляется слева, как контакт."
+    },
+    {
+      "seconds": 19,
+      "text": "3. Так же сохраняем новости. Здесь тестовая RSS-лента, без внешнего сервиса."
+    },
+    {
+      "seconds": 24,
+      "text": "4. Создаём личную страницу My daily space."
+    },
+    {
+      "seconds": 30,
+      "text": "5. Выбираем товар Hand soap из каталога и добавляем его блок."
+    },
+    {
+      "seconds": 36,
+      "text": "6. Добавляем новость из другого канала. Данные остаются связаны с ботами."
+    },
+    {
+      "seconds": 40,
+      "text": "7. Меняем вид товара на карточку. Изменения сохраняются автоматически."
+    },
+    {
+      "seconds": 45,
+      "text": "8. Меняем порядок блоков. Undo возвращает предыдущее расположение."
+    },
+    {
+      "seconds": 50,
+      "text": "9. Preview показывает собранную страницу: товар и новость в одном месте."
+    },
+    {
+      "seconds": 56,
+      "text": "10. Request purchase: одна единица товара. Перед отправкой есть подтверждение; деньги не списываются."
+    },
+    {
+      "seconds": 63,
+      "text": "11. Заявка уходит исходному боту. Check status проверяет эту же заявку."
+    },
+    {
+      "seconds": 75,
+      "text": "Готово: Confirmed. Бот подтвердил тестовую заявку — без оплаты."
+    }
+  ],
+  "approximate_seconds": 82,
+  "caption_overlay": true
+}

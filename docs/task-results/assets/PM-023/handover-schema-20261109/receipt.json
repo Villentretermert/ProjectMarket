@@ -1,9 +1,9 @@
 {
-  "sha256": "c3ab3a24f3a9c5d650c25173b982c63e70e3b90ef64e12ad0bea00e3353496d8",
-  "bytes": 774471680,
+  "sha256": "1a3dd882fe9da1c0e687352b37af69af82b7243d58cfbfbd8037bc83cadb8cf0",
+  "bytes": 774492160,
   "manifest": {
     "release_commit": "896449bde9cdec4cea9f7ce29eba6910285da30e",
-    "tooling_commit": "75f61ab7cef9956f6c2d311f76111bb735b78f8d",
+    "tooling_commit": "0e8c986ea92073c6a1b09d921dd8d0ab2f690fba",
     "images": {
       "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
       "bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
@@ -48,7 +48,7 @@
     ],
     "git_snapshot_files": {
       "project": 748,
-      "tooling": 762
+      "tooling": 765
     },
     "schema_version": "marketob-source-handover/v1",
     "files": [
@@ -99,8 +99,8 @@
       },
       {
         "name": "sources/tooling.tar",
-        "size": 32675840,
-        "sha256": "6bc1107f35fa341a9ad01272d1f6f5a8fbd4d5a7977762bc62eb5e50de9ba54f"
+        "size": 32696320,
+        "sha256": "01f65cfc04908395987ae54bbbe73e193ac21970abbf8ad675695d1bba1ddf9b"
       },
       {
         "name": "verify_bundle.py",

@@ -10,7 +10,11 @@
 [MarkeTOB](http://127.0.0.1:19000/app/) и создайте свой аккаунт через Create account.
 Приложение использует восстановленную `marketob_pm022`; прежние БД `marketob_recovered` и `marketob` сохранены.
 На стенде есть синтетические проверки/demo, это не публичный сервис.
-Приватная конфигурация — `.local/pm021/docker.env`, **MARKETOB_RELEASE=photos-20261108**.
+Приватная конфигурация — `.local/pm021/docker.env`, **MARKETOB_RELEASE=schema-20261109**.
+9 ноября установлен API/maintenance с исправлением конкурентной инициализации
+схем; news-бот использует Meduza. [Текущие IDs и проверка](CURRENT_DELIVERY.md).
+
+История установки фотографий:
 8 ноября установлен API/maintenance с фотографиями товаров; собран соответствующий
 bot image. DB/proxy/CA и существующая БД сохранены, новых миграций нет.
 Backup/restore: 29 таблиц и 10 sequences совпали; четыре сервиса healthy.

@@ -1,5 +1,18 @@
 # Текущее состояние
 
+9 ноября: **все три подзадачи поставки выполнены**. R1 — текущий inventory/binding;
+R2 — исправленный source archive 1a3dd882… с Windows/Linux offline verification;
+R3 — [чистый Docker/Web запуск](task-results/PM-024-clean-delivery-20261109.md):
+5 browser checks, 0 JS errors, ровно 1 confirmed-заявка от Docker Python-бота.
+34 focused tests и все четыре задания CI 42662230365 PASS; smoke_release отдельно
+проверен на текущих образах. [Инструкция получателю](setup/CURRENT_DELIVERY.md).
+Рабочий пилот не менялся. PM-023/024 открыты, 19/24; отсрочки сохраняются.
+
+Уточнение R2: текущий архив — 1a3dd882… в handover-schema-20261109-02,
+после исправления найденного CI различия CRLF/LF в хеше исторического recipe.
+34 focused tests и повторная Windows/Linux offline-проверка PASS; текущая
+квитанция обновлена, первый tar оставлен для диагностики. Чистый запуск в работе.
+
 9 ноября, PM-023-R2: [исходный комплект schema-20261109](task-results/PM-023-source-kit-20261109.md)
 собран и автономно проверен на Windows/Linux. 32 focused tests PASS,
 исторический комплект 68958f1 сохранён. Два из трёх пунктов поставки выполнены;
