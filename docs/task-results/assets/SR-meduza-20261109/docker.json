@@ -1,0 +1,24 @@
+{
+  "result": "PASS",
+  "image": "marketob-bot:meduza-20261109",
+  "image_id": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
+  "dependencies": {
+    "marketob-demo-bots": "0.1.0",
+    "marketob-contracts": "1.0.3",
+    "rpds-py": "2026.9.1",
+    "referencing": "0.37.0",
+    "jsonschema-specifications": "2025.9.1",
+    "marketob-bot-sdk": "0.1.0",
+    "attrs": "26.1.0",
+    "defusedxml": "0.7.1",
+    "jsonschema": "4.26.0"
+  },
+  "unchanged_versions": true,
+  "live_feed": {
+    "entries": 30,
+    "dated": 30,
+    "source": "Meduza \u00b7 https://meduza.io",
+    "bytes": 343176,
+    "uid": 10001
+  }
+}

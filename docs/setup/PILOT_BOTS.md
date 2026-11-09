@@ -85,6 +85,8 @@ same key/channel/journal. Do not run two publishers for one journal. Existing
 `news_1`–`news_5` references in My Space remain valid. Source availability depends
 on your network; fetching failure preserves the previous snapshot and retries
 at the configured interval. `--once` only publishes one cycle and then exits.
+For a source rollback, change the URL while retaining the current journal; do not
+restore an older revision journal independently of the matching platform state.
 
 The catalog commits an inbox before ACK and a unique request ledger before result.
 On restart it resumes local unfinished events, including accepted results whose

@@ -1,0 +1,15 @@
+{
+  "feed_entries": 30,
+  "news_blocks": 5,
+  "dated_entries": 30,
+  "result": "PASS",
+  "source": "https://meduza.io/rss/all",
+  "checked_at": "2026-11-09T02:31:38.128759+00:00",
+  "response_bytes": 343176,
+  "response_sha256": "38490baa8a731d9ce0d9e096df35ece03cf501ece6259258af8a4f047b96a0ab",
+  "existing_layouts_unchanged": true,
+  "stable_resource_ids": true,
+  "repeat_after_restart_unchanged": true,
+  "anonymous_private_channel_rejected": true,
+  "api_release_unchanged": "photos-20261108"
+}

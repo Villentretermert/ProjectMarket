@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-11-09T02:38:04Z",
+  "runtime": "Python on the local Windows host",
+  "interval_seconds": 300,
+  "successful_cycles_observed": 2,
+  "feed_entries_per_cycle": [30, 30],
+  "stderr_empty": true,
+  "autostart_after_reboot": false,
+  "platform_services_healthy": 4,
+  "api_release": "photos-20261108",
+  "platform_containers_replaced": false,
+  "database_migrations": false
+}
