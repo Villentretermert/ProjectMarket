@@ -16,3 +16,5 @@ third_party/embedded-68958f1/locks/* -text
 third_party/debian-68958f1/metadata/* -text
 third_party/debian-68958f1/manifest.json text eol=lf
 third_party/delivery-68958f1/recipe.json text eol=lf
+
+third_party/**/binding.json text eol=lf

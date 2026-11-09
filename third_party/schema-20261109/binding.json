@@ -1,0 +1,424 @@
+{
+  "schema": "marketob-release-binding/v1",
+  "release_commit": "896449bde9cdec4cea9f7ce29eba6910285da30e",
+  "images": {
+    "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
+    "db": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+    "proxy": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b"
+  },
+  "inventory": "third_party/schema-20261109/inventory.json",
+  "component_occurrences": 584,
+  "bound_files": {
+    "third_party/68958f1/inventory.json": "246af97f6dc54724b96efe4d422b811d20da164ce48e4c380dd191238be0b041",
+    "third_party/68958f1/texts.tar.gz": "19e6f3d8390f11539321b11ff183e5605391bf376b27617cedc0c36bc42cce6d",
+    "third_party/68958f1-native/inventory.json": "a3a783d35c117823bca052ee3eb577d8c2d3464d8d3cf518d0fc2175d903e90c",
+    "third_party/68958f1-native/texts.tar.gz": "21ee42cdfe173ce399a83a29dd1589719389edc9b94b2ae1b531bb9966a5e07c",
+    "third_party/68958f1-crate-notices/inventory.json": "e060f8ca17dacfa90b182c64a99c1f8c0b3c44c64b5394f4654d6a5832fc94ad",
+    "third_party/68958f1-crate-notices/texts.tar.gz": "174e6b1918aa7b3050241749917ac548100ce04708c3a0e7136fb2bbf8a5ef4c",
+    "third_party/native-68958f1/sources.json": "067c2757df7f023e6ed47a0b757f6ddc04a5cdce192aa0761f97f3edbb888bc7",
+    "third_party/debian-68958f1/manifest.json": "506488bdca23c5493f518fcc69dfd95d92e33762846359d3b4bb8ba8956b7bdd",
+    "third_party/alpine-68958f1/sources.json": "66a77b5b5e33aa5acc5d0d88db14e6bce451c9ad3db28c94fd001a4d4aae7d82",
+    "third_party/delivery-68958f1/recipe.json": "79b23328c2a7ef9a57efb3e6f0885b935d530b203634637f62d9d1866803bdb8",
+    "third_party/schema-20261109/inventory.json": "f11860d84d37417ca2ec75f9a398632eb67c6033490a8b3c46dd4f00ccb81340",
+    "third_party/schema-20261109/texts.tar.gz": "19e6f3d8390f11539321b11ff183e5605391bf376b27617cedc0c36bc42cce6d"
+  },
+  "probes": {
+    "api": {
+      "image_id": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+      "own": {
+        "marketob-contracts": {
+          "license": "Apache-2.0",
+          "files": {
+            "contracts/__init__.py": {
+              "sha256": "5d06e2d93a836ede9b2d5e25c4418894766f24789acc10bda01d988860d42270",
+              "normalize_lf": true
+            },
+            "contracts/product_image.py": {
+              "sha256": "b2dc34808bfae788d72a34b67e9576a5b28115cbfae4d6793e78b2c8257cf1ac",
+              "normalize_lf": true
+            },
+            "contracts/py.typed": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "normalize_lf": true
+            },
+            "contracts/schemas.json": {
+              "sha256": "463609f6275f49ec775b875eb08814a6477abcb2410e94004552df5e0b7bd340",
+              "normalize_lf": true
+            }
+          },
+          "notices": {
+            "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+            "NOTICE": "1576a5be1ff84d686f608e2011101ce6b93a4093e83c8b21d3af7dad4d818c53"
+          },
+          "generated_launchers": {}
+        },
+        "marketob-api": {
+          "license": "Apache-2.0",
+          "files": {
+            "marketob_api/__init__.py": {
+              "sha256": "cca2062a88c298e5ae74156e3a57c6cff94f453ed7eec9668f230190a6a35eec",
+              "normalize_lf": true
+            },
+            "marketob_api/__main__.py": {
+              "sha256": "f3f7a3a6c64b8f8fb1d591a74231920d12f8e63997ee581bb284ddca3833bf87",
+              "normalize_lf": true
+            },
+            "marketob_api/access.py": {
+              "sha256": "18486676d06f3d1d020402deb38fc771a9aed25d31cb393705cdb28d3b76f2eb",
+              "normalize_lf": true
+            },
+            "marketob_api/access_changes.py": {
+              "sha256": "4b073746abf471b51775868dedf8d88169dee4ee0ca22be20d5e8040582a95a0",
+              "normalize_lf": true
+            },
+            "marketob_api/actions.py": {
+              "sha256": "87f4e7e19a983e4365d6de1e383dcc9dc2f7c587f7defb088eb3419c2a04c971",
+              "normalize_lf": true
+            },
+            "marketob_api/app.py": {
+              "sha256": "8d0f5239f3d9ebb7e0e8af1fe215d4f0e0971d846e645c959b7dd0e254e3bc3b",
+              "normalize_lf": true
+            },
+            "marketob_api/auth_routes.py": {
+              "sha256": "d7256b9af43c55c427973a809d397296203851099e37ff70b8b1761a2d29fd1a",
+              "normalize_lf": true
+            },
+            "marketob_api/bot_identity.py": {
+              "sha256": "ca6c5f81e282f37b9d769d50cbfd9e5b42a0bc19e739f71e9027365424db1cdf",
+              "normalize_lf": true
+            },
+            "marketob_api/bot_routes.py": {
+              "sha256": "e107351109928c437582956478daaa544c33e19740286db14ab9923d708a3281",
+              "normalize_lf": true
+            },
+            "marketob_api/channels.py": {
+              "sha256": "af2594e25950f65fb9c407fd26577b45942e03e478df151256f7036e4f92138f",
+              "normalize_lf": true
+            },
+            "marketob_api/config.py": {
+              "sha256": "ccbc1b81c4a83ff23ea0bd64605351915a268fb838f064974b4aba91485a80c2",
+              "normalize_lf": true
+            },
+            "marketob_api/cursors.py": {
+              "sha256": "ec8a457f9aa14b77ca717d671c775e1d7607057997adbf62f1b829091b041bc0",
+              "normalize_lf": true
+            },
+            "marketob_api/database.py": {
+              "sha256": "3e0acdd823c91811c1ec36c242544e2362d8621709708b92d9aa1368fc330ec5",
+              "normalize_lf": true
+            },
+            "marketob_api/errors.py": {
+              "sha256": "fda43e19d7db67f2abab289438b381174dd4c74906cafe354d46e7ef6b107fdc",
+              "normalize_lf": true
+            },
+            "marketob_api/favorites.py": {
+              "sha256": "7fd378a0ead6d97e75a95a7ea4c1cb8ca9a23f44788789d97c1a4578a5895298",
+              "normalize_lf": true
+            },
+            "marketob_api/health.py": {
+              "sha256": "2114793618d413db38eccec23c499d2c82a3030190b88e9dda9c6c91b047b9dc",
+              "normalize_lf": true
+            },
+            "marketob_api/identity.py": {
+              "sha256": "ef2a3e043b612b20b376c680b1c1481727db56dccdfbab3c93c122eb94156e7e",
+              "normalize_lf": true
+            },
+            "marketob_api/ingestion.py": {
+              "sha256": "0d8ad0615daafba26524efc8d7ae5939a77827bd2da91717dce70142f135ce31",
+              "normalize_lf": true
+            },
+            "marketob_api/maintenance.py": {
+              "sha256": "b2da510f304099282bc019d31aaf766e928bbded09d144306aaea045c52df4a2",
+              "normalize_lf": true
+            },
+            "marketob_api/migrate.py": {
+              "sha256": "30f18ff0a82202f98f8bd2cd4ba8b36dee7d663a2dd159a5524283e33a74be31",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/001_identity.sql": {
+              "sha256": "f1c73eb85eeae53f5ace4bd85f12c6ed2cb57a4b12c863c1048b09d37a48667f",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/002_bots.sql": {
+              "sha256": "5a272707aec61f51900bba25587c013a65147d8af12e700c56f4bbf57c9e808f",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/003_ingestion.sql": {
+              "sha256": "4052e8ed5ced2664cc293e1fa9dfc580cc5f2975623f718806aa09068f2e2752",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/004_channels.sql": {
+              "sha256": "8183f48a58af25b7fd16c34b99bb5e4152ead8f92c8de1e712375b89a84bcbf5",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/005_actions.sql": {
+              "sha256": "85cb196ef50fa533a362a93da2eabee10f9bef4377b1bba549430e96a0ed8665",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/006_teams.sql": {
+              "sha256": "3a99abc16409f45f6556ae07ac72c7a9d31736a380f41e0902922e7f3e957c1a",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/007_favorites.sql": {
+              "sha256": "5bc6f571df02f17777014a83bdeb17d3f29307458613d3149dcaacdb5809575e",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/008_personal_pages.sql": {
+              "sha256": "2bcc251363b787095ee2753504d66bb708caf5cdbe1d53187f0d027bb4362bb4",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/009_shares.sql": {
+              "sha256": "fc91a18904adfd8021903b7dd81520c8212fdf26f926a1b7a5dc15514ac3c6af",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/010_updates.sql": {
+              "sha256": "e0d1d996c770cfc658b8a5167ef6f131caec91922b90801b483bbb5a71a823bf",
+              "normalize_lf": true
+            },
+            "marketob_api/migrations/011_operations.sql": {
+              "sha256": "298a07595dd4ffe434d1f4cb89134d8d63a065c8d1c11684122cc0761c6d3d9d",
+              "normalize_lf": true
+            },
+            "marketob_api/observability.py": {
+              "sha256": "f7a73423b7e118b23b052e94629493388223e6ce7d8f7f930a4cf292553211c6",
+              "normalize_lf": true
+            },
+            "marketob_api/operations.py": {
+              "sha256": "67f24e8d1daa125f9be5dfd27a68d0c8817ffe394d2fceba549baf3eea6dcf9b",
+              "normalize_lf": true
+            },
+            "marketob_api/payloads.py": {
+              "sha256": "861958859421bb76daf648fbc2556ba73f5982385709eafbe5a06c0b97cdb7b0",
+              "normalize_lf": true
+            },
+            "marketob_api/personal_pages.py": {
+              "sha256": "3bbad6ea540301435107b2260750fee036c19dac7814bfc56be6bcec004b1da8",
+              "normalize_lf": true
+            },
+            "marketob_api/privacy.py": {
+              "sha256": "748efb0a76713346145a78cb0928a255acb1ce50395c02424e7c9a7f64303b98",
+              "normalize_lf": true
+            },
+            "marketob_api/quotas.py": {
+              "sha256": "ab586abd176ed32f6d8dee3df47e334ae1206ba3c3a932e4d46909b741bd03f3",
+              "normalize_lf": true
+            },
+            "marketob_api/request_state.py": {
+              "sha256": "cbb9568ec11186bb76624a7f9eef1ea9e430343ff4c80f6e13994e7f65c58ad6",
+              "normalize_lf": true
+            },
+            "marketob_api/sharing.py": {
+              "sha256": "a51b95e9a3db651be6dc6bef409f55a937f25a0a02219294292b38a88797c6f5",
+              "normalize_lf": true
+            },
+            "marketob_api/teams.py": {
+              "sha256": "873db8957f8ace382ed74941ea7e2bd8bbdc5187360ead39299e39856d1b8fcd",
+              "normalize_lf": true
+            },
+            "marketob_api/transport.py": {
+              "sha256": "b62c2442e1c3557bb30a81146b56b1b425e8f9ec897c5db46a1e7ca4991c9468",
+              "normalize_lf": true
+            },
+            "marketob_api/updates.py": {
+              "sha256": "cf56dc4fc35632319f31c31c3d66074fa0050f1cb257807f440b1db3879f949a",
+              "normalize_lf": true
+            },
+            "marketob_api/web/actions.js": {
+              "sha256": "3a5573c9fbce763746ca1fee453d3594546a876f4488cf5cca58b9e6cc43577a",
+              "normalize_lf": true
+            },
+            "marketob_api/web/api.js": {
+              "sha256": "79ab2ff22f2c26ea573b72626accb12296acb4ca3ce06ee93da814b4ff00b00a",
+              "normalize_lf": true
+            },
+            "marketob_api/web/app.js": {
+              "sha256": "b4537fa12c0107b53e05b17b570b0640fffbc4be76aba41a169768ee62c16b3f",
+              "normalize_lf": true
+            },
+            "marketob_api/web/block-catalog.js": {
+              "sha256": "ccc4d34d6d1915bcf87bdb6eea1e913c6ef8359ec426b8d3cde351500f93b6c5",
+              "normalize_lf": true
+            },
+            "marketob_api/web/dom.js": {
+              "sha256": "292ed7e1ea88647cb674661600be7edc8d76048f732a780292251158fa3f5db3",
+              "normalize_lf": true
+            },
+            "marketob_api/web/favorites.js": {
+              "sha256": "01f7588138244037b363b02f18ca22a050ebbc893eb78690c19657c5079bf5b0",
+              "normalize_lf": true
+            },
+            "marketob_api/web/index.html": {
+              "sha256": "31152ff4b661a6f24add240a28636436e6ab12ba14de88d1d270e00c5cd8dd93",
+              "normalize_lf": true
+            },
+            "marketob_api/web/live.js": {
+              "sha256": "f63f2195fa683505c42ac66cb547e28485c63e5debb795b2efc0e8f841ce21be",
+              "normalize_lf": true
+            },
+            "marketob_api/web/privacy.js": {
+              "sha256": "bf7173049047da2711d2b852e5de76c96d5b0e5939366b6dc489afdf70b907ad",
+              "normalize_lf": true
+            },
+            "marketob_api/web/render.js": {
+              "sha256": "75ba6b134be71136ac466f1b91e6b1496b8c11f81c84ad5b2f7dce7c91079206",
+              "normalize_lf": true
+            },
+            "marketob_api/web/sharing.js": {
+              "sha256": "5b3bde76180995a4f562a88a2e13b5c89833e9dbf958c9708487cf114b2a38b6",
+              "normalize_lf": true
+            },
+            "marketob_api/web/space.js": {
+              "sha256": "083edb4674744cac0e7665fd3dc704e54eced64818570d64c9f8604c3750ba1a",
+              "normalize_lf": true
+            },
+            "marketob_api/web/studio-editor.js": {
+              "sha256": "2de8b6b32b6f35ef8b9dcf3ed3d7251cb4a14e1d1e23cbf65558ebf25ffbec2a",
+              "normalize_lf": true
+            },
+            "marketob_api/web/studio.js": {
+              "sha256": "718d4aca5b923831e549af260206779aee08cc279e8de4d185a683d89d839678",
+              "normalize_lf": true
+            },
+            "marketob_api/web/styles.css": {
+              "sha256": "16c619213e9720d5133486051176e65411493b2c297fb19e5fdd1a528f5bd6be",
+              "normalize_lf": true
+            },
+            "marketob_api/web_routes.py": {
+              "sha256": "0223a47a8fc7e00a5174ba1c32d575c947618448bc3bf9f67b43393b06315465",
+              "normalize_lf": true
+            },
+            "marketob_api/worker_health.py": {
+              "sha256": "b4a9a23b01c743cb4b7d6f6ccd21986249eac49024db2455ff181a9a2f8976eb",
+              "normalize_lf": true
+            },
+            "marketob_api/workspace_access.py": {
+              "sha256": "6a72e62e9366b03bc79a4d93022cc98b077496e338640f25788be1618b446fd5",
+              "normalize_lf": true
+            }
+          },
+          "notices": {
+            "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+            "NOTICE": "1576a5be1ff84d686f608e2011101ce6b93a4093e83c8b21d3af7dad4d818c53"
+          },
+          "generated_launchers": {
+            "../../../bin/marketob-api": "d2f089ecc6a38416e11d72197a84641b6940136488436317156cb3cc3f7a92d0"
+          }
+        }
+      },
+      "native": {
+        "psycopg_c/_psycopg.cpython-314-x86_64-linux-gnu.so": "d109209bbcc5211efc027796c9ecfdd1d63fe64eb0afb10611ab223a83a3829f",
+        "psycopg_c/pq.cpython-314-x86_64-linux-gnu.so": "c3a285298290ac2a1e1a20a5ef1aee606554af92693b87b6d45741b04b658332",
+        "jsonschema_rs/jsonschema_rs.abi3.so": "fab639290cf0d44f439d45fb480bb2b630a12eb57a0218c5e9e22f42a0bae65a",
+        "rpds/rpds.cpython-314-x86_64-linux-gnu.so": "6ccfc934fe55ba4e5fe23334a0ee537d2197b60931198746ba83ae07b94d735e",
+        "pydantic_core/_pydantic_core.cpython-314-x86_64-linux-gnu.so": "f1c6034d9d708521893241e1f597532aab8c334fddc10b8773f6a73e0503577b",
+        "_cffi_backend.cpython-314-x86_64-linux-gnu.so": "7d1eff7fbb874ee72228fd426103da2b9eef528979156077bdec736d5b4f61a2",
+        "_argon2_cffi_bindings/_ffi.abi3.so": "c16944f0fe69f501255092d4f6e8f92f89b62ede92e60904ab30b5486601e784"
+      }
+    },
+    "bot": {
+      "image_id": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
+      "own": {
+        "marketob-demo-bots": {
+          "license": "Apache-2.0",
+          "files": {
+            "marketob_bots/__init__.py": {
+              "sha256": "45ae06b560e49baeb76727bd2c93163aea339795f9c5a0fa3ec9d39883473cc1",
+              "normalize_lf": true
+            },
+            "marketob_bots/catalog.py": {
+              "sha256": "c95b68e092510b2e7f21c19d460d74fbe580ba5daaf53cb177f8f7410de70111",
+              "normalize_lf": true
+            },
+            "marketob_bots/common.py": {
+              "sha256": "7534b37dd552aaf6048628ce2e59a6992d8f964fea1b20b0f2fceedfd6035bec",
+              "normalize_lf": true
+            },
+            "marketob_bots/demo_photo.py": {
+              "sha256": "2ed5be81b33fe0c43d8cc2e51c946724f20899ebb2107bc7ced4f876b6ca1c10",
+              "normalize_lf": true
+            },
+            "marketob_bots/fixtures/rss.xml": {
+              "sha256": "707b10c0798e2627c0a7434394b9faf6701a1565218ce61007e9ff593258580f",
+              "normalize_lf": true
+            },
+            "marketob_bots/news.py": {
+              "sha256": "5c3fc9f97073dbe627af8d93b7414b458c07604ff8c81faf4363e64c2632533f",
+              "normalize_lf": true
+            },
+            "marketob_bots/state.py": {
+              "sha256": "b027b13c192206b2774aeafff39ebbfd634e6a083e0a4d37ea010d5ed96e86ef",
+              "normalize_lf": true
+            }
+          },
+          "notices": {
+            "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+            "NOTICE": "1576a5be1ff84d686f608e2011101ce6b93a4093e83c8b21d3af7dad4d818c53"
+          },
+          "generated_launchers": {}
+        },
+        "marketob-contracts": {
+          "license": "Apache-2.0",
+          "files": {
+            "contracts/__init__.py": {
+              "sha256": "5d06e2d93a836ede9b2d5e25c4418894766f24789acc10bda01d988860d42270",
+              "normalize_lf": true
+            },
+            "contracts/product_image.py": {
+              "sha256": "b2dc34808bfae788d72a34b67e9576a5b28115cbfae4d6793e78b2c8257cf1ac",
+              "normalize_lf": true
+            },
+            "contracts/py.typed": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "normalize_lf": true
+            },
+            "contracts/schemas.json": {
+              "sha256": "463609f6275f49ec775b875eb08814a6477abcb2410e94004552df5e0b7bd340",
+              "normalize_lf": true
+            }
+          },
+          "notices": {
+            "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+            "NOTICE": "1576a5be1ff84d686f608e2011101ce6b93a4093e83c8b21d3af7dad4d818c53"
+          },
+          "generated_launchers": {}
+        },
+        "marketob-bot-sdk": {
+          "license": "Apache-2.0",
+          "files": {
+            "marketob_sdk/__init__.py": {
+              "sha256": "a4766e75d82426f22612997005950b0358b9b3743aed015cd553af0f004285c8",
+              "normalize_lf": true
+            },
+            "marketob_sdk/client.py": {
+              "sha256": "cd55dbba86e5bc9a86202147813db8d011b221a6a2364704265995995096bd38",
+              "normalize_lf": true
+            },
+            "marketob_sdk/types.py": {
+              "sha256": "7b4304d0acbc110e89d03201964e2ffd652edd4e3cd79aa7e33e1ea770a5e204",
+              "normalize_lf": true
+            }
+          },
+          "notices": {
+            "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+            "NOTICE": "1576a5be1ff84d686f608e2011101ce6b93a4093e83c8b21d3af7dad4d818c53"
+          },
+          "generated_launchers": {}
+        }
+      },
+      "native": {
+        "rpds/rpds.cpython-314-x86_64-linux-gnu.so": "6ccfc934fe55ba4e5fe23334a0ee537d2197b60931198746ba83ae07b94d735e"
+      }
+    }
+  },
+  "coverage_state": "partial",
+  "open_items": [
+    "alpine-attribution",
+    "native-build-graph",
+    "nested-vendor-attribution",
+    "remaining-source-inputs",
+    "full-rebuild",
+    "other-platforms",
+    "external-release-acceptance"
+  ]
+}
