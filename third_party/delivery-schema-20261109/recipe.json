@@ -1,0 +1,65 @@
+{
+  "release_commit": "896449bde9cdec4cea9f7ce29eba6910285da30e",
+  "images": {
+    "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
+    "db": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+    "proxy": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b"
+  },
+  "bound_files": {
+    "third_party/68958f1/inventory.json": "246af97f6dc54724b96efe4d422b811d20da164ce48e4c380dd191238be0b041",
+    "third_party/68958f1/texts.tar.gz": "19e6f3d8390f11539321b11ff183e5605391bf376b27617cedc0c36bc42cce6d",
+    "third_party/68958f1-native/inventory.json": "a3a783d35c117823bca052ee3eb577d8c2d3464d8d3cf518d0fc2175d903e90c",
+    "third_party/68958f1-native/texts.tar.gz": "21ee42cdfe173ce399a83a29dd1589719389edc9b94b2ae1b531bb9966a5e07c",
+    "third_party/68958f1-crate-notices/inventory.json": "e060f8ca17dacfa90b182c64a99c1f8c0b3c44c64b5394f4654d6a5832fc94ad",
+    "third_party/68958f1-crate-notices/texts.tar.gz": "174e6b1918aa7b3050241749917ac548100ce04708c3a0e7136fb2bbf8a5ef4c",
+    "third_party/native-68958f1/sources.json": "067c2757df7f023e6ed47a0b757f6ddc04a5cdce192aa0761f97f3edbb888bc7",
+    "third_party/debian-68958f1/manifest.json": "506488bdca23c5493f518fcc69dfd95d92e33762846359d3b4bb8ba8956b7bdd",
+    "third_party/alpine-68958f1/sources.json": "66a77b5b5e33aa5acc5d0d88db14e6bce451c9ad3db28c94fd001a4d4aae7d82",
+    "third_party/delivery-68958f1/recipe.json": "79b23328c2a7ef9a57efb3e6f0885b935d530b203634637f62d9d1866803bdb8",
+    "third_party/schema-20261109/inventory.json": "f11860d84d37417ca2ec75f9a398632eb67c6033490a8b3c46dd4f00ccb81340",
+    "third_party/schema-20261109/texts.tar.gz": "19e6f3d8390f11539321b11ff183e5605391bf376b27617cedc0c36bc42cce6d",
+    "third_party/schema-20261109/binding.json": "0b7647c3013349e35321738fed6ed2308ce268c0fa3310c40308e664d53e59b2"
+  },
+  "sources": [
+    {
+      "name": "debian.tar",
+      "size": 549560320,
+      "sha256": "d3393b02aa53dd684280ef87ea9a91b10da2f991aa4ec75eab1ce4d427f96ae7",
+      "scope": "95 source package/version pairs, 304 pool files, 11 metadata files"
+    },
+    {
+      "name": "alpine.tar.gz",
+      "size": 80916989,
+      "sha256": "b6afc1f597c2f0e173e08ecfd34387da6ce46048289c399e8faff45161ecc21b",
+      "scope": "187 verified recipe/source inputs for 20 origins; four attribution gaps remain"
+    },
+    {
+      "name": "python-rust.tar.gz",
+      "size": 78719279,
+      "sha256": "983b9cf9026864e4bc5cd17e6a76ce1327f1d1f4aac7c81e1ae7343c53aa71d4",
+      "scope": "482 inputs: 6 Python sdists, 450 crates, 26 upstream files"
+    },
+    {
+      "name": "modified-psycopg.tar.gz",
+      "size": 699587,
+      "sha256": "8ead8d8ebe3e053b01d9722e95aecdeb6aaeb1eb1cae628c87cf188d9df350af",
+      "scope": "Source tree from the 7 November recipient replacement demonstration"
+    }
+  ],
+  "open_items": [
+    "alpine-attribution",
+    "native-build-graph",
+    "nested-vendor-attribution",
+    "remaining-source-inputs",
+    "full-rebuild",
+    "other-platforms",
+    "external-release-acceptance"
+  ],
+  "release": "schema-20261109",
+  "release_binding": "third_party/schema-20261109/binding.json",
+  "inventory": "third_party/schema-20261109/inventory.json",
+  "archive": "marketob-sources-schema-20261109.tar",
+  "readme": "docs/licensing/SOURCE_HANDOVER_SCHEMA.md",
+  "gaps": "third_party/delivery-schema-20261109/GAPS.md"
+}

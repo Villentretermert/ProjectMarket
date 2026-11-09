@@ -163,17 +163,42 @@ def pack(destination: Path, files: dict[str, Path], identity: dict[str, Any]) ->
     return {"sha256": checksum, "bytes": destination.stat().st_size, "manifest": manifest}
 
 
-def check_recipe(root: Path = ROOT) -> dict[str, Any]:
-    recipe = json_object((root / RECIPE).read_bytes())
+def check_recipe(root: Path = ROOT, recipe_path: str = RECIPE) -> dict[str, Any]:
+    safe_name(recipe_path)
+    recipe = json_object((root / recipe_path).read_bytes())
     for name, checksum in recipe["bound_files"].items():
         safe_name(name)
         if file_hash(root / name) != checksum:
             raise ValueError("Release evidence changed: " + name)
-    inventory = json_object((root / "third_party/68958f1-native/inventory.json").read_bytes())
+    current_keys = {"release_binding", "inventory", "readme", "gaps", "archive", "release"}
+    if current_keys & recipe.keys():
+        if not current_keys <= recipe.keys():
+            raise ValueError("Incomplete current release recipe")
+        # Imported only for assembly/review; the standalone verifier needs no checkout.
+        from scripts.release_binding import verify as verify_binding
+
+        for key in ("release_binding", "inventory", "readme", "gaps", "archive"):
+            safe_name(recipe[key])
+        if "/" in recipe["archive"] or not recipe["archive"].endswith(".tar"):
+            raise ValueError("Expected an archive basename")
+        if not {recipe[k] for k in ("release_binding", "inventory")} <= set(recipe["bound_files"]):
+            raise ValueError("Missing release evidence binding")
+        binding = verify_binding(root / recipe["release_binding"], root)
+        for key in ("images", "release_commit", "open_items"):
+            if recipe[key] != binding[key]:
+                raise ValueError("Recipe differs from release binding: " + key)
+        if recipe["inventory"] != binding["inventory"]:
+            raise ValueError("Recipe selects a different inventory")
+        previous = json_object((root / RECIPE).read_bytes())
+        if recipe["sources"] != previous["sources"]:
+            raise ValueError("Source inputs require a new reviewed binding")
+    inventory = json_object(
+        (root / recipe.get("inventory", "third_party/68958f1-native/inventory.json")).read_bytes()
+    )
     actual = {i["role"]: i["id"] for i in inventory["images"]}
     if (
         actual != recipe["images"]
-        or inventory["release"] != recipe["release_commit"][:7]
+        or inventory["release"] != recipe.get("release", recipe["release_commit"][:7])
         or set(actual) != {"api", "bot", "db", "proxy"}
         or not recipe["open_items"]
     ):
@@ -231,10 +256,10 @@ def git_snapshot(root: Path, revision: str, target: Path) -> int:
     return len(seen)
 
 
-def build(output: Path, inputs: dict[str, Path]) -> dict[str, Any]:
+def build(output: Path, inputs: dict[str, Path], recipe_path: str = RECIPE) -> dict[str, Any]:
     if output.exists() or not output.resolve().is_relative_to(ROOT / ".local"):
         raise ValueError("Use a new output directory below the repository's .local")
-    recipe = check_recipe()
+    recipe = check_recipe(recipe_path=recipe_path)
     expected = {r["name"]: r for r in recipe["sources"]}
     if set(inputs) != set(expected):
         raise ValueError("Supply each source archive from the recipe exactly once")
@@ -252,7 +277,7 @@ def build(output: Path, inputs: dict[str, Path]) -> dict[str, Any]:
         raise ValueError("Commit tracked changes before assembling a versioned handover")
     tooling = git("rev-parse", "HEAD").decode().strip()
     # Git normalizes JSON line endings on Windows; bind the parsed recipe values.
-    if json_object(git("show", "HEAD:" + RECIPE)) != recipe:
+    if json_object(git("show", "HEAD:" + recipe_path)) != recipe:
         raise ValueError("Recipe values must match the tooling commit")
     output.mkdir(parents=True)
     stage = output / "staging"
@@ -265,8 +290,8 @@ def build(output: Path, inputs: dict[str, Path]) -> dict[str, Any]:
         snapshot_files[label] = git_snapshot(ROOT, revision, target)
         files["sources/" + label + ".tar"] = target
     for name, tracked in {
-        "README.md": "docs/licensing/SOURCE_HANDOVER.md",
-        "GAPS.md": "third_party/delivery-68958f1/GAPS.md",
+        "README.md": recipe.get("readme", "docs/licensing/SOURCE_HANDOVER.md"),
+        "GAPS.md": recipe.get("gaps", "third_party/delivery-68958f1/GAPS.md"),
         "LICENSE": "LICENSE",
         "NOTICE": "NOTICE",
         "verify_bundle.py": "scripts/delivery_bundle.py",
@@ -274,8 +299,9 @@ def build(output: Path, inputs: dict[str, Path]) -> dict[str, Any]:
         target = stage / name
         target.write_bytes(git("show", tooling + ":" + tracked))
         files[name] = target
+    archive_name = recipe.get("archive", "marketob-sources-68958f1.tar")
     result = pack(
-        output / "marketob-sources-68958f1.tar",
+        output / archive_name,
         files,
         {
             "release_commit": recipe["release_commit"],
@@ -287,7 +313,7 @@ def build(output: Path, inputs: dict[str, Path]) -> dict[str, Any]:
             "git_snapshot_files": snapshot_files,
         },
     )
-    result["archive"] = "marketob-sources-68958f1.tar"
+    result["archive"] = archive_name
     (output / "receipt.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     (output / "SHA256SUMS").write_text(result["sha256"] + "  " + result["archive"] + "\n")
     for name in ("README.md", "verify_bundle.py"):
@@ -302,6 +328,9 @@ def main() -> None:
     parser.add_argument("--check-recipe", action="store_true")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--source", action="append", default=[], metavar="NAME=PATH")
+    parser.add_argument(
+        "--recipe", default=RECIPE, help="Repository-relative recipe; historical default preserved"
+    )
     args = parser.parse_args()
     if args.verify:
         if not args.sha256:
@@ -318,7 +347,7 @@ def main() -> None:
             )
         )
     elif args.check_recipe:
-        recipe = check_recipe()
+        recipe = check_recipe(recipe_path=args.recipe)
         print(json.dumps({"recipe": "verified", "source_archives": len(recipe["sources"])}))
     elif args.output:
         inputs = {}
@@ -327,7 +356,7 @@ def main() -> None:
             if not separator or name in inputs:
                 parser.error("Use each NAME=PATH once")
             inputs[name] = Path(path).resolve()
-        result = build(args.output.resolve(), inputs)
+        result = build(args.output.resolve(), inputs, args.recipe)
         print(json.dumps({k: v for k, v in result.items() if k != "manifest"}))
     else:
         parser.error("Select --verify, --check-recipe or --output")

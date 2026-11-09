@@ -137,6 +137,45 @@ def test_release_recipe_binds_current_evidence() -> None:
     assert len(recipe["sources"]) == 4
 
 
+def test_current_recipe_preserves_historical_source_inputs() -> None:
+    current = check_recipe(recipe_path="third_party/delivery-schema-20261109/recipe.json")
+    previous = check_recipe()
+    assert current["release_commit"] == "896449bde9cdec4cea9f7ce29eba6910285da30e"
+    assert current["sources"] == previous["sources"]
+    assert current["images"]["api"] != previous["images"]["api"]
+    assert current["archive"] == "marketob-sources-schema-20261109.tar"
+
+
+@pytest.mark.parametrize("change", ["image", "commit", "gaps", "path", "missing", "sources"])
+def test_current_recipe_rejects_stale_or_unbound_metadata(
+    tmp_path: Path, change: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import scripts.delivery_bundle as module
+
+    path = ROOT / "third_party/delivery-schema-20261109/recipe.json"
+    recipe = json.loads(path.read_bytes())
+    if change == "image":
+        recipe["images"]["api"] = "sha256:" + "0" * 64
+    elif change == "commit":
+        recipe["release_commit"] = "0" * 40
+    elif change == "gaps":
+        recipe["open_items"] = ["hidden"]
+    elif change == "path":
+        recipe["archive"] = "../escape.tar"
+    elif change == "missing":
+        del recipe["release_binding"]
+    else:
+        recipe["sources"][0]["sha256"] = "0" * 64
+    # Use real material verification while substituting only the recipe under review.
+    original = module.json_object
+    raw = path.read_bytes()
+    monkeypatch.setattr(
+        module, "json_object", lambda data: recipe if data == raw else original(data)
+    )
+    with pytest.raises(ValueError):
+        check_recipe(recipe_path=path.relative_to(ROOT).as_posix())
+
+
 def test_git_snapshot_ignores_windows_checkout_conversion(tmp_path: Path) -> None:
     repository = tmp_path / "repo"
     repository.mkdir()
