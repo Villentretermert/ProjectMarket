@@ -18,8 +18,15 @@ from defusedxml.ElementTree import fromstring  # type: ignore[import-untyped]
 from marketob_sdk import BotClient
 from marketob_sdk.client import NoRedirect
 
-from marketob_bots.common import RSS_URL, Configuration, FeedError, run
+from marketob_bots.common import Configuration, FeedError, run
 from marketob_bots.state import Journal
+
+# Attribution is tied to a known URL, never inferred from untrusted feed markup.
+SOURCES = {
+    "https://meduza.io/rss/all": "Meduza · https://meduza.io",
+    "https://meduza.io/rss/en/all": "Meduza (English) · https://meduza.io/en",
+    "https://feeds.bbci.co.uk/news/world/rss.xml": "BBC News · https://www.bbc.com/news",
+}
 
 
 class PlainText(HTMLParser):
@@ -162,9 +169,7 @@ def cycle(client: BotClient, journal: Journal, config: Configuration) -> dict[st
     source = (
         "Synthetic RSS fixture"
         if config.offline
-        else "BBC News · https://www.bbc.com/news"
-        if config.rss_url == RSS_URL
-        else "Configured RSS feed"
+        else SOURCES.get(config.rss_url, "Configured RSS feed")
     )
     for index in range(5):
         if index < len(items):

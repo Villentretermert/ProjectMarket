@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic test content, not an article or feed snapshot from Meduza. -->
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Synthetic feed</title>
+    <item>
+      <title><![CDATA[Демо: <b>новости</b> &amp; события]]></title>
+      <link>https://example.invalid/news/demo-one</link>
+      <guid>synthetic-one</guid>
+      <enclosure url="https://example.invalid/image.jpg" type="image/jpeg"/>
+      <description><![CDATA[<img src="https://example.invalid/tracker"/>ARTICLE_MUST_NOT_COPY]]></description>
+      <content:encoded><![CDATA[<p>FULL_ARTICLE_MUST_NOT_COPY</p>]]></content:encoded>
+      <pubDate>Mon, 09 Nov 2026 03:30:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Demo: second update</title>
+      <link>https://example.invalid/news/demo-two</link>
+      <pubDate>Sun, 08 Nov 2026 21:00:00 -0400</pubDate>
+    </item>
+    <item>
+      <title>Demo: unsafe link omitted</title>
+      <link>javascript:alert(1)</link>
+      <pubDate>invalid</pubDate>
+    </item>
+    <item>
+      <title>Demo: credential link omitted</title>
+      <link>https://user:password@example.invalid/story</link>
+      <pubDate>Mon, 09 Nov 2026 02:00:00</pubDate>
+    </item>
+    <item>
+      <title>Demo: no date</title>
+      <link>https://example.invalid/news/demo-five</link>
+    </item>
+    <item>
+      <title>Demo: counted in chart, outside the five slots</title>
+      <link>https://example.invalid/news/demo-six</link>
+      <pubDate>Sun, 08 Nov 2026 10:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

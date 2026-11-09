@@ -24,7 +24,7 @@ share or print these files. Windows files inherit directory ACLs; use a private
 user directory. The scripts request mode 0600 on platforms supporting POSIX modes.
 
 `--offline` seeds synthetic RSS data without internet. Omit it to seed the public
-BBC World feed. The continuous news command above reads the real feed every 300 seconds;
+Meduza Russian feed. The continuous news command above reads the real feed every 300 seconds;
 add `--offline` to keep synthetic data. Change `MARKETOB_RSS_URL` in `news.env`
 for another public HTTPS RSS/Atom feed. Stop each process with Ctrl+C. Restart with
 the **same** journal. Never run two writers with separate journals for one bot.
@@ -66,15 +66,25 @@ with deployment state before migrating; see [backup/restore](BACKUP_RESTORE.md).
 | Hand soap / rice | Request purchase → confirmed |
 | Paper towels | Request purchase → failed (simulated supplier decline) |
 | Milk | Out of stock; API rejects purchase request |
-| Public RSS | Five latest title/date/source-link blocks |
+| Public RSS | First five title/date/source-link blocks, in feed order |
 | Feed chart | Counts by publication date in the **currently fetched window** |
 
 There are no payments or shipments. Quantity is one. Existing feed data remains
 available if fetching/parsing fails. The parser rejects DTD/external entities,
 limits XML to 1 MiB and examines at most 100 items; it publishes no full articles.
 Missing dates are omitted from the chart. Missing feed slots get explicit placeholders.
-The source is configurable; the current default is BBC World following the owner's
-general-news preference. Offline fixtures are synthetic and do not fetch this feed.
+The default is `https://meduza.io/rss/all`, following the owner's S06 source choice.
+Set `MARKETOB_RSS_URL=https://meduza.io/rss/en/all` for the English edition.
+The interface remains English; headlines keep the source language. Known Meduza
+and legacy BBC URLs receive explicit publisher attribution; custom feeds receive
+the generic source label. Offline fixtures are synthetic and do not fetch this feed.
+
+To change an existing pilot, stop its news process, back up `news.env` and the
+SQLite journal, change only `MARKETOB_RSS_URL` in `news.env`, then restart with the
+same key/channel/journal. Do not run two publishers for one journal. Existing
+`news_1`–`news_5` references in My Space remain valid. Source availability depends
+on your network; fetching failure preserves the previous snapshot and retries
+at the configured interval. `--once` only publishes one cycle and then exits.
 
 The catalog commits an inbox before ACK and a unique request ledger before result.
 On restart it resumes local unfinished events, including accepted results whose

@@ -14,7 +14,7 @@ from marketob_sdk.client import identifier
 
 from marketob_bots.state import Journal, StateError
 
-RSS_URL = "https://feeds.bbci.co.uk/news/world/rss.xml"
+RSS_URL = "https://meduza.io/rss/all"
 ENV_KEYS = {
     "MARKETOB_API_URL",
     "MARKETOB_BOT_KEY",
