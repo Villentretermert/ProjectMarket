@@ -10,7 +10,10 @@
   `UnsupportedFieldAttributeWarning` стал ошибкой; подавления не добавлено.
 - 17 focused, 242 unit tests и Ruff/format/mypy117 PASS (2 Windows skip).
   Docker: 31 версия пакетов/54 пути OpenAPI сохранены, 8 параллельных factory
-  вызовов прошли. PostgreSQL/CI/установка в работе.
+  вызовов прошли. Все четыре задания CI 42639942759 PASS: 355 Python/69 Chromium.
+- Установлен API/worker schema-20261109 после backup/restore с совпадением
+  29 таблиц/10 sequences. Исходная БД, DB/proxy/CA сохранены; четыре сервиса healthy.
+  My Space/фото/Meduza/Live/390px/logout, HTTPS/HTTP2 проверены; news-бот работает.
   [Разбор и схема](docs/task-results/PM-023-schemas-20261109.md). 19/24 сохраняется.
 
 ## 2026-11-09 — S06 · Meduza RSS

@@ -1,0 +1,10 @@
+{
+  "result": "PASS",
+  "release": "schema-20261109",
+  "trusted_existing_ca": true,
+  "https_demo_session": true,
+  "secure_cookie": true,
+  "logout": true,
+  "http_version": "2",
+  "http_status": 200
+}

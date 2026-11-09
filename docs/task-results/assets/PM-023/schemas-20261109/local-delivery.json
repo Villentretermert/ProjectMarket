@@ -1,0 +1,36 @@
+{
+  "release": "schema-20261109",
+  "source_commit": "896449bde9cdec4cea9f7ce29eba6910285da30e",
+  "backup_restore": {
+    "tables": 29,
+    "sequences": 10,
+    "all_equal": true
+  },
+  "original_database_preserved": true,
+  "migrations_run": false,
+  "database_and_proxy_unchanged": true,
+  "ca_unchanged": true,
+  "api_image_id": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+  "services": [
+    {
+      "service": "api",
+      "state": "running",
+      "health": "healthy"
+    },
+    {
+      "service": "db",
+      "state": "running",
+      "health": "healthy"
+    },
+    {
+      "service": "maintenance",
+      "state": "running",
+      "health": "healthy"
+    },
+    {
+      "service": "proxy",
+      "state": "running",
+      "health": "healthy"
+    }
+  ]
+}

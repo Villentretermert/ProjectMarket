@@ -1,0 +1,17 @@
+{
+  "result": "PASS",
+  "release": "schema-20261109",
+  "product_image_decoded": true,
+  "existing_demo_login": true,
+  "my_space_meduza_blocks": 5,
+  "channel_meduza_blocks": 5,
+  "source_links": true,
+  "layout_preserved": true,
+  "live": true,
+  "mobile_width": 390,
+  "no_horizontal_overflow": true,
+  "external_requests": [],
+  "page_errors": [],
+  "logout_clears_news": true,
+  "browser": "157.0.4341.42"
+}
