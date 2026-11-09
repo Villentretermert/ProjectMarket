@@ -1,0 +1,113 @@
+{
+  "sha256": "c3ab3a24f3a9c5d650c25173b982c63e70e3b90ef64e12ad0bea00e3353496d8",
+  "bytes": 774471680,
+  "manifest": {
+    "release_commit": "896449bde9cdec4cea9f7ce29eba6910285da30e",
+    "tooling_commit": "75f61ab7cef9956f6c2d311f76111bb735b78f8d",
+    "images": {
+      "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+      "bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
+      "db": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+      "proxy": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b"
+    },
+    "coverage_state": "partial",
+    "open_items": [
+      "alpine-attribution",
+      "native-build-graph",
+      "nested-vendor-attribution",
+      "remaining-source-inputs",
+      "full-rebuild",
+      "other-platforms",
+      "external-release-acceptance"
+    ],
+    "source_scope": [
+      {
+        "name": "debian.tar",
+        "size": 549560320,
+        "sha256": "d3393b02aa53dd684280ef87ea9a91b10da2f991aa4ec75eab1ce4d427f96ae7",
+        "scope": "95 source package/version pairs, 304 pool files, 11 metadata files"
+      },
+      {
+        "name": "alpine.tar.gz",
+        "size": 80916989,
+        "sha256": "b6afc1f597c2f0e173e08ecfd34387da6ce46048289c399e8faff45161ecc21b",
+        "scope": "187 verified recipe/source inputs for 20 origins; four attribution gaps remain"
+      },
+      {
+        "name": "python-rust.tar.gz",
+        "size": 78719279,
+        "sha256": "983b9cf9026864e4bc5cd17e6a76ce1327f1d1f4aac7c81e1ae7343c53aa71d4",
+        "scope": "482 inputs: 6 Python sdists, 450 crates, 26 upstream files"
+      },
+      {
+        "name": "modified-psycopg.tar.gz",
+        "size": 699587,
+        "sha256": "8ead8d8ebe3e053b01d9722e95aecdeb6aaeb1eb1cae628c87cf188d9df350af",
+        "scope": "Source tree from the 7 November recipient replacement demonstration"
+      }
+    ],
+    "git_snapshot_files": {
+      "project": 748,
+      "tooling": 762
+    },
+    "schema_version": "marketob-source-handover/v1",
+    "files": [
+      {
+        "name": "GAPS.md",
+        "size": 1994,
+        "sha256": "fa6db23ffb8aa98d921c6b714cf33ad9d2a9ec89735777eb5448dd87a19553de"
+      },
+      {
+        "name": "LICENSE",
+        "size": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "name": "NOTICE",
+        "size": 401,
+        "sha256": "1576a5be1ff84d686f608e2011101ce6b93a4093e83c8b21d3af7dad4d818c53"
+      },
+      {
+        "name": "README.md",
+        "size": 4720,
+        "sha256": "d2f28b7893e6571f8a7875bb85cc16a7050b2e1e521672a16f5504fc3157ecce"
+      },
+      {
+        "name": "sources/alpine.tar.gz",
+        "size": 80916989,
+        "sha256": "b6afc1f597c2f0e173e08ecfd34387da6ce46048289c399e8faff45161ecc21b"
+      },
+      {
+        "name": "sources/debian.tar",
+        "size": 549560320,
+        "sha256": "d3393b02aa53dd684280ef87ea9a91b10da2f991aa4ec75eab1ce4d427f96ae7"
+      },
+      {
+        "name": "sources/modified-psycopg.tar.gz",
+        "size": 699587,
+        "sha256": "8ead8d8ebe3e053b01d9722e95aecdeb6aaeb1eb1cae628c87cf188d9df350af"
+      },
+      {
+        "name": "sources/project.tar",
+        "size": 31846400,
+        "sha256": "be578e31417c2633f21b663860969dc0b19c78eb18a3302ed2ea34cb615c398d"
+      },
+      {
+        "name": "sources/python-rust.tar.gz",
+        "size": 78719279,
+        "sha256": "983b9cf9026864e4bc5cd17e6a76ce1327f1d1f4aac7c81e1ae7343c53aa71d4"
+      },
+      {
+        "name": "sources/tooling.tar",
+        "size": 32675840,
+        "sha256": "6bc1107f35fa341a9ad01272d1f6f5a8fbd4d5a7977762bc62eb5e50de9ba54f"
+      },
+      {
+        "name": "verify_bundle.py",
+        "size": 14993,
+        "sha256": "5b08b9a1f6ca0e86e9107c8639294933d180953e997d12cf8eddb643a8aab685"
+      }
+    ]
+  },
+  "archive": "marketob-sources-schema-20261109.tar"
+}
