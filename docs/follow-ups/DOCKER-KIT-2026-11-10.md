@@ -6,12 +6,16 @@
 
 ## Результат и приёмка
 
-- [ ] Экспорт четырёх immutable IDs schema-20261109, без mutable tags и volumes.
-- [ ] Комплект с recipe/source receipt, исходным архивом, инструкцией и standalone
+- [x] Экспорт четырёх immutable IDs schema-20261109, без mutable tags и volumes.
+- [x] Комплект с recipe/source receipt, исходным архивом, инструкцией и standalone
   verifier на Python. Внешний SHA-256 квитанции связывает весь состав.
-- [ ] Положительные и отрицательные проверки целостности, image IDs и состава.
-- [ ] Реальный Docker load, запуск по IDs и подтверждение сохранности рабочего пилота.
-- [ ] CHANGELOG, STATUS, отчёт, GitHub и команды получателя обновлены.
+- [x] Положительные и отрицательные проверки целостности, image IDs и состава.
+- [x] Реальный Docker load, запуск по IDs и подтверждение сохранности рабочего пилота.
+- [x] CHANGELOG, STATUS, отчёт, GitHub и команды получателя обновлены.
+
+[Результат и квитанции](../task-results/PM-024-docker-kit-20261110.md): 22 теста,
+standalone Windows/Linux, load/новая БД/HTTPS/боты/заявки/stop-up PASS.
+Все четыре задания CI 42849734668 на tooling 6fab0e6 PASS.
 
 ```mermaid
 flowchart LR

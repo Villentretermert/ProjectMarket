@@ -1,0 +1,76 @@
+{
+  "schema": "marketob-docker-kit/v1",
+  "platform": "linux/amd64",
+  "tooling_commit": "6fab0e6c2b71f23115960af99823dc293f39893a",
+  "release_commit": "896449bde9cdec4cea9f7ce29eba6910285da30e",
+  "images": {
+    "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
+    "db": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+    "proxy": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b"
+  },
+  "coverage_state": "partial",
+  "open_items": [
+    "alpine-attribution",
+    "native-build-graph",
+    "nested-vendor-attribution",
+    "remaining-source-inputs",
+    "full-rebuild",
+    "other-platforms",
+    "external-release-acceptance"
+  ],
+  "files": {
+    "README.md": {
+      "bytes": 7325,
+      "sha256": "de89d15b32f8aadbd49ab724ace5573804c8610891f72cb82196044d1bf51857"
+    },
+    "api.tar": {
+      "bytes": 186385408,
+      "sha256": "14bca79e9b5184d65d0ecb48dafc804468b05e4731bdfbdef518f7f1ca2c8d6e"
+    },
+    "bot.tar": {
+      "bytes": 141639680,
+      "sha256": "fc668268f920255494c58821fe13bbcff4ed9f3d9ccee5406f73c5f9d429ea09"
+    },
+    "compose.images.yaml": {
+      "bytes": 783,
+      "sha256": "e7f20132dbf361e4723f9edd8721bbcf8d9c91796f71e8bd9f7e6436554dffe0"
+    },
+    "compose.local.yaml": {
+      "bytes": 1075,
+      "sha256": "e03b53c106735fe120bfe55eef8fb8f79208388c16a16979dd50e4ecbfc5550d"
+    },
+    "compose.yaml": {
+      "bytes": 3134,
+      "sha256": "8462bdd57e5575e872f4df4645c5c8179d50db6d8c1f15b6ff55c586b731eea4"
+    },
+    "db.tar": {
+      "bytes": 459256832,
+      "sha256": "237815758caa50970f3be0b5c2c62a411be9649669618780c5d6fa733687afd5"
+    },
+    "prepare.py": {
+      "bytes": 1603,
+      "sha256": "203be0319364d9aec9b0dd1e0bb1a4500223ea2ce18e2045579f0f46730bd923"
+    },
+    "proxy.tar": {
+      "bytes": 202917376,
+      "sha256": "b81da47b97d48f0a409ee40485bc1c6e4ae491cc726a646935923dc3e21eaccf"
+    },
+    "recipe.json": {
+      "bytes": 3481,
+      "sha256": "782c0bb93d4560302685264cfda136fa52c806f579d2ec400c266b0c780fa2a3"
+    },
+    "source-receipt.json": {
+      "bytes": 3927,
+      "sha256": "193dff442b5bf53f61733180a5c27c3544128c5d255fb8ce0692a5c26087ca5d"
+    },
+    "sources.tar": {
+      "bytes": 774492160,
+      "sha256": "1a3dd882fe9da1c0e687352b37af69af82b7243d58cfbfbd8037bc83cadb8cf0"
+    },
+    "verify.py": {
+      "bytes": 12999,
+      "sha256": "8a4454485ea0deea8c5935f6345ccd3c50cc5cc02a8048dca689157eea05b47f"
+    }
+  }
+}

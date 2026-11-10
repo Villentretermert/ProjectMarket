@@ -7,7 +7,13 @@
   связываются внешним SHA-256 квитанции; Compose использует immutable IDs.
 - 22 теста проверяют повреждение/подмену архива, лишние images/tags, несовпадение
   исходников, платформу, самостоятельный verifier и сохранность прежнего .env.
-  Ruff/format/mypy123 PASS. Реальная сборка/load/start выполняются следующим шагом.
+  Ruff/format/mypy123 PASS. Комплект около 1,76 ГБ собран; standalone Windows/Linux
+  offline verification, четыре Docker load и новая Compose-копия прошли.
+- HTTPS/Secure cookie, 4 товара/6 news/chart records, ответы confirmed/failed и
+  сохранность после stop/up проверены. Временные ресурсы удалены; Container IDs
+  рабочего пилота и API tags сохранились. [Результат](docs/task-results/PM-024-docker-kit-20261110.md).
+- Все четыре задания CI 42849734668 на tooling 6fab0e6 PASS. Квитанция комплекта
+  078418fb… опубликована; 15 файлов (включая receipt/SHA256SUMS), 1 764 728 433 байта.
 - [План](docs/follow-ups/DOCKER-KIT-2026-11-10.md),
   [инструкция](docs/setup/DOCKER_KIT.md). Рабочий пилот и глобальный счётчик 19/24 сохранены.
 

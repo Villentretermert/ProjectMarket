@@ -1,5 +1,12 @@
 # Текущее состояние
 
+10 ноября, PM-024-R2: [переносимый Docker-комплект](task-results/PM-024-docker-kit-20261110.md)
+собран и проверен: 22 unit tests, Windows/Linux offline verifier, четыре Docker
+load и запуск из доставленных Compose-файлов на новой БД. Два Docker-бота,
+HTTPS, ответы confirmed/failed и stop/up persistence PASS. Рабочий пилот сохранён.
+Квитанция 078418fb…; большие архивы локальны. Полная PM-024 открыта, 19/24.
+Все четыре задания CI 42849734668 на 6fab0e6 PASS; рабочие четыре сервиса healthy.
+
 9 ноября: **все три подзадачи поставки выполнены**. R1 — текущий inventory/binding;
 R2 — исправленный source archive 1a3dd882… с Windows/Linux offline verification;
 R3 — [чистый Docker/Web запуск](task-results/PM-024-clean-delivery-20261109.md):

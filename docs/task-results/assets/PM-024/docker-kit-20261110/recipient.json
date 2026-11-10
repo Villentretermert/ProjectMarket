@@ -1,0 +1,26 @@
+{
+  "result": "PASS",
+  "kit_receipt_sha256": "078418fbf1e6c2f28c2ac3bbf59f0f1ff7a89fbd56aca20edd98771a84712bca",
+  "images": {
+    "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
+    "db": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+    "proxy": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b"
+  },
+  "windows_standalone": true,
+  "docker_load_count": 4,
+  "compose_no_build_no_pull": true,
+  "fresh_database": true,
+  "https_ca_and_secure_cookie": true,
+  "catalog_records": 4,
+  "news_chart_records": 6,
+  "outcomes": [
+    "confirmed",
+    "failed"
+  ],
+  "private_channels": true,
+  "stop_start_persistence": true,
+  "temporary_stack_removed": true,
+  "working_pilot_containers_and_api_tags_unchanged": true,
+  "limitation": "Existing local Docker engine; no second physical computer or fresh daemon was used."
+}
