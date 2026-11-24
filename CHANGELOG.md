@@ -8,6 +8,7 @@
 - 67 targeted tests (27 новых), Ruff/format/mypy131 PASS. Финальный recipe run-03 PASS; CI ожидается.
 - CI Python shell читает pin из проверенного Dockerfile: его временный script находится вне repository import path. Сбой прямого import воспроизведён локально; product/recipe code сохранён.
 - Для Linux output bind mount новый каталог получает 0775, compiler container — группу владельца; root с cap_drop=ALL иначе получает Permission denied. Отказ и исправление проверены в отдельном Linux volume; добавлен вывод CI diagnostics.
+- Повторные CI downloads отвергли один ZIP по pinned SHA; добавлены размер/SHA и отдельный диагностический refetch без замены отвергнутых входов. Локальный refetch совпал; причина runner-отказа ещё уточняется.
 - Runtime и прежние kits сохранены; bootstrap/full-image/native gaps и полная приёмка открыты, 19/24.
 
 

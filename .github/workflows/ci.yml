@@ -85,6 +85,31 @@ jobs:
           subprocess.run([sys.executable, '-m', 'scripts.go_sources', '--collect', str(kit), '--fetch'], check=True)
           receipt = json.loads(Path('docs/task-results/assets/PM-023/go-20261124/receipt.json').read_text())
           subprocess.run([sys.executable, '-I', str(kit / 'verify.py'), '--verify', str(kit), '--sha256', receipt['manifest_sha256']], check=True)
+      - name: Diagnose rejected Go downloads
+        if: failure() && runner.os == 'Linux'
+        shell: python
+        run: |
+          import hashlib, json, urllib.request
+          from pathlib import Path
+          kit = Path('.local/go-sources')
+          plan = json.loads(Path('third_party/go-schema-20261109/source-plan.json').read_text())
+          for row in {r['filename']: r for r in plan['modules'] + plan['sources']}.values():
+              path = kit / row['filename']
+              if not path.is_file():
+                  continue
+              raw = path.read_bytes()
+              actual = {'size': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+              expected = {key: row[key] for key in actual}
+              if actual == expected:
+                  continue
+              print(json.dumps({'url': row['url'], 'expected': expected, 'rejected': actual}))
+              # Diagnostic only: never replace a rejected input or relax its pinned hash.
+              try:
+                  with urllib.request.urlopen(row['url'], timeout=30) as response:
+                      retry = response.read(row['size'] + 1)
+                      print(json.dumps({'refetch_size': len(retry), 'refetch_sha256': hashlib.sha256(retry).hexdigest(), 'content_length': response.headers.get('Content-Length'), 'content_type': response.headers.get('Content-Type')}))
+              except Exception as error:
+                  print(type(error).__name__, str(error))
       - name: Rebuild delivered Go binaries without network or prior build cache
         if: runner.os == 'Linux'
         shell: python
