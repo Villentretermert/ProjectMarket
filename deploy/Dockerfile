@@ -3,8 +3,9 @@ FROM python:3.14.9-slim-bookworm@sha256:945c2676dc2b18e0c1f16879244122c57c0ffede
 # Reuse the official image's PGDG signing key; apt still verifies signed indexes.
 COPY --from=pgdg-source /usr/local/share/keyrings/postgres.gpg.asc /usr/local/share/keyrings/postgres.gpg.asc
 COPY --from=pgdg-source /etc/apt/sources.list.d/pgdg.list /etc/apt/sources.list.d/pgdg.list
-# Use Debian's security backport in both build and runtime stages.
-RUN apt-get update \
+# PGDG removes superseded versions from its live index; keep exact pins resolvable.
+RUN printf '%s\n' 'deb [signed-by=/usr/local/share/keyrings/postgres.gpg.asc] https://apt-archive.postgresql.org/pub/repos/apt bookworm-pgdg-archive main' > /etc/apt/sources.list.d/pgdg-archive.list \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
        libssl3=3.0.22-1~deb12u2 openssl=3.0.22-1~deb12u2 libpq5=18.6-1.pgdg12+2 \
     && rm -rf /var/lib/apt/lists/*

@@ -1,5 +1,11 @@
 # Журнал изменений
 
+## 2026-11-24 · PM-023-PGDG — доступность закреплённых build inputs
+
+- CI выявил исчезновение libpq5 18.6-1.pgdg12+2 из live PGDG.
+- API и recipient replacement используют также официальный подписанный PGDG archive; прежние version pins сохранены.
+- Оба .deb проверены; библиотека совпала с установленной. Чистый CI ожидается; рабочий runtime не заменён.
+
 ## 2026-11-24 · PM-023-PY — исходники Python runtime
 
 - Собраны все 30 runtime sdists по inventory/uv.lock установленного release; 24 ранее отсутствовали.

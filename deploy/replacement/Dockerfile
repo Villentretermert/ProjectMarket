@@ -2,7 +2,9 @@ ARG API_IMAGE=marketob-api:local
 FROM ${API_IMAGE} AS build
 USER 0
 WORKDIR /work
-RUN apt-get update \
+# Also support already delivered API images that predate the archive source.
+RUN printf '%s\n' 'deb [signed-by=/usr/local/share/keyrings/postgres.gpg.asc] https://apt-archive.postgresql.org/pub/repos/apt bookworm-pgdg-archive main' > /etc/apt/sources.list.d/pgdg-archive.list \
+    && apt-get update \
     && apt-get install -y --no-install-recommends gcc libc6-dev libpq-dev=18.6-1.pgdg12+2 \
     && rm -rf /var/lib/apt/lists/*
 COPY build-requirements.txt ./

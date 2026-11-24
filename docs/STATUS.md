@@ -1,5 +1,10 @@
 # Текущее состояние
 
+24 ноября: [PM-023-PGDG](task-results/PM-023-pgdg-20261124.md) — исправляется
+обнаруженная CI недоступность прежнего libpq5 в live PGDG. Официальный archive
+содержит оба точных .deb; libpq совпадает с установленной. Archive добавлен
+к обычной/replacement сборке с прежними pins/signature checks; CI ожидается.
+
 24 ноября: [PM-023-PY](task-results/PM-023-python-sources-20261124.md) — собраны все
 30 runtime PyPI sdists (24 новых + 6 прежних), сверены lock hashes/PKG-INFO.
 85 focused tests, Ruff/mypy125 и standalone Windows/Linux без сети PASS.
