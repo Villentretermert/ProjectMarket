@@ -60,6 +60,11 @@ jobs:
       - name: Collect and verify pinned Python runtime sources
         if: runner.os == 'Linux'
         run: python -m scripts.python_sources --collect .local/python-runtime-sources --fetch
+      - name: Verify CPython source and installed-image binding
+        run: python -m scripts.cpython_sources --check-plan
+      - name: Collect and verify official CPython source supplement
+        if: runner.os == 'Linux'
+        run: python -m scripts.cpython_sources --collect .local/cpython-sources --fetch
       - name: Verify licenses in distributable Python wheels
         shell: python
         run: |

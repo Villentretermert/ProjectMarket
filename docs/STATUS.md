@@ -1,5 +1,11 @@
 # Текущее состояние
 
+24 ноября: [PM-023-CPY](task-results/PM-023-cpython-20261124.md) — исходники
+CPython 3.14.9 собраны; source hash, LICENSE/patchlevel и обе роли проверены.
+51 targeted tests, Ruff/mypy127, повторный probe и offline Windows/Linux PASS.
+Комплект 24,9 МБ с автономной проверкой готов локально; CI ожидается.
+Далее Go/build inputs; полный rebuild и приёмка открыты, 19/24. Отсрочки сохранены.
+
 24 ноября: [PM-023-PGDG](task-results/PM-023-pgdg-20261124.md) — исправлена
 обнаруженная CI недоступность прежнего libpq5 в live PGDG. Официальный archive
 содержит оба точных .deb; libpq совпадает с установленной. Archive добавлен

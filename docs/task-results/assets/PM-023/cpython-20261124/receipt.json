@@ -1,0 +1,29 @@
+{
+  "manifest_sha256": "dce9641bb63d430b0037b22697809986e5c61186294adb879e47dcb96668ecd4",
+  "images": {
+    "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582"
+  },
+  "source": {
+    "version": "3.14.9",
+    "filename": "Python-3.14.9.tar.xz",
+    "url": "https://www.python.org/ftp/python/3.14.9/Python-3.14.9.tar.xz",
+    "release_url": "https://www.python.org/downloads/release/python-3149/",
+    "size": 24176992,
+    "sha256": "e02d9ac21cebda6e46435369744a92c65cc7cd8669697694122cf97ffacd1e53",
+    "published_sha256": "e02d9ac21cebda6e46435369744a92c65cc7cd8669697694122cf97ffacd1e53"
+  },
+  "coverage_state": "partial",
+  "open_items": [
+    "compiler-and-build-dependencies",
+    "go-inputs",
+    "native-link-and-rebuild",
+    "release-acceptance"
+  ],
+  "members": 5571,
+  "expanded_bytes": 117744029,
+  "matched_source_files": {
+    "patchlevel": "f0ba21fa5390ca9ac79f7bb8e03a3caec930558b8fca80125582148a4663c5db",
+    "license": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231"
+  }
+}

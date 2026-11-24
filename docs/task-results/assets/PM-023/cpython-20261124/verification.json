@@ -1,0 +1,23 @@
+{
+  "manifest_sha256": "dce9641bb63d430b0037b22697809986e5c61186294adb879e47dcb96668ecd4",
+  "files": 11,
+  "kit_bytes": 24883429,
+  "source_members": 5571,
+  "targeted_tests": 51,
+  "new_tests": 22,
+  "mypy_files": 127,
+  "ruff": "pass",
+  "repeat_image_probe": "pass",
+  "windows": {
+    "python": "3.14.7",
+    "standalone_isolated": true,
+    "passed": true
+  },
+  "linux": {
+    "python": "3.14.9",
+    "network": "none",
+    "container_filesystem": "read-only",
+    "kit_mount": "read-only",
+    "passed": true
+  }
+}

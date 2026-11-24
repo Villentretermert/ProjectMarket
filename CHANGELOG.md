@@ -1,5 +1,12 @@
 # Журнал изменений
 
+## 2026-11-24 · PM-023-CPY — исходный комплект CPython
+
+- Собран официальный CPython 3.14.9, source SHA совпал с API/bot images и Python release.
+- LICENSE/patchlevel совпали с установленными; сохранены compiler/build observations и standalone verifier.
+- 51 targeted tests (22 новых), Ruff/format/mypy127 и повторный probe/Windows/Linux offline PASS; CI ожидается.
+- Комплект 24,9 МБ локальный; runtime/БД и прежние kits сохранены. Полный rebuild/приёмка открыты, 19/24.
+
 ## 2026-11-24 · PM-023-PGDG — доступность закреплённых build inputs
 
 - CI выявил исчезновение libpq5 18.6-1.pgdg12+2 из live PGDG.

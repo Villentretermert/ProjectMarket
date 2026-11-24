@@ -48,6 +48,10 @@ Git-снимки и инструкция связаны манифестом с 
 из release lock и корневые PKG-INFO проверены; offline Windows/Linux PASS.
 CPython/Go/build dependencies и полный rebuild остаются открытыми.
 
+24 ноября: [CPython supplement](CPYTHON_SOURCES.md) содержит официальный
+source tar 3.14.9 и observed build files. Source hash/лицензия/header совпали
+с установленными API/ботом. Go/compiler/build closure и полный rebuild открыты.
+
 ## Следующие действия перед передачей образов
 
 | Пункт | Состояние | Проверяемый результат |

@@ -1,0 +1,26 @@
+{
+  "schema": "marketob-cpython-source/v1",
+  "release_commit": "896449bde9cdec4cea9f7ce29eba6910285da30e",
+  "images": {
+    "api": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "bot": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582"
+  },
+  "coverage_state": "partial",
+  "open_items": [
+    "compiler-and-build-dependencies",
+    "go-inputs",
+    "native-link-and-rebuild",
+    "release-acceptance"
+  ],
+  "inventory_sha256": "f11860d84d37417ca2ec75f9a398632eb67c6033490a8b3c46dd4f00ccb81340",
+  "runtime_sha256": "e680afb3de8f2e0ff7cb9877e37699d3fcdd3a75a886d00d01351d2c962720c8",
+  "source": {
+    "version": "3.14.9",
+    "filename": "Python-3.14.9.tar.xz",
+    "url": "https://www.python.org/ftp/python/3.14.9/Python-3.14.9.tar.xz",
+    "release_url": "https://www.python.org/downloads/release/python-3149/",
+    "size": 24176992,
+    "sha256": "e02d9ac21cebda6e46435369744a92c65cc7cd8669697694122cf97ffacd1e53",
+    "published_sha256": "e02d9ac21cebda6e46435369744a92c65cc7cd8669697694122cf97ffacd1e53"
+  }
+}

@@ -20,3 +20,4 @@ third_party/delivery-68958f1/recipe.json text eol=lf
 third_party/**/binding.json text eol=lf
 third_party/delivery-schema-20261109/recipe.json text eol=lf
 third_party/python-sources-schema-20261109/manifest.json text eol=lf
+third_party/cpython-schema-20261109/* -text

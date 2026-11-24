@@ -1,0 +1,90 @@
+{
+  "api": {
+    "image_id": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "source_env": {
+      "PYTHON_VERSION": "3.14.9",
+      "PYTHON_SHA256": "e02d9ac21cebda6e46435369744a92c65cc7cd8669697694122cf97ffacd1e53"
+    },
+    "version": "3.14.9",
+    "implementation": "CPython",
+    "machine": "x86_64",
+    "compiler": "GCC 12.2.0",
+    "config_args": "'--build=x86_64-linux-gnu' '--enable-loadable-sqlite-extensions' '--enable-optimizations' '--enable-option-checking=fatal' '--enable-shared' '--with-lto' '--with-ensurepip' 'build_alias=x86_64-linux-gnu'",
+    "files": {
+      "executable": {
+        "path": "/usr/local/bin/python3.14",
+        "size": 14480,
+        "sha256": "3fbc4d6c766a7a5d56c4bcc80d3325181a05f1b64596eb7cf622f0ec056dd546"
+      },
+      "library": {
+        "path": "/usr/local/lib/libpython3.14.so",
+        "size": 5659480,
+        "sha256": "e63c8f184a359f00b1226e07f54a9bf530da38ef099fb9ccc1386fd2569615fa"
+      },
+      "license": {
+        "path": "/usr/local/lib/python3.14/LICENSE.txt",
+        "size": 13804,
+        "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231"
+      },
+      "patchlevel": {
+        "path": "/usr/local/include/python3.14/patchlevel.h",
+        "size": 1773,
+        "sha256": "f0ba21fa5390ca9ac79f7bb8e03a3caec930558b8fca80125582148a4663c5db"
+      },
+      "pyconfig": {
+        "path": "/usr/local/include/python3.14/pyconfig.h",
+        "size": 61314,
+        "sha256": "d5eb771a8c4c474dfdee1dfd7815b48680259e924176c8bbded7765e04f31e44"
+      },
+      "makefile": {
+        "path": "/usr/local/lib/python3.14/config-3.14-x86_64-linux-gnu/Makefile",
+        "size": 225046,
+        "sha256": "a1ef9270f41fbc1addd54a5d6dc01b46b4ee680387f7ecd730132e4e1f29bb10"
+      }
+    }
+  },
+  "bot": {
+    "image_id": "sha256:a93b10c759b741ae247e8b6a2571ce7feeba32bbc1756e7fc8c1c5d9936db582",
+    "source_env": {
+      "PYTHON_VERSION": "3.14.9",
+      "PYTHON_SHA256": "e02d9ac21cebda6e46435369744a92c65cc7cd8669697694122cf97ffacd1e53"
+    },
+    "version": "3.14.9",
+    "implementation": "CPython",
+    "machine": "x86_64",
+    "compiler": "GCC 12.2.0",
+    "config_args": "'--build=x86_64-linux-gnu' '--enable-loadable-sqlite-extensions' '--enable-optimizations' '--enable-option-checking=fatal' '--enable-shared' '--with-lto' '--with-ensurepip' 'build_alias=x86_64-linux-gnu'",
+    "files": {
+      "executable": {
+        "path": "/usr/local/bin/python3.14",
+        "size": 14480,
+        "sha256": "3fbc4d6c766a7a5d56c4bcc80d3325181a05f1b64596eb7cf622f0ec056dd546"
+      },
+      "library": {
+        "path": "/usr/local/lib/libpython3.14.so",
+        "size": 5659480,
+        "sha256": "e63c8f184a359f00b1226e07f54a9bf530da38ef099fb9ccc1386fd2569615fa"
+      },
+      "license": {
+        "path": "/usr/local/lib/python3.14/LICENSE.txt",
+        "size": 13804,
+        "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231"
+      },
+      "patchlevel": {
+        "path": "/usr/local/include/python3.14/patchlevel.h",
+        "size": 1773,
+        "sha256": "f0ba21fa5390ca9ac79f7bb8e03a3caec930558b8fca80125582148a4663c5db"
+      },
+      "pyconfig": {
+        "path": "/usr/local/include/python3.14/pyconfig.h",
+        "size": 61314,
+        "sha256": "d5eb771a8c4c474dfdee1dfd7815b48680259e924176c8bbded7765e04f31e44"
+      },
+      "makefile": {
+        "path": "/usr/local/lib/python3.14/config-3.14-x86_64-linux-gnu/Makefile",
+        "size": 225046,
+        "sha256": "a1ef9270f41fbc1addd54a5d6dc01b46b4ee680387f7ecd730132e4e1f29bb10"
+      }
+    }
+  }
+}
