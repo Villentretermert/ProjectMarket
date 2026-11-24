@@ -4,7 +4,9 @@
 CPython 3.14.9 собраны; source hash, LICENSE/patchlevel и обе роли проверены.
 51 targeted tests, Ruff/mypy127, повторный probe и offline Windows/Linux PASS.
 Комплект kit-02 24,9 МБ повторно собран одинаково Windows/Linux после
-исправления порядка файлов; CI с обязательным manifest hash ожидается.
+исправления порядка файлов. Все четыре jobs CI 45402033433 на e3b1e6d PASS:
+447 Python-тестов, Web/API/bot, Docker/HTTPS/HTTP2/backup/restore; точный
+manifest hash при повторном CI-сборе совпал.
 Далее Go/build inputs; полный rebuild и приёмка открыты, 19/24. Отсрочки сохранены.
 
 24 ноября: [PM-023-PGDG](task-results/PM-023-pgdg-20261124.md) — исправлена

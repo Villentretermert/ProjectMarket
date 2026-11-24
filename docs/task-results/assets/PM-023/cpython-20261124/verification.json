@@ -18,9 +18,21 @@
     "network": "none",
     "container_filesystem": "read-only",
     "kit_mount": "read-only",
-    "passed": true,
-    "writable_mount": "new output directory only"
+    "passed": true
   },
   "windows_linux_identical_manifest": true,
-  "linux_offline_recollection": true
+  "linux_offline_recollection": true,
+  "linux_recollection": {
+    "network": "none",
+    "container_filesystem": "read-only",
+    "inputs": "read-only",
+    "output": "new writable directory",
+    "manifest_bytes_match_windows": true
+  },
+  "ci_linux_recollection": {
+    "run_id": 45402033433,
+    "job_id": 138473029116,
+    "source_downloaded": true,
+    "published_manifest_matched": true
+  }
 }

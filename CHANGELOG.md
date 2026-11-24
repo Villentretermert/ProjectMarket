@@ -4,7 +4,7 @@
 
 - Собран официальный CPython 3.14.9, source SHA совпал с API/bot images и Python release.
 - LICENSE/patchlevel совпали с установленными; сохранены compiler/build observations и standalone verifier.
-- 51 targeted tests (22 новых), Ruff/format/mypy127 и повторный probe/Windows/Linux offline PASS; CI ожидается.
+- 51 targeted tests (22 новых), Ruff/format/mypy127 и повторный probe/Windows/Linux offline PASS; все четыре jobs CI 45402033433 PASS (447 Python-тестов, Web/Docker/restore).
 - Исправлен различающийся порядок Path на Windows/Linux; повторные offline-сборки дали одинаковый manifest. CI теперь требует опубликованный SHA-256.
 - Комплект kit-02 24,9 МБ локальный; runtime/БД и прежние kits сохранены. Полный rebuild/приёмка открыты, 19/24.
 

@@ -9,8 +9,8 @@
 - [x] Сопоставить source hash с официальным release Python 3.14.9; получить
   исходный архив, сверить LICENSE и Include/patchlevel.h с установленными.
 - [x] Подготовить отдельный комплект и standalone verifier без сторонних библиотек.
-- [ ] Проверить отрицательные случаи и настоящий комплект на Windows/Linux, CI.
-- [ ] Обновить журнал, статус, отчёт, инструкцию и GitHub.
+- [x] Проверить отрицательные случаи и настоящий комплект на Windows/Linux, CI.
+- [x] Обновить журнал, статус, отчёт, инструкцию и GitHub.
 
 ```mermaid
 flowchart LR
@@ -26,4 +26,4 @@ flowchart LR
 полная приёмка остаются открытыми. Установленные images и исторические kits
 не заменяются; 19/24, Android/облако/L2 сохраняют прежний статус.
 
-[Локальный результат](../task-results/PM-023-cpython-20261124.md): 51 тест и offline Windows/Linux PASS; CI ожидается.
+[Локальный результат](../task-results/PM-023-cpython-20261124.md): 51 тест и offline Windows/Linux PASS; Все четыре jobs CI 45402033433 на e3b1e6d PASS; 447 Python-тестов, Web/Docker/restore. Windows/Linux повторные сборки дают один manifest hash e2afec94….
