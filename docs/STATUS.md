@@ -4,7 +4,10 @@
 591 module records + Go/gosu root sources, связаны с обоими binaries/builders.
 91 targeted tests, Ruff/mypy129, повторный probe, offline Windows/Linux и
 одинаковый manifest при Linux пересборе PASS. Комплект kit-03 247 МБ локально;
-CI ожидается. Полный rebuild/bootstrap и остальные gaps открыты, 19/24.
+Все четыре jobs CI 45412698032 на 96f275d PASS: 487 Python-тестов, Web/API/bot,
+Docker/HTTPS/HTTP2/backup/restore; source manifest повторён в CI. Четыре
+рабочих сервиса healthy. Далее автономная пересборка Caddy/gosu из этих inputs;
+полный rebuild/bootstrap и остальные gaps открыты, 19/24.
 
 
 24 ноября: [PM-023-CPY](task-results/PM-023-cpython-20261124.md) — исходники

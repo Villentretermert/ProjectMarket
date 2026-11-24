@@ -64,5 +64,15 @@
   "targeted_tests": 91,
   "new_tests": 40,
   "ruff": "PASS",
-  "mypy_files": 129
+  "mypy_files": 129,
+  "local_full_unit": {
+    "platform": "Windows",
+    "python": "3.14.7",
+    "passed": 374,
+    "skipped_linux_only": 2,
+    "integration_deselected": 111,
+    "elapsed_seconds": 51.47,
+    "sandbox_attempt": "stalled in asyncio socketpair accept; task test processes stopped",
+    "retry": "PASS with loopback access"
+  }
 }

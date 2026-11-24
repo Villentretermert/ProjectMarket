@@ -5,7 +5,8 @@
 - Собраны 591 записи go.sum и Go/gosu sources; binary/build evidence связаны с установленными proxy/db.
 - Python collector/probe/standalone verifier проверяют SHA-256/h1 без исполнения исходников.
 - 91 targeted tests (40 новых), Ruff/format/mypy129, повторный probe и Windows/Linux offline PASS; Linux пересбор дал тот же manifest.
-- 247 МБ, 584 файла локально; добавлен независимый повторный сетевой сбор в CI (итог ожидается).
+- 247 МБ, 584 файла локально; все четыре jobs CI 45412698032 на 96f275d PASS: 487 Python-тестов, Web/API/bot, Docker/HTTPS/HTTP2/backup/restore. Повторный сетевой сбор подтвердил опубликованный manifest.
+- Полный локальный Windows прогон: 374 PASS/2 Linux-only skips; sandbox socketpair ожидание устранено запуском с loopback-доступом без изменений кода.
 - Runtime и прежние комплекты сохранены; full rebuild/bootstrap/прочие gaps и PM-023 открыты, 19/24.
 
 
