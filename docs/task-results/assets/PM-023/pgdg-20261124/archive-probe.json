@@ -1,0 +1,11 @@
+{
+  "repository": "https://apt-archive.postgresql.org/pub/repos/apt",
+  "suite": "bookworm-pgdg-archive",
+  "apt_signature_verification": "PASS",
+  "version": "18.6-1.pgdg12+2",
+  "libpq_matches_installed": true,
+  "packages": {
+    "libpq5": "9dc15f3f41090e632e0449693323f18c96bfd25794c439d8bcde06af6c5012f6",
+    "libpq-dev": "9ff4af94d256ef62db43169137d63e9e85de21b048a08e16892f5eb041217f29"
+  }
+}

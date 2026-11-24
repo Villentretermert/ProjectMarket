@@ -4,13 +4,13 @@
 
 - CI выявил исчезновение libpq5 18.6-1.pgdg12+2 из live PGDG.
 - API и recipient replacement используют также официальный подписанный PGDG archive; прежние version pins сохранены.
-- Оба .deb проверены; библиотека совпала с установленной. Чистый CI ожидается; рабочий runtime не заменён.
+- Оба .deb проверены; библиотека совпала с установленной. Локальная замена драйвера/13 групп и все четыре jobs CI 45396695801 PASS; рабочий runtime не заменён.
 
 ## 2026-11-24 · PM-023-PY — исходники Python runtime
 
 - Собраны все 30 runtime sdists по inventory/uv.lock установленного release; 24 ранее отсутствовали.
 - Добавлены standalone verifier, точный mapping и проверка PKG-INFO без выполнения package code.
-- 85 targeted tests, Ruff/format/mypy125, offline Windows/Linux PASS; CI ожидается.
+- 85 targeted tests, Ruff/format/mypy125, offline Windows/Linux PASS; все четыре jobs CI 45396695801 PASS (425 Python-тестов, Web/Docker/restore).
 - Архив локальный, прежние kits/runtime сохранены. Полное build closure/приёмка открыты, 19/24.
 
 ## 2026-11-10 — PM-024-R2 · переносимые Docker-образы

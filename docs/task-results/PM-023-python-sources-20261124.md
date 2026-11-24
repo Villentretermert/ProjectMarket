@@ -46,8 +46,11 @@ flowchart LR
   repository modules; Linux **3.14.9** — в одноразовом контейнере с
   `--network none --read-only`, каталог источников подключён read-only.
   [Результаты](assets/PM-023/python-sources-20261124/verification.json).
-- CI: mapping на Windows/Linux и повторный download/hash/PKG-INFO на Linux
-  добавлены в существующий workflow; итог запуска будет записан отдельно.
+- Все четыре задания [CI 45396695801](https://github.com/Villentretermert/ProjectMarket/actions/runs/45396695801) на fc40c24 PASS: 314 unit + 111 integration = 425 различных Python-тестов, Web и Docker/HTTPS/HTTP2/backup/restore. На Linux повторный сбор 30 sdists дал тот же SHA-256, что и локальный комплект.
+  [Квитанция CI](assets/PM-023/python-sources-20261124/ci.json).
+  Первый запуск 45396108240 прошёл Python-проверки, но упал на исчезнувшем
+  libpq5 в live PGDG; оставшийся integration job отменён новым push.
+  [Исправление сборки и повторная проверка](PM-023-pgdg-20261124.md).
 
 Первый сбор остановился на штатной symlink `referencing/CHANGELOG.rst`.
 Исправлено чтение таких ссылок как непрозрачных данных без перехода по ним;
@@ -57,7 +60,7 @@ flowchart LR
 Docker-служба на начало проверки была остановлена. В WSL обнаружен Python
 3.8.10 без tomllib; для проверки Linux запущена существующая Docker-служба
 и использован уже имеющийся API image по immutable ID. Образы не собирались,
-миграции и пользовательские данные не изменялись.
+проверочные команды не выполняли миграций и не подключали пользовательские volumes.
 
 ## Ограничения и следующий шаг
 

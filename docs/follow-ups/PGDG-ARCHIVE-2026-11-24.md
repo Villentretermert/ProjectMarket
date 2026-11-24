@@ -10,8 +10,8 @@
   `bookworm-pgdg-archive`; сравнить libpq с установленными байтами.
 - [x] Подключить архив к обычной и recipient replacement сборке.
   Сохранить exact version pins и проверку подписей прежним PGDG keyring.
-- [ ] Пройти чистую сборку и реальные TLS/DB/modified-driver проверки CI.
-- [ ] Записать результат и обновить issue/STATUS/CHANGELOG.
+- [x] Пройти чистую сборку и реальные TLS/DB/modified-driver проверки CI.
+- [x] Записать результат и обновить issue/STATUS/CHANGELOG.
 
 Это изменение доступности build inputs; оно не обновляет установленную
 библиотеку и не пересоздаёт рабочие контейнеры. Счётчик 19/24, полная PM-023
@@ -19,3 +19,5 @@
 
 Основание: [PostgreSQL FAQ об архиве старых версий](https://wiki.postgresql.org/wiki/Apt/FAQ#Where_are_older_versions_of_the_packages?),
 [официальный формат DIST-pgdg-archive](https://apt-archive.postgresql.org/).
+
+[Результат](../task-results/PM-023-pgdg-20261124.md): четыре jobs CI 45396695801 PASS; 13 локальных групп проверки recipient replacement PASS.

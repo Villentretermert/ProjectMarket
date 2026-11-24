@@ -1,5 +1,7 @@
 # Замена psycopg-c получателем поставки
 
+24 ноября: для повторной сборки прежних images используйте [исправленный Dockerfile fc40c24](https://github.com/Villentretermert/ProjectMarket/blob/fc40c2478fc8376e90630d319996a0addb7754cd/deploy/replacement/Dockerfile). В нём подключён официальный PGDG archive: прежняя версия libpq удалена из live index. Исторические source kits содержат старый рецепт; перед повторением замените `deploy/replacement/Dockerfile` его исправленной версией в tooling checkout. Версии библиотек и остальные шаги сохраняются. [Результат проверки](../task-results/PM-023-pgdg-20261124.md).
+
 7 ноября 2026. Проверенный сценарий предназначен для Linux amd64 API пилота
 68958f1, Python 3.14.9, psycopg-c 3.3.6 и libpq 18.6. Он собирает изменённые
 C-исходники и проверяет их в отдельном образе. [Фактический результат](../task-results/PM-023-replacement-20261107.md).

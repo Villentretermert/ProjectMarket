@@ -1,0 +1,87 @@
+{
+  "result": "PASS",
+  "baseline_image": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+  "candidate_image": "sha256:5f679da2f0b210d52d5d155958bb44f8f83d2bf4e393bac7f9f8cedaebe89902",
+  "database_image": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+  "source_modification": {
+    "source_sha256": "29c568426ad61c1b702c7d73505c43ca2c9fc5d97a8431d8d9049e731e319ff8",
+    "marker": "marketob-recipient-build-20261107",
+    "license_sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+    "changes": [
+      {
+        "path": "psycopg_c/_psycopg.c",
+        "before": "32ac1ccef8633a3af9015db597e217c37ae84fb29316844b2042d186c1f5544a",
+        "after": "01fbc809f309989257fb186ed4f2a270b7a3e2099d9f9b11fa1b0e908ad4a0c4"
+      },
+      {
+        "path": "psycopg_c/pq.c",
+        "before": "bdebdaf82cb9e9087fba189996edacd62454df7ef29510c27c3bf001262df0a4",
+        "after": "61fdcca74d12c4a0f748bbb27b6790bcd326f26714f45ea1134db1f4aa9fdadf"
+      }
+    ]
+  },
+  "before": {
+    "implementation": "c",
+    "driver_version": "3.3.6",
+    "extension_version": "3.3.6",
+    "libpq": 180006,
+    "libpq_build": 180006,
+    "uid": 10001,
+    "other_site_packages_sha256": "45df4a05b6b67d05aa3b69626adbe61818532676f2d63cbe8a25af204a5aae0c",
+    "system_packages_sha256": "3581e3f50febf353cecc28993e8b6a1b2fcf1c56fcccd9e63abe9f3dab2ffd9f",
+    "extensions": [
+      {
+        "name": "_psycopg.cpython-314-x86_64-linux-gnu.so",
+        "sha256": "d109209bbcc5211efc027796c9ecfdd1d63fe64eb0afb10611ab223a83a3829f",
+        "marker": null
+      },
+      {
+        "name": "pq.cpython-314-x86_64-linux-gnu.so",
+        "sha256": "c3a285298290ac2a1e1a20a5ef1aee606554af92693b87b6d45741b04b658332",
+        "marker": null
+      }
+    ]
+  },
+  "after": {
+    "implementation": "c",
+    "driver_version": "3.3.6",
+    "extension_version": "3.3.6",
+    "libpq": 180006,
+    "libpq_build": 180006,
+    "uid": 10001,
+    "other_site_packages_sha256": "45df4a05b6b67d05aa3b69626adbe61818532676f2d63cbe8a25af204a5aae0c",
+    "system_packages_sha256": "3581e3f50febf353cecc28993e8b6a1b2fcf1c56fcccd9e63abe9f3dab2ffd9f",
+    "extensions": [
+      {
+        "name": "_psycopg.cpython-314-x86_64-linux-gnu.so",
+        "sha256": "adf44263f17b31d5c471579fa606fd3213740548b1b95129cd4775fb63348d10",
+        "marker": "marketob-recipient-build-20261107"
+      },
+      {
+        "name": "pq.cpython-314-x86_64-linux-gnu.so",
+        "sha256": "6b8ed1e995a7f697713f0bf50c36c020c53c0f865e2b98fb2fe9195a0c5ecfe3",
+        "marker": "marketob-recipient-build-20261107"
+      }
+    ]
+  },
+  "driver_smoke": {
+    "result": "PASS",
+    "implementation": "c",
+    "libpq": 180006,
+    "checks": [
+      "TLS verify-full",
+      "wrong CA rejected",
+      "missing CA rejected",
+      "wrong hostname rejected",
+      "system CA",
+      "default connection",
+      "JSONB parameters",
+      "primary/auxiliary pools",
+      "commit/rollback",
+      "statement timeout",
+      "terminated connections recovered",
+      "non-pool transaction",
+      "cancel_safe"
+    ]
+  }
+}

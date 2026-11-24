@@ -1,5 +1,7 @@
 # Текущая локальная поставка · schema-20261109
 
+24 ноября: для пересборки из исторического source kit нужен [исправленный PGDG recipe](../licensing/REPLACING_LIBRARIES.md). Запуск готового Docker kit без сборки сохраняется.
+
 24 ноября: для передачи исходников добавлено [дополнение 30 Python runtime sdists](../licensing/PYTHON_RUNTIME_SOURCES.md). Прежние image IDs, source tar и Docker kit сохранены.
 
 9 ноября 2026. Рабочее приложение: [My Space](http://127.0.0.1:19000/app/#/space).

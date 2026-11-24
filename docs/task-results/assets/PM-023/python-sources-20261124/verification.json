@@ -15,5 +15,8 @@
   "new_tests": 29,
   "mypy_files": 125,
   "ruff": "pass",
-  "sdists": 30
+  "sdists": 30,
+  "historical_native_sdist_overlap": 6,
+  "ci_archive_matches_local": true,
+  "ci_run_id": 45396695801
 }

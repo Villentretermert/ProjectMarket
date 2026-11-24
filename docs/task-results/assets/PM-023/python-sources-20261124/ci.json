@@ -1,0 +1,455 @@
+{
+  "run_id": 45396695801,
+  "url": "https://github.com/Villentretermert/ProjectMarket/actions/runs/45396695801",
+  "head_sha": "fc40c2478fc8376e90630d319996a0addb7754cd",
+  "jobs": [
+    {
+      "id": 138454407292,
+      "name": "Docker / PostgreSQL",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Reject missing Compose credentials",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python scripts/dev_env.py",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker compose config --quiet",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker compose up --build --detach --wait --wait-timeout 120",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify rebuilt database startup helper",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify Debian OpenSSL security revision",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python scripts/smoke_api.py --database ok",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python scripts/smoke_identity.py --bots",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m scripts.smoke_channels",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify minimal non-root runtime",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify global build installer is absent",
+          "conclusion": "success"
+        },
+        {
+          "name": "Inventory actual API image native libraries",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify C driver TLS, transactions, pools and cancellation",
+          "conclusion": "success"
+        },
+        {
+          "name": "Rebuild and verify recipient-modified C driver",
+          "conclusion": "success"
+        },
+        {
+          "name": "Record recipient replacement evidence",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python scripts/smoke_ingestion.py --phase before",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m scripts.smoke_actions --phase before",
+          "conclusion": "success"
+        },
+        {
+          "name": "Database outage and recovery",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python scripts/smoke_ingestion.py --phase after",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m scripts.smoke_actions --phase after",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pip install uv==0.13.5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv sync --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked python -m scripts.smoke_bots --mode python",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked python -m scripts.smoke_bots --mode docker",
+          "conclusion": "success"
+        },
+        {
+          "name": "Local delivery with verified HTTPS",
+          "conclusion": "success"
+        },
+        {
+          "name": "Consistent backup and isolated restore",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker compose exec -T maintenance python -m marketob_api.maintenance --once",
+          "conclusion": "success"
+        },
+        {
+          "name": "Service status",
+          "conclusion": "success"
+        },
+        {
+          "name": "Remove only disposable CI resources",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 138454407550,
+      "name": "PostgreSQL / identity, bots, ingestion and channels",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pip install uv==0.13.5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv sync --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python scripts/dev_env.py",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker compose -f compose.yaml -f deploy/compose.test.yaml up db --build --detach --wait",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked python scripts/test_postgres.py",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked python scripts/test_postgres.py --backend",
+          "conclusion": "success"
+        },
+        {
+          "name": "Browser acceptance dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked python scripts/test_postgres.py --web",
+          "conclusion": "success"
+        },
+        {
+          "name": "Remove only disposable CI resources",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 138454407933,
+      "name": "Python / windows-latest",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pip install uv==0.13.5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv sync --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Inventory native psycopg libraries",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked ruff check .",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked ruff format --check .",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked mypy",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked pytest -q -m \"not integration\"",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked python -m scripts.smoke_local",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv pip check",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python scripts/validate_requirements.py",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify third-party notice archive",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify Alpine source notice associations",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify embedded source notice associations",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native SBOM and compiler notice evidence",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify crate notice supplement",
+          "conclusion": "success"
+        },
+        {
+          "name": "Replay crate provenance from pinned sources",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Verify installed Debian source versions against signed indexes",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify source handover release bindings",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify complete installed Python source mapping",
+          "conclusion": "success"
+        },
+        {
+          "name": "Collect and verify pinned Python runtime sources",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Verify licenses in distributable Python wheels",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 138454410161,
+      "name": "Python / ubuntu-latest",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pip install uv==0.13.5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv sync --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Inventory native psycopg libraries",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked ruff check .",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked ruff format --check .",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked mypy",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked pytest -q -m \"not integration\"",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv run --locked python -m scripts.smoke_local",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv pip check",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python scripts/validate_requirements.py",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify third-party notice archive",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify Alpine source notice associations",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify embedded source notice associations",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native SBOM and compiler notice evidence",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify crate notice supplement",
+          "conclusion": "success"
+        },
+        {
+          "name": "Replay crate provenance from pinned sources",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify installed Debian source versions against signed indexes",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify source handover release bindings",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify complete installed Python source mapping",
+          "conclusion": "success"
+        },
+        {
+          "name": "Collect and verify pinned Python runtime sources",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify licenses in distributable Python wheels",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

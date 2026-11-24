@@ -1,14 +1,17 @@
 # Текущее состояние
 
-24 ноября: [PM-023-PGDG](task-results/PM-023-pgdg-20261124.md) — исправляется
+24 ноября: [PM-023-PGDG](task-results/PM-023-pgdg-20261124.md) — исправлена
 обнаруженная CI недоступность прежнего libpq5 в live PGDG. Официальный archive
 содержит оба точных .deb; libpq совпадает с установленной. Archive добавлен
-к обычной/replacement сборке с прежними pins/signature checks; CI ожидается.
+к обычной/replacement сборке с прежними pins/signature checks. Все четыре
+задания CI 45396695801 на fc40c24 PASS: 425 Python-тестов, Web, Docker/HTTPS/
+HTTP2/backup/restore. Локальная замена драйвера старого image: 13 групп PASS.
 
 24 ноября: [PM-023-PY](task-results/PM-023-python-sources-20261124.md) — собраны все
 30 runtime PyPI sdists (24 новых + 6 прежних), сверены lock hashes/PKG-INFO.
 85 focused tests, Ruff/mypy125 и standalone Windows/Linux без сети PASS.
-Архив 14,7 МБ — дополнение к поставке; CI ожидается. CPython/Go/build closure
+Архив 14,7 МБ — дополнение к поставке; повторный CI-сбор дал тот же SHA-256.
+CPython/Go/build closure
 и полная приёмка открыты, 19/24; прежние отсрочки сохраняются.
 
 10 ноября, PM-024-R2: [переносимый Docker-комплект](task-results/PM-024-docker-kit-20261110.md)
