@@ -91,9 +91,10 @@ jobs:
         run: |
           import json, subprocess, sys
           from pathlib import Path
-          from scripts.go_rebuild import TOOLCHAIN
+          # Actions executes this Python file outside the repository import path.
+          toolchain = Path('.local/go-sources/Dockerfile.proxy').read_text().splitlines()[0].split()[1]
           # Preparation is online; every compiler and smoke container has network=none.
-          subprocess.run(['docker', 'pull', '--platform', 'linux/amd64', TOOLCHAIN], check=True)
+          subprocess.run(['docker', 'pull', '--platform', 'linux/amd64', toolchain], check=True)
           subprocess.run([sys.executable, '-m', 'scripts.go_rebuild', '--kit', '.local/go-sources', '--output', '.local/go-rebuild'], check=True)
           expected = json.loads(Path('docs/task-results/assets/PM-023/go-build-20261124/result.json').read_text())
           actual = json.loads(Path('.local/go-rebuild/result.json').read_text())

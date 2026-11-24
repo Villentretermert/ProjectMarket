@@ -6,6 +6,7 @@
 - Обе сборки совпали с установленными SHA-256/build metadata; проверены UID/GID и HTTPS/HTTP2 с отрицательными TLS сценариями.
 - Новый пустой volume, network=none, readonly containers, ограничение CPU/RAM; временные объекты компилятора на отдельном диске.
 - 67 targeted tests (27 новых), Ruff/format/mypy131 PASS. Финальный recipe run-03 PASS; CI ожидается.
+- CI Python shell читает pin из проверенного Dockerfile: его временный script находится вне repository import path. Сбой прямого import воспроизведён локально; product/recipe code сохранён.
 - Runtime и прежние kits сохранены; bootstrap/full-image/native gaps и полная приёмка открыты, 19/24.
 
 
