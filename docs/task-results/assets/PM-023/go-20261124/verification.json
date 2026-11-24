@@ -1,0 +1,68 @@
+{
+  "windows_standalone": {
+    "python": "3.14.7",
+    "result": {
+      "manifest_sha256": "1219282099550462950ae09cbf9a78a095d601be746f3a73607d03d5e8caf43e",
+      "module_inputs": 591,
+      "root_sources": 2,
+      "files": 584,
+      "bytes": 246872827,
+      "coverage_state": "partial",
+      "open_items": [
+        "toolchain-bootstrap-and-full-rebuild",
+        "native-build-graph",
+        "remaining-source-and-attribution-gaps",
+        "release-acceptance"
+      ]
+    }
+  },
+  "linux_standalone": {
+    "python": "3.14.9",
+    "network": "none",
+    "filesystem": "read-only",
+    "result": {
+      "manifest_sha256": "1219282099550462950ae09cbf9a78a095d601be746f3a73607d03d5e8caf43e",
+      "module_inputs": 591,
+      "root_sources": 2,
+      "files": 584,
+      "bytes": 246872827,
+      "coverage_state": "partial",
+      "open_items": [
+        "toolchain-bootstrap-and-full-rebuild",
+        "native-build-graph",
+        "remaining-source-and-attribution-gaps",
+        "release-acceptance"
+      ]
+    }
+  },
+  "linux_offline_recollection": {
+    "manifest_sha256": "1219282099550462950ae09cbf9a78a095d601be746f3a73607d03d5e8caf43e",
+    "module_inputs": 591,
+    "root_sources": 2,
+    "files": 584,
+    "bytes": 246872827,
+    "coverage_state": "partial",
+    "open_items": [
+      "toolchain-bootstrap-and-full-rebuild",
+      "native-build-graph",
+      "remaining-source-and-attribution-gaps",
+      "release-acceptance"
+    ]
+  },
+  "public_refetch": {
+    "module_records": 591,
+    "root_sources": 2,
+    "all_input_bytes_match": true
+  },
+  "reprobe": {
+    "files_matched": 19,
+    "binary_roles": [
+      "db",
+      "proxy"
+    ]
+  },
+  "targeted_tests": 91,
+  "new_tests": 40,
+  "ruff": "PASS",
+  "mypy_files": 129
+}

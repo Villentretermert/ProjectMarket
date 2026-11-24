@@ -1,0 +1,7 @@
+{
+	"CGO_ENABLED": "0",
+	"GOARCH": "amd64",
+	"GOOS": "linux",
+	"GOTOOLCHAIN": "local",
+	"GOVERSION": "go1.26.10"
+}

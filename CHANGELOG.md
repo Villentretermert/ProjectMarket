@@ -1,5 +1,14 @@
 # Журнал изменений
 
+## 2026-11-24 · PM-023-GO — исходные материалы Go
+
+- Собраны 591 записи go.sum и Go/gosu sources; binary/build evidence связаны с установленными proxy/db.
+- Python collector/probe/standalone verifier проверяют SHA-256/h1 без исполнения исходников.
+- 91 targeted tests (40 новых), Ruff/format/mypy129, повторный probe и Windows/Linux offline PASS; Linux пересбор дал тот же manifest.
+- 247 МБ, 584 файла локально; добавлен независимый повторный сетевой сбор в CI (итог ожидается).
+- Runtime и прежние комплекты сохранены; full rebuild/bootstrap/прочие gaps и PM-023 открыты, 19/24.
+
+
 ## 2026-11-24 · PM-023-CPY — исходный комплект CPython
 
 - Собран официальный CPython 3.14.9, source SHA совпал с API/bot images и Python release.

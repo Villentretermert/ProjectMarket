@@ -1,0 +1,14 @@
+{
+  "manifest_sha256": "1219282099550462950ae09cbf9a78a095d601be746f3a73607d03d5e8caf43e",
+  "module_inputs": 591,
+  "root_sources": 2,
+  "files": 584,
+  "bytes": 246872827,
+  "coverage_state": "partial",
+  "open_items": [
+    "toolchain-bootstrap-and-full-rebuild",
+    "native-build-graph",
+    "remaining-source-and-attribution-gaps",
+    "release-acceptance"
+  ]
+}

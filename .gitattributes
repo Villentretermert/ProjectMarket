@@ -21,3 +21,9 @@ third_party/**/binding.json text eol=lf
 third_party/delivery-schema-20261109/recipe.json text eol=lf
 third_party/python-sources-schema-20261109/manifest.json text eol=lf
 third_party/cpython-schema-20261109/* -text
+
+# Preserve exact observed Go source/build evidence on Windows.
+third_party/go-schema-20261109/* -text
+# go version -m emits a trailing tab; the recorded release metadata uses CRLF.
+third_party/go-schema-20261109/*-build-info.txt whitespace=-blank-at-eol
+third_party/go-schema-20261109/go-release.json whitespace=cr-at-eol

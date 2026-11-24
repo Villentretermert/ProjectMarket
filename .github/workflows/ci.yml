@@ -73,6 +73,18 @@ jobs:
           receipt = json.loads(Path('docs/task-results/assets/PM-023/cpython-20261124/receipt.json').read_text())
           # Linux must reproduce the published Windows-collected kit, including its verifier.
           subprocess.run([sys.executable, '-I', str(kit / 'verify.py'), '--verify', str(kit), '--sha256', receipt['manifest_sha256']], check=True)
+      - name: Verify complete Go source and installed-image binding
+        run: python -m scripts.go_sources --check-plan
+      - name: Recollect and verify Go source supplement
+        if: runner.os == 'Linux'
+        shell: python
+        run: |
+          import json, subprocess, sys
+          from pathlib import Path
+          kit = Path('.local/go-sources')
+          subprocess.run([sys.executable, '-m', 'scripts.go_sources', '--collect', str(kit), '--fetch'], check=True)
+          receipt = json.loads(Path('docs/task-results/assets/PM-023/go-20261124/receipt.json').read_text())
+          subprocess.run([sys.executable, '-I', str(kit / 'verify.py'), '--verify', str(kit), '--sha256', receipt['manifest_sha256']], check=True)
       - name: Verify licenses in distributable Python wheels
         shell: python
         run: |

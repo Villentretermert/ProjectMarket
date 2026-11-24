@@ -1,0 +1,14 @@
+{
+  "db": {
+    "image_id": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+    "builder_id": "sha256:31c34b802dcb74c7b2bbbcd8d69acaff216e8eb6911868cb7d42f112c0f62f31",
+    "binary_path": "/usr/local/bin/gosu",
+    "binary_sha256": "7a3526e4111a4a07283fecd0f359ec65c194778d92b585fb96a3e292a590b0aa"
+  },
+  "proxy": {
+    "image_id": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b",
+    "builder_id": "sha256:9dae3a921129565adb024bbc3c5b072c6b1d7471f92ecdffef76da7742c7a37f",
+    "binary_path": "/usr/bin/caddy",
+    "binary_sha256": "838befb8dc94a98b18cf54e881c69f78806b20ce7bbc0494647b4897c9cfaad6"
+  }
+}

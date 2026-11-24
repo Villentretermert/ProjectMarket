@@ -1,5 +1,11 @@
 # Лицензии и подготовка к распространению
 
+24 ноября: [Go source supplement](GO_SOURCES.md) содержит весь go.sum union
+двух builders, Go 1.26.10/gosu 1.19 source archives и автономную проверку.
+Ранее добавлены PyPI/CPython sources; полный build closure, bootstrap и
+оставшиеся attribution/release gaps всё ещё открыты.
+
+
 3 ноября 2026. D49 фиксирует выбор владельцем Apache License 2.0 для собственного
 кода MarkeTOB. Канонические [LICENSE](../../LICENSE) и [NOTICE](../../NOTICE)
 скопированы в четыре Python-пакета. Сборки wheel включают оба файла и выражение

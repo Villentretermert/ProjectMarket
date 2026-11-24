@@ -1,5 +1,9 @@
 # Текущая локальная поставка · schema-20261109
 
+24 ноября: добавлен [комплект исходников Go/Caddy/gosu](../licensing/GO_SOURCES.md).
+Это отдельное дополнение с offline verifier; готовые Docker images сохранены.
+
+
 24 ноября: к исходникам добавлен [комплект CPython 3.14.9](../licensing/CPYTHON_SOURCES.md) с автономной проверкой; прежние Docker/source kits сохранены.
 
 24 ноября: для пересборки из исторического source kit нужен [исправленный PGDG recipe](../licensing/REPLACING_LIBRARIES.md). Запуск готового Docker kit без сборки сохраняется.

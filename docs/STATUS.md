@@ -1,5 +1,12 @@
 # Текущее состояние
 
+24 ноября: [PM-023-GO](task-results/PM-023-go-20261124.md) — собраны Go sources:
+591 module records + Go/gosu root sources, связаны с обоими binaries/builders.
+91 targeted tests, Ruff/mypy129, повторный probe, offline Windows/Linux и
+одинаковый manifest при Linux пересборе PASS. Комплект kit-03 247 МБ локально;
+CI ожидается. Полный rebuild/bootstrap и остальные gaps открыты, 19/24.
+
+
 24 ноября: [PM-023-CPY](task-results/PM-023-cpython-20261124.md) — исходники
 CPython 3.14.9 собраны; source hash, LICENSE/patchlevel и обе роли проверены.
 51 targeted tests, Ruff/mypy127, повторный probe и offline Windows/Linux PASS.
