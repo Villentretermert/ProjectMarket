@@ -1,0 +1,39 @@
+{
+  "local_recipe": "run-04",
+  "targeted_tests": 67,
+  "new_tests": 27,
+  "ruff": "PASS",
+  "format_files": 131,
+  "mypy_files": 131,
+  "exact_binary_comparison": "PASS",
+  "lock_and_build_metadata": "PASS",
+  "runtime_probes": "PASS",
+  "transient_go_volumes_remaining": 0,
+  "pilot": {
+    "services_healthy": 4,
+    "ready_http_status": 200,
+    "database": "ok",
+    "images_replaced": false
+  },
+  "initial_diagnostics": [
+    "tmpfs too small for compiler objects; use disk GOTMPDIR",
+    "negative TLS case reached server rejection before SAN; test-only default_sni added",
+    "GOENV=off is observed as empty config path"
+  ],
+  "ci_launcher_check": "temporary Python script can resolve pinned image from verified Dockerfile",
+  "linux_output_permission_probe": {
+    "initial_mode": "0755",
+    "host_owner": "1001:1001",
+    "capabilities": "ALL dropped",
+    "initial_exit": 1,
+    "initial_error": "Permission denied creating output/result",
+    "corrected_mode": "0775",
+    "supplementary_group": 1001,
+    "corrected_exit": 0,
+    "content": "test",
+    "temporary_volume_removed": true
+  },
+  "previous_accepted_local_recipe": "run-03",
+  "final_code_local_rebuild": "ca8b19514e491cb75c4984ee397ca7124cb51bdd",
+  "repeat_result_byte_equivalent": true
+}

@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-24",
+  "run_id": 45421327206,
+  "url": "https://github.com/Villentretermert/ProjectMarket/actions/runs/45421327206",
+  "code_commit": "ca8b19514e491cb75c4984ee397ca7124cb51bdd",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 138541333063,
+      "name": "Python / ubuntu-latest",
+      "conclusion": "success"
+    },
+    {
+      "id": 138541333258,
+      "name": "Python / windows-latest",
+      "conclusion": "success"
+    },
+    {
+      "id": 138541333582,
+      "name": "Docker / PostgreSQL",
+      "conclusion": "success"
+    },
+    {
+      "id": 138541333762,
+      "name": "PostgreSQL / identity, bots, ingestion and channels",
+      "conclusion": "success"
+    }
+  ],
+  "unit_linux_passed": 403,
+  "unit_windows_passed": 401,
+  "unit_windows_linux_only_skipped": 2,
+  "integration_passed": 111,
+  "distinct_python_tests": 514,
+  "focused_local_tests": 67,
+  "new_tests": 27,
+  "ruff": "PASS",
+  "format_files": 131,
+  "mypy_files": 131,
+  "source_manifest_recollected": "1219282099550462950ae09cbf9a78a095d601be746f3a73607d03d5e8caf43e",
+  "offline_rebuild": "PASS",
+  "local_run": "run-04",
+  "linux_rebuild_receipt": "ci-rebuild.json",
+  "previous_runs": [
+    {
+      "id": 45418205554,
+      "state": "cancelled",
+      "reason": "Python shell import-path fix"
+    },
+    {
+      "id": 45418457425,
+      "state": "cancelled",
+      "reason": "Linux container output permissions fix"
+    },
+    {
+      "id": 45419353243,
+      "attempt": 1,
+      "state": "failure",
+      "reason": "Go ZIP rejected before rebuild; other jobs passed"
+    },
+    {
+      "id": 45419353243,
+      "attempt": 2,
+      "state": "failure",
+      "reason": "Same ZIP rejected; separate sum.golang.org HTTP/2 error in Docker build; Windows/integration passed"
+    }
+  ],
+  "browser_scenarios": 69
+}

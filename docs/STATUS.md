@@ -3,8 +3,11 @@
 24 ноября: [PM-023-GOBUILD](task-results/PM-023-go-build-20261124.md) —
 Caddy/gosu пересобраны из kit-03 без сети; оба binary SHA совпали с установленными.
 67 targeted tests, Ruff/mypy131 и отдельные UID/GID/HTTPS/HTTP2 проверки PASS.
-Финальный полный recipe run-03 PASS; CI ожидается. Runtime сохранён; Go bootstrap,
-полный image/native rebuild и остальные gaps открыты, 19/24.
+Финальный recipe run-04 и все четыре jobs CI 45421327206 на ca8b195 PASS:
+514 Python-тестов, 69 browser checks, Web/API/bot, Docker/HTTPS/HTTP2/backup/restore.
+Linux повторил exact source/compiler/input/binary hashes. Runtime сохранён.
+Далее оставшаяся атрибуция четырёх Alpine packages; Go bootstrap, полный
+image/native rebuild и остальные gaps открыты, 19/24.
 
 
 24 ноября: [PM-023-GO](task-results/PM-023-go-20261124.md) — собраны Go sources:

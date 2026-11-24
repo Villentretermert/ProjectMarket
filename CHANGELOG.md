@@ -5,10 +5,10 @@
 - Добавлен Python recipe для компиляции Caddy/gosu из проверенного kit-03 в чистом закреплённом Go image.
 - Обе сборки совпали с установленными SHA-256/build metadata; проверены UID/GID и HTTPS/HTTP2 с отрицательными TLS сценариями.
 - Новый пустой volume, network=none, readonly containers, ограничение CPU/RAM; временные объекты компилятора на отдельном диске.
-- 67 targeted tests (27 новых), Ruff/format/mypy131 PASS. Финальный recipe run-03 PASS; CI ожидается.
+- 67 targeted tests (27 новых), Ruff/format/mypy131 PASS. Финальный recipe run-04 и четыре jobs CI 45421327206 на ca8b195 PASS: 514 Python-тестов, 69 browser checks, Web/API/bot, Docker/HTTPS/HTTP2/backup/restore. Linux подтвердил source/compiler/input/binary hashes.
 - CI Python shell читает pin из проверенного Dockerfile: его временный script находится вне repository import path. Сбой прямого import воспроизведён локально; product/recipe code сохранён.
 - Для Linux output bind mount новый каталог получает 0775, compiler container — группу владельца; root с cap_drop=ALL иначе получает Permission denied. Отказ и исправление проверены в отдельном Linux volume; добавлен вывод CI diagnostics.
-- Повторные CI downloads отвергли один ZIP по pinned SHA; добавлены размер/SHA и отдельный диагностический refetch без замены отвергнутых входов. Локальный refetch совпал; причина runner-отказа ещё уточняется.
+- Повторные CI downloads отвергли один ZIP по pinned SHA; добавлены размер/SHA и отдельный диагностический refetch без замены отвергнутых входов. Windows/Linux refetch совпали; следующий CI успешно повторил весь source kit. Причина прежнего отказа не доказана; диагностика сохранена.
 - Runtime и прежние kits сохранены; bootstrap/full-image/native gaps и полная приёмка открыты, 19/24.
 
 

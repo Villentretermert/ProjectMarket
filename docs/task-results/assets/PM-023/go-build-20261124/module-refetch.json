@@ -1,0 +1,17 @@
+{
+  "status": 200,
+  "content_type": "application/zip",
+  "content_length": "69474",
+  "bytes": 69474,
+  "sha256": "b3aad505eb58e03d5200ff4eab62aaa5c55d57b003b4c7060a2748ff819677f1",
+  "expected_sha256": "b3aad505eb58e03d5200ff4eab62aaa5c55d57b003b4c7060a2748ff819677f1",
+  "h1": "h1:V7SIoCzkyWD93WmyKECSX+tMu/hLqQQvptlhEsbBIhI=",
+  "expected_h1": "h1:V7SIoCzkyWD93WmyKECSX+tMu/hLqQQvptlhEsbBIhI=",
+  "linux_refetch": {
+    "status": 200,
+    "size": 69474,
+    "sha256": "b3aad505eb58e03d5200ff4eab62aaa5c55d57b003b4c7060a2748ff819677f1",
+    "content_length": "69474",
+    "content_type": "application/zip"
+  }
+}
