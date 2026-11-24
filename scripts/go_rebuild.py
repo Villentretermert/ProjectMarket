@@ -294,9 +294,13 @@ def run(kit: Path, output: Path, wsl: str | None) -> dict[str, Any]:
         prepared = write_inputs(kit, plan, tar)
         binaries = output / "binaries"
         binaries.mkdir()
+        # Linux bind mounts retain the host owner. With all capabilities dropped,
+        # container root needs this new directory's group, not DAC override or 0777.
+        binaries.chmod(0o775)
         docker.run("volume", "create", volume)
         created = True
         options = ["--mount", f"type=volume,src={volume},dst=/work"]
+        options += ["--group-add", str(binaries.stat().st_gid)]
         options += docker.mount(tar, "/inputs.tar") + docker.mount(binaries, "/output", False)
         docker.container(volume + "-compile", options, BUILD, output / "build.log", timeout=1200)
         build = validate_build(kit, binaries)

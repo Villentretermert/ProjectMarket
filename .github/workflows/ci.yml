@@ -100,6 +100,16 @@ jobs:
           actual = json.loads(Path('.local/go-rebuild/result.json').read_text())
           for key in ('prepared_inputs', 'binaries', 'compiler_sha256', 'runtime_checks'):
               assert actual[key] == expected[key], key
+      - name: Record offline Go rebuild diagnostics
+        if: always() && runner.os == 'Linux'
+        shell: python
+        run: |
+          from pathlib import Path
+          output = Path('.local/go-rebuild')
+          for name in ('result.json', 'build.log', 'gosu.log', 'https.log'):
+              path = output / name
+              if path.is_file():
+                  print(name, path.read_text(errors='replace')[-12000:])
       - name: Verify licenses in distributable Python wheels
         shell: python
         run: |
