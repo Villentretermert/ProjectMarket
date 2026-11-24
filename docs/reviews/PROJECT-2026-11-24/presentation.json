@@ -1,0 +1,17 @@
+{
+  "page_id": "page_aa683b1a53cc8191a82d224d80286a68",
+  "artifact_ref": "artifact_external_883e2440-8481-44ce-a24b-59e0cdf6915e",
+  "slides": 68,
+  "state_version": 15,
+  "screenshot_takes": {
+    "default": "take-03",
+    "07-space-editor.png": "take-04",
+    "08-space-preview.png": "take-04",
+    "10-confirmed.png": "take-04"
+  },
+  "video_take": "take-04",
+  "slide_render_size": [
+    1280,
+    720
+  ]
+}

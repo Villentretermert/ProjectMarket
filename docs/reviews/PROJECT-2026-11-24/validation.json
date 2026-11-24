@@ -1,0 +1,19 @@
+{
+  "slides": 68,
+  "video_seconds": 167.2,
+  "video_sha256": "0deab7dcc7fcdcd2648f825b6ccfe128e718068db3dfcf266364b211fc73ec7c",
+  "video_bytes": 5172174,
+  "video_decode": "PASS",
+  "chapter_frames": 23,
+  "page_errors": [],
+  "visual_review": "PASS",
+  "slides_reviewed_individually": 68,
+  "slide_canvas_bounds": "PASS",
+  "final_video_chapters_reviewed": 23,
+  "presentation_state_version": 15,
+  "source_commit": "11653f0a81f5911076ddedc473bbc60e63909d70",
+  "source_references": "PASS",
+  "json_syntax": "PASS",
+  "recorder_syntax": "PASS",
+  "text_credential_pattern_check": "PASS"
+}
