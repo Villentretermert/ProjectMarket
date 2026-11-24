@@ -1,0 +1,11 @@
+{
+	"GOCACHE": "/work/buildcache",
+	"GOENV": "",
+	"GOFLAGS": "",
+	"GOMODCACHE": "/work/mod",
+	"GOPATH": "/work/gopath",
+	"GOPROXY": "off",
+	"GOSUMDB": "off",
+	"GOTMPDIR": "/work/tmp",
+	"GOWORK": "off"
+}

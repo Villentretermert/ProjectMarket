@@ -1,0 +1,72 @@
+{
+  "result": "PASS",
+  "source_manifest_sha256": "1219282099550462950ae09cbf9a78a095d601be746f3a73607d03d5e8caf43e",
+  "toolchain": {
+    "reference": "golang:1.26.10-alpine3.23@sha256:0525c952defebc693cdaf62cdf43afa32be5a7f377e99260642ea19c240c708e",
+    "image_id": "sha256:c3b115201bc73f32bec28694395c415387ba16e1068e9f1c1ac4971db9ba20df"
+  },
+  "prepared_inputs": {
+    "members": 823,
+    "sha256": "0f55c59cd6b247ed649545e3d619dbc89883ea0e3f9e2eda380acdef57a0e0de",
+    "size": 212623360
+  },
+  "network": "none",
+  "initial_work_volume": "empty",
+  "runtime_checks": {
+    "gosu": {
+      "result": "PASS",
+      "nobody": true,
+      "explicit_uid_gid": true,
+      "version": true
+    },
+    "https": {
+      "result": "PASS",
+      "https": true,
+      "http2": true,
+      "untrusted_ca_rejected": true,
+      "wrong_hostname_rejected": true
+    }
+  },
+  "binaries": {
+    "db": {
+      "sha256": "7a3526e4111a4a07283fecd0f359ec65c194778d92b585fb96a3e292a590b0aa",
+      "size": 2777966,
+      "image_id": "sha256:07aa878e696f9eca7e46515ba052c6f80f1372d09686cfb7b71ba49054b5a52f",
+      "byte_identical": true
+    },
+    "proxy": {
+      "sha256": "838befb8dc94a98b18cf54e881c69f78806b20ce7bbc0494647b4897c9cfaad6",
+      "size": 81974344,
+      "image_id": "sha256:031c3f1f15156d1a0054dbe3328220c81ca0090b9dab5384fd0210d88672164b",
+      "byte_identical": true
+    }
+  },
+  "compiler_sha256": "9c2a37ae5b21ba1d5a004bb9ab4d0c64de6fc5778e9d30487adccea62678b8b5",
+  "go_environment": {
+    "CGO_ENABLED": "0",
+    "GOARCH": "amd64",
+    "GOOS": "linux",
+    "GOTOOLCHAIN": "local",
+    "GOVERSION": "go1.26.10"
+  },
+  "offline_environment": {
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOWORK": "off",
+    "GOENV": "",
+    "GOCACHE": "/work/buildcache",
+    "GOMODCACHE": "/work/mod",
+    "GOTMPDIR": "/work/tmp",
+    "GOPATH": "/work/gopath",
+    "GOFLAGS": ""
+  },
+  "observed_network_interfaces": [
+    "lo"
+  ],
+  "limitations": [
+    "compiler-bootstrap",
+    "full-image-rebuild",
+    "other-native-source-gaps",
+    "release-acceptance"
+  ]
+}

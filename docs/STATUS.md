@@ -1,5 +1,12 @@
 # Текущее состояние
 
+24 ноября: [PM-023-GOBUILD](task-results/PM-023-go-build-20261124.md) —
+Caddy/gosu пересобраны из kit-03 без сети; оба binary SHA совпали с установленными.
+67 targeted tests, Ruff/mypy131 и отдельные UID/GID/HTTPS/HTTP2 проверки PASS.
+Финальный полный recipe run-03 PASS; CI ожидается. Runtime сохранён; Go bootstrap,
+полный image/native rebuild и остальные gaps открыты, 19/24.
+
+
 24 ноября: [PM-023-GO](task-results/PM-023-go-20261124.md) — собраны Go sources:
 591 module records + Go/gosu root sources, связаны с обоими binaries/builders.
 91 targeted tests, Ruff/mypy129, повторный probe, offline Windows/Linux и

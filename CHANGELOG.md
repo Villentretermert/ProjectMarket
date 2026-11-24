@@ -1,5 +1,14 @@
 # Журнал изменений
 
+## 2026-11-24 · PM-023-GOBUILD — пересборка Go без сети
+
+- Добавлен Python recipe для компиляции Caddy/gosu из проверенного kit-03 в чистом закреплённом Go image.
+- Обе сборки совпали с установленными SHA-256/build metadata; проверены UID/GID и HTTPS/HTTP2 с отрицательными TLS сценариями.
+- Новый пустой volume, network=none, readonly containers, ограничение CPU/RAM; временные объекты компилятора на отдельном диске.
+- 67 targeted tests (27 новых), Ruff/format/mypy131 PASS. Финальный recipe run-03 PASS; CI ожидается.
+- Runtime и прежние kits сохранены; bootstrap/full-image/native gaps и полная приёмка открыты, 19/24.
+
+
 ## 2026-11-24 · PM-023-GO — исходные материалы Go
 
 - Собраны 591 записи go.sum и Go/gosu sources; binary/build evidence связаны с установленными proxy/db.

@@ -1,5 +1,10 @@
 # Текущая локальная поставка · schema-20261109
 
+24 ноября: добавлен [рецепт автономной пересборки Caddy/gosu](../licensing/GO_REBUILD.md)
+из Go source kit. Требуется заранее получить закреплённый compiler image;
+готовые рабочие контейнеры и исторический Docker kit сохранены.
+
+
 24 ноября: добавлен [комплект исходников Go/Caddy/gosu](../licensing/GO_SOURCES.md).
 Это отдельное дополнение с offline verifier; готовые Docker images сохранены.
 

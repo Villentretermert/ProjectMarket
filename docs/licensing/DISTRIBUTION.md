@@ -1,5 +1,10 @@
 # Лицензии и подготовка к распространению
 
+24 ноября: [offline Go rebuild](GO_REBUILD.md) проверяет воспроизведение
+двух Go binaries из переданных inputs с готовым закреплённым компилятором.
+Bootstrap compiler и полный Docker/native rebuild остаются отдельными проверками.
+
+
 24 ноября: [Go source supplement](GO_SOURCES.md) содержит весь go.sum union
 двух builders, Go 1.26.10/gosu 1.19 source archives и автономную проверку.
 Ранее добавлены PyPI/CPython sources; полный build closure, bootstrap и
