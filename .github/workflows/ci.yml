@@ -64,7 +64,15 @@ jobs:
         run: python -m scripts.cpython_sources --check-plan
       - name: Collect and verify official CPython source supplement
         if: runner.os == 'Linux'
-        run: python -m scripts.cpython_sources --collect .local/cpython-sources --fetch
+        shell: python
+        run: |
+          import json, subprocess, sys
+          from pathlib import Path
+          kit = Path('.local/cpython-sources')
+          subprocess.run([sys.executable, '-m', 'scripts.cpython_sources', '--collect', str(kit), '--fetch'], check=True)
+          receipt = json.loads(Path('docs/task-results/assets/PM-023/cpython-20261124/receipt.json').read_text())
+          # Linux must reproduce the published Windows-collected kit, including its verifier.
+          subprocess.run([sys.executable, '-I', str(kit / 'verify.py'), '--verify', str(kit), '--sha256', receipt['manifest_sha256']], check=True)
       - name: Verify licenses in distributable Python wheels
         shell: python
         run: |

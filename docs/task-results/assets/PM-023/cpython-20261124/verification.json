@@ -1,7 +1,7 @@
 {
-  "manifest_sha256": "dce9641bb63d430b0037b22697809986e5c61186294adb879e47dcb96668ecd4",
+  "manifest_sha256": "e2afec94b1aef0e02ffbe783e20e03f373e5d2769c282ca5e4053023b6b7d325",
   "files": 11,
-  "kit_bytes": 24883429,
+  "kit_bytes": 24883534,
   "source_members": 5571,
   "targeted_tests": 51,
   "new_tests": 22,
@@ -18,6 +18,9 @@
     "network": "none",
     "container_filesystem": "read-only",
     "kit_mount": "read-only",
-    "passed": true
-  }
+    "passed": true,
+    "writable_mount": "new output directory only"
+  },
+  "windows_linux_identical_manifest": true,
+  "linux_offline_recollection": true
 }

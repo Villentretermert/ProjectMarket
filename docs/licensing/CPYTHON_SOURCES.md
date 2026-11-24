@@ -9,18 +9,18 @@
 
 ## Что передавать
 
-Локальный каталог `.local/pm023/cpython-20261124/kit/`: **11 файлов,
-24 883 429 байт**. Передавайте каталог целиком. Внутри — исходный tar.xz,
+Локальный каталог `.local/pm023/cpython-20261124/kit-02/`: **11 файлов,
+24 883 534 байт**. Передавайте каталог целиком. Внутри — исходный tar.xz,
 source plan, inventory, наблюдения API/бота, установленная лицензия, patchlevel.h,
 pyconfig.h, Makefile, standalone verifier и README. Личные данные и bot keys
 в комплект не входят. Это дополнение к историческим Docker/source kits.
 
-Квитанция лежит рядом с каталогом: `.local/pm023/cpython-20261124/receipt.json`.
+Квитанция лежит рядом с каталогом: `.local/pm023/cpython-20261124/receipt-02.json`.
 Её [публичная копия](../task-results/assets/PM-023/cpython-20261124/receipt.json)
 содержит независимый SHA-256 **manifest.json**:
 
 ```text
-dce9641bb63d430b0037b22697809986e5c61186294adb879e47dcb96668ecd4
+e2afec94b1aef0e02ffbe783e20e03f373e5d2769c282ca5e4053023b6b7d325
 ```
 
 ## Проверка без сети
@@ -30,7 +30,7 @@ dce9641bb63d430b0037b22697809986e5c61186294adb879e47dcb96668ecd4
 Из каталога комплекта:
 
 ```text
-python -I verify.py --verify . --sha256 dce9641bb63d430b0037b22697809986e5c61186294adb879e47dcb96668ecd4
+python -I verify.py --verify . --sha256 e2afec94b1aef0e02ffbe783e20e03f373e5d2769c282ca5e4053023b6b7d325
 ```
 
 Утилита сверяет независимый manifest hash, точный состав и каждый файл,

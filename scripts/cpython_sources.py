@@ -305,7 +305,8 @@ def collect(output: Path, source: Path | None, fetch: bool) -> dict[str, Any]:
         verify_source(target, plan, object_json((output / "runtime.json").read_bytes()))
         manifest = {
             "schema": "marketob-cpython-kit/v1",
-            "files": {p.name: file_spec(p) for p in sorted(output.iterdir())},
+            # Path ordering differs by OS; filenames must have one portable order.
+            "files": {p.name: file_spec(p) for p in sorted(output.iterdir(), key=lambda p: p.name)},
         }
         (output / "manifest.json").write_bytes(json_bytes(manifest))
         return verify(output, file_digest(output / "manifest.json"))
