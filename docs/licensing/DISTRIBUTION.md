@@ -43,6 +43,11 @@ Git-снимки и инструкция связаны манифестом с 
 проверен на Windows и в Linux без сети. Его охват partial и список открытых
 пунктов сохранены внутри. [Квитанция](../task-results/assets/PM-023/handover-20261108/receipt.json).
 
+24 ноября: [дополнение Python runtime](PYTHON_RUNTIME_SOURCES.md) содержит все
+30 installed PyPI sdists, включая 24 ранее отсутствовавших. URL/size/SHA-256
+из release lock и корневые PKG-INFO проверены; offline Windows/Linux PASS.
+CPython/Go/build dependencies и полный rebuild остаются открытыми.
+
 ## Следующие действия перед передачей образов
 
 | Пункт | Состояние | Проверяемый результат |

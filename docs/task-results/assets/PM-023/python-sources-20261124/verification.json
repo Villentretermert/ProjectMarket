@@ -1,0 +1,19 @@
+{
+  "archive_sha256": "102d3b95e5800c49bae69f3ea9f81411e58948af1cd66d59976a0cbf1ee9cd5f",
+  "windows": {
+    "python": "3.14.7",
+    "mode": "standalone -I",
+    "passed": true
+  },
+  "linux": {
+    "python": "3.14.9",
+    "mode": "standalone -I; network none; read-only container and source mount",
+    "image_id": "sha256:97570a3fc6ce9a11509b589c33c55ab8e01e75045c582046d1b616d4adbd53b8",
+    "passed": true
+  },
+  "targeted_tests": 85,
+  "new_tests": 29,
+  "mypy_files": 125,
+  "ruff": "pass",
+  "sdists": 30
+}

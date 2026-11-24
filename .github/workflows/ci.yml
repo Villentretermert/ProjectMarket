@@ -55,6 +55,11 @@ jobs:
         run: python -m scripts.debian_sources --fetch --indexes-only
       - name: Verify source handover release bindings
         run: python -m scripts.delivery_bundle --check-recipe
+      - name: Verify complete installed Python source mapping
+        run: python -m scripts.python_sources --check-plan
+      - name: Collect and verify pinned Python runtime sources
+        if: runner.os == 'Linux'
+        run: python -m scripts.python_sources --collect .local/python-runtime-sources --fetch
       - name: Verify licenses in distributable Python wheels
         shell: python
         run: |

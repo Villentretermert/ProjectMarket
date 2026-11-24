@@ -1,5 +1,11 @@
 # Текущее состояние
 
+24 ноября: [PM-023-PY](task-results/PM-023-python-sources-20261124.md) — собраны все
+30 runtime PyPI sdists (24 новых + 6 прежних), сверены lock hashes/PKG-INFO.
+85 focused tests, Ruff/mypy125 и standalone Windows/Linux без сети PASS.
+Архив 14,7 МБ — дополнение к поставке; CI ожидается. CPython/Go/build closure
+и полная приёмка открыты, 19/24; прежние отсрочки сохраняются.
+
 10 ноября, PM-024-R2: [переносимый Docker-комплект](task-results/PM-024-docker-kit-20261110.md)
 собран и проверен: 22 unit tests, Windows/Linux offline verifier, четыре Docker
 load и запуск из доставленных Compose-файлов на новой БД. Два Docker-бота,

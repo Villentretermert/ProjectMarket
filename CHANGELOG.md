@@ -1,5 +1,12 @@
 # Журнал изменений
 
+## 2026-11-24 · PM-023-PY — исходники Python runtime
+
+- Собраны все 30 runtime sdists по inventory/uv.lock установленного release; 24 ранее отсутствовали.
+- Добавлены standalone verifier, точный mapping и проверка PKG-INFO без выполнения package code.
+- 85 targeted tests, Ruff/format/mypy125, offline Windows/Linux PASS; CI ожидается.
+- Архив локальный, прежние kits/runtime сохранены. Полное build closure/приёмка открыты, 19/24.
+
 ## 2026-11-10 — PM-024-R2 · переносимые Docker-образы
 
 - Добавлены сборщик/standalone verifier Docker-комплекта и отдельный генератор
